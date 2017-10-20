@@ -1,0 +1,1 @@
+This directory saves logs, model checkpoints and other output files.

@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup Label="Globals">
+    <CustomProjectExtensionsPath>$(AppData)\Microsoft\AITools\BuildSystem\BrainScript\</CustomProjectExtensionsPath>
+  </PropertyGroup>
+  <Import Project="$(CustomProjectExtensionsPath)BrainScript.props" />
+  <PropertyGroup>
+    <StartupFile>FeedForward.cntk</StartupFile>
+    <ProjectGuid>e6a465e7-44dd-49c8-a8b3-81dc9b8dad7a</ProjectGuid>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DebuggerFlavor>CNTKBrainScriptDebugger</DebuggerFlavor>
+  </PropertyGroup>
+  <ItemGroup>
+    <Script Include="FeedForward.cntk" />
+  </ItemGroup>
+  <Import Project="$(CustomProjectExtensionsPath)BrainScript.targets" />
+  <!-- This next bit is required unless the macro used to Import your targets is defined in an MSBuild toolset. -->
+  <ProjectExtensions>
+    <ProjectCapabilities>
+      <ProjectConfigurationsDeclaredAsItems />
+    </ProjectCapabilities>
+  </ProjectExtensions>
+</Project>

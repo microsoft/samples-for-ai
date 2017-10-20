@@ -1,0 +1,24 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "cifar10_tf", "cifar10_tf\cifar10_tf.pyproj", "{F7130CC2-FAB7-45AA-97B8-7C6F372AC51F}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "cifar10_th", "cifar10_th\cifar10_th.pyproj", "{B7C0B0A0-49DD-4D9E-AD08-7EA9030C9482}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F7130CC2-FAB7-45AA-97B8-7C6F372AC51F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F7130CC2-FAB7-45AA-97B8-7C6F372AC51F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B7C0B0A0-49DD-4D9E-AD08-7EA9030C9482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B7C0B0A0-49DD-4D9E-AD08-7EA9030C9482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

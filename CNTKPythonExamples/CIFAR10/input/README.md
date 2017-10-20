@@ -1,0 +1,1 @@
+This directory saves input data. They will be download by script.

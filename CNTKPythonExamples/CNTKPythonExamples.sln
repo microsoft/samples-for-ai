@@ -1,0 +1,36 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26430.16
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ATIS", "ATIS\ATIS.pyproj", "{DC6AB9E6-6C76-4302-BBAB-1BA688F13FA7}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CIFAR10", "CIFAR10\CIFAR10.pyproj", "{3EDF0F39-C22E-4454-9198-910C0063740D}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "CMUDict", "CMUDict\CMUDict.pyproj", "{C0A34FDB-833B-451B-A726-6A1C3C704489}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MNIST", "MNIST\MNIST.pyproj", "{E319C9E6-B0D4-4F39-891D-A21D6AA266FB}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ptb", "ptb\ptb.pyproj", "{324469C2-258E-4672-B41D-46F6B3FAD81C}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{DC6AB9E6-6C76-4302-BBAB-1BA688F13FA7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC6AB9E6-6C76-4302-BBAB-1BA688F13FA7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3EDF0F39-C22E-4454-9198-910C0063740D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3EDF0F39-C22E-4454-9198-910C0063740D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0A34FDB-833B-451B-A726-6A1C3C704489}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0A34FDB-833B-451B-A726-6A1C3C704489}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E319C9E6-B0D4-4F39-891D-A21D6AA266FB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E319C9E6-B0D4-4F39-891D-A21D6AA266FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{324469C2-258E-4672-B41D-46F6B3FAD81C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{324469C2-258E-4672-B41D-46F6B3FAD81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
