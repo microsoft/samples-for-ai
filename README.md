@@ -1,12 +1,12 @@
 # Introduction 
 There are Visual Studio sample solutions provided, with which you can start with using VisualStudioToolsForAI extension. Solutions are separated according to different deep learning frameworks they used. Each solution has one or more sample projects with the same deep learning framework. Currently, we support these frameworks: 
-- CNTK
-- Tensorflow
-- Caffe2
-- Keras
-- MXNet
-- Chainer
-- theano
+- CNTK
+- Tensorflow
+- Caffe2
+- Keras
+- MXNet
+- Chainer
+- theano
 
 The solutions have two kinds of projects. One is BrainScript project for CNTK BrainScript language. The other is Python flavored project, which support the frameworks had python bindings.
 
