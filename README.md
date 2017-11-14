@@ -187,12 +187,19 @@ The examples is from [theano tutorial page](http://deeplearning.net/software/the
 # License
 
 The samples scripts are from official github of each framework. They are under different license.
+
 The script of CNTK is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
+
 The script of Tensorflow samples are under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0). So we just move the original code here without any change.
+
 The script of Caffe2(version 0.8.1) samples are under BSD 2-Clause license. (But currently, the code in master branch are under Apache 2.0 license)
+
 The script of Keras is under [MIT license](https://github.com/fchollet/keras/blob/master/LICENSE).
+
 The script of Theano is under [BSD license](https://en.wikipedia.org/wiki/BSD_licenses)
+
 The script of MXNet is under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0). So we just move the original code here without any change.
+
 The script of Chainer is under [MIT license](https://github.com/chainer/chainer/blob/master/LICENSE)
 
 
