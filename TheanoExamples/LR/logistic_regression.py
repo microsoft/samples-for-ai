@@ -3,30 +3,6 @@ import numpy as np
 import sys
 import os
 
-#################################################################################
-# Install Theano if it is not avalaible.                                        #
-#################################################################################
-
-def install(package_name):
-    import importlib
-    try:
-        importlib.import_module(package_name)
-    except ImportError:
-        import pip
-        pip.main(['install', '--user', package_name])
-        import site
-        if sys.version_info < (3, 0):
-            reload(site)
-        elif sys.version_info < (3, 4):
-            import imp
-            imp.reload(site)
-        else:
-            importlib.reload(site)
-
-
-if True:
-    install('theano')
-
 import numpy
 import theano
 import theano.tensor as T
