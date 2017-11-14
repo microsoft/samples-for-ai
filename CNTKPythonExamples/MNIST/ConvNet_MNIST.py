@@ -80,7 +80,6 @@ def convnet_mnist(debug_output=False, epoch_size=60000, minibatch_size=64, max_e
         input_var : reader_train.streams.features,
         label_var : reader_train.streams.labels
     }
-
     C.logging.log_number_of_parameters(z) ; print()
 
     # Get minibatches of images to train with and perform model training
@@ -137,7 +136,9 @@ if __name__=='__main__':
     import install_mnist as im
     if not os.path.exists(os.path.join(datadir, 'Train-28x28_cntk_text.txt')) or \
        not os.path.exists(os.path.join(datadir, 'Test-28x28_cntk_text.txt')):
+        cwd=os.getcwd()  # Load data will change current working directory
         im.loadAllData(datadir)
+        os.chdir(os.path.abspath(cwd))
         print("Finished data loading process.")
     else:
         print("Data was loaded, do not need reload.")

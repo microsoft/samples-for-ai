@@ -246,7 +246,9 @@ if __name__=='__main__':
     import download_data as dd
     if not os.path.exists(os.path.join(datadir, 'ptb', 'token2id.txt')) or \
        not os.path.exists(os.path.join(datadir, 'ptb', 'valid.txt')):
+        cwd=os.getcwd() # load data will change current working directory
         dd.loadData(datadir)
+        os.chdir(os.path.abspath(cwd))
         print("Finished data loading process.")
     else:
         print("Data was loaded, do not need reload.")

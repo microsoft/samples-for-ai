@@ -7,6 +7,7 @@
 from __future__ import print_function
 import numpy as np
 import os
+import cntk
 from cntk import Trainer, Axis
 from cntk.io import MinibatchSource, CTFDeserializer, StreamDef, StreamDefs, INFINITELY_REPEAT
 from cntk.learners import momentum_sgd, fsadagrad, momentum_as_time_constant_schedule, learning_rate_schedule, UnitType
@@ -385,7 +386,7 @@ def translate(tokens, model_decoding, vocab, i2w, show_attention=False, max_labe
         return []
 
     # convert to one_hot
-    query = Value.one_hot([w], len(vdict), sparse_output=True)
+    query = cntk.Value.one_hot([w], len(vdict), sparse_output=True)
     pred = model_decoding(query)
     pred = pred[0] # first sequence (we only have one) -> [len, vocab size]
     if use_attention:
