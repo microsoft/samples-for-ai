@@ -202,9 +202,3 @@ The script of MXNet is under [Apache 2.0 license](https://en.wikipedia.org/wiki/
 
 The script of Chainer is under [MIT license](https://github.com/chainer/chainer/blob/master/LICENSE)
 
-
-
-If you want to learn more about creating good readme files then refer the following [guidelines](https://www.visualstudio.com/en-us/docs/git/create-a-readme). You can also seek inspiration from the below readme files:
-- [ASP.NET Core](https://github.com/aspnet/Home)
-- [Visual Studio Code](https://github.com/Microsoft/vscode)
-- [Chakra Core](https://github.com/Microsoft/ChakraCore)
