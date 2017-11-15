@@ -277,19 +277,21 @@ The examples is from [theano tutorial page](http://deeplearning.net/software/the
 
 # License
 
-The samples scripts are from official github of each framework. They are under different license.
+The samples scripts are from official github of each framework. They are under different licenses.
 
-The script of CNTK is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
+The scripts of CNTK are under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
-The script of Tensorflow samples are under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0). So we just move the original code here without any change.
+The scripts of Tensorflow samples are under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0). So we just move the original code here without any change.
 
-The script of Caffe2(version 0.8.1) samples are under [BSD 2-Clause license](https://github.com/caffe2/caffe2/tree/v0.8.1). ( While the code in master branch are under Apache 2.0 license)
+For the scripts of Caffe2, different versions released with different licenses. 
+Currently, the master branch is under Apache 2.0 license. But the version 0.7 and 0.8.1 were released with [BSD 2-Clause license](https://github.com/caffe2/caffe2/tree/v0.8.1).
+The scripts in our solution are based on caffe2 github source tree version 0.7 and 0.8.1, with BSD 2-Clause license.
 
-The script of Keras is under [MIT license](https://github.com/fchollet/keras/blob/master/LICENSE).
+The scripts of Keras are under [MIT license](https://github.com/fchollet/keras/blob/master/LICENSE).
 
-The script of Theano is under [BSD license](https://en.wikipedia.org/wiki/BSD_licenses)
+The scripts of Theano are under [BSD license](https://en.wikipedia.org/wiki/BSD_licenses)
 
-The script of MXNet is under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0). So we just move the original code here without any change.
+The scripts of MXNet are under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0). So we just move the original code here without any change.
 
-The script of Chainer is under [MIT license](https://github.com/chainer/chainer/blob/master/LICENSE)
+The scripts of Chainer are under [MIT license](https://github.com/chainer/chainer/blob/master/LICENSE)
 
