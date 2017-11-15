@@ -33,7 +33,7 @@ Solutions are separated by different deep learning frameworks they use:
 
 # Brief Introduction on Samples
 
-## CNTKBarinScript
+## CNTK BarinScript
 
 ### Project AN4
 1. Description:
@@ -77,7 +77,7 @@ Run script “04_OneConvBN.cntk” for batch normalization for the convolutional
 The digit images in the MNIST set were originally selected and experimented with by Chris Burges and Corinna Cortes using bounding-box normalization and centering. Yann LeCun's version which is provided on this page uses centering by center of mass within in a larger window.
 (From [http://yann.lecun.com/exdb/mnist/](http://yann.lecun.com/exdb/mnist/))
 
-## CNTKPythonExamples
+## CNTK Python
 
 ### Project ATIS
 1. Description:
@@ -286,7 +286,8 @@ The samples scripts are from official github of each framework. They are under d
 
 The scripts of CNTK are under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
-The scripts of Tensorflow samples are under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0). So we just move the original code here without any change.
+The scripts of Tensorflow samples are under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0).
+There are no changes on the original code.
 
 For the scripts of Caffe2, different versions released with different licenses. 
 Currently, the master branch is under Apache 2.0 license. But the version 0.7 and 0.8.1 were released with [BSD 2-Clause license](https://github.com/caffe2/caffe2/tree/v0.8.1).
@@ -296,7 +297,8 @@ The scripts of Keras are under [MIT license](https://github.com/fchollet/keras/b
 
 The scripts of Theano are under [BSD license](https://en.wikipedia.org/wiki/BSD_licenses).
 
-The scripts of MXNet are under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0). So we just move the original code here without any change.
+The scripts of MXNet are under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0).
+There are no changes on the original code.
 
 The scripts of Chainer are under [MIT license](https://github.com/chainer/chainer/blob/master/LICENSE).
 
