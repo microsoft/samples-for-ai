@@ -98,7 +98,9 @@ Garofolo, John, et al. ATIS2 LDC93S5. Web Download. Philadelphia: Linguistic Dat
 
 Dahl, Deborah, et al. ATIS3 Test Data LDC95S26. Web Download. Philadelphia: Linguistic Data Consortium, 1995.
 
-Dahl, Deborah, et al. ATIS3 Training Data LDC94S19. Web Download. Philadelphia: Linguistic Data Consortium, 1994. (From ‘CNTK/LICENSE.md’)
+Dahl, Deborah, et al. ATIS3 Training Data LDC94S19. Web Download. Philadelphia: Linguistic Data Consortium, 1994. 
+
+(From [CNTK/LICENSE.md](https://github.com/Microsoft/CNTK/blob/v2.2/LICENSE.md))
 
 ATIS data in this example is preprocessed by converting words into word indexes, and labels into label IDs in order to use CNTKTextFormatReader. You can use any script/tool to preprocess your text data files. In this example, data is already preprocessed.
 
