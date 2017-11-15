@@ -6,8 +6,7 @@
     <ProjectGuid>15057d2e-fc65-4b0b-b525-b51370774fc1</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <ProjectTypeGuids>{92094B2C-1D42-4DCB-B555-D375CCA232CD};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>train_mnist.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

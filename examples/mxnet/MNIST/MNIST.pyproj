@@ -6,8 +6,7 @@
     <ProjectGuid>ca269755-be1c-4873-aaed-ef9c1b0ba79b</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <ProjectTypeGuids>{F27D043F-2ECA-4BF2-83C7-6AA886412AD4};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>mnist.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>

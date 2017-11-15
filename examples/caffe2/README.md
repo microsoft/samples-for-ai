@@ -1,33 +1,26 @@
-# Caffe2
+# Introduction
 
-[![TravisCI Build Status](https://travis-ci.org/caffe2/caffe2.svg?branch=master)](https://travis-ci.org/caffe2/caffe2)
-[![Appveyor Build Status](https://ci.appveyor.com/api/projects/status/github/caffe2/caffe2?svg=true)](https://ci.appveyor.com/project/Yangqing/caffe2)
+The visual solution involve two projects:
 
-Caffe2 is a lightweight, modular, and scalable deep learning framework. Building on the original [Caffe](http://caffe.berkeleyvision.org), Caffe2 is designed with expression, speed, and modularity in mind.
+1. **MNIST project**: It is a common examples for digit recognition. The project trained MNIST dataset with LeNet model.
 
-## News and Events
-
-[Caffe2 research award competition request for proposals](https://research.fb.com/programs/research-awards/proposals/caffe2-rfp/)
-
-## Questions and Feedback
-
-Please use Github issues (https://github.com/caffe2/caffe2/issues) to ask questions, report bugs, and request new features.
-
-Please participate in our survey (https://www.surveymonkey.com/r/caffe2). We will send you information about new releases and special developer events/webinars.
+2. **cifar10 project**: It is a common examples for image recognition. The project trained cifar10 dataset with AlexNet model.
 
 
-## License and Citation
+# License
 
-Caffe2 is released under the [BSD 2-Clause license](https://github.com/Yangqing/caffe2/blob/master/LICENSE).
+The script of Caffe2 examples are from Caffe2's github, on version 0.8.1. 
+Caffe2 v0.8.1 is released under the [BSD 2-Clause license](https://github.com/caffe2/caffe2/tree/v0.8.1).
 
-### Further Resources on [Caffe2.ai](http://caffe2.ai)
+# How to Run
 
-* [Installation](http://caffe2.ai/docs/getting-started.html)
-* [Learn More](http://caffe2.ai/docs/learn-more.html)
-* [Upgrading to Caffe2](http://caffe2.ai/docs/caffe-migration.html)
-* [Datasets](http://caffe2.ai/docs/datasets.html)
-* [Model Zoo](http://caffe2.ai/docs/zoo.html)
-* [Tutorials](http://caffe2.ai/docs/tutorials.html)
-* [Operators Catalogue](http://caffe2.ai/docs/operators-catalogue.html)
-* [C++ API](http://caffe2.ai/doxygen-c/html/classes.html)
-* [Python API](http://caffe2.ai/doxygen-python/html/namespaces.html)
+1. Open the solution. (It will open with Visual Studio 2017 by default.)
+
+2. Right click the project name to set the project want to run as "Startup Project"
+
+3. Right click the script name to set the script want to run as "Startup File"
+
+4. Right-click the script -> Start without Debugging
+
+
+

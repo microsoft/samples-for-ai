@@ -283,7 +283,7 @@ The script of CNTK is under [MIT license](https://en.wikipedia.org/wiki/MIT_Lice
 
 The script of Tensorflow samples are under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0). So we just move the original code here without any change.
 
-The script of Caffe2(version 0.8.1) samples are under BSD 2-Clause license. (But currently, the code in master branch are under Apache 2.0 license)
+The script of Caffe2(version 0.8.1) samples are under [BSD 2-Clause license](https://github.com/caffe2/caffe2/tree/v0.8.1). ( While the code in master branch are under Apache 2.0 license)
 
 The script of Keras is under [MIT license](https://github.com/fchollet/keras/blob/master/LICENSE).
 
