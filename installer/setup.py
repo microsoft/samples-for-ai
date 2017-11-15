@@ -6,7 +6,7 @@ import subprocess
 import os
 import re
 import ctypes
-
+import stat
 
 sys_info = {}
 
@@ -28,22 +28,23 @@ logger = _init_logger()
 def detect_os():
     os_name = platform.platform(terse = True)
     os_bit = platform.architecture()[0]
+    logger.info("OS is %s %s" % (os_name, os_bit))
+    if (os_bit != "64bit"):
+        logger.error("Only 64bit operation system is supported now.")
+        return False
     if (os_name.startswith("Windows")):
-        sys_info['OS'] = 'win'
-        if (os_bit != "64bit"):
-            logger.error("Only 64bit Windows operation system is supported now.")
-            return False
+        sys_info['OS'] = 'win'        
         if not os_name.startswith("Windows-10"):
             logger.warning("We recommend Windows 10 as the primary development OS, other versions are not fully tested.")
     elif (os_name.startswith("Linux")):
         sys_info['OS'] = 'linux'
     else:
-        sys_info['OS'] = os_name
-    logger.info("OS is %s" % os_name)
-    
+        logger.error("Only Windows and Linux are supported now.")
+        return False
     return True
 
-detect_os()
+if (not detect_os()):
+    exit()
 
 target_dir = os.path.sep.join([os.getenv("APPDATA"), "Microsoft", "ToolsForAI", "RuntimeSDK"]) if sys_info['OS'] == 'win' else ''
 
@@ -222,31 +223,47 @@ def _update_pathenv(path, add):
 
 def detect_gpu():
     sys_info['GPU'] = False
+    res = True
     if (sys_info['OS'] == 'win'):
-        detect_gpu_win(r"https://go.microsoft.com/fwlink/?LinkId=862961&clcid=0x1033")
+        res = detect_gpu_win()
+    elif (sys_info['OS'] == 'linux'):
+        res = detect_gpu_linux()
 
-def detect_gpu_win(detector_url):
-    local_dir = os.path.join(target_dir, 'tools')
-    if not os.path.isdir(local_dir):
-        os.makedirs(local_dir)
-    local_path = os.path.join(local_dir, "gpu_detector_win.exe")
-    _download_file(detector_url, local_path)
-    if (os.path.isfile(local_path)):
-        sys_info["GPU"] = _run_cmd(local_path)
-    else:
-        logger.info("gpu detector download fails, will use wmi to detect graphics card.")
-        logger.warning("will not check compute capability of the graphics card if found. "
-                       "CUDA 8.0 require compute capability >= 2.0. Please manually check it or download from %s to use the gpu_detector_win.exe.")
-        _, wmic_res = _run_cmd('wmic', ['path', 'Win32_VideoController', 'get', 'Name'], True)
-        
-        if "NVIDIA" in wmic_res:
-            sys_info["GPU"] = True           
-        else:
-            sys_info["GPU"] = False
+    if not res:
+        return False
+
     if sys_info["GPU"]:
         logger.info("Found NVIDIA graphics card.")
     else:
         logger.info("No NVIDIA graphics card is found.")
+
+    return True
+
+def detect_gpu_linux():
+    local_path = os.path.join(os.curdir, 'gpu_detector_linux')
+    
+    if (os.path.isfile(local_path)):
+        try:
+            st = os.stat(local_path)
+            os.chmod(local_path, st.st_mode | stat.S_IEXEC)
+            result = subprocess.Popen(local_path)
+            sys_info["GPU"] = result.returncode == 0
+        except:
+            logger.error("detect_gpu error: ", sys.exc_info())
+            return False
+    else:
+        logger.error("No gpu detector found. Please make sure gpu_detector_linux is downloaded in the same directory with the script.")
+        return False
+    return True
+
+def detect_gpu_win():
+    local_path = os.path.join(os.curdir, "gpu_detector_win.exe")
+    if (os.path.isfile(local_path)):
+        sys_info["GPU"] = _run_cmd(local_path)
+    else:
+        logger.error("No gpu detector found. Please make sure gpu_detector_win.exe is downloaded in the same directory with the script.")
+        return False
+    return True    
 
 def detect_vs():
     vs = []
@@ -345,6 +362,7 @@ def install_cntk():
     if (sys_info["OS"] == 'win'):
         install_cntk_win(target_version)
 
+
 def install_cntk_win(target_version):   
     cntk_root = os.path.join(target_dir, "cntk")
     versions = _get_cntk_version_win()
@@ -414,15 +432,15 @@ def pip_install():
         
         if (sys_info['OS'] == 'win'):
             pip_list.append(("cntk", "https://cntk.ai/PythonWheel/GPU-1bit-SGD/cntk-2.2-cp35-cp35m-win_amd64.whl"))
-            caffe2_wheel = os.path.join(target_dir, "caffe2_gpu-0.8.1-cp35-cp35m-win_amd64.whl")
-            caffe2_url = "https://go.microsoft.com/fwlink/?LinkId=862958&clcid=0x1033"
-            if (_download_file(caffe2_url, caffe2_wheel)):
+            caffe2_wheel = os.path.join(os.curdir, "caffe2_gpu-0.8.1-cp35-cp35m-win_amd64.whl")
+            caffe2_url = r"https://go.microsoft.com/fwlink/?LinkId=862958&clcid=0x1033"
+            if (os.path.isfile(caffe2_wheel)):
                 pip_list.append(("caffe2", caffe2_wheel))
             else:
                 logger.warning("Please manully install caffe2. You can download the wheel file here: %s" % caffe2_url)
         elif (sys_info['OS'] == 'linux'):
             pip_list.append(("cntk", "https://cntk.ai/PythonWheel/GPU-1bit-SGD/cntk-2.2-cp35-cp35m-linux_x86_64.whl"))
-            
+
         for pkt, source in pip_list:
             if pip.main(['install', source]) != 0:
                 logger.error("%s installation fails. Please manually install it." % pkt)
@@ -441,11 +459,12 @@ def main():
     if args.verbose:
         logger.setLevel(logging.DEBUG)
 
-    if not detect_python_version():
+    if not detect_python_version() or not detect_gpu():
         return
+
     if (sys_info['OS'] == 'win'):
         detect_vs()
-    detect_gpu()
+
     if (sys_info["GPU"]):
         detect_cuda()
         detect_cudnn()
