@@ -20,19 +20,19 @@ b. Microsoft.VisualStudioToolsForAI.VS2015.vsix for Visual Studio 2015
 c. Visual Studio Code Tools for AI for Visual Studio Code
 
 2. Pre-download data
-In CNTK-BrainScript-MNIST project, in “input” folder, run “python install_mnist.py” to download data to current folder.
+In CNTK-BrainScript-MNIST project, in "input" folder, run "python install_mnist.py" to download data to current folder.
 
 ## Run samples in Local Environment
 
 1. Run CNTK-BrainScript Projects
 a. Download and Open the solution
-b. Set the project you want as “Startup Project”
-c. Set the script you want to run as “Startup File”
-d. Click “Run CNTK Brain Script”
+b. Set the project you want as "Startup Project"
+c. Set the script you want to run as "Startup File"
+d. Click "Run CNTK Brain Script"
 
 2. Run Python Flavored Projects
 a. Download and Open the solution
-b. Set the “Startup Project” and “Startup File”
+b. Set the "Startup Project" and "Startup File"
 c. Right-click the script -> Start without Debugging
 
 
@@ -43,7 +43,7 @@ c. Right-click the script -> Start without Debugging
 ### Project AN4
 1. Description:
 
-This is an example for training feed forward networks for speech data. You only need to run script “FeedForward.cntk” for FeedForward training.
+This is an example for training feed forward networks for speech data. You only need to run script "FeedForward.cntk" for FeedForward training.
 
 2. Data:
 
@@ -79,7 +79,8 @@ Run script “04_OneConvBN.cntk” for batch normalization for the convolutional
 
 2. Data:
 
-The digit images in the MNIST set were originally selected and experimented with by Chris Burges and Corinna Cortes using bounding-box normalization and centering. Yann LeCun's version which is provided on this page uses centering by center of mass within in a larger window. (From http://yann.lecun.com/exdb/mnist/)
+The digit images in the MNIST set were originally selected and experimented with by Chris Burges and Corinna Cortes using bounding-box normalization and centering. Yann LeCun's version which is provided on this page uses centering by center of mass within in a larger window.
+(From [http://yann.lecun.com/exdb/mnist/](http://yann.lecun.com/exdb/mnist/))
 
 ## CNTKPythonExamples
 
@@ -102,18 +103,24 @@ Dahl, Deborah, et al. ATIS3 Training Data LDC94S19. Web Download. Philadelphia: 
 
 (From [CNTK/LICENSE.md](https://github.com/Microsoft/CNTK/blob/v2.2/LICENSE.md))
 
-ATIS data in this example is preprocessed by converting words into word indexes, and labels into label IDs in order to use CNTKTextFormatReader. You can use any script/tool to preprocess your text data files. In this example, data is already preprocessed.
+ATIS data in this example is preprocessed by converting words into word indexes, and labels into label IDs in order to use CNTKTextFormatReader. 
 
 ### Project CIFAR10
 1. Description:
 
-The example applies CNN on the CIFAR-10 dataset. It is a popular image classification example. The network contains four convolution layers and three dense layers. Max pooling is conducted for every two convolution layers. Dropout is applied after the first two dense layers. It adds data augmentation to training.
+The example applies CNN on the CIFAR-10 dataset. It is a popular image classification example. 
+The network contains four convolution layers and three dense layers. 
+Max pooling is conducted for every two convolution layers. 
+Dropout is applied after the first two dense layers. 
+It adds data augmentation to training.
 
 2. Data:
 
-The [CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html) is a popular dataset for image classification, collected by Alex Krizhevsky, Vinod Nair, and Geoffrey Hinton. It is a labeled subset of the 80 million tiny images dataset.
+The [CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html) is a popular dataset for image classification, collected by Alex Krizhevsky, Vinod Nair, and Geoffrey Hinton. 
+It is a labeled subset of the 80 million tiny images dataset.
 
-The CIFAR-10 dataset consists of 60,000 32x32 color images in 10 classes, with 6,000 images per class. There are 50,000 training images and 10,000 test images. The 10 classes are: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck.
+The CIFAR-10 dataset consists of 60,000 32x32 color images in 10 classes, with 6,000 images per class. There are 50,000 training images and 10,000 test images. 
+The 10 classes are: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck.
 
 ### Project CMUDict
 1. Description:
@@ -127,14 +134,16 @@ The data is CMUDict dictionary.
 ### Project MNIST
 1. Description:
 
-This is an example for training a feedforward classification model for MNIST images.
+This is an example for training a feedforward classification model on MNIST images.
 
 2. Data:
 
-The digit images in the [MNIST set](http://yann.lecun.com/exdb/mnist/) were originally selected and experimented with by Chris Burges and Corinna Cortes using bounding-box normalization and centering. Yann LeCun's version which is provided on this page uses centering by center of mass within in a larger window.
+The digit images in the [MNIST set](http://yann.lecun.com/exdb/mnist/) were originally selected and experimented with by Chris Burges and Corinna Cortes using bounding-box normalization and centering. 
+Yann LeCun's version which is provided on this page uses centering by center of mass within in a larger window.
+[From http://yann.lecun.com/exdb/mnist/](http://yann.lecun.com/exdb/mnist/)
 
 ### Project ptb
-1. Description: 
+1. Description:
 
 This is an example for creating and train an RNN language model.
 
@@ -146,7 +155,7 @@ CNTK distribution contains a subset of the data of The Penn Treebank Project[(ht
 
 Marcus, Mitchell, Beatrice Santorini, and Mary Ann Marcinkiewicz. Treebank-2 LDC95T7. Web Download. Philadelphia: Linguistic Data Consortium, 1995.
 
-For more details, please see the CNTK [PennTreebank webpage](https://github.com/Microsoft/CNTK/tree/master/Examples/SequenceToSequence/PennTreebank)
+For more details, please see the [CNTK PennTreebank webpage](https://github.com/Microsoft/CNTK/tree/master/Examples/SequenceToSequence/PennTreebank)
 
 
 ## Tensorflow
@@ -160,7 +169,8 @@ The code is a simple example to train and evaluate a convolutional neural networ
 
 The [CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html) is a popular dataset for image classification, collected by Alex Krizhevsky, Vinod Nair, and Geoffrey Hinton. It is a labeled subset of the 80 million tiny images dataset.
 
-The CIFAR-10 dataset consists of 60,000 32x32 color images in 10 classes, with 6,000 images per class. There are 50,000 training images and 10,000 test images. The 10 classes are: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck.
+The CIFAR-10 dataset consists of 60,000 32x32 color images in 10 classes, with 6,000 images per class. There are 50,000 training images and 10,000 test images. 
+The 10 classes are: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck.
 
 ### Project embedding
 1. Description:
@@ -171,7 +181,8 @@ This is an example for word embedding.
 
 Website: [http://mattmahoney.net/dc/](http://mattmahoney.net/dc/). The dataset licensed under GPL lecense.
 
-This project filters the 1 GB test file enwik9 to produce a 715 MB file fil9, and compress this with 17 compressors. Furthermore, it produces the file text8 by truncating fil9 to 100 MB, and test this on 25 compressors, including the 17 tested on fil9.  text8 is the first 108 bytes of fil9. 
+This project filters the 1 GB test file enwik9 to produce a 715 MB file fil9, and compress this with 17 compressors. 
+Furthermore, it produces the file text8 by truncating fil9 to 100 MB, and test this on 25 compressors, including the 17 tested on fil9.  text8 is the first 108 bytes of fil9. 
 
 (From: [http://mattmahoney.net/dc/textdata.html](http://mattmahoney.net/dc/textdata.html))
 
@@ -217,8 +228,7 @@ This is an example for training a LeNet model for MNIST images.
 
 2. Data:
 
-The digit images in the MNIST set were originally selected and experimented with by Chris Burges and Corinna Cortes using bounding-box normalization and centering. Yann LeCun's version which is provided on this page uses centering by center of mass within in a larger window. (From http://yann.lecun.com/exdb/mnist/)
-
+The digit images in the MNIST set.
 
 ## MXNet
 
@@ -229,7 +239,7 @@ Train mnist, see more explanation at [the website](http://mxnet.io/tutorials/pyt
 
 2. Data:
 
-[MNIST dataset](http://yann.lecun.com/exdb/mnist/)
+The digit images in the MNIST set. [MNIST dataset](http://yann.lecun.com/exdb/mnist/)
 
 
 ## Chainer
@@ -237,7 +247,8 @@ Train mnist, see more explanation at [the website](http://mxnet.io/tutorials/pyt
 ### Project mnist
 1. Description:
 
-This is a minimal example to write a feed-forward net. The code consists of three parts: dataset preparation, network and optimizer definition and learning loop. This is a common routine to write a learning process of networks with dataset that is small enough to fit into memory.
+This is an example to trian a feed-forward net on MNIST dataset. 
+The code consists of three parts: dataset preparation, network and optimizer definition and learning loop. 
 
 2. Data:
 
@@ -253,9 +264,7 @@ Train a simple deep CNN on the CIFAR10 small images dataset. With Tensorflow bac
 
 2. Data:
 
-The [CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html) is a popular dataset for image classification, collected by Alex Krizhevsky, Vinod Nair, and Geoffrey Hinton. It is a labeled subset of the 80 million tiny images dataset.
-
-The CIFAR-10 dataset consists of 60,000 32x32 color images in 10 classes, with 6,000 images per class. There are 50,000 training images and 10,000 test images. The 10 classes are: airplane, automobile, bird, cat, deer, dog, frog, horse, ship, and truck.
+This project uses CIFAR-10 dataset. ([CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html))
 
 ### Project cifar10_th
 1. Description:
@@ -264,7 +273,7 @@ Train a simple deep CNN on the CIFAR10 small images dataset. With Theano backend
 
 2. Data:
 
-This project uses CIFAR-10 data as above.
+This project uses CIFAR-10 dataset.([CIFAR-10 dataset](http://www.cs.toronto.edu/~kriz/cifar.html))
 
 
 ## Theano
@@ -272,7 +281,8 @@ This project uses CIFAR-10 data as above.
 ### Project LR
 1. Description:
 
-The examples is from [theano tutorial page](http://deeplearning.net/software/theano/tutorial/examples.html#a-real-example-logistic-regression). It is a simple logistic regression examples. And data is generated randomly.
+The examples is from [theano tutorial page](http://deeplearning.net/software/theano/tutorial/examples.html#a-real-example-logistic-regression). 
+It is a simple logistic regression examples. And data is generated randomly.
 
 
 # License
@@ -289,9 +299,9 @@ The scripts in our solution are based on caffe2 github source tree version 0.7 a
 
 The scripts of Keras are under [MIT license](https://github.com/fchollet/keras/blob/master/LICENSE).
 
-The scripts of Theano are under [BSD license](https://en.wikipedia.org/wiki/BSD_licenses)
+The scripts of Theano are under [BSD license](https://en.wikipedia.org/wiki/BSD_licenses).
 
 The scripts of MXNet are under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0). So we just move the original code here without any change.
 
-The scripts of Chainer are under [MIT license](https://github.com/chainer/chainer/blob/master/LICENSE)
+The scripts of Chainer are under [MIT license](https://github.com/chainer/chainer/blob/master/LICENSE).
 
