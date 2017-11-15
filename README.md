@@ -1,42 +1,37 @@
 # Introduction 
-There are Visual Studio sample solutions provided, with which you can start with using VisualStudioToolsForAI extension. Solutions are separated according to different deep learning frameworks they used. Each solution has one or more sample projects with the same deep learning framework. Currently, we support these frameworks: 
-- CNTK
+
+Samples in Visual Studio solution format are provided for users to get started with deep learning using [Microsoft Visual Studio Tools for AI](https://github.com/Microsoft/vs-tools-for-ai).
+Each solution has one or more sample projects.
+Solutions are separated by different deep learning frameworks they use:
+- CNTK (both BrainScript and Python languages)
 - Tensorflow
 - Caffe2
 - Keras
 - MXNet
 - Chainer
-- theano
-
-The solutions have two kinds of projects. One is BrainScript project for CNTK BrainScript language. The other is Python flavored project, which support the frameworks had python bindings.
-
+- Theano
 
 # Getting Started
 
 ## Prerequisites to run the samples
-1. Download and Install VisualStudioToolsForAI Extension
-a. Microsoft.VisualStudioToolsForAI.VS2017.vsix for Visual Studio 2017
-b. Microsoft.VisualStudioToolsForAI.VS2015.vsix for Visual Studio 2015
-c. Visual Studio Code Tools for AI for Visual Studio Code
+- Install [Microsoft Visual Studio](https://www.visualstudio.com/) 2017 or 2015.
+- Install [Microsoft Visual Studio Tools for AI](https://github.com/Microsoft/vs-tools-for-ai).
+- Pre-download data
+    - For CNTK BrainScript MNIST project, in the "input" folder, run "python install_mnist.py" to download data.
 
-2. Pre-download data
-In CNTK-BrainScript-MNIST project, in "input" folder, run "python install_mnist.py" to download data to current folder.
+## Runing samples locally
 
-## Run samples in Local Environment
+- CNTK BrainScript Projects
+    - Set the project you want to run as "Startup Project".
+    - Set the script you want to run as "Startup File".
+    - Click "Run CNTK Brain Script".
 
-1. Run CNTK-BrainScript Projects
-a. Download and Open the solution
-b. Set the project you want as "Startup Project"
-c. Set the script you want to run as "Startup File"
-d. Click "Run CNTK Brain Script"
-
-2. Run Python Flavored Projects
-a. Download and Open the solution
-b. Set the "Startup Project" and "Startup File"
-c. Right-click the script -> Start without Debugging
+- Python Projects
+    - Set the "Startup File".
+    - Right click the startup Python script, and click "Start without Debugging" or "Start with Debugging" context menus.
 
 
-# Examples Brief Introduction
+# Brief Introduction on Samples
 
 ## CNTKBarinScript
 
