@@ -4,13 +4,13 @@ These examples are from tensorflow examples and tensorflow model zoo tutorials, 
 
 ## List of Projects
 
-1. **cifar10**: ([details of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/cifar10))
+1. **cifar10**: ([source of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/cifar10))
 
-2. **embedding**: ([details of the script](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/tutorials/word2vec))
+2. **embedding**: ([source of the script](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/tutorials/word2vec))
 
-3. **imagenet**: ([details of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/imagenet))
+3. **imagenet**: ([source  of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/imagenet))
 
-4. **MNIST**: ([details of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/mnist))
+4. **MNIST**: ([source of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/mnist))
 
 For more details, you can see the tensorflow githubs. [Tensorflow](https://github.com/tensorflow/tensorflow) and [Tensorflow Model Zoo](https://github.com/tensorflow/models).
 
