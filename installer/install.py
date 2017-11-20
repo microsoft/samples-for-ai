@@ -11,7 +11,7 @@ import stat
 sys_info = {}
 
 def _init_logger(log_level = logging.INFO):
-    logger = logging.getLogger('Microsoft ToolsForAI')
+    logger = logging.getLogger('Microsoft Visual Studio Tools for AI')
     logger.setLevel(log_level)
     handler = logging.StreamHandler(sys.stdout)
     formatter = logging.Formatter(fmt='%(asctime)s [%(levelname)s] '
