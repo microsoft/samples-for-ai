@@ -20,7 +20,6 @@ def _init_logger(log_level = logging.INFO):
                                   datefmt='%H:%M:%S')
     handler.setFormatter(formatter)
     logger.addHandler(handler)
-
     return logger
 
 logger = _init_logger()
@@ -441,6 +440,8 @@ def pip_framework_install():
                 ("cntk", "https://cntk.ai/PythonWheel/%s/cntk-2.2-cp35-cp35m-%s.whl" % ("GPU" if sys_info["GPU"] else "CPU-Only", "win_amd64" if sys_info["OS"] == 'win' else "linux_x86_64")),
                 ("tensorflow", "tensorflow%s == 1.4.0" % ("-gpu" if sys_info["GPU"] else "")),
                 ("mxnet", "mxnet%s == 0.12.0" % ("-cu80" if sys_info["GPU"] else "")),
+                ("cupy", "cupy" if sys_info['OS'] == 'linux' else ""),
+                ("chainer", "chainer == 3.0.0"),
                 ("theano", "theano == 0.9.0"),
                 ("keras", "keras == 2.0.9")]
     
@@ -453,22 +454,20 @@ def pip_framework_install():
         else:
             logger.warning("Please manully install caffe2. You can download the wheel file here: %s" % caffe2_url)
     
-        # chainer, if cupy installed 
-        import importlib
-        try:
-            cupy = importlib.import_module('cupy')
-            if (_version_compare('2.0', cupy.__version__)):
-                pip_list.append(("chainer", "chainer == 3.0.0"))
-            else:
-                logger.warning("Please make sure cupy >= 2.0.0")
-        except ImportError:
-            logger.warning("Please manully install chainer.")
-    elif (sys_info['OS'] == 'linux'):
-        pip_list.append(("chainer", "chainer == 3.0.0"))
+        # chainer
+        if sys_info['GPU']:
+            import importlib
+            try:
+                cupy = importlib.import_module('cupy')
+                if (not _version_compare('2.0', cupy.__version__)):
+                    logger.warning("Please make sure cupy >= 2.0.0 to support CUDA for chainer 3.0.0.")
+            except ImportError:
+                logger.warning("Please manully install cupy to support CUDA for chainer."
+                "You can reference this link <https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer> to install cupy on windows")
 
     # user specified pip options
     pip_ops = []
-    for pkt, source in pip_list:
+    for pkt, source in filter(lambda x: x[1], pip_list):
         if not pip_package_install(pip_ops + [source]):
             logger.error("%s installation fails. Please manually install it." % pkt)
             return
