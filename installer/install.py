@@ -372,8 +372,8 @@ def install_cntk_win(target_version):
             logger.debug("CNTK target dir: %s" % target_dir)
             if not os.path.isdir(target_dir):
                 os.makedirs(target_dir)
-            cntk_zip_file = os.path.join(target_dir, "CNTK-2-2-Windows-64bit-GPU-1bit-SGD.zip")
-            cntk_url = "https://cntk.ai/BinaryDrop/CNTK-2-2-Windows-64bit-GPU-1bit-SGD.zip"
+            cntk_zip_file = os.path.join(target_dir, "CNTK-2-2-Windows-64bit-GPU.zip")
+            cntk_url = "https://cntk.ai/BinaryDrop/CNTK-2-2-Windows-64bit-GPU.zip"
             if not _download_file(cntk_url, cntk_zip_file) or not _unzip_file(cntk_zip_file, target_dir):
                 raise Exception
             _update_pathenv(os.path.join(cntk_root, "cntk"), True)
@@ -431,7 +431,7 @@ def pip_install():
                     ("mxnet", "mxnet%s == 0.12.0" % ("-cu80" if sys_info["GPU"] else ""))]
         
         if (sys_info['OS'] == 'win'):
-            pip_list.append(("cntk", "https://cntk.ai/PythonWheel/GPU-1bit-SGD/cntk-2.2-cp35-cp35m-win_amd64.whl"))
+            pip_list.append(("cntk", "https://cntk.ai/PythonWheel/GPU/cntk-2.2-cp35-cp35m-win_amd64.whl"))
             caffe2_wheel = os.path.join(os.curdir, "caffe2_gpu-0.8.1-cp35-cp35m-win_amd64.whl")
             caffe2_url = r"https://go.microsoft.com/fwlink/?LinkId=862958&clcid=0x1033"
             if (os.path.isfile(caffe2_wheel)):
@@ -439,7 +439,7 @@ def pip_install():
             else:
                 logger.warning("Please manully install caffe2. You can download the wheel file here: %s" % caffe2_url)
         elif (sys_info['OS'] == 'linux'):
-            pip_list.append(("cntk", "https://cntk.ai/PythonWheel/GPU-1bit-SGD/cntk-2.2-cp35-cp35m-linux_x86_64.whl"))
+            pip_list.append(("cntk", "https://cntk.ai/PythonWheel/GPU/cntk-2.2-cp35-cp35m-linux_x86_64.whl"))
 
         for pkt, source in pip_list:
             if pip.main(['install', source]) != 0:
