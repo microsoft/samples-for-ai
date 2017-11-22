@@ -1,3 +1,10 @@
+'''
+This work is made by https://github.com/naturomics/CapsNet-Tensorflow
+It is a Tensorflow implementation of CapsNet based on Geoffrey 
+Hinton's paper Dynamic Routing Between Capsules
+
+I have make some changes on the code.
+'''
 from __future__ import absolute_import
 from __future__ import division
 from __future__ import print_function
@@ -35,11 +42,9 @@ def main(_):
             for step in tqdm(range(num_batch), total=num_batch, ncols=70, leave=False, unit='b'):
                 global_step = sess.run(capsNet.global_step)
                 sess.run(capsNet.train_op)
-
                 if step % cfg.train_sum_freq == 0:
                     _, summary_str = sess.run([capsNet.train_op, capsNet.train_summary])
                     sv.summary_writer.add_summary(summary_str, global_step)
-
                 if (global_step + 1) % cfg.test_sum_freq == 0:
                     test_acc = 0
                     for i in range(num_test_batch):
