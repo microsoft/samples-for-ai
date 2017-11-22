@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "imagenet", "imagenet\imagenet.pyproj", "{82D9546F-5924-4A16-8F9C-F3B853B883F1}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MNIST", "MNIST\MNIST.pyproj", "{1A8C8511-61BB-4F82-BC27-C82CBC6ACA3A}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "cifar10", "cifar10\cifar10.pyproj", "{16A0ED44-98A5-4DCB-B8DB-58ADB8D25AAE}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "capsule", "capsule\capsule.pyproj", "{C163D73B-A2BA-4567-BF14-1E89CB9FE7EB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,8 +27,13 @@ Global
 		{1A8C8511-61BB-4F82-BC27-C82CBC6ACA3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16A0ED44-98A5-4DCB-B8DB-58ADB8D25AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16A0ED44-98A5-4DCB-B8DB-58ADB8D25AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C163D73B-A2BA-4567-BF14-1E89CB9FE7EB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C163D73B-A2BA-4567-BF14-1E89CB9FE7EB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {9739BA71-A525-45A1-82B0-E61E825D0ACE}
 	EndGlobalSection
 EndGlobal

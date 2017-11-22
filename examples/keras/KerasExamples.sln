@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "cifar10_tf", "cifar10_tf\cifar10_tf.pyproj", "{F7130CC2-FAB7-45AA-97B8-7C6F372AC51F}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "cifar10_th", "cifar10_th\cifar10_th.pyproj", "{B7C0B0A0-49DD-4D9E-AD08-7EA9030C9482}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "frcnn", "train_frcnn\frcnn.pyproj", "{EFD0A2B5-E181-4CC7-B7BF-E77FD70538A5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,8 +19,13 @@ Global
 		{F7130CC2-FAB7-45AA-97B8-7C6F372AC51F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B7C0B0A0-49DD-4D9E-AD08-7EA9030C9482}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{B7C0B0A0-49DD-4D9E-AD08-7EA9030C9482}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EFD0A2B5-E181-4CC7-B7BF-E77FD70538A5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EFD0A2B5-E181-4CC7-B7BF-E77FD70538A5}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {86A9456A-67EA-42F0-A6D2-39A9DE74B9E2}
 	EndGlobalSection
 EndGlobal
