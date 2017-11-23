@@ -35,11 +35,15 @@ Currently, the installer works on Windows only:
     git clone https://github.com/Microsoft/samples-for-ai.git
     cd samples-for-ai
     cd installer
-    - Windows
-        python install.py
-    - Non-Windows
+    - Windows:
+        python.exe install.py
+    - Non-Windows:
         python3 install.py
     ```
+> [!NOTE]
+>
+> On Linux, you may need 'sudo' to install deep learning frameworks into system directory.
+
 
 ## Runing samples locally
 
