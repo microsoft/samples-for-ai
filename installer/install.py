@@ -10,11 +10,148 @@ import stat
 
 sys_info = {}
 
+if platform.system() == 'Windows':
+    import winreg 
+    from ctypes.wintypes import HANDLE, BOOL, DWORD, HWND, HINSTANCE, HKEY
+
+    class COORD(ctypes.Structure):
+      """struct in wincon.h."""
+      _fields_ = [
+        ("X", ctypes.c_short),
+        ("Y", ctypes.c_short)]
+
+    class SMALL_RECT(ctypes.Structure):
+      """struct in wincon.h."""
+      _fields_ = [
+        ("Left", ctypes.c_short),
+        ("Top", ctypes.c_short),
+        ("Right", ctypes.c_short),
+        ("Bottom", ctypes.c_short)]
+
+    class CONSOLE_SCREEN_BUFFER_INFO(ctypes.Structure):
+      """struct in wincon.h."""
+      _fields_ = [
+        ("dwSize", COORD),
+        ("dwCursorPosition", COORD),
+        ("wAttributes", ctypes.c_ushort),
+        ("srWindow", SMALL_RECT),
+        ("dwMaximumWindowSize", COORD)]
+
+    class ShellExecuteInfo(ctypes.Structure):
+        _fields_ = [('cbSize', DWORD),
+                    ('fMask', ctypes.c_ulong),
+                    ('hwnd', HWND),
+                    ('lpVerb', ctypes.c_char_p),
+                    ('lpFile', ctypes.c_char_p),
+                    ('lpParameters', ctypes.c_char_p),
+                    ('lpDirectory', ctypes.c_char_p),
+                    ('nShow', ctypes.c_int),
+                    ('hInstApp', HINSTANCE),
+                    ('lpIDList', ctypes.c_void_p),
+                    ('lpClass', ctypes.c_char_p),
+                    ('hKeyClass', HKEY),
+                    ('dwHotKey', DWORD),
+                    ('hIcon', HANDLE),
+                    ('hProcess', HANDLE)]
+        def __init__(self, **kw):
+            ctypes.Structure.__init__(self)
+            self.cbSize = ctypes.sizeof(self)
+            for name, value in kw.items():
+                setattr(self, name, value)
+
+class _AnsiColorStreamHandler(logging.StreamHandler):
+    DEFAULT = '\x1b[0m'
+    RED     = '\x1b[31m'
+    GREEN   = '\x1b[32m'
+    YELLOW  = '\x1b[33m'
+    CYAN    = '\x1b[36m'
+
+    CRITICAL = RED
+    ERROR    = RED
+    WARNING  = YELLOW
+    INFO     = GREEN
+    DEBUG    = CYAN
+
+    @classmethod
+    def _get_color(cls, level):
+        if level >= logging.CRITICAL:  return cls.CRITICAL
+        elif level >= logging.ERROR:   return cls.ERROR
+        elif level >= logging.WARNING: return cls.WARNING
+        elif level >= logging.INFO:    return cls.INFO
+        elif level >= logging.DEBUG:   return cls.DEBUG
+        else:                          return cls.DEFAULT
+
+    def __init__(self, stream = None):
+        logging.StreamHandler.__init__(self, stream)
+
+    def format(self, record):
+        text = logging.StreamHandler.format(self, record)
+        color = self._get_color(record.levelno)
+        return color + text + self.DEFAULT
+
+
+class _WinColorStreamHandler(logging.StreamHandler):
+    # wincon.h
+    FOREGROUND_BLACK     = 0x0000
+    FOREGROUND_BLUE      = 0x0001
+    FOREGROUND_GREEN     = 0x0002
+    FOREGROUND_CYAN      = 0x0003
+    FOREGROUND_RED       = 0x0004
+    FOREGROUND_MAGENTA   = 0x0005
+    FOREGROUND_YELLOW    = 0x0006
+    FOREGROUND_GREY      = 0x0007
+    FOREGROUND_INTENSITY = 0x0008 # foreground color is intensified.
+    FOREGROUND_WHITE     = FOREGROUND_BLUE | FOREGROUND_GREEN | FOREGROUND_RED
+
+    DEFAULT  = FOREGROUND_WHITE
+    CRITICAL = FOREGROUND_RED | FOREGROUND_INTENSITY
+    ERROR    = FOREGROUND_RED | FOREGROUND_INTENSITY
+    WARNING  = FOREGROUND_YELLOW | FOREGROUND_INTENSITY
+    INFO     = FOREGROUND_GREEN
+    DEBUG    = FOREGROUND_CYAN
+
+    @classmethod
+    def _get_color(cls, level):
+        if level >= logging.CRITICAL:  return cls.CRITICAL
+        elif level >= logging.ERROR:   return cls.ERROR
+        elif level >= logging.WARNING: return cls.WARNING
+        elif level >= logging.INFO:    return cls.INFO
+        elif level >= logging.DEBUG:   return cls.DEBUG
+        else:                          return cls.DEFAULT
+
+    def _set_color(self, code):
+        import ctypes
+        ctypes.windll.kernel32.SetConsoleTextAttribute(self._outhdl, code)
+
+    def __init__(self, stream=None):
+        logging.StreamHandler.__init__(self, stream)
+        import ctypes.util
+        crtname = ctypes.util.find_msvcrt()
+        if not crtname:
+            crtname = ctypes.util.find_library("msvcrt")
+        crtlib = ctypes.cdll.LoadLibrary(crtname)
+        self._outhdl = crtlib._get_osfhandle(self.stream.fileno())
+        csbi = CONSOLE_SCREEN_BUFFER_INFO()
+        ctypes.windll.kernel32.GetConsoleScreenBufferInfo(self._outhdl, ctypes.byref(csbi))
+        # original console color
+        self._original = csbi.wAttributes
+
+
+    def emit(self, record):
+        color = self._get_color(record.levelno)
+        self._set_color(color | self._original & 0xf0)
+        logging.StreamHandler.emit(self, record)
+        self._set_color(self._original)
+
 def _init_logger(log_level = logging.INFO):
     logger = logging.getLogger('Microsoft Visual Studio Tools for AI')
     logger.setLevel(log_level)
     logger.propagate = False
-    handler = logging.StreamHandler(sys.stdout)
+    if platform.system() == 'Windows':
+        colorStreamHandler = _WinColorStreamHandler
+    else:
+        colorStreamHandler = _AnsiColorStreamHandler
+    handler = colorStreamHandler(sys.stdout)
     formatter = logging.Formatter(fmt='%(asctime)s [%(levelname)s] '
                                       '[%(name)s] %(message)s',
                                   datefmt='%H:%M:%S')
@@ -47,32 +184,6 @@ if (not detect_os()):
     exit()
 
 target_dir = os.path.sep.join([os.getenv("APPDATA"), "Microsoft", "ToolsForAI", "RuntimeSDK"]) if sys_info['OS'] == 'win' else ''
-
-if sys_info['OS'] == 'win':
-    import winreg 
-    from ctypes.wintypes import HANDLE, BOOL, DWORD, HWND, HINSTANCE, HKEY
-
-    class ShellExecuteInfo(ctypes.Structure):
-        _fields_ = [('cbSize', DWORD),
-                    ('fMask', ctypes.c_ulong),
-                    ('hwnd', HWND),
-                    ('lpVerb', ctypes.c_char_p),
-                    ('lpFile', ctypes.c_char_p),
-                    ('lpParameters', ctypes.c_char_p),
-                    ('lpDirectory', ctypes.c_char_p),
-                    ('nShow', ctypes.c_int),
-                    ('hInstApp', HINSTANCE),
-                    ('lpIDList', ctypes.c_void_p),
-                    ('lpClass', ctypes.c_char_p),
-                    ('hKeyClass', HKEY),
-                    ('dwHotKey', DWORD),
-                    ('hIcon', HANDLE),
-                    ('hProcess', HANDLE)]
-        def __init__(self, **kw):
-            ctypes.Structure.__init__(self)
-            self.cbSize = ctypes.sizeof(self)
-            for name, value in kw.items():
-                setattr(self, name, value)
 
 
 def _registry_read(hkey, keypath, value_name):
@@ -284,8 +395,9 @@ def detect_python_version():
     py_version = ".".join(map(str,sys.version_info[0:2]))
     sys_info["python"] = py_version.replace('.', '')
     logger.info("Python version is %s, %s" % (py_version, py_architecture))
-    if not ("3.5" == py_version and py_architecture == '64bit'):
-        logger.error("64-bit Python 3.5 for Windows is required to run this script."
+    if not (_version_compare("3.5", py_version) and py_architecture == '64bit'):
+        logger.error("64-bit Python 3.5 or higher for Windows is required to run this script."
+            " We recommend Python 3.5.4 to be used."
             " If not installed, please download it from https://www.python.org/ftp/python/3.5.4/python-3.5.4-amd64.exe and install it manually.")
         return False
     return True
@@ -434,10 +546,15 @@ def pip_package_install(args):
     return res == 0
 
 def pip_framework_install():    
-    
+    wheel_ver = sys_info['python']
     pip_list = [("numpy", "numpy == 1.13.3"),
                 ("scipy", "scipy == 1.0.0"), 
-                ("cntk", "https://cntk.ai/PythonWheel/%s/cntk-2.2-cp35-cp35m-%s.whl" % ("GPU" if sys_info["GPU"] else "CPU-Only", "win_amd64" if sys_info["OS"] == 'win' else "linux_x86_64")),
+                ("cntk", "https://cntk.ai/PythonWheel/{0}/cntk-2.2-cp{2}-cp{2}m-{1}.whl".format(
+                    "GPU" if sys_info["GPU"] else "CPU-Only", 
+                    "win_amd64" if sys_info["OS"] == 'win' else "linux_x86_64",
+                    wheel_ver 
+                    )
+                ),
                 ("tensorflow", "tensorflow%s == 1.4.0" % ("-gpu" if sys_info["GPU"] else "")),
                 ("mxnet", "mxnet%s == 0.12.0" % ("-cu80" if sys_info["GPU"] else "")),
                 ("cupy", "cupy" if sys_info['OS'] == 'linux' else ""),
@@ -449,9 +566,9 @@ def pip_framework_install():
     if (sys_info['OS'] == 'win'):
         caffe2_wheel = os.path.join(os.curdir, "caffe2_gpu-0.8.1-cp35-cp35m-win_amd64.whl")
         caffe2_url = r"https://go.microsoft.com/fwlink/?LinkId=862958&clcid=0x1033"
-        if (os.path.isfile(caffe2_wheel)):
+        if (sys_info['python'] == '35' and os.path.isfile(caffe2_wheel)):
             pip_list.append(("caffe2", caffe2_wheel))
-        else:
+        elif (sys_info['python'] == '35'):
             logger.warning("Please manully install caffe2. You can download the wheel file here: %s" % caffe2_url)
     
         # chainer
