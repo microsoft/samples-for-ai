@@ -284,8 +284,9 @@ def detect_python_version():
     py_version = ".".join(map(str,sys.version_info[0:2]))
     sys_info["python"] = py_version.replace('.', '')
     logger.info("Python version is %s, %s" % (py_version, py_architecture))
-    if not ("3.5" == py_version and py_architecture == '64bit'):
-        logger.error("64-bit Python 3.5 for Windows is required to run this script."
+    if not (_version_compare("3.5", py_version) and py_architecture == '64bit'):
+        logger.error("64-bit Python 3.5 or higher for Windows is required to run this script."
+            " We recommend Python 3.5.4 to be used."
             " If not installed, please download it from https://www.python.org/ftp/python/3.5.4/python-3.5.4-amd64.exe and install it manually.")
         return False
     return True
@@ -434,10 +435,15 @@ def pip_package_install(args):
     return res == 0
 
 def pip_framework_install():    
-    
+    wheel_ver = sys_info['python']
     pip_list = [("numpy", "numpy == 1.13.3"),
                 ("scipy", "scipy == 1.0.0"), 
-                ("cntk", "https://cntk.ai/PythonWheel/%s/cntk-2.2-cp35-cp35m-%s.whl" % ("GPU" if sys_info["GPU"] else "CPU-Only", "win_amd64" if sys_info["OS"] == 'win' else "linux_x86_64")),
+                ("cntk", "https://cntk.ai/PythonWheel/{0}/cntk-2.2-cp{2}-cp{2}m-{1}.whl".format(
+                    "GPU" if sys_info["GPU"] else "CPU-Only", 
+                    "win_amd64" if sys_info["OS"] == 'win' else "linux_x86_64",
+                    wheel_ver 
+                    )
+                ),
                 ("tensorflow", "tensorflow%s == 1.4.0" % ("-gpu" if sys_info["GPU"] else "")),
                 ("mxnet", "mxnet%s == 0.12.0" % ("-cu80" if sys_info["GPU"] else "")),
                 ("cupy", "cupy" if sys_info['OS'] == 'linux' else ""),
@@ -449,9 +455,9 @@ def pip_framework_install():
     if (sys_info['OS'] == 'win'):
         caffe2_wheel = os.path.join(os.curdir, "caffe2_gpu-0.8.1-cp35-cp35m-win_amd64.whl")
         caffe2_url = r"https://go.microsoft.com/fwlink/?LinkId=862958&clcid=0x1033"
-        if (os.path.isfile(caffe2_wheel)):
+        if (sys_info['python'] == '35' and os.path.isfile(caffe2_wheel)):
             pip_list.append(("caffe2", caffe2_wheel))
-        else:
+        elif (sys_info['python'] == '35'):
             logger.warning("Please manully install caffe2. You can download the wheel file here: %s" % caffe2_url)
     
         # chainer
