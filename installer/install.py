@@ -446,7 +446,7 @@ def pip_framework_install():
                 ),
                 ("tensorflow", "tensorflow%s == 1.4.0" % ("-gpu" if sys_info["GPU"] else "")),
                 ("mxnet", "mxnet%s == 0.12.0" % ("-cu80" if sys_info["GPU"] else "")),
-                ("cupy", "cupy" if sys_info['OS'] == 'linux' else ""),
+                ("cupy", "cupy" if (sys_info["GPU"] and (sys_info['OS'] == 'linux')) else ""),
                 ("chainer", "chainer == 3.0.0"),
                 ("theano", "theano == 0.9.0"),
                 ("keras", "keras == 2.0.9")]
