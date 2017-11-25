@@ -244,8 +244,8 @@ def detect_gpu_linux():
     
     if (os.path.isfile(local_path)):
         try:
-            st = os.stat(local_path)
-            os.chmod(local_path, st.st_mode | stat.S_IEXEC)
+            #st = os.stat(local_path)
+            #os.chmod(local_path, st.st_mode | stat.S_IEXEC)
             result = subprocess.Popen(local_path)
             sys_info["GPU"] = result.returncode == 0
         except:
