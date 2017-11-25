@@ -26,10 +26,10 @@ Please visit [here](https://github.com/Microsoft/vs-tools-for-ai/blob/master/doc
 
 ## Using a one-click installer to setup deep learning frameworks
 
-Currently, the installer works on Windows only:
+Currently, this installer works on Windows and Linux:
 
 - Install NVIDIA GPU driver, CUDA and cuDNN.
-- Install latest Python **3.5**. Other Python versions are not supported yet.
+- Install latest **Python 3.5 or 3.6**. Other Python versions are not supported yet.
 - Run the following commands in a terminal:
     ```bash
     git clone https://github.com/Microsoft/samples-for-ai.git
