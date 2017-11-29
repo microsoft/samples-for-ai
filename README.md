@@ -19,6 +19,32 @@ Solutions are separated by different deep learning frameworks they use:
 - Pre-download data
     - For CNTK BrainScript MNIST project, in the "input" folder, run "python install_mnist.py" to download data.
 
+## Preparing development environment
+Before training deep learning models on your local or remote computer you should make sure you have the latest applicable prerequisites installed. This includes making sure the latest drivers and libraries for your NVIDIA GPU (if you have one). You should also ensure you have installed Python and Python libraries such as NumPy, SciPy, Python support for Visual Studio, and appropriate deep learning frameworks such as Microsoft Cognitive Toolkit (CNTK), TensorFlow, Caffe2, MXNet, Keras, Theano, PyTorch and/or Chainer.
+
+Please visit [here](https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md) for detailed instruction.
+
+## Using a one-click installer to setup deep learning frameworks
+
+Currently, this installer works on Windows and Linux:
+
+- Install NVIDIA GPU driver, CUDA and cuDNN.
+- Install latest **Python 3.5 or 3.6**. Other Python versions are not supported yet.
+- Run the following commands in a terminal:
+    ```bash
+    git clone https://github.com/Microsoft/samples-for-ai.git
+    cd samples-for-ai
+    cd installer
+    - Windows:
+        python.exe install.py
+    - Non-Windows:
+        python3 install.py
+    ```
+> [!NOTE]
+>
+> On Linux, you may need 'sudo' to install deep learning frameworks into system directory.
+
+
 ## Runing samples locally
 
 - CNTK BrainScript Projects
