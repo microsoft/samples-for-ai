@@ -13,13 +13,13 @@ sys_info = {}
 def _init_logger(log_level = logging.INFO):
     logger = logging.getLogger('Microsoft Visual Studio Tools for AI')
     logger.setLevel(log_level)
+    logger.propagate = False
     handler = logging.StreamHandler(sys.stdout)
     formatter = logging.Formatter(fmt='%(asctime)s [%(levelname)s] '
                                       '[%(name)s] %(message)s',
                                   datefmt='%H:%M:%S')
     handler.setFormatter(formatter)
     logger.addHandler(handler)
-
     return logger
 
 logger = _init_logger()
@@ -244,8 +244,8 @@ def detect_gpu_linux():
     
     if (os.path.isfile(local_path)):
         try:
-            st = os.stat(local_path)
-            os.chmod(local_path, st.st_mode | stat.S_IEXEC)
+            #st = os.stat(local_path)
+            #os.chmod(local_path, st.st_mode | stat.S_IEXEC)
             result = subprocess.Popen(local_path)
             sys_info["GPU"] = result.returncode == 0
         except:
@@ -284,8 +284,9 @@ def detect_python_version():
     py_version = ".".join(map(str,sys.version_info[0:2]))
     sys_info["python"] = py_version.replace('.', '')
     logger.info("Python version is %s, %s" % (py_version, py_architecture))
-    if not ("3.5" == py_version and py_architecture == '64bit'):
-        logger.error("64-bit Python 3.5 for Windows is required to run this script."
+    if not (_version_compare("3.5", py_version) and py_architecture == '64bit'):
+        logger.error("64-bit Python 3.5 or higher for Windows is required to run this script."
+            " We recommend Python 3.5.4 to be used."
             " If not installed, please download it from https://www.python.org/ftp/python/3.5.4/python-3.5.4-amd64.exe and install it manually.")
         return False
     return True
@@ -420,42 +421,68 @@ def install_cntk_win(target_version):
     else:
         logger.debug("cntk root path set fails.")
 
-def pip_install():
+
+def pip_package_install(args):
+    res = -1
     try:
         import pip
-
-        pip_list = [("scipy", "scipy == 1.0.0"), 
-                    ("keras", "keras == 2.0.9"), 
-                    ("theano", "theano == 0.9.0"), 
-                    ("tensorflow", "tensorflow%s == 1.4.0" % ("-gpu" if sys_info["GPU"] else "")), 
-                    ("mxnet", "mxnet%s == 0.12.0" % ("-cu80" if sys_info["GPU"] else ""))]
-        
-        if (sys_info['OS'] == 'win'):
-            pip_list.append(("cntk", "https://cntk.ai/PythonWheel/GPU/cntk-2.2-cp35-cp35m-win_amd64.whl"))
-            caffe2_wheel = os.path.join(os.curdir, "caffe2_gpu-0.8.1-cp35-cp35m-win_amd64.whl")
-            caffe2_url = r"https://go.microsoft.com/fwlink/?LinkId=862958&clcid=0x1033"
-            if (os.path.isfile(caffe2_wheel)):
-                pip_list.append(("caffe2", caffe2_wheel))
-            else:
-                logger.warning("Please manully install caffe2. You can download the wheel file here: %s" % caffe2_url)
-        elif (sys_info['OS'] == 'linux'):
-            pip_list.append(("cntk", "https://cntk.ai/PythonWheel/GPU/cntk-2.2-cp35-cp35m-linux_x86_64.whl"))
-
-        for pkt, source in pip_list:
-            if pip.main(['install', source]) != 0:
-                logger.error("%s installation fails. Please manually install it." % pkt)
-                return
-        logger.info("pip packages installation succeeds.")
+        res = pip.main(['install', *args])
     except ImportError:
         logger.error("you need to install pip first.")
     except Exception:
-        logger.error("pip install error. ")
+        logger.error("pip package %s install error. " % pkt)
         logger.error(sys.exc_info())
+    return res == 0
+
+def pip_framework_install():    
+    wheel_ver = sys_info['python']
+    pip_list = [("numpy", "numpy == 1.13.3"),
+                ("scipy", "scipy == 1.0.0"), 
+                ("cntk", "https://cntk.ai/PythonWheel/{0}/cntk-2.2-cp{2}-cp{2}m-{1}.whl".format(
+                    "GPU" if sys_info["GPU"] else "CPU-Only", 
+                    "win_amd64" if sys_info["OS"] == 'win' else "linux_x86_64",
+                    wheel_ver 
+                    )
+                ),
+                ("tensorflow", "tensorflow%s == 1.4.0" % ("-gpu" if sys_info["GPU"] else "")),
+                ("mxnet", "mxnet%s == 0.12.0" % ("-cu80" if sys_info["GPU"] else "")),
+                ("cupy", "cupy" if (sys_info["GPU"] and (sys_info['OS'] == 'linux')) else ""),
+                ("chainer", "chainer == 3.0.0"),
+                ("theano", "theano == 0.9.0"),
+                ("keras", "keras == 2.0.9")]
+    
+    # caffe2, windows only
+    if (sys_info['OS'] == 'win'):
+        caffe2_wheel = os.path.join(os.curdir, "caffe2_gpu-0.8.1-cp35-cp35m-win_amd64.whl")
+        caffe2_url = r"https://go.microsoft.com/fwlink/?LinkId=862958&clcid=0x1033"
+        if (sys_info['python'] == '35' and os.path.isfile(caffe2_wheel)):
+            pip_list.append(("caffe2", caffe2_wheel))
+        elif (sys_info['python'] == '35'):
+            logger.warning("Please manully install caffe2. You can download the wheel file here: %s" % caffe2_url)
+    
+        # chainer
+        if sys_info['GPU']:
+            import importlib
+            try:
+                cupy = importlib.import_module('cupy')
+                if (not _version_compare('2.0', cupy.__version__)):
+                    logger.warning("Please make sure cupy >= 2.0.0 to support CUDA for chainer 3.0.0.")
+            except ImportError:
+                logger.warning("Please manully install cupy to support CUDA for chainer."
+                "You can reference this link <https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer> to install cupy on windows")
+
+    # user specified pip options
+    pip_ops = []
+    for pkt, source in filter(lambda x: x[1], pip_list):
+        if not pip_package_install(pip_ops + [source]):
+            logger.error("%s installation fails. Please manually install it." % pkt)
+            return
+    logger.info("pip packages installation succeeds.")
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--verbose", help="increase output verbosity", action="store_true")
-    args = parser.parse_args()
+    args, unknown = parser.parse_known_args()
     if args.verbose:
         logger.setLevel(logging.DEBUG)
 
@@ -469,7 +496,7 @@ def main():
         detect_cuda()
         detect_cudnn()
     install_cntk()
-    pip_install()
+    pip_framework_install()
     logger.info("Setup finishes.")
 
 
