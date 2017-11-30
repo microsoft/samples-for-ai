@@ -38,8 +38,10 @@ def detect_os():
             logger.warning("We recommend Windows 10 as the primary development OS, other versions are not fully tested.")
     elif (os_name.startswith("Linux")):
         sys_info['OS'] = 'linux'
+    elif (os_name.startswith("Darwin")):
+        sys_info['OS'] = 'mac'
     else:
-        logger.error("Only Windows and Linux are supported now.")
+        logger.error("Only Windows, macOS and Linux are supported now.")
         return False
     return True
 
@@ -219,51 +221,25 @@ def _update_pathenv(path, add):
     _registry_write(winreg.HKEY_CURRENT_USER, "Environment", "PATH", path_value)
     
 
-
-
 def detect_gpu():
     sys_info['GPU'] = False
-    res = True
+    gpu_detector_name = 'gpu_detector_' + sys_info['OS']
     if (sys_info['OS'] == 'win'):
-        res = detect_gpu_win()
-    elif (sys_info['OS'] == 'linux'):
-        res = detect_gpu_linux()
+        gpu_detector_name = gpu_detector_name + '.exe'
+    local_path = os.path.join(os.curdir, gpu_detector_name)
 
-    if not res:
+    if not (os.path.isfile(local_path)):
+        logger.error("No GPU detector found. Please make sure {0} is in the same directory with the installer script.".format(gpu_detector_name))
         return False
 
+    sys_info["GPU"] = _run_cmd(local_path)
     if sys_info["GPU"]:
-        logger.info("Found NVIDIA graphics card.")
+        logger.info("Find NVIDIA GPU card.")
     else:
-        logger.info("No NVIDIA graphics card is found.")
+        logger.info("No NVIDIA GPU card found.")
 
     return True
 
-def detect_gpu_linux():
-    local_path = os.path.join(os.curdir, 'gpu_detector_linux')
-    
-    if (os.path.isfile(local_path)):
-        try:
-            #st = os.stat(local_path)
-            #os.chmod(local_path, st.st_mode | stat.S_IEXEC)
-            result = subprocess.Popen(local_path)
-            sys_info["GPU"] = result.returncode == 0
-        except:
-            logger.error("detect_gpu error: ", sys.exc_info())
-            return False
-    else:
-        logger.error("No gpu detector found. Please make sure gpu_detector_linux is downloaded in the same directory with the script.")
-        return False
-    return True
-
-def detect_gpu_win():
-    local_path = os.path.join(os.curdir, "gpu_detector_win.exe")
-    if (os.path.isfile(local_path)):
-        sys_info["GPU"] = _run_cmd(local_path)
-    else:
-        logger.error("No gpu detector found. Please make sure gpu_detector_win.exe is downloaded in the same directory with the script.")
-        return False
-    return True    
 
 def detect_vs():
     vs = []
@@ -274,8 +250,7 @@ def detect_vs():
     if (vs_2017_path and os.path.isfile(os.path.sep.join([vs_2017_path, "Common7", "IDE", "devenv.exe"]))):
         vs.append("VS2017")
     if (len(vs) == 0):
-        logger.warning("Visual Studio 2015 or Visual Studio 2017 is required."
-                       " Please manually install either.")
+        logger.warning("Please install Visual Studio 2017 or 2015.")
     else:
         logger.info("Visual Studio Found: %s" % " ".join(vs))
 
@@ -285,9 +260,8 @@ def detect_python_version():
     sys_info["python"] = py_version.replace('.', '')
     logger.info("Python version is %s, %s" % (py_version, py_architecture))
     if not (_version_compare("3.5", py_version) and py_architecture == '64bit'):
-        logger.error("64-bit Python 3.5 or higher for Windows is required to run this script."
-            " We recommend Python 3.5.4 to be used."
-            " If not installed, please download it from https://www.python.org/ftp/python/3.5.4/python-3.5.4-amd64.exe and install it manually.")
+        logger.error("64-bit Python 3.5 or higher is required to run this installer."
+            " We recommend latest Python 3.5 (https://www.python.org/downloads/release/python-354/).")
         return False
     return True
 
@@ -441,8 +415,8 @@ def pip_framework_install():
                 ("cntk", "https://cntk.ai/PythonWheel/{0}/cntk-2.2-cp{2}-cp{2}m-{1}.whl".format(
                     "GPU" if sys_info["GPU"] else "CPU-Only", 
                     "win_amd64" if sys_info["OS"] == 'win' else "linux_x86_64",
-                    wheel_ver 
-                    )
+                    wheel_ver
+                    ) if ((sys_info["OS"] == 'win') or (sys_info["OS"] == 'linux')) else ""
                 ),
                 ("tensorflow", "tensorflow%s == 1.4.0" % ("-gpu" if sys_info["GPU"] else "")),
                 ("mxnet", "mxnet%s == 0.12.0" % ("-cu80" if sys_info["GPU"] else "")),
