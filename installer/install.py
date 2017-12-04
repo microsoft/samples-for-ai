@@ -10,47 +10,7 @@ import stat
 
 sys_info = {}
 
-def _init_logger(log_level = logging.INFO):
-    logger = logging.getLogger('Microsoft Visual Studio Tools for AI')
-    logger.setLevel(log_level)
-    logger.propagate = False
-    handler = logging.StreamHandler(sys.stdout)
-    formatter = logging.Formatter(fmt='%(asctime)s [%(levelname)s] '
-                                      '[%(name)s] %(message)s',
-                                  datefmt='%H:%M:%S')
-    handler.setFormatter(formatter)
-    logger.addHandler(handler)
-    return logger
-
-logger = _init_logger()
-
-
-def detect_os():
-    os_name = platform.platform(terse = True)
-    os_bit = platform.architecture()[0]
-    logger.info("OS is %s %s" % (os_name, os_bit))
-    if (os_bit != "64bit"):
-        logger.error("Only 64bit operation system is supported now.")
-        return False
-    if (os_name.startswith("Windows")):
-        sys_info['OS'] = 'win'        
-        if not os_name.startswith("Windows-10"):
-            logger.warning("We recommend Windows 10 as the primary development OS, other versions are not fully tested.")
-    elif (os_name.startswith("Linux")):
-        sys_info['OS'] = 'linux'
-    elif (os_name.startswith("Darwin")):
-        sys_info['OS'] = 'mac'
-    else:
-        logger.error("Only Windows, macOS and Linux are supported now.")
-        return False
-    return True
-
-if (not detect_os()):
-    exit()
-
-target_dir = os.path.sep.join([os.getenv("APPDATA"), "Microsoft", "ToolsForAI", "RuntimeSDK"]) if sys_info['OS'] == 'win' else ''
-
-if sys_info['OS'] == 'win':
+if platform.system() == 'Windows':
     import winreg 
     from ctypes.wintypes import HANDLE, BOOL, DWORD, HWND, HINSTANCE, HKEY
 
@@ -76,6 +36,17 @@ if sys_info['OS'] == 'win':
             for name, value in kw.items():
                 setattr(self, name, value)
 
+def _init_logger(log_level = logging.INFO):
+    logger = logging.getLogger('Microsoft Visual Studio Tools for AI')
+    logger.setLevel(log_level)
+    logger.propagate = False
+    handler = logging.StreamHandler(sys.stdout)
+    formatter = logging.Formatter(fmt='%(asctime)s [%(levelname)s] '
+                                      '[%(name)s] %(message)s',
+                                  datefmt='%H:%M:%S')
+    handler.setFormatter(formatter)
+    logger.addHandler(handler)
+    return logger
 
 def _registry_read(hkey, keypath, value_name):
     try:
@@ -220,6 +191,25 @@ def _update_pathenv(path, add):
         os.environ["PATH"] = os.environ["PATH"].replace(path + ";", "")
     _registry_write(winreg.HKEY_CURRENT_USER, "Environment", "PATH", path_value)
     
+def detect_os():
+    os_name = platform.platform(terse = True)
+    os_bit = platform.architecture()[0]
+    logger.info("OS is %s %s" % (os_name, os_bit))
+    if (os_bit != "64bit"):
+        logger.error("Only 64bit operation system is supported now.")
+        return False
+    if (os_name.startswith("Windows")):
+        sys_info['OS'] = 'win'        
+        if not os_name.startswith("Windows-10"):
+            logger.warning("We recommend Windows 10 as the primary development OS, other versions are not fully tested.")
+    elif (os_name.startswith("Linux")):
+        sys_info['OS'] = 'linux'
+    elif (os_name.startswith("Darwin")):
+        sys_info['OS'] = 'mac'
+    else:
+        logger.error("Only Windows, macOS and Linux are supported now.")
+        return False
+    return True
 
 def detect_gpu():
     sys_info['GPU'] = False
@@ -332,13 +322,13 @@ def detect_visualcpp_runtime_win():
     return False
 
 
-def install_cntk():
-    target_version = 'CNTK-2-2'
+def install_cntk(target_dir):
+    target_version = 'CNTK-2-3'
     if (sys_info["OS"] == 'win'):
-        install_cntk_win(target_version)
+        install_cntk_win(target_version, target_dir)
 
 
-def install_cntk_win(target_version):   
+def install_cntk_win(target_version, target_dir):   
     cntk_root = os.path.join(target_dir, "cntk")
     versions = _get_cntk_version_win()
     suc = True
@@ -347,8 +337,8 @@ def install_cntk_win(target_version):
             logger.debug("CNTK target dir: %s" % target_dir)
             if not os.path.isdir(target_dir):
                 os.makedirs(target_dir)
-            cntk_zip_file = os.path.join(target_dir, "CNTK-2-2-Windows-64bit-GPU.zip")
-            cntk_url = "https://cntk.ai/BinaryDrop/CNTK-2-2-Windows-64bit-GPU.zip"
+            cntk_zip_file = os.path.join(target_dir, "%s-Windows-64bit-GPU.zip" % target_version)
+            cntk_url = "https://cntk.ai/BinaryDrop/%s-Windows-64bit-GPU.zip" % target_version
             if not _download_file(cntk_url, cntk_zip_file) or not _unzip_file(cntk_zip_file, target_dir):
                 raise Exception
             _update_pathenv(os.path.join(cntk_root, "cntk"), True)
@@ -412,7 +402,7 @@ def pip_framework_install():
     wheel_ver = sys_info['python']
     pip_list = [("numpy", "numpy == 1.13.3"),
                 ("scipy", "scipy == 1.0.0"), 
-                ("cntk", "https://cntk.ai/PythonWheel/{0}/cntk-2.2-cp{2}-cp{2}m-{1}.whl".format(
+                ("cntk", "https://cntk.ai/PythonWheel/{0}/cntk-2.3-cp{2}-cp{2}m-{1}.whl".format(
                     "GPU" if sys_info["GPU"] else "CPU-Only", 
                     "win_amd64" if sys_info["OS"] == 'win' else "linux_x86_64",
                     wheel_ver
@@ -421,9 +411,9 @@ def pip_framework_install():
                 ("tensorflow", "tensorflow%s == 1.4.0" % ("-gpu" if sys_info["GPU"] else "")),
                 ("mxnet", "mxnet%s == 0.12.0" % ("-cu80" if sys_info["GPU"] else "")),
                 ("cupy", "cupy" if (sys_info["GPU"] and (sys_info['OS'] == 'linux')) else ""),
-                ("chainer", "chainer == 3.0.0"),
-                ("theano", "theano == 0.9.0"),
-                ("keras", "keras == 2.0.9")]
+                ("chainer", "chainer == 3.1.0"),
+                ("theano", "theano == 1.0.0"),
+                ("keras", "keras == 2.1.1")]
     
     # caffe2, windows only
     if (sys_info['OS'] == 'win'):
@@ -460,20 +450,22 @@ def main():
     if args.verbose:
         logger.setLevel(logging.DEBUG)
 
-    if not detect_python_version() or not detect_gpu():
+    if not detect_os() or not detect_python_version() or not detect_gpu():
         return
 
+    target_dir = os.path.sep.join([os.getenv("APPDATA"), "Microsoft", "ToolsForAI", "RuntimeSDK"]) if sys_info['OS'] == 'win' else ''
+    
     if (sys_info['OS'] == 'win'):
         detect_vs()
 
     if (sys_info["GPU"]):
         detect_cuda()
         detect_cudnn()
-    install_cntk()
+    install_cntk(target_dir)
     pip_framework_install()
     logger.info("Setup finishes.")
 
-
+logger = _init_logger()
 
 if __name__ == "__main__":
     main()
