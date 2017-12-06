@@ -139,11 +139,11 @@ def _download_file(url, local_path):
         logging.error("download file from %s fails." % url)
         return False
 
-def _unzip_file(file_name, target_dir):  
-    logger.info("unzip %s to %s ..." % (file_name, target_dir)) 
+def _unzip_file(file_path, target_dir):  
+    logger.info("unzip %s to %s ..." % (file_path, target_dir)) 
     try:
         import zipfile
-        with zipfile.ZipFile(file_name) as zip_file:
+        with zipfile.ZipFile(file_path) as zip_file:
             if os.path.isdir(target_dir):  
                 pass
             else:
@@ -155,21 +155,41 @@ def _unzip_file(file_name, target_dir):
         logger.error("unzip error: ", sys.exc_info())
         return False
 
+def _extract_tar(file_path, target_dir):
+    logger.info("extract %s to %s ..." % (file_path, target_dir))
+    try:
+        import tarfile
+        with tarfile.open(file_path) as tar:
+            tar.extractall(path = target_dir)
+    except:
+        logger.error("extract error: ", sys.exc_info())
+        return False
+    return True
 
 def _version_compare(ver1, ver2):
     to_version = lambda ver: tuple([int(x) for x in ver.split('.') if x.isdigit()])
     return to_version(ver1) <= to_version(ver2)
 
-def _get_cntk_version_win():
-    cmd = r"C:\Windows\System32\where.exe"
-    args = ["cntk.exe"]
+def _get_cntk_version():
+    if sys_info["OS"] == 'win':
+        cmd = r"C:\Windows\System32\where.exe"
+        args = ["cntk.exe"]
+    elif sys_info["OS"] == "linux":
+        cmd = r"which"
+        args = ['-a', 'cntk']
+    else:
+        return
     status, cntk_paths = _run_cmd(cmd, args, True)
-    logger.debug("In _get_cntk_version_win, status: %s, cntk_path: %s" % (status, cntk_paths))
+    logger.debug("In _get_cntk_version, status: %s, cntk_path: %s" % (status, cntk_paths))
     versions = {}
     if not status:
         return versions
 
     for cntk_path in cntk_paths.split('\n'):
+        # cntk binary path hierarchy not consistent for linux and win
+        if sys_info["OS"] == 'linux':
+            cntk_path = os.path.dirname(cntk_path)
+
         cntk_root = os.path.dirname(os.path.dirname(cntk_path))
         version_file = os.path.join(cntk_root, "version.txt")
         version = ""
@@ -177,15 +197,15 @@ def _get_cntk_version_win():
             with open(version_file) as fin:
                 version = fin.readline().strip()
             versions[version] = cntk_root
-        logger.debug("In _get_cntk_version_win, find version: %s, path: %s" % (version, cntk_path))
+        logger.debug("In _get_cntk_version, find version: %s, path: %s" % (version, cntk_path))
     return versions
 
-def _update_pathenv(path, add):
+def _update_pathenv_win(path, add):
     path_value = _registry_read(winreg.HKEY_CURRENT_USER, "Environment", "PATH")
     logger.debug("Before update, PATH : %s" % path_value)
     if add:
         path_value = path + ";" + path_value
-        os.environ["PATH"] = path + ";" + os.environ["PATH"]
+        os.environ["PATH"] = path + ";" + os.environ.get("PATH", "")
     else:
         path_value = path_value.replace(path + ";", "")
         os.environ["PATH"] = os.environ["PATH"].replace(path + ";", "")
@@ -323,67 +343,102 @@ def detect_visualcpp_runtime_win():
 
 
 def install_cntk(target_dir):
+    if sys_info['OS'] != 'win' and sys_info['OS'] != 'linux':
+        logger.info("CNTK only support windows and linux at present, will not install it.")
+        return
+
     target_version = 'CNTK-2-3'
-    if (sys_info["OS"] == 'win'):
-        install_cntk_win(target_version, target_dir)
-
-
-def install_cntk_win(target_version, target_dir):   
-    cntk_root = os.path.join(target_dir, "cntk")
-    versions = _get_cntk_version_win()
-    suc = True
-    if target_version not in versions.keys():
-        try:          
-            logger.debug("CNTK target dir: %s" % target_dir)
-            if not os.path.isdir(target_dir):
-                os.makedirs(target_dir)
-            cntk_zip_file = os.path.join(target_dir, "%s-Windows-64bit-GPU.zip" % target_version)
-            cntk_url = "https://cntk.ai/BinaryDrop/%s-Windows-64bit-GPU.zip" % target_version
-            if not _download_file(cntk_url, cntk_zip_file) or not _unzip_file(cntk_zip_file, target_dir):
-                raise Exception
-            _update_pathenv(os.path.join(cntk_root, "cntk"), True)
-            if os.path.isfile(cntk_zip_file):
-                os.remove(cntk_zip_file)
-            if (not detect_mpi_win()):
-                mpi_exe = os.path.sep.join([target_dir, "cntk", "prerequisites", "MSMpiSetup.exe"])
-                logger.debug("MPI exe path: %s" % mpi_exe)
-                logger.info("Begin MPI installation...")
-                _run_cmd_admin(mpi_exe, "-unattend")
-                if (detect_mpi_win()):
-                    logger.info("MPI installation suceeds.")
-                else:
-                    logger.error("MPI installation fails. Please manually install MSMPI >= 7.0.12437.6")
-
-            if (not detect_visualcpp_runtime_win()):
-                vc_redist_exe = os.path.sep.join([target_dir, "cntk", "prerequisites", "VS2015", "vc_redist.x64.exe"])
-                logger.debug("VC redist exe path: %s" % vc_redist_exe)
-                logger.info("Begin Visual C++ runtime installation...")
-                _run_cmd_admin(vc_redist_exe, "/install /norestart /passive")
-                if (detect_visualcpp_runtime_win()):
-                    logger.info("Visual C++ runtime installation suceeds."
-                        " Please manually install Visual C++ Redistributable Package for Visual Studio 2015(2017).")
-                else:
-                    logger.error("Visual C++ runtime installation fails.")
-            if target_version in _get_cntk_version_win().keys():
-                logger.info("CNTK installation succeeds.")
-            else:
-                suc = False
-                logger.error("CNTK installation fails.")
-        except:
-            suc = False
-            logger.error("CNTK installation fails.")
-            logger.error(sys.exc_info())
-        if not suc:
-            logger.warning("Please manually install %s and add the directory which contains cntk.exe to PATH environment." % target_version)
-    else:
+    versions = _get_cntk_version()
+    if target_version in versions.keys():
         cntk_root = versions[target_version]
         logger.info("CNTK with version: {} already exists.".format(target_version))
+        return
 
+    logger.debug("CNTK target dir: %s" % target_dir)
+    if not os.path.isdir(target_dir):
+        os.makedirs(target_dir)
+
+    cntk_file_name = "{}-{}-64bit-{}.{}".format(target_version, 
+        'Windows' if sys_info['OS'] == 'win' else 'Linux', 
+        'GPU' if sys_info['GPU'] else 'CPU-Only',
+        'zip' if sys_info['OS'] == 'win' else 'tar.gz')
+    cntk_file_path = os.path.join(target_dir, cntk_file_name)
+    cntk_url = "https://cntk.ai/BinaryDrop/%s" % cntk_file_name
+
+    if (not _download_file(cntk_url, cntk_file_path) or 
+        not (_unzip_file(cntk_file_path, target_dir) if sys_info["OS"] == "win" else _extract_tar(cntk_file_path, target_dir))):
+        logger.error("CNTK installation fails.")
+        return
+
+    if os.path.isfile(cntk_file_path):
+        os.remove(cntk_file_path)
+
+    cntk_root = os.path.join(target_dir, 'cntk')
+
+    if (sys_info["OS"] == 'win'):
+        suc = install_cntk_win(cntk_root)
+    else:
+        suc = install_cntk_linux(cntk_root)
+
+    if suc and target_version in _get_cntk_version().keys():
+        logger.info("CNTK installation succeeds.")
+        logger.warning("Please open a new window to make the updated environment variable effective.")
+    else:
+        logger.error("CNTK installation fails.")
+        logger.warning("Please manually install %s and update PATH environment." % target_version)
+        logger.warning("You can reference this link based on your OS: https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-your-machine")
+
+def install_cntk_linux(cntk_root):
+    logger.warning("CNTK V2 on Linux requires C++ Compiler and Open MPI to be installed. "
+                   "Please manually install them if absent. "
+                   "You can reference this link: https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-Linux-Binary-Manual")
+    PATH = "%s/cntk/bin" % cntk_root
+    LD_LIBRARY_PATH = "{0}/cntk/lib:{0}/cntk/dependencies/lib".format(cntk_root)
+    os.environ["PATH"] = PATH + ':' + os.environ.get("PATH", "")
+    os.environ["LD_LIBRARY_PATH"] = LD_LIBRARY_PATH + ':' + os.environ.get("LD_LIBRARY_PATH", "")
+    sh = 'echo "export PATH={0}:$PATH" >> ~/.bashrc && echo "export LD_LIBRARY_PATH={1}:$LD_LIBRARY_PATH" >> ~/.bashrc'.format(PATH, LD_LIBRARY_PATH)
+    return _run_cmd("/bin/bash", ['-c', sh])
+
+
+def install_cntk_win(cntk_root):      
+    suc = True 
+    try:          
+        _update_pathenv_win(os.path.join(cntk_root, "cntk"), True)
+        if (not detect_mpi_win()):
+            mpi_exe = os.path.sep.join([cntk_root, "prerequisites", "MSMpiSetup.exe"])
+            logger.debug("MPI exe path: %s" % mpi_exe)
+            logger.info("Begin MPI installation...")
+            _run_cmd_admin(mpi_exe, "-unattend")
+            if (detect_mpi_win()):
+                logger.info("MPI installation suceeds.")
+            else:
+                suc = False
+                logger.error("MPI installation fails. Please manually install MSMPI >= 7.0.12437.6")
+
+        if (not detect_visualcpp_runtime_win()):
+            vc_redist_exe = os.path.sep.join([cntk_root, "prerequisites", "VS2015", "vc_redist.x64.exe"])
+            logger.debug("VC redist exe path: %s" % vc_redist_exe)
+            logger.info("Begin Visual C++ runtime installation...")
+            _run_cmd_admin(vc_redist_exe, "/install /norestart /passive")
+            if (detect_visualcpp_runtime_win()):
+                logger.info("Visual C++ runtime installation suceeds."
+                    " Please manually install Visual C++ Redistributable Package for Visual Studio 2015(2017).")
+            else:
+                suc = False
+                logger.error("Visual C++ runtime installation fails.")
+        
+    except:
+        suc = False
+        logger.error("CNTK installation fails.")
+        logger.error(sys.exc_info())
+   
     logger.debug("Set cntk root path...")
     if (_run_cmd("SETX", ["AITOOLS_CNTK_ROOT", cntk_root])):
         logger.debug("cntk root path set succeeds.")
     else:
         logger.debug("cntk root path set fails.")
+
+    return suc
 
 
 def pip_package_install(args):
@@ -453,7 +508,7 @@ def main():
     if not detect_os() or not detect_python_version() or not detect_gpu():
         return
 
-    target_dir = os.path.sep.join([os.getenv("APPDATA"), "Microsoft", "ToolsForAI", "RuntimeSDK"]) if sys_info['OS'] == 'win' else ''
+    target_dir = os.path.sep.join([os.getenv("APPDATA") if sys_info['OS'] == 'win' else os.path.expanduser('~'), "Microsoft", "ToolsForAI", "RuntimeSDK"])
     
     if (sys_info['OS'] == 'win'):
         detect_vs()
