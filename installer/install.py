@@ -343,11 +343,11 @@ def detect_visualcpp_runtime_win():
 
 
 def install_cntk(target_dir):
-    if sys_info['OS'] != 'win' and sys_info['OS'] != 'linux':
-        logger.info("CNTK only support windows and linux at present, will not install it.")
+    if sys_info['OS'] != 'win': #and sys_info['OS'] != 'linux':
+        logger.info("CNTK is not supported on your OS at present, will not install it.")
         return
 
-    target_version = 'CNTK-2-3'
+    target_version = 'CNTK-2-2'
     versions = _get_cntk_version()
     if target_version in versions.keys():
         cntk_root = versions[target_version]
@@ -400,7 +400,7 @@ def install_cntk_linux(cntk_root):
     return _run_cmd("/bin/bash", ['-c', sh])
 
 
-def install_cntk_win(target_version, cntk_root):      
+def install_cntk_win(cntk_root):      
     suc = True 
     try:          
         _update_pathenv_win(os.path.join(cntk_root, "cntk"), True)
