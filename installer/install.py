@@ -203,6 +203,10 @@ def _get_cntk_version():
 def _update_pathenv_win(path, add):
     path_value = _registry_read(winreg.HKEY_CURRENT_USER, "Environment", "PATH")
     logger.debug("Before update, PATH : %s" % path_value)
+    
+    if add and path in path_value:
+        return
+
     if add:
         path_value = path + ";" + path_value
         os.environ["PATH"] = path + ";" + os.environ.get("PATH", "")
