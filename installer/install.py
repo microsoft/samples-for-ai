@@ -508,7 +508,11 @@ def main():
     if not detect_os() or not detect_python_version() or not detect_gpu():
         return
 
-    target_dir = os.path.sep.join([os.getenv("APPDATA") if sys_info['OS'] == 'win' else os.path.expanduser('~'), "Microsoft", "ToolsForAI", "RuntimeSDK"])
+    target_dir = ''
+    if sys_info['OS'] == 'win':
+        target_dir = os.path.sep.join([os.getenv("APPDATA"), "Microsoft", "ToolsForAI", "RuntimeSDK"])
+    elif sys_info['OS'] == 'linux':
+        target_dir = os.path.sep.join([os.path.expanduser('~'), '.toolsforai', 'RuntimeSDK'])
     
     if (sys_info['OS'] == 'win'):
         detect_vs()
