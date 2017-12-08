@@ -55,15 +55,15 @@ speechTrain = [
         keepCheckPointFiles = true
         
         # Additional optional parameters are: parallelizationStartEpoch
-        parallelTrain = [
-            parallelizationMethod = "DataParallelSGD"
-            distributedMBReading = true
-            
-            # Additional optional parameters are: useZeroThresholdFor1BitQuantization
-            dataParallelSGD = [
-                gradientBits = 1
-            ]
-        ]
+        #parallelTrain = [
+            #parallelizationMethod = "DataParallelSGD"
+            #distributedMBReading = true
+            #
+            ## Additional optional parameters are: useZeroThresholdFor1BitQuantization
+            #dataParallelSGD = [
+                #gradientBits = 1
+            #]
+        #]
         
         autoAdjust=[
             autoAdjustMinibatch = true
