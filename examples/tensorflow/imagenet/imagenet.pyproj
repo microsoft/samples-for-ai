@@ -6,8 +6,7 @@
     <ProjectGuid>82d9546f-5924-4a16-8f9c-f3b853b883f1</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <ProjectTypeGuids>{D22814C2-A430-4A53-8052-A3A64BFB2240};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
-    <StartupFile>
-    </StartupFile>
+    <StartupFile>classify_image.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
