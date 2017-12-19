@@ -350,7 +350,7 @@ def install_cntk(target_dir):
         logger.info("CNTK is not supported on your OS at present, will not install it.")
         return
 
-    target_version = 'CNTK-2-3'
+    target_version = 'CNTK-2-3-1'
     versions = _get_cntk_version()
     if target_version in versions.keys():
         cntk_root = versions[target_version]
@@ -460,7 +460,7 @@ def pip_framework_install():
     wheel_ver = sys_info['python']
     pip_list = [("numpy", "numpy == 1.13.3"),
                 ("scipy", "scipy == 1.0.0"), 
-                ("cntk", "https://cntk.ai/PythonWheel/{0}/cntk-2.3-cp{2}-cp{2}m-{1}.whl".format(
+                ("cntk", "https://cntk.ai/PythonWheel/{0}/cntk-2.3.1-cp{2}-cp{2}m-{1}.whl".format(
                     "GPU" if sys_info["GPU"] else "CPU-Only", 
                     "win_amd64" if sys_info["OS"] == 'win' else "linux_x86_64",
                     wheel_ver
