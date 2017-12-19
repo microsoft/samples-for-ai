@@ -203,7 +203,10 @@ def _get_cntk_version():
 def _update_pathenv_win(path, add):
     path_value = _registry_read(winreg.HKEY_CURRENT_USER, "Environment", "PATH")
     logger.debug("Before update, PATH : %s" % path_value)
+    
     if add:
+        if path in path_value:
+            return
         path_value = path + ";" + path_value
         os.environ["PATH"] = path + ";" + os.environ.get("PATH", "")
     else:
@@ -347,7 +350,7 @@ def install_cntk(target_dir):
         logger.info("CNTK is not supported on your OS at present, will not install it.")
         return
 
-    target_version = 'CNTK-2-2'
+    target_version = 'CNTK-2-3'
     versions = _get_cntk_version()
     if target_version in versions.keys():
         cntk_root = versions[target_version]
@@ -457,18 +460,18 @@ def pip_framework_install():
     wheel_ver = sys_info['python']
     pip_list = [("numpy", "numpy == 1.13.3"),
                 ("scipy", "scipy == 1.0.0"), 
-                ("cntk", "https://cntk.ai/PythonWheel/{0}/cntk-2.2-cp{2}-cp{2}m-{1}.whl".format(
+                ("cntk", "https://cntk.ai/PythonWheel/{0}/cntk-2.3-cp{2}-cp{2}m-{1}.whl".format(
                     "GPU" if sys_info["GPU"] else "CPU-Only", 
                     "win_amd64" if sys_info["OS"] == 'win' else "linux_x86_64",
                     wheel_ver
                     ) if ((sys_info["OS"] == 'win') or (sys_info["OS"] == 'linux')) else ""
                 ),
                 ("tensorflow", "tensorflow%s == 1.4.0" % ("-gpu" if sys_info["GPU"] else "")),
-                ("mxnet", "mxnet%s == 0.12.0" % ("-cu80" if sys_info["GPU"] else "")),
+                ("mxnet", "mxnet%s == 1.0.0" % ("-cu80" if sys_info["GPU"] else "")),
                 ("cupy", "cupy" if (sys_info["GPU"] and (sys_info['OS'] == 'linux')) else ""),
-                ("chainer", "chainer == 3.0.0"),
-                ("theano", "theano == 0.9.0"),
-                ("keras", "keras == 2.0.9")]
+                ("chainer", "chainer == 3.2.0"),
+                ("theano", "theano == 1.0.1"),
+                ("keras", "keras == 2.1.2")]
     
     # caffe2, windows only
     if (sys_info['OS'] == 'win'):
@@ -513,7 +516,7 @@ def main():
         target_dir = os.path.sep.join([os.getenv("APPDATA"), "Microsoft", "ToolsForAI", "RuntimeSDK"])
     elif sys_info['OS'] == 'linux':
         target_dir = os.path.sep.join([os.path.expanduser('~'), '.toolsforai', 'RuntimeSDK'])
-        
+
     if (sys_info['OS'] == 'win'):
         detect_vs()
 
