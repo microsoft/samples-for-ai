@@ -8,6 +8,9 @@ import re
 import ctypes
 import stat
 
+TOOLSFORAI_OS_WIN = 'win'
+TOOLSFORAI_OS_LINUX = 'linux'
+TOOLSFORAI_OS_MACOS = 'mac'
 sys_info = {}
 
 if platform.system() == 'Windows':
@@ -129,18 +132,17 @@ def _run_cmd_admin(cmd, param, wait=True):
         logger.error(e)
 
 def _download_file(url, local_path):
-    logger.info("downloading from %s ..." % url)
+    logger.info("Downloading %s ..." % url)
     try:
         import urllib.request
         urllib.request.urlretrieve(url, local_path)
-        logger.info("download file from %s succeeds" % url)
         return True
     except:
-        logging.error("download file from %s fails." % url)
+        logging.error("Fail to download %s." % url)
         return False
 
 def _unzip_file(file_path, target_dir):  
-    logger.info("unzip %s to %s ..." % (file_path, target_dir)) 
+    logger.info("Unzipping %s to %s ..." % (file_path, target_dir))
     try:
         import zipfile
         with zipfile.ZipFile(file_path) as zip_file:
@@ -152,17 +154,17 @@ def _unzip_file(file_path, target_dir):
                 zip_file.extract(names, target_dir)  
         return True
     except:
-        logger.error("unzip error: ", sys.exc_info())
+        logger.error("Fail to unzip. Error: ", sys.exc_info())
         return False
 
 def _extract_tar(file_path, target_dir):
-    logger.info("extract %s to %s ..." % (file_path, target_dir))
+    logger.info("Extracting %s to %s ..." % (file_path, target_dir))
     try:
         import tarfile
         with tarfile.open(file_path) as tar:
             tar.extractall(path = target_dir)
     except:
-        logger.error("extract error: ", sys.exc_info())
+        logger.error("Fail to extract. Error: ", sys.exc_info())
         return False
     return True
 
@@ -171,7 +173,7 @@ def _version_compare(ver1, ver2):
     return to_version(ver1) <= to_version(ver2)
 
 def _get_cntk_version():
-    if sys_info["OS"] == 'win':
+    if sys_info["OS"] == TOOLSFORAI_OS_WIN:
         cmd = r"C:\Windows\System32\where.exe"
         args = ["cntk.exe"]
     elif sys_info["OS"] == "linux":
@@ -187,7 +189,7 @@ def _get_cntk_version():
 
     for cntk_path in cntk_paths.split('\n'):
         # cntk binary path hierarchy not consistent for linux and win
-        if sys_info["OS"] == 'linux':
+        if sys_info["OS"] == TOOLSFORAI_OS_LINUX:
             cntk_path = os.path.dirname(cntk_path)
 
         cntk_root = os.path.dirname(os.path.dirname(cntk_path))
@@ -217,27 +219,33 @@ def _update_pathenv_win(path, add):
 def detect_os():
     os_name = platform.platform(terse = True)
     os_bit = platform.architecture()[0]
-    logger.info("OS is %s %s" % (os_name, os_bit))
-    if (os_bit != "64bit"):
-        logger.error("Only 64bit operation system is supported now.")
-        return False
+    is_64bit = (os_bit == "64bit")
+
+    logger.info("OS: %s, %s" % (os_name, os_bit))
+
     if (os_name.startswith("Windows")):
-        sys_info['OS'] = 'win'        
+        sys_info['OS'] = TOOLSFORAI_OS_WIN
         if not os_name.startswith("Windows-10"):
             logger.warning("We recommend Windows 10 as the primary development OS, other versions are not fully tested.")
     elif (os_name.startswith("Linux")):
-        sys_info['OS'] = 'linux'
+        sys_info['OS'] = TOOLSFORAI_OS_LINUX
     elif (os_name.startswith("Darwin")):
-        sys_info['OS'] = 'mac'
+        sys_info['OS'] = TOOLSFORAI_OS_MACOS
+        is_64bit = sys.maxsize > 2**32
     else:
         logger.error("Only Windows, macOS and Linux are supported now.")
         return False
+
+    if not is_64bit:
+        logger.error("Only 64-bit OS is supported now.")
+        return False
+
     return True
 
 def detect_gpu():
     sys_info['GPU'] = False
     gpu_detector_name = 'gpu_detector_' + sys_info['OS']
-    if (sys_info['OS'] == 'win'):
+    if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
         gpu_detector_name = gpu_detector_name + '.exe'
     local_path = os.path.join(os.curdir, gpu_detector_name)
 
@@ -245,12 +253,11 @@ def detect_gpu():
         logger.error("No GPU detector found. Please make sure {0} is in the same directory with the installer script.".format(gpu_detector_name))
         return False
 
-    sys_info["GPU"] = _run_cmd(local_path)
-    if sys_info["GPU"]:
-        logger.info("Find NVIDIA GPU card.")
-    else:
-        logger.info("No NVIDIA GPU card found.")
+    sys_info["GPU"], return_stdout = _run_cmd(local_path, return_stdout = True)
+    if not sys_info["GPU"]:
+        return_stdout = 'None'
 
+    logger.info('NVIDIA GPU: {0}'.format(return_stdout))
     return True
 
 
@@ -265,13 +272,14 @@ def detect_vs():
     if (len(vs) == 0):
         logger.warning("Please install Visual Studio 2017 or 2015.")
     else:
-        logger.info("Visual Studio Found: %s" % " ".join(vs))
+        logger.info("Installed Visual Studio: %s" % " ".join(vs))
 
 def detect_python_version():
     py_architecture = platform.architecture()[0]
     py_version = ".".join(map(str,sys.version_info[0:2]))
+    py_full_version = ".".join(map(str,sys.version_info[0:3]))
     sys_info["python"] = py_version.replace('.', '')
-    logger.info("Python version is %s, %s" % (py_version, py_architecture))
+    logger.info("Python: %s, %s" % (py_full_version, py_architecture))
     if not (_version_compare("3.5", py_version) and py_architecture == '64bit'):
         logger.error("64-bit Python 3.5 or higher is required to run this installer."
             " We recommend latest Python 3.5 (https://www.python.org/downloads/release/python-354/).")
@@ -280,7 +288,7 @@ def detect_python_version():
 
 
 def detect_cuda():
-    if (sys_info['OS'] == 'win'):
+    if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
         detect_cuda_win()
 
 def detect_cuda_win():
@@ -292,7 +300,7 @@ def detect_cuda_win():
                        "Please Download and install CUDA 8.0 from https://developer.nvidia.com/cuda-toolkit.")
 
 def detect_cudnn():
-    if (sys_info['OS'] == 'win'):
+    if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
         detect_cudnn_win()
 
 def detect_cudnn_win():
@@ -346,15 +354,15 @@ def detect_visualcpp_runtime_win():
 
 
 def install_cntk(target_dir):
-    if sys_info['OS'] != 'win': #and sys_info['OS'] != 'linux':
-        logger.info("CNTK is not supported on your OS at present, will not install it.")
+    if sys_info['OS'] != TOOLSFORAI_OS_WIN and sys_info['OS'] != TOOLSFORAI_OS_LINUX:
+        logger.info("CNTK is not supported on your OS.")
         return
 
     target_version = 'CNTK-2-3-1'
     versions = _get_cntk_version()
     if target_version in versions.keys():
         cntk_root = versions[target_version]
-        logger.info("CNTK with version: {} already exists.".format(target_version))
+        logger.info("Installed CNTK: {}".format(target_version))
         return
 
     logger.debug("CNTK target dir: %s" % target_dir)
@@ -362,9 +370,9 @@ def install_cntk(target_dir):
         os.makedirs(target_dir)
 
     cntk_file_name = "{}-{}-64bit-{}.{}".format(target_version, 
-        'Windows' if sys_info['OS'] == 'win' else 'Linux', 
+        'Windows' if sys_info['OS'] == TOOLSFORAI_OS_WIN else 'Linux',
         'GPU' if sys_info['GPU'] else 'CPU-Only',
-        'zip' if sys_info['OS'] == 'win' else 'tar.gz')
+        'zip' if sys_info['OS'] == TOOLSFORAI_OS_WIN else 'tar.gz')
     cntk_file_path = os.path.join(target_dir, cntk_file_name)
     cntk_url = "https://cntk.ai/BinaryDrop/%s" % cntk_file_name
 
@@ -378,7 +386,7 @@ def install_cntk(target_dir):
 
     cntk_root = os.path.join(target_dir, 'cntk')
 
-    if (sys_info["OS"] == 'win'):
+    if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         suc = install_cntk_win(cntk_root)
     else:
         suc = install_cntk_linux(cntk_root)
@@ -392,9 +400,8 @@ def install_cntk(target_dir):
         logger.warning("You can reference this link based on your OS: https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-your-machine")
 
 def install_cntk_linux(cntk_root):
-    logger.warning("CNTK V2 on Linux requires C++ Compiler and Open MPI to be installed. "
-                   "Please manually install them if absent. "
-                   "You can reference this link: https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-Linux-Binary-Manual")
+    logger.warning("CNTK V2 on Linux requires C++ Compiler and Open MPI. "
+                   "Please refer to https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-Linux-Binary-Manual")
     PATH = "%s/cntk/bin" % cntk_root
     LD_LIBRARY_PATH = "{0}/cntk/lib:{0}/cntk/dependencies/lib".format(cntk_root)
     os.environ["PATH"] = PATH + ':' + os.environ.get("PATH", "")
@@ -456,25 +463,25 @@ def pip_package_install(args):
         logger.error(sys.exc_info())
     return res == 0
 
-def pip_framework_install():    
+def pip_framework_install():
     wheel_ver = sys_info['python']
     pip_list = [("numpy", "numpy == 1.13.3"),
                 ("scipy", "scipy == 1.0.0"), 
                 ("cntk", "https://cntk.ai/PythonWheel/{0}/cntk-2.3.1-cp{2}-cp{2}m-{1}.whl".format(
                     "GPU" if sys_info["GPU"] else "CPU-Only", 
-                    "win_amd64" if sys_info["OS"] == 'win' else "linux_x86_64",
+                    "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64",
                     wheel_ver
-                    ) if ((sys_info["OS"] == 'win') or (sys_info["OS"] == 'linux')) else ""
+                    ) if ((sys_info["OS"] == TOOLSFORAI_OS_WIN) or (sys_info["OS"] == TOOLSFORAI_OS_LINUX)) else ""
                 ),
                 ("tensorflow", "tensorflow%s == 1.4.0" % ("-gpu" if sys_info["GPU"] else "")),
                 ("mxnet", "mxnet%s == 1.0.0" % ("-cu80" if sys_info["GPU"] else "")),
-                ("cupy", "cupy == 2.2.0" if (sys_info["GPU"] and (sys_info['OS'] == 'linux')) else ""),
+                ("cupy", "cupy == 2.2.0" if (sys_info["GPU"] and (sys_info['OS'] == TOOLSFORAI_OS_LINUX)) else ""),
                 ("chainer", "chainer == 3.2.0"),
                 ("theano", "theano == 1.0.1"),
                 ("keras", "keras == 2.1.2")]
     
     # caffe2, windows only
-    if (sys_info['OS'] == 'win'):
+    if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
         caffe2_wheel = os.path.join(os.curdir, "caffe2_gpu-0.8.1-cp35-cp35m-win_amd64.whl")
         caffe2_url = r"https://go.microsoft.com/fwlink/?LinkId=862958&clcid=0x1033"
         if (sys_info['python'] == '35' and os.path.isfile(caffe2_wheel)):
@@ -488,7 +495,7 @@ def pip_framework_install():
             try:
                 cupy = importlib.import_module('cupy')
                 if (not _version_compare('2.0', cupy.__version__)):
-                    logger.warning("Please make sure cupy >= 2.0.0 to support CUDA for chainer 3.0.0.")
+                    logger.warning("Please make sure cupy >= 2.0.0 to support CUDA for chainer 3.2.0.")
             except ImportError:
                 logger.warning("Please manully install cupy to support CUDA for chainer."
                 "You can reference this link <https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer> to install cupy on windows")
@@ -512,12 +519,12 @@ def main():
         return
 
     target_dir = ''
-    if sys_info['OS'] == 'win':
+    if sys_info['OS'] == TOOLSFORAI_OS_WIN:
         target_dir = os.path.sep.join([os.getenv("APPDATA"), "Microsoft", "ToolsForAI", "RuntimeSDK"])
-    elif sys_info['OS'] == 'linux':
+    elif sys_info['OS'] == TOOLSFORAI_OS_LINUX:
         target_dir = os.path.sep.join([os.path.expanduser('~'), '.toolsforai', 'RuntimeSDK'])
 
-    if (sys_info['OS'] == 'win'):
+    if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
         detect_vs()
 
     if (sys_info["GPU"]):
