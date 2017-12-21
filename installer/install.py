@@ -357,6 +357,11 @@ def install_cntk(target_dir):
     if sys_info['OS'] != TOOLSFORAI_OS_WIN and sys_info['OS'] != TOOLSFORAI_OS_LINUX:
         logger.info("CNTK is not supported on your OS.")
         return
+    
+    # Temporarily disable installing CNTK on Linux
+    # Users may use 'sudo', so that it will be installed into root directory. 
+    if sys_info['OS'] == TOOLSFORAI_OS_LINUX:
+        return
 
     target_version = 'CNTK-2-3-1'
     versions = _get_cntk_version()
@@ -508,6 +513,35 @@ def pip_framework_install():
             return
     logger.info("pip packages installation succeeds.")
 
+
+def set_owner_as_login(target_dir):
+    try:
+        import grp
+        import pwd
+        import getpass
+
+        if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
+            return
+
+        if ((not os.path.isdir(target_dir)) or (not os.path.exists(target_dir))):
+            return
+
+        username = os.getlogin()
+        usergroup = grp.getgrgid(pwd.getpwnam(os.getlogin()).pw_gid).gr_name
+        if ((not username) or (not usergroup)):
+            return
+
+        if (username != getpass.getuser()):
+            _run_cmd('chown', ['-R', '{0}:{1}'.format(username, usergroup), target_dir])
+    except:
+        pass
+
+
+def fix_toolsforai_owner():
+    target_dir = os.path.sep.join([os.path.expanduser('~'), '.toolsforai'])
+    set_owner_as_login(target_dir)
+
+
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--verbose", help="increase output verbosity", action="store_true")
@@ -531,6 +565,7 @@ def main():
         detect_cuda()
         detect_cudnn()
     install_cntk(target_dir)
+    # fix_toolsforai_owner()
     pip_framework_install()
     logger.info("Setup finishes.")
 
