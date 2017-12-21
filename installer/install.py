@@ -359,7 +359,7 @@ def install_cntk(target_dir):
         return
     
     # Temporarily disable installing CNTK on Linux
-    # Users may use 'sudo', so that it will be installed into root directory. 
+    # If 'sudo' is used, the effective and real users don't match. 
     if sys_info['OS'] == TOOLSFORAI_OS_LINUX:
         return
 
