@@ -567,10 +567,10 @@ def main():
     install_cntk(target_dir)
     # fix_toolsforai_owner()
     pip_framework_install()
-    logger.info("Setup finishes.")
+    logger.info('Setup finishes.')
 
 logger = _init_logger()
 
 if __name__ == "__main__":
     main()
-    input("Press enter to exit.")
+    input('Press enter to exit.')
