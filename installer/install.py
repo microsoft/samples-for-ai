@@ -176,7 +176,7 @@ def _get_cntk_version():
     if sys_info["OS"] == TOOLSFORAI_OS_WIN:
         cmd = r"C:\Windows\System32\where.exe"
         args = ["cntk.exe"]
-    elif sys_info["OS"] == "linux":
+    elif sys_info["OS"] == TOOLSFORAI_OS_LINUX:
         cmd = r"which"
         args = ['-a', 'cntk']
     else:
@@ -382,7 +382,7 @@ def install_cntk(target_dir):
     cntk_url = "https://cntk.ai/BinaryDrop/%s" % cntk_file_name
 
     if (not _download_file(cntk_url, cntk_file_path) or 
-        not (_unzip_file(cntk_file_path, target_dir) if sys_info["OS"] == "win" else _extract_tar(cntk_file_path, target_dir))):
+        not (_unzip_file(cntk_file_path, target_dir) if sys_info["OS"] == TOOLSFORAI_OS_WIN else _extract_tar(cntk_file_path, target_dir))):
         logger.error("CNTK installation fails.")
         return
 
