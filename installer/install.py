@@ -595,7 +595,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
     parser.add_argument("-u", "--user", help="install pip package to user install directory", action="store_true")
-    parser.add_argument("-o", "--options", help="pip extra options for installation")
+    parser.add_argument("-o", "--options", help="pip extra options for installation. --user ignored if this option supplied.")
     args, unknown = parser.parse_known_args()
     if args.verbose:
         logger.setLevel(logging.DEBUG)
