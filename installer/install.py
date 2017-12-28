@@ -51,6 +51,14 @@ def _init_logger(log_level = logging.INFO):
     logger.addHandler(handler)
     return logger
 
+logger = _init_logger()
+
+try:
+    import pip
+except ImportError:
+    logger.error("you need to install pip first.")
+
+
 def _registry_read(hkey, keypath, value_name):
     try:
         registry_key = winreg.OpenKey(hkey, keypath)
@@ -135,10 +143,16 @@ def _download_file(url, local_path):
     logger.info("Downloading %s ..." % url)
     try:
         import urllib.request
-        urllib.request.urlretrieve(url, local_path)
+        import ssl
+        myssl = ssl.create_default_context();
+        myssl.check_hostname=False
+        myssl.verify_mode=ssl.CERT_NONE
+        with urllib.request.urlopen(url, context = myssl) as fin, \
+            open(local_path, 'wb') as fout:
+            fout.write(fin.read())
         return True
     except:
-        logging.error("Fail to download %s." % url)
+        logging.error("Fail to download %s. %s" % (url, sys.exc_info()))
         return False
 
 def _unzip_file(file_path, target_dir):  
@@ -172,35 +186,16 @@ def _version_compare(ver1, ver2):
     to_version = lambda ver: tuple([int(x) for x in ver.split('.') if x.isdigit()])
     return to_version(ver1) <= to_version(ver2)
 
-def _get_cntk_version():
-    if sys_info["OS"] == TOOLSFORAI_OS_WIN:
-        cmd = r"C:\Windows\System32\where.exe"
-        args = ["cntk.exe"]
-    elif sys_info["OS"] == TOOLSFORAI_OS_LINUX:
-        cmd = r"which"
-        args = ['-a', 'cntk']
-    else:
-        return
-    status, cntk_paths = _run_cmd(cmd, args, True)
-    logger.debug("In _get_cntk_version, status: %s, cntk_path: %s" % (status, cntk_paths))
-    versions = {}
-    if not status:
-        return versions
-
-    for cntk_path in cntk_paths.split('\n'):
-        # cntk binary path hierarchy not consistent for linux and win
-        if sys_info["OS"] == TOOLSFORAI_OS_LINUX:
-            cntk_path = os.path.dirname(cntk_path)
-
-        cntk_root = os.path.dirname(os.path.dirname(cntk_path))
-        version_file = os.path.join(cntk_root, "version.txt")
-        version = ""
-        if os.path.isfile(version_file):
-            with open(version_file) as fin:
-                version = fin.readline().strip()
-            versions[version] = cntk_root
-        logger.debug("In _get_cntk_version, find version: %s, path: %s" % (version, cntk_path))
-    return versions
+def _get_cntk_version(cntk_root):
+    logger.debug("In _get_cntk_version, cntk_root: %s" % cntk_root)
+    version = ''
+    version_file = os.path.join(cntk_root, "cntk", "version.txt")
+    
+    if os.path.isfile(version_file):
+        with open(version_file) as fin:
+            version = fin.readline().strip()
+    logger.debug("In _get_cntk_version, find version: %s" % version)
+    return version
 
 def _update_pathenv_win(path, add):
     path_value = _registry_read(winreg.HKEY_CURRENT_USER, "Environment", "PATH")
@@ -364,10 +359,9 @@ def install_cntk(target_dir):
         return
 
     target_version = 'CNTK-2-3-1'
-    versions = _get_cntk_version()
-    if target_version in versions.keys():
-        cntk_root = versions[target_version]
-        logger.info("Installed CNTK: {}".format(target_version))
+    version = _get_cntk_version(target_dir)
+    if target_version == version:
+        logger.info("CNTK already installed")
         return
 
     logger.debug("CNTK target dir: %s" % target_dir)
@@ -396,7 +390,7 @@ def install_cntk(target_dir):
     else:
         suc = install_cntk_linux(cntk_root)
 
-    if suc and target_version in _get_cntk_version().keys():
+    if suc and target_version == _get_cntk_version():
         logger.info("CNTK installation succeeds.")
         logger.warning("Please open a new window to make the updated environment variable effective.")
     else:
@@ -455,63 +449,118 @@ def install_cntk_win(cntk_root):
 
     return suc
 
-
-def pip_package_install(args):
-    res = -1
-    try:
-        import pip
-        res = pip.main(['install', *args])
-    except ImportError:
-        logger.error("you need to install pip first.")
-    except Exception:
-        logger.error("pip package %s install error. " % pkt)
-        logger.error(sys.exc_info())
+def pip_install_package(name, options, version = ""):
+    logger.info("Begin install %s %s ..." % (name, version))
+    pkt = name
+    if version:
+        pkt = "%s == %s" % (name, version)
+    res = pip.main(["install", *options, pkt])
+    if res != 0:
+        logger.error("Fail to install %s pip package." % name)
+    else:
+        logger.info("%s %s installed" % (name, version))
     return res == 0
 
-def pip_framework_install():
-    wheel_ver = sys_info['python']
-    pip_list = [("numpy", "numpy == 1.13.3"),
-                ("scipy", "scipy == 1.0.0"), 
-                ("cntk", "https://cntk.ai/PythonWheel/{0}/cntk-2.3.1-cp{2}-cp{2}m-{1}.whl".format(
-                    "GPU" if sys_info["GPU"] else "CPU-Only", 
-                    "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64",
-                    wheel_ver
-                    ) if ((sys_info["OS"] == TOOLSFORAI_OS_WIN) or (sys_info["OS"] == TOOLSFORAI_OS_LINUX)) else ""
-                ),
-                ("tensorflow", "tensorflow%s == 1.4.0" % ("-gpu" if sys_info["GPU"] else "")),
-                ("mxnet", "mxnet%s == 1.0.0" % ("-cu80" if sys_info["GPU"] else "")),
-                ("cupy", "cupy == 2.2.0" if (sys_info["GPU"] and (sys_info['OS'] == TOOLSFORAI_OS_LINUX)) else ""),
-                ("chainer", "chainer == 3.2.0"),
-                ("theano", "theano == 1.0.1"),
-                ("keras", "keras == 2.1.2")]
-    
-    # caffe2, windows only
-    if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
-        caffe2_wheel = os.path.join(os.curdir, "caffe2_gpu-0.8.1-cp35-cp35m-win_amd64.whl")
-        caffe2_url = r"https://go.microsoft.com/fwlink/?LinkId=862958&clcid=0x1033"
-        if (sys_info['python'] == '35' and os.path.isfile(caffe2_wheel)):
-            pip_list.append(("caffe2", caffe2_wheel))
-        elif (sys_info['python'] == '35'):
-            logger.warning("Please manully install caffe2. You can download the wheel file here: %s" % caffe2_url)
-    
-        # chainer
-        if sys_info['GPU']:
-            import importlib
-            try:
-                cupy = importlib.import_module('cupy')
-                if (not _version_compare('2.0', cupy.__version__)):
-                    logger.warning("Please make sure cupy >= 2.0.0 to support CUDA for chainer 3.2.0.")
-            except ImportError:
-                logger.warning("Please manully install cupy to support CUDA for chainer."
-                "You can reference this link <https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer> to install cupy on windows")
+def pip_install_tensorflow(options):
+    version = "1.4.0"
+    name = "tensorflow%s" % ("-gpu" if sys_info["GPU"] else "")
 
-    # user specified pip options
+    pip_install_package(name, options, version)
+
+def pip_install_cntk(options):
+    if not ((sys_info["OS"] == TOOLSFORAI_OS_WIN) or (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
+        logger.info("cntk pip package not available on your OS.")
+        return
+
+    version = "2.3.1"
+    wheel_ver = sys_info['python']
+    arch = "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64"
+    gpu_type = "GPU" if sys_info["GPU"] else "CPU-Only"
+    pkt = "https://cntk.ai/PythonWheel/{0}/cntk-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch)
+
+    pip_install_package(pkt, options)
+
+def pip_install_keras(options):
+    version = "2.1.2"
+    name = "keras"
+
+    pip_install_package(name, options, version)
+
+def pip_install_caffe2(options):
+    if not (sys_info['OS'] == TOOLSFORAI_OS_WIN):
+        logger.warning("You need to install caffe2 from source.")
+        return
+
+    version = "0.8.1"
+    arch = "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64"
+    wheel_ver = sys_info["python"]
+    pkt = os.path.join(os.curdir, "caffe2_gpu-{0}-cp{1}-cp{1}m-{2}.whl".format(version, wheel_ver, arch))
+    
+    if not os.path.isfile(pkt):
+        logger.warning("Please manully install caffe2.")
+        return
+
+    pip_install_package(pkt, options)
+    
+
+def pip_install_theano(options):
+    version = "1.0.1"
+    name = "theano"
+
+    pip_install_package(name, options, version)
+
+def pip_install_mxnet(options):
+    version = "1.0.0"
+    name = "mxnet%s" % ("-cu80" if sys_info["GPU"] else "")
+
+    pip_install_package(name, options, version)
+
+def pip_install_chainer(options):
+    # cupy installation for GPU linux
+    if (sys_info["GPU"] and (sys_info['OS'] == TOOLSFORAI_OS_LINUX)):
+        logger.info("Install cupy to support CUDA for chainer.")
+        pip_install_package('cupy', options, '2.2.0')
+    elif (sys_info["GPU"] and (sys_info['OS'] == TOOLSFORAI_OS_WIN)):
+        import importlib
+        try:
+            cupy = importlib.import_module('cupy')
+            if (not _version_compare('2.0', cupy.__version__)):
+                logger.warning("Please make sure cupy >= 2.0.0 to support CUDA for chainer.")
+        except ImportError:
+            logger.warning("Please manully install cupy to support CUDA for chainer."
+            "You can reference this link <https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer> to install cupy on windows")
+
+
+    version = "3.2.0"
+    name = "chainer"
+
+    pip_install_package(name, options, version)
+
+
+
+def pip_framework_install(options, user, verbose):
+    
     pip_ops = []
-    for pkt, source in filter(lambda x: x[1], pip_list):
-        if not pip_package_install(pip_ops + [source]):
-            logger.error("%s installation fails. Please manually install it." % pkt)
-            return
-    logger.info("pip packages installation succeeds.")
+    if options:
+        pip_ops = options.split()
+    elif user:
+        pip_ops = ["--user"]
+    
+    if not verbose:
+        pip_ops.append('-q')
+
+    if not pip_install_package('scipy', pip_ops, '1.0.0'):
+        logger.error("Pip installation terminated due to scipy installation failure.")
+        return
+
+    pip_install_cntk(pip_ops)
+    pip_install_tensorflow(pip_ops)
+    pip_install_mxnet(pip_ops)
+    pip_install_chainer(pip_ops)
+    pip_install_theano(pip_ops)
+    pip_install_keras(pip_ops)
+    pip_install_caffe2(pip_ops)
+
 
 
 def set_owner_as_login(target_dir):
@@ -544,7 +593,9 @@ def fix_toolsforai_owner():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--verbose", help="increase output verbosity", action="store_true")
+    parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
+    parser.add_argument("-u", "--user", help="install pip package to user install directory", action="store_true")
+    parser.add_argument("-o", "--options", help="pip extra options for installation")
     args, unknown = parser.parse_known_args()
     if args.verbose:
         logger.setLevel(logging.DEBUG)
@@ -566,10 +617,8 @@ def main():
         detect_cudnn()
     install_cntk(target_dir)
     # fix_toolsforai_owner()
-    pip_framework_install()
+    pip_framework_install(args.options, args.user, args.verbose)
     logger.info('Setup finishes.')
-
-logger = _init_logger()
 
 if __name__ == "__main__":
     main()
