@@ -4,6 +4,7 @@ import logging
 import sys
 import subprocess
 import os
+import shutil
 import re
 import ctypes
 import stat
@@ -355,44 +356,63 @@ def install_cntk(target_dir):
     
     # Temporarily disable installing CNTK on Linux
     # If 'sudo' is used, the effective and real users don't match. 
-    if sys_info['OS'] == TOOLSFORAI_OS_LINUX:
-        return
+    #if sys_info['OS'] == TOOLSFORAI_OS_LINUX:
+    #    return
 
-    target_version = 'CNTK-2-3-1'
+    ver = '2.3.1'
+    target_version = 'CNTK-{0}'.format(ver.replace('.', '-'))
     version = _get_cntk_version(target_dir)
     if target_version == version:
-        logger.info("CNTK already installed")
+        logger.info('CNTK {0} already installed'.format(ver))
         return
 
-    logger.debug("CNTK target dir: %s" % target_dir)
+    logger.debug('CNTK target dir: {0}'.format(target_dir))
+
+    cntk_root = os.path.join(target_dir, 'cntk')
+    if os.path.isdir(cntk_root):
+        try:
+            shutil.rmtree(cntk_root)
+        except:
+            logger.error('CNTK installation fails: cannot remove old version in directory {0}.'.format(cntk_root))
+            return
+
     if not os.path.isdir(target_dir):
-        os.makedirs(target_dir)
+        try:
+            os.makedirs(target_dir)
+        except:
+            logger.error('CNTK installation fails: cannot create directory {0}.'.format(target_dir))
+            return
 
     cntk_file_name = "{}-{}-64bit-{}.{}".format(target_version, 
         'Windows' if sys_info['OS'] == TOOLSFORAI_OS_WIN else 'Linux',
         'GPU' if sys_info['GPU'] else 'CPU-Only',
         'zip' if sys_info['OS'] == TOOLSFORAI_OS_WIN else 'tar.gz')
     cntk_file_path = os.path.join(target_dir, cntk_file_name)
-    cntk_url = "https://cntk.ai/BinaryDrop/%s" % cntk_file_name
+    cntk_url = 'https://cntk.ai/BinaryDrop/{0}'.format(cntk_file_name)
 
-    if (not _download_file(cntk_url, cntk_file_path) or 
-        not (_unzip_file(cntk_file_path, target_dir) if sys_info["OS"] == TOOLSFORAI_OS_WIN else _extract_tar(cntk_file_path, target_dir))):
-        logger.error("CNTK installation fails.")
+    skip_downloading = False
+    if not skip_downloading:
+        if not _download_file(cntk_url, cntk_file_path):
+            logger.error('CNTK installation fails: cannot download {0}'.format(cntk_url))
+            return
+
+    if (not (_unzip_file(cntk_file_path, target_dir) if sys_info["OS"] == TOOLSFORAI_OS_WIN else _extract_tar(cntk_file_path, target_dir))):
+        logger.error('CNTK installation fails: cannot decompress the downloaded package.')
         return
 
-    if os.path.isfile(cntk_file_path):
-        os.remove(cntk_file_path)
-
-    cntk_root = os.path.join(target_dir, 'cntk')
+    if not skip_downloading:
+        if os.path.isfile(cntk_file_path):
+            os.remove(cntk_file_path)
 
     if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         suc = install_cntk_win(cntk_root)
     else:
         suc = install_cntk_linux(cntk_root)
 
-    if suc and target_version == _get_cntk_version():
+    version = _get_cntk_version(target_dir)
+    if (suc and (target_version == version)):
         logger.info("CNTK installation succeeds.")
-        logger.warning("Please open a new window to make the updated environment variable effective.")
+        logger.warning("Please open a new terminal to make the updated Path environment variable effective.")
     else:
         logger.error("CNTK installation fails.")
         logger.warning("Please manually install %s and update PATH environment." % target_version)
@@ -401,15 +421,26 @@ def install_cntk(target_dir):
 def install_cntk_linux(cntk_root):
     logger.warning("CNTK V2 on Linux requires C++ Compiler and Open MPI. "
                    "Please refer to https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-Linux-Binary-Manual")
-    PATH = "%s/cntk/bin" % cntk_root
-    LD_LIBRARY_PATH = "{0}/cntk/lib:{0}/cntk/dependencies/lib".format(cntk_root)
-    os.environ["PATH"] = PATH + ':' + os.environ.get("PATH", "")
-    os.environ["LD_LIBRARY_PATH"] = LD_LIBRARY_PATH + ':' + os.environ.get("LD_LIBRARY_PATH", "")
-    sh = 'echo "export PATH={0}:$PATH" >> ~/.bashrc && echo "export LD_LIBRARY_PATH={1}:$LD_LIBRARY_PATH" >> ~/.bashrc'.format(PATH, LD_LIBRARY_PATH)
-    return _run_cmd("/bin/bash", ['-c', sh])
+    bashrc_file_path = os.path.sep.join([os.path.expanduser('~'), '.bashrc'])
+    content = ''
+    with open(bashrc_file_path, 'r') as bashrc_file:
+        content = bashrc_file.read()
+
+    with open(bashrc_file_path, 'a+') as bashrc_file:
+        CNTK_PATH = '{0}/cntk/bin'.format(cntk_root)
+        CNTK_PATH_EXPORT = 'export PATH={0}:$PATH'.format(CNTK_PATH)
+        if not (CNTK_PATH_EXPORT in content):
+            bashrc_file.write('{0}\n'.format(CNTK_PATH_EXPORT))
+
+        CNTK_LD_LIBRARY_PATH = '{0}/cntk/lib:{0}/cntk/dependencies/lib'.format(cntk_root)
+        CNTK_LD_LIBRARY_PATH_EXPORT = 'export LD_LIBRARY_PATH={0}:$LD_LIBRARY_PATH'.format(CNTK_LD_LIBRARY_PATH)
+        if not (CNTK_LD_LIBRARY_PATH_EXPORT in content):
+            bashrc_file.write('{0}\n'.format(CNTK_LD_LIBRARY_PATH_EXPORT))
+
+    return True
 
 
-def install_cntk_win(cntk_root):      
+def install_cntk_win(cntk_root):
     suc = True 
     try:          
         _update_pathenv_win(os.path.join(cntk_root, "cntk"), True)
@@ -449,6 +480,7 @@ def install_cntk_win(cntk_root):
 
     return suc
 
+
 def pip_install_package(name, options, version = ""):
     logger.info("Begin install %s %s ..." % (name, version))
     pkt = name
@@ -461,11 +493,13 @@ def pip_install_package(name, options, version = ""):
         logger.info("%s %s installed" % (name, version))
     return res == 0
 
+
 def pip_install_tensorflow(options):
     version = "1.4.0"
     name = "tensorflow%s" % ("-gpu" if sys_info["GPU"] else "")
 
     pip_install_package(name, options, version)
+
 
 def pip_install_cntk(options):
     if not ((sys_info["OS"] == TOOLSFORAI_OS_WIN) or (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
@@ -480,11 +514,13 @@ def pip_install_cntk(options):
 
     pip_install_package(pkt, options)
 
+
 def pip_install_keras(options):
     version = "2.1.2"
-    name = "keras"
+    name = "Keras"
 
     pip_install_package(name, options, version)
+
 
 def pip_install_caffe2(options):
     if not (sys_info['OS'] == TOOLSFORAI_OS_WIN):
@@ -492,20 +528,15 @@ def pip_install_caffe2(options):
         return
 
     version = "0.8.1"
-    arch = "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64"
+    arch = "win_amd64"
     wheel_ver = sys_info["python"]
-    pkt = os.path.join(os.curdir, "caffe2_gpu-{0}-cp{1}-cp{1}m-{2}.whl".format(version, wheel_ver, arch))
-    
-    if not os.path.isfile(pkt):
-        logger.warning("Please manully install caffe2.")
-        return
-
+    pkt = "https://github.com/linmajia/caffe2-package/raw/master/{0}/caffe2_gpu-{0}-cp{1}-cp{1}m-{2}.whl".format(version, wheel_ver, arch)
     pip_install_package(pkt, options)
     
 
 def pip_install_theano(options):
     version = "1.0.1"
-    name = "theano"
+    name = "Theano"
 
     pip_install_package(name, options, version)
 
@@ -514,6 +545,7 @@ def pip_install_mxnet(options):
     name = "mxnet%s" % ("-cu80" if sys_info["GPU"] else "")
 
     pip_install_package(name, options, version)
+
 
 def pip_install_chainer(options):
     # cupy installation for GPU linux
@@ -530,16 +562,12 @@ def pip_install_chainer(options):
             logger.warning("Please manully install cupy to support CUDA for chainer."
             "You can reference this link <https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer> to install cupy on windows")
 
-
     version = "3.2.0"
     name = "chainer"
-
     pip_install_package(name, options, version)
 
 
-
-def pip_framework_install(options, user, verbose):
-    
+def pip_framework_install(options, user, verbose):   
     pip_ops = []
     if options:
         pip_ops = options.split()
@@ -562,33 +590,33 @@ def pip_framework_install(options, user, verbose):
     pip_install_caffe2(pip_ops)
 
 
+def set_ownership_as_login(target_dir):
+    if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
+        return
 
-def set_owner_as_login(target_dir):
     try:
         import grp
         import pwd
         import getpass
 
-        if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
-            return
-
         if ((not os.path.isdir(target_dir)) or (not os.path.exists(target_dir))):
             return
 
-        username = os.getlogin()
-        usergroup = grp.getgrgid(pwd.getpwnam(os.getlogin()).pw_gid).gr_name
-        if ((not username) or (not usergroup)):
+        real_user = os.getlogin()
+        real_group = grp.getgrgid(pwd.getpwnam(real_user).pw_gid).gr_name
+        if ((not real_user) or (not real_group)):
             return
 
-        if (username != getpass.getuser()):
-            _run_cmd('chown', ['-R', '{0}:{1}'.format(username, usergroup), target_dir])
+        if (real_user != getpass.getuser()):
+            _run_cmd('chown', ['-R', '{0}:{1}'.format(real_user, real_group), target_dir])
     except:
         pass
 
 
-def fix_toolsforai_owner():
+def fix_directory_ownership():
+    # On Linux, if users install with "sudo", then ~/.toolsforai will have wrong directory ownership.
     target_dir = os.path.sep.join([os.path.expanduser('~'), '.toolsforai'])
-    set_owner_as_login(target_dir)
+    set_ownership_as_login(target_dir)
 
 
 def main():
@@ -616,8 +644,8 @@ def main():
         detect_cuda()
         detect_cudnn()
     install_cntk(target_dir)
-    # fix_toolsforai_owner()
     pip_framework_install(args.options, args.user, args.verbose)
+    fix_directory_ownership()
     logger.info('Setup finishes.')
 
 if __name__ == "__main__":
