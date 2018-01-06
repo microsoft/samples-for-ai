@@ -482,22 +482,40 @@ def install_cntk_win(cntk_root):
 
 
 def pip_install_package(name, options, version = ""):
-    logger.info("Begin install %s %s ..." % (name, version))
-    pkt = name
-    if version:
-        pkt = "%s == %s" % (name, version)
-    res = pip.main(["install", *options, pkt])
-    if res != 0:
-        logger.error("Fail to install %s pip package." % name)
-    else:
-        logger.info("%s %s installed" % (name, version))
-    return res == 0
+    try:
+        logger.info("Begin install %s %s ..." % (name, version))
+        pkt = name
+        if version:
+            pkt = "%s == %s" % (name, version)
+        res = pip.main(["install", *options, pkt])
+        if res != 0:
+            logger.error("Fail to install %s pip package." % name)
+        else:
+            logger.info("%s %s installed" % (name, version))
+        return res == 0
+    except:
+        return False
+
+
+def pip_install_scipy(options):
+    version = '1.13.3'
+    name = 'numpy'
+    if not pip_install_package(name, options, version):
+        logger.error("Pip installation terminated due to numpy installation failure.")
+        return False
+
+    version = '1.0.0'
+    name = 'scipy'
+    if not pip_install_package(name, options, version):
+        logger.error("Pip installation terminated due to scipy installation failure.")
+        return False
+
+    return True
 
 
 def pip_install_tensorflow(options):
     version = "1.4.0"
     name = "tensorflow%s" % ("-gpu" if sys_info["GPU"] else "")
-
     pip_install_package(name, options, version)
 
 
@@ -511,14 +529,12 @@ def pip_install_cntk(options):
     arch = "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64"
     gpu_type = "GPU" if sys_info["GPU"] else "CPU-Only"
     pkt = "https://cntk.ai/PythonWheel/{0}/cntk-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch)
-
     pip_install_package(pkt, options)
 
 
 def pip_install_keras(options):
     version = "2.1.2"
     name = "Keras"
-
     pip_install_package(name, options, version)
 
 
@@ -537,13 +553,12 @@ def pip_install_caffe2(options):
 def pip_install_theano(options):
     version = "1.0.1"
     name = "Theano"
-
     pip_install_package(name, options, version)
+
 
 def pip_install_mxnet(options):
     version = "1.0.0"
     name = "mxnet%s" % ("-cu80" if sys_info["GPU"] else "")
-
     pip_install_package(name, options, version)
 
 
@@ -567,7 +582,21 @@ def pip_install_chainer(options):
     pip_install_package(name, options, version)
 
 
-def pip_framework_install(options, user, verbose):   
+def pip_install_extra_software(options):
+    version = '0.19.1'
+    name = 'scikit-learn'
+    pip_install_package(name, options, version)
+
+    version = ''
+    name = 'jupyter'
+    pip_install_package(name, options, version)
+
+    version = ''
+    name = 'matplotlib'
+    pip_install_package(name, options, version)   
+
+
+def pip_software_install(options, user, verbose):
     pip_ops = []
     if options:
         pip_ops = options.split()
@@ -577,8 +606,7 @@ def pip_framework_install(options, user, verbose):
     if not verbose:
         pip_ops.append('-q')
 
-    if not pip_install_package('scipy', pip_ops, '1.0.0'):
-        logger.error("Pip installation terminated due to scipy installation failure.")
+    if not pip_install_scipy(pip_ops):
         return
 
     pip_install_cntk(pip_ops)
@@ -588,6 +616,7 @@ def pip_framework_install(options, user, verbose):
     pip_install_theano(pip_ops)
     pip_install_keras(pip_ops)
     pip_install_caffe2(pip_ops)
+    pip_install_extra_software(pip_ops)
 
 
 def set_ownership_as_login(target_dir):
@@ -644,7 +673,7 @@ def main():
         detect_cuda()
         detect_cudnn()
     install_cntk(target_dir)
-    pip_framework_install(args.options, args.user, args.verbose)
+    pip_software_install(args.options, args.user, args.verbose)
     fix_directory_ownership()
     logger.info('Setup finishes.')
 
