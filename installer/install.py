@@ -546,7 +546,7 @@ def pip_install_caffe2(options):
     version = "0.8.1"
     arch = "win_amd64"
     wheel_ver = sys_info["python"]
-    pkt = "https://github.com/linmajia/caffe2-package/raw/master/{0}/caffe2_gpu-{0}-cp{1}-cp{1}m-{2}.whl".format(version, wheel_ver, arch)
+    pkt = "https://github.com/linmajia/ai-package/raw/master/caffe2/{0}/caffe2_gpu-{0}-cp{1}-cp{1}m-{2}.whl".format(version, wheel_ver, arch)
     pip_install_package(pkt, options)
     
 
