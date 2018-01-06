@@ -480,6 +480,7 @@ def install_cntk_win(cntk_root):
 
     return suc
 
+
 def pip_install_package(name, options, version = ""):
     logger.info("Begin install %s %s ..." % (name, version))
     pkt = name
@@ -492,11 +493,13 @@ def pip_install_package(name, options, version = ""):
         logger.info("%s %s installed" % (name, version))
     return res == 0
 
+
 def pip_install_tensorflow(options):
     version = "1.4.0"
     name = "tensorflow%s" % ("-gpu" if sys_info["GPU"] else "")
 
     pip_install_package(name, options, version)
+
 
 def pip_install_cntk(options):
     if not ((sys_info["OS"] == TOOLSFORAI_OS_WIN) or (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
@@ -511,11 +514,13 @@ def pip_install_cntk(options):
 
     pip_install_package(pkt, options)
 
+
 def pip_install_keras(options):
     version = "2.1.2"
     name = "Keras"
 
     pip_install_package(name, options, version)
+
 
 def pip_install_caffe2(options):
     if not (sys_info['OS'] == TOOLSFORAI_OS_WIN):
@@ -523,14 +528,9 @@ def pip_install_caffe2(options):
         return
 
     version = "0.8.1"
-    arch = "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64"
+    arch = "win_amd64"
     wheel_ver = sys_info["python"]
-    pkt = os.path.join(os.curdir, "caffe2_gpu-{0}-cp{1}-cp{1}m-{2}.whl".format(version, wheel_ver, arch))
-    
-    if not os.path.isfile(pkt):
-        logger.warning("Please manully install caffe2.")
-        return
-
+    pkt = "https://github.com/linmajia/caffe2-package/raw/master/{0}/caffe2_gpu-{0}-cp{1}-cp{1}m-{2}.whl".format(version, wheel_ver, arch)
     pip_install_package(pkt, options)
     
 
@@ -545,6 +545,7 @@ def pip_install_mxnet(options):
     name = "mxnet%s" % ("-cu80" if sys_info["GPU"] else "")
 
     pip_install_package(name, options, version)
+
 
 def pip_install_chainer(options):
     # cupy installation for GPU linux
@@ -566,9 +567,7 @@ def pip_install_chainer(options):
     pip_install_package(name, options, version)
 
 
-
-def pip_framework_install(options, user, verbose):
-    
+def pip_framework_install(options, user, verbose):   
     pip_ops = []
     if options:
         pip_ops = options.split()
@@ -589,7 +588,6 @@ def pip_framework_install(options, user, verbose):
     pip_install_theano(pip_ops)
     pip_install_keras(pip_ops)
     pip_install_caffe2(pip_ops)
-
 
 
 def set_ownership_as_login(target_dir):
