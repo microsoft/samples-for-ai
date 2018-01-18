@@ -8,11 +8,14 @@ import shutil
 import re
 import ctypes
 import stat
+import importlib
+
 
 TOOLSFORAI_OS_WIN = 'win'
 TOOLSFORAI_OS_LINUX = 'linux'
 TOOLSFORAI_OS_MACOS = 'mac'
 sys_info = {}
+
 
 if platform.system() == 'Windows':
     import winreg 
@@ -40,6 +43,7 @@ if platform.system() == 'Windows':
             for name, value in kw.items():
                 setattr(self, name, value)
 
+
 def _init_logger(log_level = logging.INFO):
     logger = logging.getLogger('Microsoft Visual Studio Tools for AI')
     logger.setLevel(log_level)
@@ -52,12 +56,13 @@ def _init_logger(log_level = logging.INFO):
     logger.addHandler(handler)
     return logger
 
-logger = _init_logger()
 
-try:
-    import pip
-except ImportError:
-    logger.error("you need to install pip first.")
+def module_exists(module_name):
+    try:
+        from pkgutil import iter_modules
+        return module_name in (name for loader, name, ispkg in iter_modules())
+    except:
+        return False
 
 
 def _registry_read(hkey, keypath, value_name):
@@ -70,6 +75,7 @@ def _registry_read(hkey, keypath, value_name):
         logger.debug("read registry key: {0}, value: {1} error".format(keypath, value_name))
         return None
 
+
 def _registry_write(hkey, keypath, name, value):
     try:
         registry_key = winreg.CreateKeyEx(hkey, keypath)
@@ -81,6 +87,7 @@ def _registry_write(hkey, keypath, name, value):
         logger.debug("write registry key: {0}, name: {1}, value: {2} error".format(keypath, name, value))
         return False
 
+
 def _registry_subkeys(hkey, keypath):
     key = winreg.OpenKey(hkey, keypath, 0, winreg.KEY_READ)
     i = 0
@@ -91,6 +98,7 @@ def _registry_subkeys(hkey, keypath):
             i += 1
         except WindowsError as e:
             break
+
 
 def _run_cmd(cmd, args = [], return_stdout = False):
     try:
@@ -126,6 +134,7 @@ def _wait_process(processHandle, timeout = -1):
     finally:
         ctypes.windll.kernel32.CloseHandle(processHandle)
 
+
 def _run_cmd_admin(cmd, param, wait=True):
     try:
         executeInfo = ShellExecuteInfo(fMask = 0x00000040, hwnd = None, lpVerb = 'runas'.encode('utf-8'),
@@ -139,6 +148,7 @@ def _run_cmd_admin(cmd, param, wait=True):
     except Exception as e:
         logger.error("run command as admin error. cmd: %s" % cmd)
         logger.error(e)
+
 
 def _download_file(url, local_path):
     logger.info("Downloading %s ..." % url)
@@ -156,6 +166,7 @@ def _download_file(url, local_path):
         logging.error("Fail to download %s. %s" % (url, sys.exc_info()))
         return False
 
+
 def _unzip_file(file_path, target_dir):  
     logger.info("Unzipping %s to %s ..." % (file_path, target_dir))
     try:
@@ -172,6 +183,7 @@ def _unzip_file(file_path, target_dir):
         logger.error("Fail to unzip. Error: ", sys.exc_info())
         return False
 
+
 def _extract_tar(file_path, target_dir):
     logger.info("Extracting %s to %s ..." % (file_path, target_dir))
     try:
@@ -183,9 +195,11 @@ def _extract_tar(file_path, target_dir):
         return False
     return True
 
+
 def _version_compare(ver1, ver2):
     to_version = lambda ver: tuple([int(x) for x in ver.split('.') if x.isdigit()])
     return to_version(ver1) <= to_version(ver2)
+
 
 def _get_cntk_version(cntk_root):
     logger.debug("In _get_cntk_version, cntk_root: %s" % cntk_root)
@@ -197,6 +211,7 @@ def _get_cntk_version(cntk_root):
             version = fin.readline().strip()
     logger.debug("In _get_cntk_version, find version: %s" % version)
     return version
+
 
 def _update_pathenv_win(path, add):
     path_value = _registry_read(winreg.HKEY_CURRENT_USER, "Environment", "PATH")
@@ -211,7 +226,8 @@ def _update_pathenv_win(path, add):
         path_value = path_value.replace(path + ";", "")
         os.environ["PATH"] = os.environ["PATH"].replace(path + ";", "")
     _registry_write(winreg.HKEY_CURRENT_USER, "Environment", "PATH", path_value)
-    
+
+
 def detect_os():
     os_name = platform.platform(terse = True)
     os_bit = platform.architecture()[0]
@@ -237,6 +253,7 @@ def detect_os():
         return False
 
     return True
+
 
 def detect_gpu():
     sys_info['GPU'] = False
@@ -270,6 +287,7 @@ def detect_vs():
     else:
         logger.info("Installed Visual Studio: %s" % " ".join(vs))
 
+
 def detect_python_version():
     py_architecture = platform.architecture()[0]
     py_version = ".".join(map(str,sys.version_info[0:2]))
@@ -287,6 +305,7 @@ def detect_cuda():
     if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
         detect_cuda_win()
 
+
 def detect_cuda_win():
     status, stdout = _run_cmd("nvcc", ["-V"], True)
     if status and re.search(r"release\s*8.0,\s*V8.0", stdout):
@@ -298,6 +317,7 @@ def detect_cuda_win():
 def detect_cudnn():
     if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
         detect_cudnn_win()
+
 
 def detect_cudnn_win():
     required_cndunn = {'6' : 'cudnn64_6.dll', '7' : 'cudnn64_7.dll'}
@@ -418,6 +438,7 @@ def install_cntk(target_dir):
         logger.warning("Please manually install %s and update PATH environment." % target_version)
         logger.warning("You can reference this link based on your OS: https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-your-machine")
 
+
 def install_cntk_linux(cntk_root):
     logger.warning("CNTK V2 on Linux requires C++ Compiler and Open MPI. "
                    "Please refer to https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-Linux-Binary-Manual")
@@ -493,7 +514,8 @@ def pip_install_package(name, options, version = ""):
         else:
             logger.info("%s %s installed" % (name, version))
         return res == 0
-    except:
+    except Exception as e:
+        #print(str(e))
         return False
 
 
@@ -568,7 +590,6 @@ def pip_install_chainer(options):
         logger.info("Install cupy to support CUDA for chainer.")
         pip_install_package('cupy', options, '2.2.0')
     elif (sys_info["GPU"] and (sys_info['OS'] == TOOLSFORAI_OS_WIN)):
-        import importlib
         try:
             cupy = importlib.import_module('cupy')
             if (not _version_compare('2.0', cupy.__version__)):
@@ -585,15 +606,24 @@ def pip_install_chainer(options):
 def pip_install_extra_software(options):
     version = '0.19.1'
     name = 'scikit-learn'
-    pip_install_package(name, options, version)
+    if module_exists('sklearn'):
+        logger.info('{0} is already installed.'.format(name))
+    else:
+        pip_install_package(name, options, version)
 
     version = ''
     name = 'jupyter'
-    pip_install_package(name, options, version)
+    if module_exists(name):
+        logger.info('{0} is already installed.'.format(name))
+    else:
+        pip_install_package(name, options, version)
 
     version = ''
     name = 'matplotlib'
-    pip_install_package(name, options, version)   
+    if module_exists(name):
+        logger.info('{0} is already installed.'.format(name))
+    else:
+        pip_install_package(name, options, version)   
 
 
 def pip_software_install(options, user, verbose):
@@ -648,7 +678,16 @@ def fix_directory_ownership():
     set_ownership_as_login(target_dir)
 
 
+logger = _init_logger()
+
+try:
+    import pip
+except ImportError:
+    logger.error("you need to install pip first.")
+
+
 def main():
+
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
     parser.add_argument("-u", "--user", help="install pip package to user install directory", action="store_true")
@@ -676,7 +715,8 @@ def main():
     pip_software_install(args.options, args.user, args.verbose)
     fix_directory_ownership()
     logger.info('Setup finishes.')
+    input('Press enter to exit.')
+
 
 if __name__ == "__main__":
     main()
-    input('Press enter to exit.')
