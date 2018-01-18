@@ -260,14 +260,14 @@ def detect_gpu():
     gpu_detector_name = 'gpu_detector_' + sys_info['OS']
     if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
         gpu_detector_name = gpu_detector_name + '.exe'
-    local_path = os.path.join(os.curdir, gpu_detector_name)
+    gpu_detector_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), gpu_detector_name)
 
-    if not (os.path.isfile(local_path)):
-        logger.error("No GPU detector found. Please make sure {0} is in the same directory with the installer script.".format(gpu_detector_name))
+    if not (os.path.isfile(gpu_detector_path)):
+        logger.error('No GPU detector found. Please make sure {0} is in the same directory with the installer script.'.format(gpu_detector_name))
         return False
 
-    sys_info["GPU"], return_stdout = _run_cmd(local_path, return_stdout = True)
-    if not sys_info["GPU"]:
+    sys_info['GPU'], return_stdout = _run_cmd(gpu_detector_path, return_stdout = True)
+    if not sys_info['GPU']:
         return_stdout = 'None'
 
     logger.info('NVIDIA GPU: {0}'.format(return_stdout))
