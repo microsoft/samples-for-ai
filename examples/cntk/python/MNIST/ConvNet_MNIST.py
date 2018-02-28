@@ -93,6 +93,9 @@ def convnet_mnist(debug_output=False, epoch_size=60000, minibatch_size=64, max_e
         trainer.summarize_training_progress()
         z.save(os.path.join(model_path, "ConvNet_MNIST_{}.dnn".format(epoch)))
     
+    # Export as ONNX
+    z.save(os.path.join(model_path, "MNIST.onnx"), format=C.ModelFormat.ONNX)
+
     # Load test data
     reader_test = create_reader(os.path.join(data_path, 'Test-28x28_cntk_text.txt'), False, input_dim, num_output_classes)
 
