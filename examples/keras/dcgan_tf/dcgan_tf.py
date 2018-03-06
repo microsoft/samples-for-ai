@@ -1,6 +1,6 @@
 ﻿'''Deep Convolution Generative Adversarial Networks
 
-Train a simple dcgan on MNIST to generate hand written digits.
+Train a simple dcgan on MNIST to generate handwritten digits.
 
 Requirements: tensorflow >= 1.4.0; Keras >= 2.1.0
 
@@ -15,7 +15,9 @@ import os
 import argparse
 import matplotlib.pyplot as plt
 
-output_dir = 'images'
+# Path for saving generated images and model
+img_dir = 'images'
+model_dir = 'saved_model'
 
 import keras
 import keras.backend as K
@@ -159,12 +161,18 @@ class DCGAN():
             # Train the generator (wants discriminator to mistake images as real)
             g_loss = self.combined.train_on_batch(noise, np.ones((batch_size, 1)))
 
-            # Plot the progress
+            # Print the progress
             print ("%d [D loss: %f, acc.: %.2f%%] [G loss: %f]" % (epoch, d_loss[0], 100*d_loss[1], g_loss))
 
-            # If at save interval => save generated image samples
-            if epoch % save_interval == 0:
+            # If at save interval => save generated image samples and generator
+            if (epoch+1) % save_interval == 0:
+                self.save_model(epoch)
                 self.save_imgs(epoch)
+
+    def save_model(self, epoch):
+        if not os.path.exists(model_dir):
+            os.makedirs(model_dir)
+        self.generator.save(os.path.join(model_dir, 'dcgan-g-{}.h5'.format(epoch)))
 
     def save_imgs(self, epoch):
         r, c = 5, 5
@@ -182,15 +190,16 @@ class DCGAN():
                 axs[i,j].imshow(gen_imgs[cnt, :,:,0], cmap='gray')
                 axs[i,j].axis('off')
                 cnt += 1
-        if not os.path.exists(output_dir):
-            os.makedirs(output_dir)
-        fig.savefig(os.path.join(output_dir, 'mnist_{}'.format(epc)))
+        if not os.path.exists(img_dir):
+            os.makedirs(img_dir)
+        fig.savefig(os.path.join(img_dir, 'mnist_{}'.format(epoch)))
         plt.close()
 
 
 def main():
+    # Create and train a dcgan model
     dcgan = DCGAN()
-    dcgan.train(epochs=100, batch_size=32, save_interval=50)
+    dcgan.train(epochs=4000, batch_size=32, save_interval=50)
 
 
 if __name__ == "__main__":
