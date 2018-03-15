@@ -2,8 +2,13 @@
 
 This is a Keras implementation of 
 NIPS 2017 Paper: "Dynamic Routing Between Capsules"
+https://arxiv.org/abs/1710.09829
 
-Ported from https://github.com/keras-team/keras/tree/master/examples
+Code ported from
+https://github.com/keras-team/keras/tree/master/examples
+
+With data augmentation, it gets to 75% validation accuracy in 
+10 epochs, and 79% after 15 epochs, and 83% after 30 epcohs.
 
 LICENSE: MIT
 """
