@@ -11,13 +11,13 @@ import stat
 import importlib
 
 
-TOOLSFORAI_OS_WIN = 'win'
-TOOLSFORAI_OS_LINUX = 'linux'
-TOOLSFORAI_OS_MACOS = 'mac'
+TOOLSFORAI_OS_WIN = "win"
+TOOLSFORAI_OS_LINUX = "linux"
+TOOLSFORAI_OS_MACOS = "mac"
 sys_info = {}
 
 
-if platform.system() == 'Windows':
+if platform.system() == "Windows":
     import winreg 
     from ctypes.wintypes import HANDLE, BOOL, DWORD, HWND, HINSTANCE, HKEY
 
@@ -236,13 +236,13 @@ def detect_os():
     logger.info("OS: %s, %s" % (os_name, os_bit))
 
     if (os_name.startswith("Windows")):
-        sys_info['OS'] = TOOLSFORAI_OS_WIN
+        sys_info["OS"] = TOOLSFORAI_OS_WIN
         if not os_name.startswith("Windows-10"):
             logger.warning("We recommend Windows 10 as the primary development OS, other versions are not fully tested.")
     elif (os_name.startswith("Linux")):
-        sys_info['OS'] = TOOLSFORAI_OS_LINUX
+        sys_info["OS"] = TOOLSFORAI_OS_LINUX
     elif (os_name.startswith("Darwin")):
-        sys_info['OS'] = TOOLSFORAI_OS_MACOS
+        sys_info["OS"] = TOOLSFORAI_OS_MACOS
         is_64bit = sys.maxsize > 2**32
     else:
         logger.error("Only Windows, macOS and Linux are supported now.")
@@ -256,9 +256,9 @@ def detect_os():
 
 
 def detect_gpu():
-    sys_info['GPU'] = False
-    gpu_detector_name = 'gpu_detector_' + sys_info['OS']
-    if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
+    sys_info["GPU"] = False
+    gpu_detector_name = 'gpu_detector_' + sys_info["OS"]
+    if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         gpu_detector_name = gpu_detector_name + '.exe'
     gpu_detector_path = os.path.join(os.path.dirname(os.path.realpath(__file__)), gpu_detector_name)
 
@@ -266,8 +266,8 @@ def detect_gpu():
         logger.error('No GPU detector found. Please make sure {0} is in the same directory with the installer script.'.format(gpu_detector_name))
         return False
 
-    sys_info['GPU'], return_stdout = _run_cmd(gpu_detector_path, return_stdout = True)
-    if not sys_info['GPU']:
+    sys_info["GPU"], return_stdout = _run_cmd(gpu_detector_path, return_stdout = True)
+    if not sys_info["GPU"]:
         return_stdout = 'None'
 
     logger.info('NVIDIA GPU: {0}'.format(return_stdout))
@@ -302,7 +302,7 @@ def detect_python_version():
 
 
 def detect_cuda():
-    if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
+    if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         detect_cuda_win()
 
 
@@ -315,7 +315,7 @@ def detect_cuda_win():
                        "Please Download and install CUDA 8.0 from https://developer.nvidia.com/cuda-toolkit.")
 
 def detect_cudnn():
-    if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
+    if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         detect_cudnn_win()
 
 
@@ -361,7 +361,7 @@ def detect_visualcpp_runtime_win():
                 display_name = _registry_read(current_key, subkey, "DisplayName")
                 if (display_name and pattern.match(display_name)):
                     logger.info("Visual C++ runtime found.")
-                    return True;
+                    return True
             winreg.CloseKey(current_key)
         except WindowsError:
             pass
@@ -370,13 +370,13 @@ def detect_visualcpp_runtime_win():
 
 
 def install_cntk(target_dir):
-    if sys_info['OS'] != TOOLSFORAI_OS_WIN and sys_info['OS'] != TOOLSFORAI_OS_LINUX:
+    if sys_info["OS"] != TOOLSFORAI_OS_WIN and sys_info["OS"] != TOOLSFORAI_OS_LINUX:
         logger.info("CNTK is not supported on your OS.")
         return
     
     # Temporarily disable installing CNTK on Linux
     # If 'sudo' is used, the effective and real users don't match. 
-    #if sys_info['OS'] == TOOLSFORAI_OS_LINUX:
+    #if sys_info["OS"] == TOOLSFORAI_OS_LINUX:
     #    return
 
     ver = '2.3.1'
@@ -404,11 +404,11 @@ def install_cntk(target_dir):
             return
 
     cntk_file_name = "{}-{}-64bit-{}.{}".format(target_version, 
-        'Windows' if sys_info['OS'] == TOOLSFORAI_OS_WIN else 'Linux',
-        'GPU' if sys_info['GPU'] else 'CPU-Only',
-        'zip' if sys_info['OS'] == TOOLSFORAI_OS_WIN else 'tar.gz')
+        "Windows" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "Linux",
+        "GPU" if sys_info["GPU"] else "CPU-Only",
+        "zip" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "tar.gz")
     cntk_file_path = os.path.join(target_dir, cntk_file_name)
-    cntk_url = 'https://cntk.ai/BinaryDrop/{0}'.format(cntk_file_name)
+    cntk_url = "https://cntk.ai/BinaryDrop/{0}".format(cntk_file_name)
 
     skip_downloading = False
     if not skip_downloading:
@@ -520,14 +520,14 @@ def pip_install_package(name, options, version = ""):
 
 
 def pip_install_scipy(options):
-    version = '1.13.3'
-    name = 'numpy'
+    name = "numpy"
+    version = "1.13.3"
     if not pip_install_package(name, options, version):
         logger.error("Pip installation terminated due to numpy installation failure.")
         return False
 
-    version = '1.0.0'
-    name = 'scipy'
+    name = "scipy"
+    version = "1.0.0"
     if not pip_install_package(name, options, version):
         logger.error("Pip installation terminated due to scipy installation failure.")
         return False
@@ -536,8 +536,11 @@ def pip_install_scipy(options):
 
 
 def pip_install_tensorflow(options):
-    version = "1.4.0"
     name = "tensorflow%s" % ("-gpu" if sys_info["GPU"] else "")
+    if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
+        version = "1.4.0"
+    else:
+        version = "1.4.1"
     pip_install_package(name, options, version)
 
 
@@ -547,7 +550,7 @@ def pip_install_cntk(options):
         return
 
     version = "2.3.1"
-    wheel_ver = sys_info['python']
+    wheel_ver = sys_info["python"]
     arch = "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64"
     gpu_type = "GPU" if sys_info["GPU"] else "CPU-Only"
     pkt = "https://cntk.ai/PythonWheel/{0}/cntk-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch)
@@ -555,13 +558,13 @@ def pip_install_cntk(options):
 
 
 def pip_install_keras(options):
-    version = "2.1.2"
     name = "Keras"
+    version = "2.1.5"
     pip_install_package(name, options, version)
 
 
 def pip_install_caffe2(options):
-    if not (sys_info['OS'] == TOOLSFORAI_OS_WIN):
+    if not (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         logger.warning("You need to install caffe2 from source.")
         return
 
@@ -573,55 +576,57 @@ def pip_install_caffe2(options):
     
 
 def pip_install_theano(options):
-    version = "1.0.1"
     name = "Theano"
+    version = "1.0.1"
     pip_install_package(name, options, version)
 
 
 def pip_install_mxnet(options):
-    version = "1.0.0"
     name = "mxnet%s" % ("-cu80" if sys_info["GPU"] else "")
+    version = "1.0.0"
     pip_install_package(name, options, version)
 
 
 def pip_install_chainer(options):
     # cupy installation for GPU linux
-    if (sys_info["GPU"] and (sys_info['OS'] == TOOLSFORAI_OS_LINUX)):
+    name = "cupy"
+    version = "2.5.0"
+    if (sys_info["GPU"] and (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
         logger.info("Install cupy to support CUDA for chainer.")
-        pip_install_package('cupy', options, '2.2.0')
-    elif (sys_info["GPU"] and (sys_info['OS'] == TOOLSFORAI_OS_WIN)):
+        pip_install_package(name, options, version)
+    elif (sys_info["GPU"] and (sys_info["OS"] == TOOLSFORAI_OS_WIN)):
         try:
-            cupy = importlib.import_module('cupy')
-            if (not _version_compare('2.0', cupy.__version__)):
+            cupy = importlib.import_module(name)
+            if (not _version_compare("2.0", cupy.__version__)):
                 logger.warning("Please make sure cupy >= 2.0.0 to support CUDA for chainer.")
         except ImportError:
             logger.warning("Please manully install cupy to support CUDA for chainer."
-            "You can reference this link <https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer> to install cupy on windows")
+            "You can reference this link <https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer> to install cupy on Windows")
 
-    version = "3.2.0"
     name = "chainer"
+    version = "3.5.0"
     pip_install_package(name, options, version)
 
 
 def pip_install_extra_software(options):
-    version = '0.19.1'
-    name = 'scikit-learn'
-    if module_exists('sklearn'):
-        logger.info('{0} is already installed.'.format(name))
+    name = "scikit-learn"
+    version = "0.19.1"
+    if module_exists("sklearn"):
+        logger.info("{0} is already installed.".format(name))
     else:
         pip_install_package(name, options, version)
 
-    version = ''
-    name = 'jupyter'
+    name = "jupyter"
+    version = ""
     if module_exists(name):
-        logger.info('{0} is already installed.'.format(name))
+        logger.info("{0} is already installed.".format(name))
     else:
         pip_install_package(name, options, version)
 
-    version = ''
-    name = 'matplotlib'
+    name = "matplotlib"
+    version = ""
     if module_exists(name):
-        logger.info('{0} is already installed.'.format(name))
+        logger.info("{0} is already installed.".format(name))
     else:
         pip_install_package(name, options, version)   
 
@@ -634,7 +639,7 @@ def pip_software_install(options, user, verbose):
         pip_ops = ["--user"]
     
     if not verbose:
-        pip_ops.append('-q')
+        pip_ops.append("-q")
 
     if not pip_install_scipy(pip_ops):
         return
@@ -650,7 +655,7 @@ def pip_software_install(options, user, verbose):
 
 
 def set_ownership_as_login(target_dir):
-    if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
+    if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         return
 
     try:
@@ -700,12 +705,12 @@ def main():
         return
 
     target_dir = ''
-    if sys_info['OS'] == TOOLSFORAI_OS_WIN:
+    if sys_info["OS"] == TOOLSFORAI_OS_WIN:
         target_dir = os.path.sep.join([os.getenv("APPDATA"), "Microsoft", "ToolsForAI", "RuntimeSDK"])
-    elif sys_info['OS'] == TOOLSFORAI_OS_LINUX:
+    elif sys_info["OS"] == TOOLSFORAI_OS_LINUX:
         target_dir = os.path.sep.join([os.path.expanduser('~'), '.toolsforai', 'RuntimeSDK'])
 
-    if (sys_info['OS'] == TOOLSFORAI_OS_WIN):
+    if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         detect_vs()
 
     if (sys_info["GPU"]):
