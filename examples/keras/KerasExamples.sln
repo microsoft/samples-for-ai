@@ -9,6 +9,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "cifar10_th", "cifar10_th\ci
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "dcgan_tf", "dcgan_tf\dcgan_tf.pyproj", "{3BF122A1-1FE9-4C9F-9A0C-84AB32D3D8B1}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "capsnet_tf", "capsnet_tf\capsnet_tf.pyproj", "{0D453F38-0222-4321-80B1-AB2585558A57}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,8 @@ Global
 		{B7C0B0A0-49DD-4D9E-AD08-7EA9030C9482}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3BF122A1-1FE9-4C9F-9A0C-84AB32D3D8B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3BF122A1-1FE9-4C9F-9A0C-84AB32D3D8B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D453F38-0222-4321-80B1-AB2585558A57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D453F38-0222-4321-80B1-AB2585558A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
