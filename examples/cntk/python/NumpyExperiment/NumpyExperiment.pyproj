@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{a675d77d-78e3-4f5f-b8bc-a70ef8be4d89}</ProjectGuid>
+    <ProjectHome>..\NumpyExperiment</ProjectHome>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <CommandLineArguments>--input_dir input/ --output_dir output/</CommandLineArguments>
+    <ProjectTypeGuids>{8B0147FC-7A0C-481F-99C4-C90CCB52692E};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
+    <StartupFile />
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup />
+  <ItemGroup>
+    <Compile Include="IndRNN.py" />
+    <Compile Include="simplest_lstm_classification.py" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>
