@@ -39,7 +39,7 @@ class IndRNN(object):
         return runit
 
 def get_batch():
-    inp = np.random.rand(20,50,20)
+    inp = np.random.rand(20,2000,2)
     target = np.sum(inp,axis=(1,2))
     target = np.reshape(target, (20,1))
     return inp,target
@@ -47,24 +47,50 @@ def get_batch():
 if __name__=='__main__':
     HIDDEN_DIM=128
 
-    input_ph=C.sequence.input_variable(20)
+    input_ph=C.sequence.input_variable(2)
     targets_ph=C.input_variable(shape=1)
-
+    
     model = C.layers.Sequential([
-        C.layers.Recurrence(IndRNN(HIDDEN_DIM, 20).build()), 
-        C.sequence.last,
-        C.layers.Dense(1)])
+        C.layers.Recurrence(IndRNN(HIDDEN_DIM, 2).build()), 
+        C.layers.Recurrence(IndRNN(1, HIDDEN_DIM).build()),
+        C.sequence.last
+        ])
     output = model(input_ph)
 
     loss = C.losses.squared_error(output, targets_ph)
     comp = C.combine(output, loss)
 
-    learner = C.learners.adagrad(loss.parameters, lr=0.0000001)
+    lrs = [(1,0.02),(300,0.002),(600,0.0001)]
+    lr_schedule = C.learners.learning_parameter_schedule(lrs)
+    
+    learner = C.learners.adam(loss.parameters, lr_schedule, 0.9)
     trainer = C.Trainer(output, loss, learner,ProgressPrinter(5))
 
+    input, target = get_batch()
     for _ in range(1000):
-        input, target = get_batch()
         trainer.train_minibatch({input_ph:input, targets_ph:target})
     
     res = output.eval({input_ph:input})
     print('predict:{}, target:{}'.format(res,target))
+    
+    # just use lstm
+    model2 = C.layers.Sequential([
+        C.layers.Recurrence(C.layers.LSTM(HIDDEN_DIM)),
+        C.sequence.last,
+        C.layers.Dense(1, activation=C.relu)
+    ])
+    output = model2(input_ph)
+
+    loss = C.losses.squared_error(output, targets_ph)
+    comp = C.combine(output, loss)
+
+    learner = C.learners.adam(loss.parameters, lr_schedule, 0.9)
+    trainer = C.Trainer(output, loss, learner,ProgressPrinter(5))
+
+    input, target = get_batch()
+    for _ in range(1000):
+        trainer.train_minibatch({input_ph:input, targets_ph:target})
+    
+    res = output.eval({input_ph:input})
+    print('predict:{}, target:{}'.format(res,target))
+    
