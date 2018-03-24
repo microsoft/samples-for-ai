@@ -17,7 +17,9 @@
   <PropertyGroup />
   <ItemGroup>
     <Compile Include="IndRNN.py" />
-    <Compile Include="simplest_lstm_classification.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="README.md" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>
