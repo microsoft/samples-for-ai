@@ -11,6 +11,10 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MNIST", "MNIST\MNIST.pyproj
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "cifar10", "cifar10\cifar10.pyproj", "{16A0ED44-98A5-4DCB-B8DB-58ADB8D25AAE}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Twitter_Sentiment_Analysis", "Twitter_Sentiment_Analysis\Twitter_Sentiment_Analysis.pyproj", "{1E07E512-FAAC-4A7C-A52A-E80CDCF94B07}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "GeneGAN", "GeneGAN\GeneGAN.pyproj", "{A687BFAE-1658-4984-BC3A-77E61453AF71}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,8 +29,15 @@ Global
 		{1A8C8511-61BB-4F82-BC27-C82CBC6ACA3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16A0ED44-98A5-4DCB-B8DB-58ADB8D25AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16A0ED44-98A5-4DCB-B8DB-58ADB8D25AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E07E512-FAAC-4A7C-A52A-E80CDCF94B07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E07E512-FAAC-4A7C-A52A-E80CDCF94B07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A687BFAE-1658-4984-BC3A-77E61453AF71}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A687BFAE-1658-4984-BC3A-77E61453AF71}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2DA67F13-B232-433E-A38C-CB4A6975548D}
 	EndGlobalSection
 EndGlobal
