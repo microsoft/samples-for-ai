@@ -1,6 +1,6 @@
 ﻿'''Wasserstein Generative Adversarial Networks
 
-Train a simple dcgan on MNIST to generate handwritten digits.
+Train a simple wgan on MNIST to generate handwritten digits.
 
 Requirements: tensorflow >= 1.4.0; Keras >= 2.1.0
 
