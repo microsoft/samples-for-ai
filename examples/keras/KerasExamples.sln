@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2036
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "cifar10_tf", "cifar10_tf\cifar10_tf.pyproj", "{F7130CC2-FAB7-45AA-97B8-7C6F372AC51F}"
 EndProject
@@ -10,6 +10,8 @@ EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "dcgan_tf", "dcgan_tf\dcgan_tf.pyproj", "{3BF122A1-1FE9-4C9F-9A0C-84AB32D3D8B1}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "capsnet_tf", "capsnet_tf\capsnet_tf.pyproj", "{0D453F38-0222-4321-80B1-AB2585558A57}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "acgan_tf", "acgan_tf\acgan_tf.pyproj", "{11DC1594-FA9D-446B-8262-63F1048B55CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -25,6 +27,8 @@ Global
 		{3BF122A1-1FE9-4C9F-9A0C-84AB32D3D8B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0D453F38-0222-4321-80B1-AB2585558A57}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0D453F38-0222-4321-80B1-AB2585558A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11DC1594-FA9D-446B-8262-63F1048B55CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11DC1594-FA9D-446B-8262-63F1048B55CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
