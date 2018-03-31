@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2010
+VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "cifar10_tf", "cifar10_tf\cifar10_tf.pyproj", "{F7130CC2-FAB7-45AA-97B8-7C6F372AC51F}"
 EndProject
