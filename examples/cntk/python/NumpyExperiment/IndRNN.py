@@ -1,3 +1,9 @@
+# 
+# Copyright (c) 2018 Wang XX 
+# 
+# MIT License 
+# http://www.opensource.org/licenses/mit-license.php 
+#  
 import cntk as C
 from cntk.initializer import xavier, glorot_uniform, normal
 from cntk.logging import ProgressPrinter

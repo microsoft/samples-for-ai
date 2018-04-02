@@ -6,3 +6,6 @@ In InnRNN.py, a model trying to fit addition result of sequences over 2000 times
 the training loss continueously decrease and quickly convergence.
 
 But the training loss nearly maintains its level when a LSTM cell is used.
+
+MIT License 
+http://www.opensource.org/licenses/mit-license.php 
