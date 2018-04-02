@@ -12,6 +12,7 @@ EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "capsnet_tf", "capsnet_tf\capsnet_tf.pyproj", "{0D453F38-0222-4321-80B1-AB2585558A57}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "DenseNet", "DenseNet\DenseNet.pyproj", "{5B91D130-03B2-415C-8EC3-92D224EE7C34}"
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "acgan_tf", "acgan_tf\acgan_tf.pyproj", "{11DC1594-FA9D-446B-8262-63F1048B55CD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,6 +30,8 @@ Global
 		{0D453F38-0222-4321-80B1-AB2585558A57}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5B91D130-03B2-415C-8EC3-92D224EE7C34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{5B91D130-03B2-415C-8EC3-92D224EE7C34}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{11DC1594-FA9D-446B-8262-63F1048B55CD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{11DC1594-FA9D-446B-8262-63F1048B55CD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
