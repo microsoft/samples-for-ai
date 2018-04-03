@@ -91,4 +91,4 @@ python tools/train.py -c conf/train.cfg
 
 ## License
 
-MIT License 
+MIT License （See [LICENSE.md](LICENSE.md)）
