@@ -15,6 +15,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ptb", "ptb\ptb.pyproj", "{3
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "RNet", "RNet\RNet.pyproj", "{2425B9C4-CBEE-4B13-8FD0-E6717A7B5546}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "NumpyExperiment", "NumpyExperiment\NumpyExperiment.pyproj", "{A675D77D-78E3-4F5F-B8BC-A70EF8BE4D89}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,8 @@ Global
 		{324469C2-258E-4672-B41D-46F6B3FAD81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{2425B9C4-CBEE-4B13-8FD0-E6717A7B5546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{2425B9C4-CBEE-4B13-8FD0-E6717A7B5546}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A675D77D-78E3-4F5F-B8BC-A70EF8BE4D89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A675D77D-78E3-4F5F-B8BC-A70EF8BE4D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
