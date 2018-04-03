@@ -39,6 +39,8 @@ Open yoloTF project, find yoloTF.py file, and clikc "Run" button.
 
 1. Download the training, validation and test data
 
+   > For windows users, just copy the following 2 links into your favorite browser, press "Enter" to start downloading.
+
    ```
    wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
    wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtest_06-Nov-2007.tar
@@ -46,6 +48,8 @@ Open yoloTF project, find yoloTF.py file, and clikc "Run" button.
    ```
 
 2. Extract all of these tars into one directory named `VOCdevkit`
+
+   > For windows users, use Winrar to extract the compressed files.
 
    ```
    tar xvf VOCtrainval_06-Nov-2007.tar
@@ -63,6 +67,8 @@ Open yoloTF project, find yoloTF.py file, and clikc "Run" button.
    ```
 
 4. Create symlinks for the PASCAL VOC dataset
+
+   > For windows users, right click the VOCdevkit/ folder and select "create symbolic links", and copy this link to the "data" directory. Or you can directly copy the whole "VOCdevkit" folder into the "data" directory and rename it "VOCdevkit2007"
 
    ```
    cd $YOLO_ROOT/data
@@ -82,6 +88,8 @@ python tools/preprocess_pascal_voc.py
 ```
 python tools/train.py -c conf/train.cfg
 ```
+
+Or user VS2017 to run the code.
 
 #### Train your customer data
 
