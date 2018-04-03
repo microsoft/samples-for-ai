@@ -1,6 +1,7 @@
 MIT License 
 
-Copyright (c) 2018 ZhangShichao
+Copyright (c) 2018
+With the permission of [nilboy](https://github.com/nilboy), original repo link [https://github.com/nilboy/tensorflow-yolo](https://github.com/nilboy/tensorflow-yolo).
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
 of this software and associated documentation files (the "Software"), to deal
