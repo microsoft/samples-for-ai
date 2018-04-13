@@ -155,7 +155,7 @@ def _download_file(url, local_path):
     try:
         import urllib.request
         import ssl
-        myssl = ssl.create_default_context();
+        myssl = ssl.create_default_context()
         myssl.check_hostname=False
         myssl.verify_mode=ssl.CERT_NONE
         with urllib.request.urlopen(url, context = myssl) as fin, \
@@ -235,6 +235,7 @@ def detect_os():
 
     logger.info("OS: %s, %s" % (os_name, os_bit))
 
+    sys_info["OS"] = None
     if (os_name.startswith("Windows")):
         sys_info["OS"] = TOOLSFORAI_OS_WIN
         if not os_name.startswith("Windows-10"):
@@ -289,10 +290,12 @@ def detect_vs():
 
 
 def detect_python_version():
+    sys_info["python"] = None
     py_architecture = platform.architecture()[0]
     py_version = ".".join(map(str,sys.version_info[0:2]))
     py_full_version = ".".join(map(str,sys.version_info[0:3]))
     sys_info["python"] = py_version.replace('.', '')
+    logger.debug("python_version: {0}", format(sys_info["python"]))
     logger.info("Python: %s, %s" % (py_full_version, py_architecture))
     if not (_version_compare("3.5", py_version) and py_architecture == '64bit'):
         logger.error("64-bit Python 3.5 or higher is required to run this installer."
@@ -300,19 +303,35 @@ def detect_python_version():
         return False
     return True
 
+def detect_tf_version():
+    sys_info["tensorflow"] = None
+    try:
+        import tensorflow as tf
+        logger.debug("Import tensorflow successfully!")
+        tf_version = tf.__version__
+        sys_info["tensorflow"] = tf_version
+        logger.info("tensorflow_version: {0}".format(tf_version))
+    except ImportError:
+        logger.error("Import tensorflow failed! Please check the installation of tensorflow.")
+    except:
+        logger.error("Unexpected error: {0}".format(sys.exc_info()[0]))
 
 def detect_cuda():
+    sys_info["CUDA"] = None
     if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         detect_cuda_win()
-
 
 def detect_cuda_win():
     status, stdout = _run_cmd("nvcc", ["-V"], True)
     if status and re.search(r"release\s*8.0,\s*V8.0", stdout):
-        logger.info("CUDA 8.0 found.")
+        sys_info["CUDA"] = "8.0"
+        logger.warning("CUDA 8.0 found. We recommend CUDA 9.0, otherwise some functions will not work properly.")
+    elif status and re.search(r"release\s*9.0,\s*V9.0", stdout):
+        sys_info["CUDA"] = "9.0"
+        logger.info["CUDA 9.0 found"]
     else: 
-        logger.warning("CUDA 8.0 is required. Could not find NVIDIA CUDA Toolkit 8.0. "
-                       "Please Download and install CUDA 8.0 from https://developer.nvidia.com/cuda-toolkit.")
+        logger.warning("CUDA 9.0 is required. Could not find NVIDIA CUDA Toolkit 9.0. "
+                       "Please Download and install CUDA 9.0 from https://developer.nvidia.com/cuda-toolkit.")
 
 def detect_cudnn():
     if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
@@ -320,7 +339,10 @@ def detect_cudnn():
 
 
 def detect_cudnn_win():
-    required_cndunn = {'6' : 'cudnn64_6.dll', '7' : 'cudnn64_7.dll'}
+    if sys_info["CUDA"] == "8.0":
+        required_cndunn = {'6': 'cudnn64_6.dll', '7': 'cudnn64_7.dll'}
+    else:
+        required_cndunn = {'7': 'cudnn64_7.dll'}
     cmd = r"C:\Windows\System32\where.exe"
     for version, dll in required_cndunn.items():
         args = [dll]
@@ -378,8 +400,10 @@ def install_cntk(target_dir):
     # If 'sudo' is used, the effective and real users don't match. 
     #if sys_info["OS"] == TOOLSFORAI_OS_LINUX:
     #    return
-
-    ver = '2.3.1'
+    if sys_info["CUDA"] == "8.0":
+        ver = "2.3.1"
+    else:
+        ver = "2.5"
     target_version = 'CNTK-{0}'.format(ver.replace('.', '-'))
     version = _get_cntk_version(target_dir)
     if target_version == version:
@@ -502,13 +526,10 @@ def install_cntk_win(cntk_root):
     return suc
 
 
-def pip_install_package(name, options, version = ""):
+def pip_install_package(name, pkg, options, version = ""):
     try:
         logger.info("Begin install %s %s ..." % (name, version))
-        pkt = name
-        if version:
-            pkt = "%s == %s" % (name, version)
-        res = pip.main(["install", *options, pkt])
+        res = pip.main(["install", *options, pkg])
         if res != 0:
             logger.error("Fail to install %s pip package." % name)
         else:
@@ -521,46 +542,67 @@ def pip_install_package(name, options, version = ""):
 
 def pip_install_scipy(options):
     name = "numpy"
-    version = "1.13.3"
-    if not pip_install_package(name, options, version):
+    version = "1.14.2"
+    if version:
+        pkg = "%s == %s" % (name, version)
+    else:
+        pkg = name
+    if not pip_install_package(name, pkg, options, version):
         logger.error("Pip installation terminated due to numpy installation failure.")
         return False
 
     name = "scipy"
-    version = "1.0.0"
-    if not pip_install_package(name, options, version):
+    version = "1.0.1"
+    if version:
+        pkg = "%s == %s" % (name, version)
+    else:
+        pkg = name
+    if not pip_install_package(name, pkg, options, version):
         logger.error("Pip installation terminated due to scipy installation failure.")
         return False
-
     return True
 
 
 def pip_install_tensorflow(options):
     name = "tensorflow%s" % ("-gpu" if sys_info["GPU"] else "")
-    if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
+    if (sys_info["CUDA"] == "8.0" and sys_info["OS"] == TOOLSFORAI_OS_WIN):
         version = "1.4.0"
-    else:
+    elif (sys_info["CUDA"] == "8.0" and sys_info["OS"] == TOOLSFORAI_OS_LINUX):
         version = "1.4.1"
-    pip_install_package(name, options, version)
+    else:
+        version = "1.5.0"
+    if version:
+        pkg = "%s == %s" % (name, version)
+    else:
+        pkg = name
+    pip_install_package(name, pkg, options, version)
 
 
 def pip_install_cntk(options):
     if not ((sys_info["OS"] == TOOLSFORAI_OS_WIN) or (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
         logger.info("cntk pip package not available on your OS.")
         return
-
-    version = "2.3.1"
+    if sys_info["CUDA"] == "8.0":
+        version = "2.3.1"
+    else:
+        version = "2.5"
+    name = "cntk"
     wheel_ver = sys_info["python"]
     arch = "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64"
     gpu_type = "GPU" if sys_info["GPU"] else "CPU-Only"
-    pkt = "https://cntk.ai/PythonWheel/{0}/cntk-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch)
-    pip_install_package(pkt, options)
+    cntk_type = "cntk_gpu" if sys_info["GPU"] else "cntk"
+    pkt = "https://cntk.ai/PythonWheel/{0}/{4}-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch, cntk_type)
+    pip_install_package(name, pkt, options, version)
 
 
 def pip_install_keras(options):
     name = "Keras"
     version = "2.1.5"
-    pip_install_package(name, options, version)
+    if version:
+        pkg = "%s == %s" % (name, version)
+    else:
+        pkg = name
+    pip_install_package(name, pkg, options, version)
 
 
 def pip_install_caffe2(options):
@@ -569,31 +611,44 @@ def pip_install_caffe2(options):
         return
 
     version = "0.8.1"
+    name = "caffe2"
     arch = "win_amd64"
     wheel_ver = sys_info["python"]
-    pkt = "https://github.com/linmajia/ai-package/raw/master/caffe2/{0}/caffe2_gpu-{0}-cp{1}-cp{1}m-{2}.whl".format(version, wheel_ver, arch)
-    pip_install_package(pkt, options)
+    pkg = "https://github.com/linmajia/ai-package/raw/master/caffe2/{0}/caffe2_gpu-{0}-cp{1}-cp{1}m-{2}.whl".format(version, wheel_ver, arch)
+    pip_install_package(name, pkg, options, version)
     
 
 def pip_install_theano(options):
     name = "Theano"
     version = "1.0.1"
-    pip_install_package(name, options, version)
+    if version:
+        pkg = "%s == %s" % (name, version)
+    else:
+        pkg = name
+    pip_install_package(name, pkg, options, version)
 
 
 def pip_install_mxnet(options):
     name = "mxnet%s" % ("-cu80" if sys_info["GPU"] else "")
     version = "1.0.0"
-    pip_install_package(name, options, version)
+    if version:
+        pkg = "%s == %s" % (name, version)
+    else:
+        pkg = name
+    pip_install_package(name, pkg, options, version)
 
 
 def pip_install_chainer(options):
     # cupy installation for GPU linux
     name = "cupy"
     version = "2.5.0"
+    if version:
+        pkg = "%s == %s" % (name, version)
+    else:
+        pkg = name
     if (sys_info["GPU"] and (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
         logger.info("Install cupy to support CUDA for chainer.")
-        pip_install_package(name, options, version)
+        pip_install_package(name, pkg, options, version)
     elif (sys_info["GPU"] and (sys_info["OS"] == TOOLSFORAI_OS_WIN)):
         try:
             cupy = importlib.import_module(name)
@@ -605,31 +660,130 @@ def pip_install_chainer(options):
 
     name = "chainer"
     version = "3.5.0"
-    pip_install_package(name, options, version)
-
-
-def pip_install_extra_software(options):
-    name = "scikit-learn"
-    version = "0.19.1"
-    if module_exists("sklearn"):
-        logger.info("{0} is already installed.".format(name))
+    if version:
+        pkg = "%s == %s" % (name, version)
     else:
-        pip_install_package(name, options, version)
+        pkg = name
+    pip_install_package(name, pkg, options, version)
 
-    name = "jupyter"
+#converter related
+def pip_install_winmltools(options):
+    name = "winmltools"
     version = ""
+    if version:
+        pkg = "%s == %s" % (name, version)
+    else:
+        pkg = name
     if module_exists(name):
         logger.info("{0} is already installed.".format(name))
     else:
-        pip_install_package(name, options, version)
+        pip_install_package(name, pkg, options)
+
+def pip_install_coremltools(options):
+    name = "coremltools"
+    version = "0.8"
+    pkg = "git+https://github.com/apple/{0}@v{1}".format(name, version)
+    if module_exists(name):
+        logger.info("{0} is already installed.".format(name))
+        return
+    pip_install_package(name, pkg, options, version)
+
+def pip_install_onnx(options):
+    name = "onnx"
+    version = "1.0.1"
+    if sys_info["python"] == "35":
+        pkg = "https://pypi.python.org/packages/40/1f/c96963199db09d79c4d846e7c9fd46f11e361cfa99cfce976f7a1c102e70/onnx-1.0.1-cp35-cp35m-win_amd64.whl"
+    elif sys_info["python"] == "36":
+        pkg = "https://pypi.python.org/packages/54/ef/242724aa703f31c54b73c57424a487263f802b50e8805dc07e1ab7e10bd4/onnx-1.0.1-cp36-cp36m-win_amd64.whl"
+    if module_exists(name):
+        logger.info("{0} is already installed.".format(name))
+        return
+    pip_install_package(name, pkg, options, version)
+
+def pip_install_tf2onnx(options):
+    pass
+
+def pip_install_extra_software(options):
+    name = "jupyter"
+    version = ""
+    if version:
+        pkg = "%s == %s" % (name, version)
+    else:
+        pkg = name
+    if module_exists(name):
+        logger.info("{0} is already installed.".format(name))
+    else:
+        pip_install_package(name, pkg, options, version)
 
     name = "matplotlib"
     version = ""
+    if version:
+        pkg = "%s == %s" % (name, version)
+    else:
+        pkg = name
     if module_exists(name):
         logger.info("{0} is already installed.".format(name))
     else:
-        pip_install_package(name, options, version)   
+        pip_install_package(name, pkg, options, version)
 
+    name = "pandas"
+    version = ""
+    if version:
+        pkg = "%s == %s" % (name, version)
+    else:
+        pkg = name
+    if module_exists(name):
+        logger.info("{0} is already installed.".format(name))
+    else:
+        pip_install_package(name, pkg, options, version)
+
+
+def pip_install_converter(options):
+    try:
+        detect_tf_version()
+        if ((not sys_info["tensorflow"]) or (not _version_compare("1.5.0", sys_info["tensorflow"]))):
+            logger.warning("We recommend tensorflow==1.5.0, otherwise some functions of converter will not work properly.")
+        pip_install_coremltools(options)
+        pip_install_onnx(options)
+        pip_install_tf2onnx(options)
+        pip_install_winmltools(options)
+
+    except Exception as e:
+        logger.info(e)
+
+def pip_install_ml_software(options):
+    name = "scikit-learn"
+    version = "0.19.1"
+    if version:
+        pkg = "%s == %s" % (name, version)
+    else:
+        pkg = name
+    if module_exists("sklearn"):
+        logger.info("{0} is already installed.".format(name))
+    else:
+        pip_install_package(name, pkg, options, version)
+
+    name = "xgboost"
+    version = "0.7"
+    if sys_info["python"] == "35":
+        pkg = "https://download.lfd.uci.edu/pythonlibs/u2yrk7ps/xgboost-0.7-cp35-cp35m-win_amd64.whl"
+    elif sys_info["python"] == "36":
+        pkg = "https://download.lfd.uci.edu/pythonlibs/u2yrk7ps/xgboost-0.7-cp36-cp36m-win_amd64.whl"
+    if module_exists(name):
+        logger.info("{0} is already installed.".format(name))
+    pip_install_package(name, pkg, options, version)
+
+    name = "libsvm"
+    version = "3.22"
+    if sys_info["python"] == "35":
+        pkg = "https://download.lfd.uci.edu/pythonlibs/u2yrk7ps/libsvm-3.22-cp35-cp35m-win_amd64.whl"
+    elif sys_info["python"] == "36":
+        pkg = "https://download.lfd.uci.edu/pythonlibs/u2yrk7ps/libsvm-3.22-cp36-cp36m-win_amd64.whl"
+    # if module_exists(name):
+    #     logger.info("{0} is already installed.".format(name))
+    #     return
+    logger.debug("pip install libsvm form {0}".format(pkg))
+    pip_install_package(name, pkg, options, version)
 
 def pip_software_install(options, user, verbose):
     pip_ops = []
@@ -650,7 +804,10 @@ def pip_software_install(options, user, verbose):
     pip_install_chainer(pip_ops)
     pip_install_theano(pip_ops)
     pip_install_keras(pip_ops)
-    pip_install_caffe2(pip_ops)
+    if sys_info["CUDA"] == "8.0":
+        pip_install_caffe2(pip_ops)
+    pip_install_ml_software(pip_ops)
+    pip_install_converter(pip_ops)
     pip_install_extra_software(pip_ops)
 
 
@@ -696,6 +853,7 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
     parser.add_argument("-u", "--user", help="install pip package to user install directory", action="store_true")
+    parser.add_argument("--forcecuda8", help="Forced installation of dependency packages for Cuda8.", action="store_true")
     parser.add_argument("-o", "--options", help="pip extra options for installation. --user ignored if this option supplied.")
     args, unknown = parser.parse_known_args()
     if args.verbose:
@@ -715,7 +873,11 @@ def main():
 
     if (sys_info["GPU"]):
         detect_cuda()
+        if args.forcecuda8:
+            sys_info["CUDA"] = "8.0"
+            logger.warning("Force the installation of the dependency packages for cuda 8.0!")
         detect_cudnn()
+
     install_cntk(target_dir)
     pip_software_install(args.options, args.user, args.verbose)
     fix_directory_ownership()
