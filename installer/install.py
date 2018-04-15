@@ -14,7 +14,13 @@ import importlib
 TOOLSFORAI_OS_WIN = "win"
 TOOLSFORAI_OS_LINUX = "linux"
 TOOLSFORAI_OS_MACOS = "mac"
-sys_info = {}
+sys_info = {
+    "OS": None,
+    "python": None,
+    "GPU": False,
+    "CUDA": None,
+    "tensorflow": None
+}
 
 
 if platform.system() == "Windows":
@@ -235,7 +241,7 @@ def detect_os():
 
     logger.info("OS: %s, %s" % (os_name, os_bit))
 
-    sys_info["OS"] = None
+    # sys_info["OS"] = None
     if (os_name.startswith("Windows")):
         sys_info["OS"] = TOOLSFORAI_OS_WIN
         if not os_name.startswith("Windows-10"):
@@ -257,7 +263,7 @@ def detect_os():
 
 
 def detect_gpu():
-    sys_info["GPU"] = False
+    # sys_info["GPU"] = False
     gpu_detector_name = 'gpu_detector_' + sys_info["OS"]
     if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         gpu_detector_name = gpu_detector_name + '.exe'
@@ -290,7 +296,7 @@ def detect_vs():
 
 
 def detect_python_version():
-    sys_info["python"] = None
+    # sys_info["python"] = None
     py_architecture = platform.architecture()[0]
     py_version = ".".join(map(str,sys.version_info[0:2]))
     py_full_version = ".".join(map(str,sys.version_info[0:3]))
@@ -304,7 +310,7 @@ def detect_python_version():
     return True
 
 def detect_tf_version():
-    sys_info["tensorflow"] = None
+    # sys_info["tensorflow"] = None
     try:
         import tensorflow as tf
         logger.debug("Import tensorflow successfully!")
@@ -317,7 +323,7 @@ def detect_tf_version():
         logger.error("Unexpected error: {0}".format(sys.exc_info()[0]))
 
 def detect_cuda():
-    sys_info["CUDA"] = None
+    # sys_info["CUDA"] = None
     if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         detect_cuda_win()
 
@@ -405,6 +411,7 @@ def install_cntk(target_dir):
     else:
         ver = "2.5"
     target_version = 'CNTK-{0}'.format(ver.replace('.', '-'))
+    logger.debug("target_version: {0}".format(target_version))
     version = _get_cntk_version(target_dir)
     if target_version == version:
         logger.info('CNTK {0} already installed'.format(ver))
