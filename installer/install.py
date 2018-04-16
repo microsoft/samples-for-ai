@@ -301,7 +301,7 @@ def detect_python_version():
     py_version = ".".join(map(str,sys.version_info[0:2]))
     py_full_version = ".".join(map(str,sys.version_info[0:3]))
     sys_info["python"] = py_version.replace('.', '')
-    logger.debug("python_version: {0}", format(sys_info["python"]))
+    logger.debug("python_version: {0}".format(sys_info["python"]))
     logger.info("Python: %s, %s" % (py_full_version, py_architecture))
     if not (_version_compare("3.5", py_version) and py_architecture == '64bit'):
         logger.error("64-bit Python 3.5 or higher is required to run this installer."
