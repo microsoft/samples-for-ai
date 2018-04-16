@@ -546,6 +546,17 @@ def pip_install_package(name, pkg, options, version = ""):
         #print(str(e))
         return False
 
+def pip_uninstall_packge(name, options, version = ""):
+    try:
+        logger.info("Begin uninstall {0} {1} ...".format(name, version))
+        res = pip.main(["uninstall", *options, name])
+        if res != 0:
+            logger.error("Fail to uninstall {0} pip package.".format(name))
+        else:
+            logger.info("{0} {1} uninstalled successfully.".format(name, version))
+        return res == 0
+    except:
+        return False
 
 def pip_install_scipy(options):
     name = "numpy"
@@ -708,7 +719,13 @@ def pip_install_onnx(options):
     pip_install_package(name, pkg, options, version)
 
 def pip_install_tf2onnx(options):
-    pass
+    name = "tf2onnx"
+    version = "0.0.0.1"
+    pkg = "git+https://github.com/tocean/tensorflow-onnx.git@r0.1"
+    if module_exists(name):
+        logger.info("{0} is already installed, we will uninstall {0} and reinstall the latest {0}.".format(name))
+        pip_uninstall_packge(name, options, version)
+    pip_install_package(name, pkg, options, version)
 
 def pip_install_extra_software(options):
     name = "jupyter"
