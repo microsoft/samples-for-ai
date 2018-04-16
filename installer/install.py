@@ -709,6 +709,9 @@ def pip_install_coremltools(options):
 def pip_install_onnx(options):
     name = "onnx"
     version = "1.0.1"
+    if sys_info["OS"] != TOOLSFORAI_OS_WIN:
+        logger.warning("In Linux or Mac, you can manually download source code and install {0}=={1} form this link: https://pypi.python.org/pypi/onnx/1.0.1 .".format(name, version))
+        return
     if sys_info["python"] == "35":
         pkg = "https://pypi.python.org/packages/40/1f/c96963199db09d79c4d846e7c9fd46f11e361cfa99cfce976f7a1c102e70/onnx-1.0.1-cp35-cp35m-win_amd64.whl"
     elif sys_info["python"] == "36":
@@ -789,6 +792,9 @@ def pip_install_ml_software(options):
 
     name = "xgboost"
     version = "0.7"
+    if sys_info["OS"] != TOOLSFORAI_OS_WIN:
+        logger.warning('In Linux or Mac, You can install {0}=={1} by "pip install ...", and C++ compiler needed.'.format(name, version))
+        return
     if sys_info["python"] == "35":
         pkg = "https://download.lfd.uci.edu/pythonlibs/u2yrk7ps/xgboost-0.7-cp35-cp35m-win_amd64.whl"
     elif sys_info["python"] == "36":
@@ -799,13 +805,13 @@ def pip_install_ml_software(options):
 
     name = "libsvm"
     version = "3.22"
+    if sys_info["OS"] != TOOLSFORAI_OS_WIN:
+        logger.warning("In Linux or Mac, in order to install {0} {1}, please manually download source code and build it.".format(name, version))
+        return
     if sys_info["python"] == "35":
         pkg = "https://download.lfd.uci.edu/pythonlibs/u2yrk7ps/libsvm-3.22-cp35-cp35m-win_amd64.whl"
     elif sys_info["python"] == "36":
         pkg = "https://download.lfd.uci.edu/pythonlibs/u2yrk7ps/libsvm-3.22-cp36-cp36m-win_amd64.whl"
-    # if module_exists(name):
-    #     logger.info("{0} is already installed.".format(name))
-    #     return
     logger.debug("pip install libsvm form {0}".format(pkg))
     pip_install_package(name, pkg, options, version)
 
