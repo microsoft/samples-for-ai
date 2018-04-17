@@ -617,16 +617,17 @@ def pip_install_cntk(options):
     if not ((sys_info["OS"] == TOOLSFORAI_OS_WIN) or (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
         logger.info("cntk pip package not available on your OS.")
         return
-    if sys_info["CUDA"] == "8.0":
-        version = "2.3.1"
-    else:
-        version = "2.5"
     name = "cntk"
     wheel_ver = sys_info["python"]
     arch = "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64"
     gpu_type = "GPU" if sys_info["GPU"] else "CPU-Only"
     cntk_type = "cntk_gpu" if sys_info["GPU"] else "cntk"
-    pkt = "https://cntk.ai/PythonWheel/{0}/{4}-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch,
+    if sys_info["CUDA"] == "8.0":
+        version = "2.3.1"
+        pkg =  "https://cntk.ai/PythonWheel/{0}/cntk-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch)
+    else:
+        version = "2.5"
+        pkt = "https://cntk.ai/PythonWheel/{0}/{4}-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch,
                                                                                 cntk_type)
     pip_install_package(name, pkt, options, version)
 
