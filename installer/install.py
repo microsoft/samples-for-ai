@@ -826,9 +826,9 @@ def pip_install_ml_software(options):
                                                                                                               version))
         return
     if sys_info["python"] == "35":
-        pkg = "https://download.lfd.uci.edu/pythonlibs/u2yrk7ps/xgboost-0.7-cp35-cp35m-win_amd64.whl"
+        pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/xgboost/0.7/xgboost-0.7-cp35-cp35m-win_amd64.whl"
     elif sys_info["python"] == "36":
-        pkg = "https://download.lfd.uci.edu/pythonlibs/u2yrk7ps/xgboost-0.7-cp36-cp36m-win_amd64.whl"
+        pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/xgboost/0.7/xgboost-0.7-cp36-cp36m-win_amd64.whl"
     if module_exists(name):
         logger.info("{0} is already installed.".format(name))
     pip_install_package(name, pkg, options, version)
@@ -841,9 +841,9 @@ def pip_install_ml_software(options):
                 name, version))
         return
     if sys_info["python"] == "35":
-        pkg = "https://download.lfd.uci.edu/pythonlibs/u2yrk7ps/libsvm-3.22-cp35-cp35m-win_amd64.whl"
+        pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/libsvm/3.22/libsvm-3.22-cp35-cp35m-win_amd64.whl"
     elif sys_info["python"] == "36":
-        pkg = "https://download.lfd.uci.edu/pythonlibs/u2yrk7ps/libsvm-3.22-cp36-cp36m-win_amd64.whl"
+        pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/libsvm/3.22/libsvm-3.22-cp36-cp36m-win_amd64.whl"
     logger.debug("pip install libsvm form {0}".format(pkg))
     pip_install_package(name, pkg, options, version)
 
