@@ -624,7 +624,7 @@ def pip_install_cntk(options):
     cntk_type = "cntk_gpu" if sys_info["GPU"] else "cntk"
     if sys_info["CUDA"] == "8.0":
         version = "2.3.1"
-        pkg =  "https://cntk.ai/PythonWheel/{0}/cntk-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch)
+        pkt =  "https://cntk.ai/PythonWheel/{0}/cntk-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch)
     else:
         version = "2.5"
         pkt = "https://cntk.ai/PythonWheel/{0}/{4}-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch,
