@@ -647,13 +647,16 @@ def pip_install_theano(options):
 
 def pip_install_mxnet(options):
     version = "1.0.0"
-    if sys_info["CUDA"] == "9.0" and sys_info["OS"] == TOOLSFORAI_OS_WIN:
-        logger.warning("Mxnet failed to install. In Windows, mxnet {0} don't support for cuda 9.0.".format(version))
-        return
+    # if sys_info["CUDA"] == "9.0" and sys_info["OS"] == TOOLSFORAI_OS_WIN:
+    #     logger.warning("Mxnet failed to install. In Windows, mxnet {0} don't support for cuda 9.0.".format(version))
+    #     return
     if sys_info["GPU"]:
         name = "mxnet%s" % ("-cu90" if sys_info["CUDA"] == "9.0" else "-cu80")
     else:
         name = "mxnet"
+    if sys_info["CUDA"] == "9.0" and sys_info["OS"] == TOOLSFORAI_OS_WIN:
+        name = "mxnet"
+        logger.warning("In windows, mxnet {0} doesn't support cuda 9.0. Instead, we install mxnet for cpu-only".format(version))
     pip_install_package(name, options, version)
 
 
