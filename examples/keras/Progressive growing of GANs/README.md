@@ -113,5 +113,6 @@ Yihang Yin (Somedaywilldo) : somedaywilldo@foxmail.com
 
 Our code is under [MIT license](https://en.wikipedia.org/wiki/MIT_License). See [LICENSE](LICENSE)
 
+## A gift for Chinese Users
 
-
+We have translated the original paper to Chinese briefly, a markdown version is available now, hope this will benefits chinese users.
