@@ -85,7 +85,6 @@ def _registry_read(hkey, keypath, value_name):
 def _registry_write(hkey, keypath, name, value):
     try:
         registry_key = winreg.CreateKeyEx(hkey, keypath)
-
         winreg.SetValueEx(registry_key, name, 0, winreg.REG_SZ, value)
         winreg.CloseKey(registry_key)
         return True
@@ -157,7 +156,7 @@ def _run_cmd_admin(cmd, param, wait=True):
 
 
 def _download_file(url, local_path):
-    logger.info("Downloading %s ..." % url)
+    logger.info("Downloading {0} ...".format(url))
     try:
         import urllib.request
         import ssl
@@ -169,12 +168,12 @@ def _download_file(url, local_path):
             fout.write(fin.read())
         return True
     except:
-        logging.error("Fail to download %s. %s" % (url, sys.exc_info()))
+        logging.error("Fail to download {0}. {1}".format(url, sys.exc_info()))
         return False
 
 
 def _unzip_file(file_path, target_dir):
-    logger.info("Unzipping %s to %s ..." % (file_path, target_dir))
+    logger.info("Unzipping {0} to {1} ...".format(file_path, target_dir))
     try:
         import zipfile
         with zipfile.ZipFile(file_path) as zip_file:
@@ -191,7 +190,7 @@ def _unzip_file(file_path, target_dir):
 
 
 def _extract_tar(file_path, target_dir):
-    logger.info("Extracting %s to %s ..." % (file_path, target_dir))
+    logger.info("Extracting {0} to {1} ...".format(file_path, target_dir))
     try:
         import tarfile
         with tarfile.open(file_path) as tar:
@@ -208,20 +207,20 @@ def _version_compare(ver1, ver2):
 
 
 def _get_cntk_version(cntk_root):
-    logger.debug("In _get_cntk_version, cntk_root: %s" % cntk_root)
+    logger.debug("In _get_cntk_version, cntk_root: {0}".format(cntk_root))
     version = ''
     version_file = os.path.join(cntk_root, "cntk", "version.txt")
 
     if os.path.isfile(version_file):
         with open(version_file) as fin:
             version = fin.readline().strip()
-    logger.debug("In _get_cntk_version, find version: %s" % version)
+    logger.debug("In _get_cntk_version, find version: {0}".format(version))
     return version
 
 
 def _update_pathenv_win(path, add):
     path_value = _registry_read(winreg.HKEY_CURRENT_USER, "Environment", "PATH")
-    logger.debug("Before update, PATH : %s" % path_value)
+    logger.debug("Before update, PATH : {0}".format(path_value))
 
     if add:
         if path in path_value:
@@ -239,7 +238,7 @@ def detect_os():
     os_bit = platform.architecture()[0]
     is_64bit = (os_bit == "64bit")
 
-    logger.info("OS: %s, %s" % (os_name, os_bit))
+    logger.info("OS: {0}, {1}".format(os_name, os_bit))
 
     # sys_info["OS"] = None
     if (os_name.startswith("Windows")):
@@ -297,7 +296,7 @@ def detect_vs():
     if (len(vs) == 0):
         logger.warning("Please install Visual Studio 2017 or 2015.")
     else:
-        logger.info("Installed Visual Studio: %s" % " ".join(vs))
+        logger.info("Installed Visual Studio: {0}".format(" ".join(vs)))
 
 
 def detect_python_version():
@@ -307,7 +306,7 @@ def detect_python_version():
     py_full_version = ".".join(map(str, sys.version_info[0:3]))
     sys_info["python"] = py_version.replace('.', '')
     logger.debug("python_version: {0}".format(sys_info["python"]))
-    logger.info("Python: %s, %s" % (py_full_version, py_architecture))
+    logger.info("Python: {0}, {1}".format(py_full_version, py_architecture))
     if not (_version_compare("3.5", py_version) and py_architecture == '64bit'):
         logger.error("64-bit Python 3.5 or higher is required to run this installer."
                      " We recommend latest Python 3.5 (https://www.python.org/downloads/release/python-354/).")
@@ -363,7 +362,7 @@ def detect_cudnn_win():
         args = [dll]
         status, cudnn = _run_cmd(cmd, args, True)
         if status and next(filter(os.path.isfile, cudnn.split('\n')), None):
-            logger.info("cuDNN %s found" % version)
+            logger.info("cuDNN {0} found".format(version))
         else:
             logger.warning("cuDNN {0} is required. "
                            "Could not find cuDNN {0}. Please Download and install cuDNN {0} from https://developer.nvidia.com/rdp/cudnn-download.".format(
@@ -377,11 +376,11 @@ def detect_mpi_win():
     if (mpi_path and os.path.isfile(os.path.sep.join([mpi_path, "bin", "mpiexec.exe"]))):
         mpi_version = _registry_read(winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\MPI", "Version")
     if (mpi_version and _version_compare(target_version, mpi_version)):
-        logger.info("MSMPI with version: %s already installed." % mpi_version)
+        logger.info("MSMPI with version: {0} already installed.".format(mpi_version))
         return True
     elif mpi_version:
-        logger.warning("MSMPI with version: %s already installed. CNTK suggests MSMPI version to be %s."
-                       " Please manually update MSMPI." % (mpi_version, target_version))
+        logger.warning("MSMPI with version: {0} already installed. CNTK suggests MSMPI version to be {1}."
+                       " Please manually update MSMPI.".format(mpi_version, target_version))
         return False
     else:
         logger.info("MSMPI not found.")
@@ -413,7 +412,6 @@ def install_cntk(target_dir):
     if sys_info["OS"] != TOOLSFORAI_OS_WIN and sys_info["OS"] != TOOLSFORAI_OS_LINUX:
         logger.info("CNTK is not supported on your OS.")
         return
-
     # Temporarily disable installing CNTK on Linux
     # If 'sudo' is used, the effective and real users don't match.
     # if sys_info["OS"] == TOOLSFORAI_OS_LINUX:
@@ -428,9 +426,7 @@ def install_cntk(target_dir):
     if target_version == version:
         logger.info('CNTK {0} already installed'.format(ver))
         return
-
     logger.debug('CNTK target dir: {0}'.format(target_dir))
-
     cntk_root = os.path.join(target_dir, 'cntk')
     if os.path.isdir(cntk_root):
         try:
@@ -438,14 +434,12 @@ def install_cntk(target_dir):
         except:
             logger.error('CNTK installation fails: cannot remove old version in directory {0}.'.format(cntk_root))
             return
-
     if not os.path.isdir(target_dir):
         try:
             os.makedirs(target_dir)
         except:
             logger.error('CNTK installation fails: cannot create directory {0}.'.format(target_dir))
             return
-
     cntk_file_name = "{}-{}-64bit-{}.{}".format(target_version,
                                                 "Windows" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "Linux",
                                                 "GPU" if sys_info["GPU"] else "CPU-Only",
@@ -480,7 +474,7 @@ def install_cntk(target_dir):
         logger.warning("Please open a new terminal to make the updated Path environment variable effective.")
     else:
         logger.error("CNTK installation fails.")
-        logger.warning("Please manually install %s and update PATH environment." % target_version)
+        logger.warning("Please manually install {0} and update PATH environment.".format(target_version))
         logger.warning(
             "You can reference this link based on your OS: https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-your-machine")
 
@@ -524,7 +518,7 @@ def install_cntk_win(cntk_root):
 
         if (not detect_visualcpp_runtime_win()):
             vc_redist_exe = os.path.sep.join([cntk_root, "prerequisites", "VS2015", "vc_redist.x64.exe"])
-            logger.debug("VC redist exe path: %s" % vc_redist_exe)
+            logger.debug("VC redist exe path: {0}".format(vc_redist_exe))
             logger.info("Begin Visual C++ runtime installation...")
             _run_cmd_admin(vc_redist_exe, "/install /norestart /passive")
             if (detect_visualcpp_runtime_win()):
@@ -533,7 +527,6 @@ def install_cntk_win(cntk_root):
             else:
                 suc = False
                 logger.error("Visual C++ runtime installation fails.")
-
     except:
         suc = False
         logger.error("CNTK installation fails.")
@@ -548,17 +541,23 @@ def install_cntk_win(cntk_root):
     return suc
 
 
-def pip_install_package(name, pkg, options, version=""):
+def pip_install_package(name, options, version="", pkg=None):
     try:
-        logger.info("Begin install %s %s ..." % (name, version))
+        logger.info("Begin install {0} {1} ...".format(name, version))
+        if not pkg:
+            if version:
+                pkg = "{0} == {1}".format(name, version)
+            else:
+                pkg = name
         res = pip.main(["install", *options, pkg])
         if res != 0:
-            logger.error("Fail to install %s pip package." % name)
+            logger.error("Fail to install {0} pip package.".format(name))
         else:
-            logger.info("%s %s installed" % (name, version))
+            logger.info("{0} {1} installed".format(name, version))
         return res == 0
     except Exception as e:
         # print(str(e))
+        logger.error(e)
         return False
 
 
@@ -578,21 +577,13 @@ def pip_uninstall_packge(name, options, version=""):
 def pip_install_scipy(options):
     name = "numpy"
     version = "1.14.2"
-    if version:
-        pkg = "%s == %s" % (name, version)
-    else:
-        pkg = name
-    if not pip_install_package(name, pkg, options, version):
+    if not pip_install_package(name, options, version):
         logger.error("Pip installation terminated due to numpy installation failure.")
         return False
 
     name = "scipy"
     version = "1.0.1"
-    if version:
-        pkg = "%s == %s" % (name, version)
-    else:
-        pkg = name
-    if not pip_install_package(name, pkg, options, version):
+    if not pip_install_package(name, options, version):
         logger.error("Pip installation terminated due to scipy installation failure.")
         return False
     return True
@@ -600,17 +591,14 @@ def pip_install_scipy(options):
 
 def pip_install_tensorflow(options):
     name = "tensorflow%s" % ("-gpu" if sys_info["GPU"] else "")
-    if (sys_info["CUDA"] == "8.0" and sys_info["OS"] == TOOLSFORAI_OS_WIN):
-        version = "1.4.0"
-    elif (sys_info["CUDA"] == "8.0" and sys_info["OS"] == TOOLSFORAI_OS_LINUX):
-        version = "1.4.1"
+    if sys_info["CUDA"] == "8.0":
+        if sys_info["OS"] == TOOLSFORAI_OS_WIN:
+            version = "1.4.0"
+        elif sys_info["OS"] == TOOLSFORAI_OS_LINUX:
+            version = "1.4.1"
     else:
         version = "1.5.0"
-    if version:
-        pkg = "%s == %s" % (name, version)
-    else:
-        pkg = name
-    pip_install_package(name, pkg, options, version)
+    pip_install_package(name, options, version)
 
 
 def pip_install_cntk(options):
@@ -624,46 +612,37 @@ def pip_install_cntk(options):
     cntk_type = "cntk_gpu" if sys_info["GPU"] else "cntk"
     if sys_info["CUDA"] == "8.0":
         version = "2.3.1"
-        pkt =  "https://cntk.ai/PythonWheel/{0}/cntk-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch)
+        pkg =  "https://cntk.ai/PythonWheel/{0}/cntk-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch)
     else:
         version = "2.5"
-        pkt = "https://cntk.ai/PythonWheel/{0}/{4}-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch,
+        pkg = "https://cntk.ai/PythonWheel/{0}/{4}-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch,
                                                                                 cntk_type)
-    pip_install_package(name, pkt, options, version)
+    pip_install_package(name, options, version, pkg)
 
 
 def pip_install_keras(options):
     name = "Keras"
     version = "2.1.5"
-    if version:
-        pkg = "%s == %s" % (name, version)
-    else:
-        pkg = name
-    pip_install_package(name, pkg, options, version)
+    pip_install_package(name, options, version)
 
 
 def pip_install_caffe2(options):
     if not (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         logger.warning("You need to install caffe2 from source.")
         return
-
-    version = "0.8.1"
     name = "caffe2"
+    version = "0.8.1"
     arch = "win_amd64"
     wheel_ver = sys_info["python"]
     pkg = "https://github.com/linmajia/ai-package/raw/master/caffe2/{0}/caffe2_gpu-{0}-cp{1}-cp{1}m-{2}.whl".format(
         version, wheel_ver, arch)
-    pip_install_package(name, pkg, options, version)
+    pip_install_package(name, options, version, pkg)
 
 
 def pip_install_theano(options):
     name = "Theano"
     version = "1.0.1"
-    if version:
-        pkg = "%s == %s" % (name, version)
-    else:
-        pkg = name
-    pip_install_package(name, pkg, options, version)
+    pip_install_package(name, options, version)
 
 
 def pip_install_mxnet(options):
@@ -675,24 +654,16 @@ def pip_install_mxnet(options):
         name = "mxnet%s" % ("-cu90" if sys_info["CUDA"] == "9.0" else "-cu80")
     else:
         name = "mxnet"
-    if version:
-        pkg = "%s == %s" % (name, version)
-    else:
-        pkg = name
-    pip_install_package(name, pkg, options, version)
+    pip_install_package(name, options, version)
 
 
 def pip_install_chainer(options):
     # cupy installation for GPU linux
     name = "cupy"
     version = "2.5.0"
-    if version:
-        pkg = "%s == %s" % (name, version)
-    else:
-        pkg = name
     if (sys_info["GPU"] and (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
         logger.info("Install cupy to support CUDA for chainer.")
-        pip_install_package(name, pkg, options, version)
+        pip_install_package(name, options, version)
     elif (sys_info["GPU"] and (sys_info["OS"] == TOOLSFORAI_OS_WIN)):
         try:
             cupy = importlib.import_module(name)
@@ -704,53 +675,33 @@ def pip_install_chainer(options):
 
     name = "chainer"
     version = "3.5.0"
-    if version:
-        pkg = "%s == %s" % (name, version)
-    else:
-        pkg = name
-    pip_install_package(name, pkg, options, version)
+    pip_install_package(name, options, version)
 
 
 # converter related
 def pip_install_winmltools(options):
     name = "winmltools"
     version = ""
-    if version:
-        pkg = "%s == %s" % (name, version)
-    else:
-        pkg = name
     if module_exists(name):
         logger.info("{0} is already installed.".format(name))
     else:
-        pip_install_package(name, pkg, options)
+        pip_install_package(name, options)
 
 
 def pip_install_coremltools(options):
     name = "coremltools"
     version = "0.8"
     pkg = "git+https://github.com/apple/{0}@v{1}".format(name, version)
-    if module_exists(name):
-        logger.info("{0} is already installed.".format(name))
-        return
-    pip_install_package(name, pkg, options, version)
+    # if module_exists(name):
+    #     logger.info("{0} is already installed.".format(name))
+    #     return
+    pip_install_package(name, options, version, pkg)
 
 
 def pip_install_onnx(options):
     name = "onnx"
     version = "1.0.1"
-    if sys_info["OS"] != TOOLSFORAI_OS_WIN:
-        logger.warning(
-            "In Linux or Mac, you can manually download source code and install {0}=={1} form this link: https://pypi.python.org/pypi/onnx/1.0.1 .".format(
-                name, version))
-        return
-    if sys_info["python"] == "35":
-        pkg = "https://pypi.python.org/packages/40/1f/c96963199db09d79c4d846e7c9fd46f11e361cfa99cfce976f7a1c102e70/onnx-1.0.1-cp35-cp35m-win_amd64.whl"
-    elif sys_info["python"] == "36":
-        pkg = "https://pypi.python.org/packages/54/ef/242724aa703f31c54b73c57424a487263f802b50e8805dc07e1ab7e10bd4/onnx-1.0.1-cp36-cp36m-win_amd64.whl"
-    if module_exists(name):
-        logger.info("{0} is already installed.".format(name))
-        return
-    pip_install_package(name, pkg, options, version)
+    pip_install_package(name, options, version)
 
 
 def pip_install_tf2onnx(options):
@@ -760,42 +711,30 @@ def pip_install_tf2onnx(options):
     if module_exists(name):
         logger.info("{0} is already installed, we will uninstall {0} and reinstall the latest {0}.".format(name))
         pip_uninstall_packge(name, options, version)
-    pip_install_package(name, pkg, options, version)
+    pip_install_package(name, options, version, pkg)
 
 
 def pip_install_extra_software(options):
     name = "jupyter"
     version = ""
-    if version:
-        pkg = "%s == %s" % (name, version)
-    else:
-        pkg = name
     if module_exists(name):
         logger.info("{0} is already installed.".format(name))
     else:
-        pip_install_package(name, pkg, options, version)
+        pip_install_package(name, options, version)
 
     name = "matplotlib"
     version = ""
-    if version:
-        pkg = "%s == %s" % (name, version)
-    else:
-        pkg = name
     if module_exists(name):
         logger.info("{0} is already installed.".format(name))
     else:
-        pip_install_package(name, pkg, options, version)
+        pip_install_package(name, options, version)
 
     name = "pandas"
     version = ""
-    if version:
-        pkg = "%s == %s" % (name, version)
-    else:
-        pkg = name
     if module_exists(name):
         logger.info("{0} is already installed.".format(name))
     else:
-        pip_install_package(name, pkg, options, version)
+        pip_install_package(name, options, version)
 
 
 def pip_install_converter(options):
@@ -808,7 +747,6 @@ def pip_install_converter(options):
         pip_install_onnx(options)
         pip_install_tf2onnx(options)
         pip_install_winmltools(options)
-
     except Exception as e:
         logger.info(e)
 
@@ -816,14 +754,10 @@ def pip_install_converter(options):
 def pip_install_ml_software(options):
     name = "scikit-learn"
     version = "0.19.1"
-    if version:
-        pkg = "%s == %s" % (name, version)
-    else:
-        pkg = name
-    if module_exists("sklearn"):
-        logger.info("{0} is already installed.".format(name))
-    else:
-        pip_install_package(name, pkg, options, version)
+    # if module_exists("sklearn"):
+    #     logger.info("{0} is already installed.".format(name))
+    # else:
+    pip_install_package(name, options, version)
 
     name = "xgboost"
     version = "0.7"
@@ -836,9 +770,9 @@ def pip_install_ml_software(options):
         pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/xgboost/0.7/xgboost-0.7-cp35-cp35m-win_amd64.whl"
     elif sys_info["python"] == "36":
         pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/xgboost/0.7/xgboost-0.7-cp36-cp36m-win_amd64.whl"
-    if module_exists(name):
-        logger.info("{0} is already installed.".format(name))
-    pip_install_package(name, pkg, options, version)
+    # if module_exists(name):
+    #     logger.info("{0} is already installed.".format(name))
+    pip_install_package(name, options, version, pkg)
 
     name = "libsvm"
     version = "3.22"
@@ -852,7 +786,7 @@ def pip_install_ml_software(options):
     elif sys_info["python"] == "36":
         pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/libsvm/3.22/libsvm-3.22-cp36-cp36m-win_amd64.whl"
     logger.debug("pip install libsvm form {0}".format(pkg))
-    pip_install_package(name, pkg, options, version)
+    pip_install_package(name, options, version, pkg)
 
 
 def pip_software_install(options, user, verbose):
