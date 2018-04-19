@@ -546,7 +546,10 @@ def pip_install_package(name, options, version="", pkg=None):
         logger.info("Begin install {0} {1} ...".format(name, version))
         if not pkg:
             if version:
-                pkg = "{0} == {1}".format(name, version)
+                if version.strip()[0] == "<" or version.strip()[0] == ">":
+                    pkg = "{0}{1}".format(name, version)
+                else:
+                    pkg = "{0} == {1}".format(name, version)
             else:
                 pkg = name
         res = pip.main(["install", *options, pkg])
@@ -857,12 +860,10 @@ except ImportError:
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("-v", "--verbose", help="increase output verbosity", action="store_true")
-    parser.add_argument("-u", "--user", help="install pip package to user install directory", action="store_true")
-    parser.add_argument("--forcecuda8", help="Forced installation of dependency packages for Cuda8.",
-                        action="store_true")
-    parser.add_argument("-o", "--options",
-                        help="pip extra options for installation. --user ignored if this option supplied.")
+    parser.add_argument("-v", "--verbose", help="give more output to debug log level.", action="store_true")
+    parser.add_argument("-u", "--user", help="install to the Python user install directory for your platform.", action="store_true")
+    parser.add_argument("--cuda80", help="forcing the installation of the dependency packages for cuda 8.0.", action="store_true")
+    parser.add_argument("-o", "--options", help="add extra options for packages installation. --user ignored if this option is supplied.")
     args, unknown = parser.parse_known_args()
     if args.verbose:
         logger.setLevel(logging.DEBUG)
@@ -881,7 +882,7 @@ def main():
 
     if (sys_info["GPU"]):
         detect_cuda()
-        if args.forcecuda8:
+        if args.cuda80:
             sys_info["CUDA"] = "8.0"
             logger.warning("Force the installation of the dependency packages for cuda 8.0!")
         detect_cudnn()
