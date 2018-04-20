@@ -15,11 +15,11 @@ This code requires [Tensorflow](https://www.tensorflow.org/). There is a set of 
 When you use docker image tensorflw/tensorflow:latest-gpu, you need to python package future.
 
     $ pip install future
-    
+
 If you want to use `--show True` option, you need to install python package `progress`.
 
     $ pip install progress
-    
+
 Usage
 -----
 
@@ -39,7 +39,7 @@ which will print:
                   [--init_std INIT_STD] [--max_grad_norm MAX_GRAD_NORM]
                   [--data_dir DATA_DIR] [--data_name DATA_NAME] [--show SHOW]
                   [--noshow]
-
+    
     optional arguments:
       -h, --help            show this help message and exit
       --edim EDIM           internal state dimension [150]
@@ -112,7 +112,6 @@ The training output looks like:
     {'perplexity': 119.15373237680929, 'epoch': 4, 'valid_perplexity': 149.00768378137946, 'learning_rate': 0.01}
     Training |##############                  | 44.0% | ETA: 378s
 
-
 Performance
 -----------
 
@@ -128,3 +127,9 @@ Author
 ------
 
 Taehoon Kim / [@carpedm20](http://carpedm20.github.io/)
+
+
+
+## License
+
+MIT License

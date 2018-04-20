@@ -30,7 +30,6 @@ To test a *quick* copy task:
 
     $ python main.py --task copy --test_max_length 10
 
-
 Results
 -------
 
@@ -50,3 +49,7 @@ Author
 ------
 
 Taehoon Kim / [@carpedm20](http://carpedm20.github.io/)
+
+## License
+
+MIT License

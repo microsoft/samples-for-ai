@@ -56,7 +56,6 @@ If your dataset is located in a different root directory:
     $ python main.py --dataset DATASET_NAME --data_dir DATASET_ROOT_DIR
     $ # example
     $ python main.py --dataset=eyes --data_dir ../datasets/ --input_fname_pattern="*_cropped.png" --train
-    
 
 ## Results
 
@@ -118,3 +117,7 @@ Details of the histogram of true and fake result of discriminator (with custom d
 ## Author
 
 Taehoon Kim / [@carpedm20](http://carpedm20.github.io/)
+
+## License
+
+MIT License
