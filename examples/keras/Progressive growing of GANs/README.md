@@ -85,6 +85,14 @@ $ python3 main.py 	--data_dir = <dataset h5 file directory> 	\
 			--resume_kimg = <previous trained images in thousands>
 ```
 
+## Results
+
+These two pictures are the training result we get so far, trained for 5 days on a NVIDIA GeForce 1080-ti GPU. You should be able to see the changes of resolution during the  progressively growing procedure of our model. Pretrained weight will be available later.
+
+![fakes003800](fakes003800.png)
+
+![fakes008080](fakes008080.png)
+
 ## Contact us
 
 Any bug report or advice, please contact us:
@@ -105,5 +113,6 @@ Yihang Yin (Somedaywilldo) : somedaywilldo@foxmail.com
 
 Our code is under [MIT license](https://en.wikipedia.org/wiki/MIT_License). See [LICENSE](LICENSE)
 
+## A Gift for Chinese Users
 
-
+We have translated the original paper to Chinese briefly, a markdown version is available now, hope this will benefits chinese users.
