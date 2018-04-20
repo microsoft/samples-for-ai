@@ -329,7 +329,6 @@ def detect_tf_version():
 
 
 def detect_cuda():
-    # sys_info["CUDA"] = None
     if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         detect_cuda_win()
 
@@ -637,8 +636,15 @@ def pip_install_caffe2(options):
     version = "0.8.1"
     arch = "win_amd64"
     wheel_ver = sys_info["python"]
-    pkg = "https://github.com/linmajia/ai-package/raw/master/caffe2/{0}/caffe2_gpu-{0}-cp{1}-cp{1}m-{2}.whl".format(
-        version, wheel_ver, arch)
+    if sys_info["GPU"] and sys_info["CUDA"] == "8.0":
+        pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/caffe2/{0}/caffe2_gpu-{0}-cp{1}-cp{1}m-{2}.whl".format(
+            version, wheel_ver, arch)
+        # pkg = "https://github.com/linmajia/ai-package/raw/master/caffe2/{0}/caffe2_gpu-{0}-cp{1}-cp{1}m-{2}.whl".format(
+        #     version, wheel_ver, arch)
+    else:
+        # pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/caffe2/{0}/caffe2-{0}-cp{1}-cp{1}m-{2}.whl".format(
+        #     version, wheel_ver, arch)
+        pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/caffe2/0.8.1/caffe2-0.8.1-cp35-cp35m-win_amd64.whl"
     pip_install_package(name, options, version, pkg)
 
 
@@ -653,11 +659,10 @@ def pip_install_mxnet(options):
     # if sys_info["CUDA"] == "9.0" and sys_info["OS"] == TOOLSFORAI_OS_WIN:
     #     logger.warning("Mxnet failed to install. In Windows, mxnet {0} don't support for cuda 9.0.".format(version))
     #     return
-    if sys_info["GPU"]:
-        name = "mxnet%s" % ("-cu90" if sys_info["CUDA"] == "9.0" else "-cu80")
+    if sys_info["GPU"] and sys_info["CUDA"] == "8.0":
+        # name = "mxnet%s" % ("-cu90" if sys_info["CUDA"] == "9.0" else "-cu80")
+        name = "mxnet-cu80"
     else:
-        name = "mxnet"
-    if sys_info["CUDA"] == "9.0" and sys_info["OS"] == TOOLSFORAI_OS_WIN:
         name = "mxnet"
         logger.warning("In windows, mxnet {0} doesn't support cuda 9.0. Instead, we install mxnet for cpu-only".format(version))
     pip_install_package(name, options, version)
@@ -814,8 +819,7 @@ def pip_software_install(options, user, verbose):
     pip_install_chainer(pip_ops)
     pip_install_theano(pip_ops)
     pip_install_keras(pip_ops)
-    if sys_info["CUDA"] == "8.0":
-        pip_install_caffe2(pip_ops)
+    pip_install_caffe2(pip_ops)
     pip_install_ml_software(pip_ops)
     pip_install_converter(pip_ops)
     pip_install_extra_software(pip_ops)
