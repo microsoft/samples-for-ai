@@ -642,9 +642,8 @@ def pip_install_caffe2(options):
         # pkg = "https://github.com/linmajia/ai-package/raw/master/caffe2/{0}/caffe2_gpu-{0}-cp{1}-cp{1}m-{2}.whl".format(
         #     version, wheel_ver, arch)
     else:
-        # pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/caffe2/{0}/caffe2-{0}-cp{1}-cp{1}m-{2}.whl".format(
-        #     version, wheel_ver, arch)
-        pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/caffe2/0.8.1/caffe2-0.8.1-cp35-cp35m-win_amd64.whl"
+        pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/caffe2/{0}/caffe2-{0}-cp{1}-cp{1}m-{2}.whl".format(
+            version, wheel_ver, arch)
     pip_install_package(name, options, version, pkg)
 
 
