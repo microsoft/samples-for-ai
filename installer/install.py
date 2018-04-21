@@ -340,7 +340,7 @@ def detect_cuda_win():
         logger.warning("CUDA 8.0 found. We recommend CUDA 9.0, otherwise some functions will not work properly.")
     elif status and re.search(r"release\s*9.0,\s*V9.0", stdout):
         sys_info["CUDA"] = "9.0"
-        logger.info["CUDA 9.0 found"]
+        logger.info("CUDA 9.0 found")
     else:
         logger.warning("CUDA 9.0 is required. Could not find NVIDIA CUDA Toolkit 9.0. "
                        "Please Download and install CUDA 9.0 from https://developer.nvidia.com/cuda-toolkit.")
