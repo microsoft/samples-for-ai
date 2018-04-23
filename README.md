@@ -47,6 +47,12 @@ Currently, this installer works on Windows, macOS and Linux:
 - Install latest NVIDIA GPU driver, CUDA 9.0, and cuDNN 7 if applicable.
 - Install latest **Python 3.5 or 3.6**. Other Python versions are not supported.
 - Run the following commands in a terminal:
+    > [!NOTE]
+    >
+    > - If your Python distribution is installed in the system directory (e.g. the one shipped with Visual Studio 2017, or the built-in one on Linux), administrative permission (e.g. "sudo" on Linux) is required to launch the installer.
+    > - Pass "**--user**" argument, if you want to install to the Python user install directory for your platform. Typically ~/.local/, or %APPDATA%\Python on Windows.
+    > - The installer will detect whether NVIDIA GPU cards are available and set up software for CUDA 9.0 by default. You can pass "**--cuda80**" argument to force installing software for CUDA 8.0 .
+
     ```bash
     git clone https://github.com/Microsoft/samples-for-ai.git
     cd samples-for-ai
@@ -56,11 +62,6 @@ Currently, this installer works on Windows, macOS and Linux:
     - Non-Windows:
         python3 install.py
     ```
-> [!NOTE]
->
-> - If your Python distribution is installed in the system directory (e.g. the one shipped with Visual Studio 2017, or the built-in one on Linux), administrative permission (e.g. "sudo" on Linux) is required to launch the installer.
-> - Pass "--user" argument, if you want to install to the Python user install directory for your platform. Typically ~/.local/, or %APPDATA%\Python on Windows.
-> - The installer will detect whether NVIDIA GPU cards are available and set up software for CUDA 9.0 by default. You can pass "--cuda80" argument to force installing software for CUDA 8.0 .
 
 
 ## Runing samples locally
