@@ -44,7 +44,7 @@ Please visit [here](https://github.com/Microsoft/vs-tools-for-ai/blob/master/doc
 
 Currently, this installer works on Windows, macOS and Linux:
 
-- Install latest NVIDIA GPU driver, CUDA 8.0, and cuDNN 6 and 7 if applicable.
+- Install latest NVIDIA GPU driver, CUDA 9.0, and cuDNN 7 if applicable.
 - Install latest **Python 3.5 or 3.6**. Other Python versions are not supported.
 - Run the following commands in a terminal:
     ```bash
@@ -58,7 +58,9 @@ Currently, this installer works on Windows, macOS and Linux:
     ```
 > [!NOTE]
 >
-> On Linux, you may need 'sudo' to install deep learning frameworks into system directory.
+> - If your Python distribution is installed in the system directory (e.g. the one shipped with Visual Studio 2017, or the built-in one on Linux), administrative permission (e.g. "sudo" on Linux) is required to launch the installer.
+> - Pass "--user" argument, if you want to install to the Python user install directory for your platform. Typically ~/.local/, or %APPDATA%\Python on Windows.
+> - The installer will detect whether NVIDIA GPU cards are available and set up software for CUDA 9.0 by default. You can pass "--cuda80" argument to force installing software for CUDA 8.0 .
 
 
 ## Runing samples locally
