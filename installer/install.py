@@ -573,8 +573,8 @@ def pip_install_package(name, options, version="", pkg=None):
 
 def pip_uninstall_packge(name, options, version=""):
     try:
-        logger.info("Begin pip-uninstall {0} {1} ...".format(name, version))
-        if options[0] == "--user":
+        logger.info("Begin to pip-uninstall {0} {1} ...".format(name, version))
+        if len(options) != 0 and options[0] == "--user":
             options.pop(0)
         res = pip.main(["uninstall", *options, name])
         if res != 0:
