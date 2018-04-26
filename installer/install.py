@@ -557,7 +557,9 @@ def pip_install_package(name, options, version="", pkg=None):
             else:
                 pkg = name
         logger.debug("pkg : {0}".format(pkg))
-        res = pip.main(["install", *options, pkg])
+        res = -1
+        # res = pip.main(["install", *options, pkg])
+        res = subprocess.check_call([sys.executable, '-m', 'pip', 'install', *options,  pkg])
         if res != 0:
             logger.error("Fail to pip-install {0}.".format(name))
             fail_install.append("%s %s" % (name, version))
@@ -576,7 +578,9 @@ def pip_uninstall_packge(name, options, version=""):
         logger.info("Begin to pip-uninstall {0} {1} ...".format(name, version))
         if len(options) != 0 and options[0] == "--user":
             options.pop(0)
-        res = pip.main(["uninstall", *options, name])
+        res = -1
+        # res = pip.main(["uninstall", *options, name])
+        res = subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', *options, name])
         if res != 0:
             logger.error("Fail to pip-uninstall {0}.".format(name))
         else:
@@ -749,9 +753,9 @@ def pip_install_tf2onnx(options):
     version = "0.0.0.1"
     # pkg = "git+https://github.com/tocean/tensorflow-onnx.git@r0.1"
     pkg = "git+https://github.com/onnx/tensorflow-onnx.git@r0.1"
-    # if module_exists(name):
-    #     logger.info("Detect {0} already installed. To install the latest version, we will uninstall {0} and reinstall {0}.".format(name))
-    #     pip_uninstall_packge(name, options, version)
+    if module_exists(name):
+        logger.info("Detect {0} already installed. To install the latest version, we will uninstall {0} and reinstall {0}.".format(name))
+        pip_uninstall_packge(name, options, version)
     return pip_install_package(name, options, version, pkg)
 
 
