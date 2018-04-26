@@ -616,6 +616,29 @@ def pip_install_tensorflow(options):
     return pip_install_package(name, options, version)
 
 
+def pip_install_pytorch(options):
+    name = "torch"
+    version = "0.4.0"
+    if sys_info["OS"] == TOOLSFORAI_OS_MACOS:
+        pip_install_package(name, options, version)
+    elif sys_info["OS"] == TOOLSFORAI_OS_WIN or sys_info["OS"] == TOOLSFORAI_OS_LINUX:
+        wheel_ver = sys_info["python"]
+        arch = "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64"
+        if not sys_info["GPU"]:
+            gpu_type = "cpu"
+        else:
+            gpu_type = "cu80" if sys_info["CUDA"] == "8.0" else "cu90"
+        pkg = "http://download.pytorch.org/whl/{0}/{1}-{2}-cp{3}-cp{3}m-{4}.whl".format(gpu_type, name, version,
+                                                                                        wheel_ver, arch)
+        pip_install_package(name, options, version, pkg)
+    else:
+        logger.error("Fail to install pytorch.")
+        logger.warning("Pytorch installation can not be supported on your OS! We recommand 64-bit Windows-10, Linux and Macos.")
+
+    name = "torchvision"
+    version = ""
+    pip_install_package(name, options)
+
 def pip_install_cntk(options):
     if not ((sys_info["OS"] == TOOLSFORAI_OS_WIN) or (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
         logger.info("CNTK(Python) can not be supported on your OS, we recommend 64-bit Windows-10 OS or 64-bit Linux OS.")
@@ -633,7 +656,6 @@ def pip_install_cntk(options):
         pkg = "https://cntk.ai/PythonWheel/{0}/{4}-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch,
                                                                                 cntk_type)
     return pip_install_package(name, options, version, pkg)
-
 
 def pip_install_keras(options):
     name = "Keras"
@@ -822,6 +844,7 @@ def pip_software_install(options, user, verbose):
 
     pip_install_cntk(pip_ops)
     pip_install_tensorflow(pip_ops)
+    pip_install_pytorch(pip_ops)
     pip_install_mxnet(pip_ops)
     pip_install_chainer(pip_ops)
     pip_install_theano(pip_ops)
