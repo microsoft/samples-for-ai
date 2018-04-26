@@ -725,10 +725,11 @@ def pip_install_onnx(options):
 def pip_install_tf2onnx(options):
     name = "tf2onnx"
     version = "0.0.0.1"
-    pkg = "git+https://github.com/tocean/tensorflow-onnx.git@r0.1"
-    if module_exists(name):
-        logger.info("Detect {0} already installed. To install the latest version, we will uninstall {0} and reinstall {0}.".format(name))
-        pip_uninstall_packge(name, options, version)
+    # pkg = "git+https://github.com/tocean/tensorflow-onnx.git@r0.1"
+    pkg = "git+https://github.com/onnx/tensorflow-onnx.git@r0.1"
+    # if module_exists(name):
+    #     logger.info("Detect {0} already installed. To install the latest version, we will uninstall {0} and reinstall {0}.".format(name))
+    #     pip_uninstall_packge(name, options, version)
     return pip_install_package(name, options, version, pkg)
 
 
