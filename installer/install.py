@@ -712,10 +712,12 @@ def pip_install_chainer(options):
         try:
             cupy = importlib.import_module(name)
             if (not _version_compare("2.0", cupy.__version__)):
-                logger.warning("To support CUDA for chainer, please make sure cupy >= 2.0.0.")
+                logger.warning("Cupy's version is too low, please manually upgrade cupy >= 2.0.0.")
+            else:
+                logger.info("Detect cupy already installed.")
         except ImportError:
-            logger.warning("Please manully install cupy to support CUDA for chainer."
-                           "You can reference this link <https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer> to install cupy on Windows")
+            logger.warning("On windows, automatic installation for cupy can't be supported.")
+            logger.warning("Please manully install cupy. You can reference this link https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer.")
 
     name = "chainer"
     version = "3.5.0"
