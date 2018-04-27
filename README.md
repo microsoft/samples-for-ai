@@ -1,5 +1,7 @@
 # Introduction 
 
+[简体中文](zh-hans/README.md)
+
 Samples in Visual Studio solution format are provided for users to get started with deep learning using [Microsoft Visual Studio Tools for AI](https://github.com/Microsoft/vs-tools-for-ai).
 Each solution has one or more sample projects.
 Solutions are separated by different deep learning frameworks they use:
@@ -47,19 +49,20 @@ Currently, this installer works on Windows, macOS and Linux:
 - Install latest NVIDIA GPU driver, CUDA 8.0, and cuDNN 6 and 7 if applicable.
 - Install latest **Python 3.5 or 3.6**. Other Python versions are not supported.
 - Run the following commands in a terminal:
-    ```bash
-    git clone https://github.com/Microsoft/samples-for-ai.git
-    cd samples-for-ai
-    cd installer
-    - Windows:
-        python.exe install.py
-    - Non-Windows:
-        python3 install.py
-    ```
+
+```bash
+git clone https://github.com/Microsoft/samples-for-ai.git
+cd samples-for-ai
+cd installer
+- Windows:
+    python.exe install.py
+- Non-Windows:
+    python3 install.py
+```
+
 > [!NOTE]
 >
 > On Linux, you may need 'sudo' to install deep learning frameworks into system directory.
-
 
 ## Runing samples locally
 
@@ -94,4 +97,3 @@ The scripts of MXNet are under [Apache 2.0 license](https://en.wikipedia.org/wik
 There are no changes on the original code.
 
 The scripts of Chainer are under [MIT license](https://github.com/chainer/chainer/blob/master/LICENSE).
-

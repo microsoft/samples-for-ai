@@ -1,5 +1,7 @@
 # Keras-progressive_growing_of_gans
 
+[简体中文](/zh-hans/examples/keras/Progressive%20growing%20of%20GANs/README.md)
+
 ## Introduction
 
 Keras implementation of Progressive Growing of GANs for Improved Quality, Stability, and Variation. 
@@ -77,7 +79,7 @@ resume_kimg             = <previous trained images in thousands>,
 
 ### 5. Using main.py (optional)
 
-We provide **main.py** for remote training for Visual Stdio or Visual Stdio Code users. So you can directely start the training process using command line or VS Debugger, which will be convenient in remote job submission.
+We provide **main.py** for remote training for Visual Stdio or Visual Stdio Code users. So you can directly start the training process using command line or VS Debugger, which will be convenient in remote job submission.
 
 ```
 $ python3 main.py 	--data_dir = <dataset h5 file directory> 	\

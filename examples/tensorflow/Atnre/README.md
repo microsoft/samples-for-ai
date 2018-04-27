@@ -1,5 +1,7 @@
 # ATNRE on Windows
 
+[简体中文](/zh-hans/examples/tensorflow/Atnre/README.md)
+
 This is a reimplementation of [Adversarial Training for Relation Extraction](https://www.researchgate.net/publication/322590918_Adversarial_Training_for_Relation_Extraction)
 
 # HOW TO RUN
