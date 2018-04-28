@@ -790,10 +790,6 @@ def pip_install_extra_software(options):
 def pip_install_converter(options):
     logger.info("Begin to install converter(coremltools, onnx, tf2onnx and winmltools) ...")
     try:
-        detect_tf_version()
-        if ((not sys_info["tensorflow"]) or (not _version_compare("1.5.0", sys_info["tensorflow"]))):
-            logger.warning(
-                "We recommend tensorflow==1.5.0, otherwise some functions of converter will not work properly.")
         pip_install_coremltools(options)
         pip_install_onnx(options)
         pip_install_tf2onnx(options)
@@ -812,15 +808,14 @@ def pip_install_ml_software(options):
     name = "xgboost"
     version = "0.7"
     if sys_info["OS"] != TOOLSFORAI_OS_WIN:
-        logger.warning(
-            'On Linux or Mac, You can install {0}=={1} by pip tools, and C++ compiler is needed.'.format(name,
-                                                                                                              version))
-        return
-    if sys_info["python"] == "35":
-        pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/xgboost/0.7/xgboost-0.7-cp35-cp35m-win_amd64.whl"
-    elif sys_info["python"] == "36":
-        pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/xgboost/0.7/xgboost-0.7-cp36-cp36m-win_amd64.whl"
-    pip_install_package(name, options, version, pkg)
+        logger.warning("C++ compiler is needed.")
+        pip_install_package(name, options, version)
+    else:
+        if sys_info["python"] == "35":
+            pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/xgboost/0.7/xgboost-0.7-cp35-cp35m-win_amd64.whl"
+        elif sys_info["python"] == "36":
+            pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/xgboost/0.7/xgboost-0.7-cp36-cp36m-win_amd64.whl"
+        pip_install_package(name, options, version, pkg)
 
     name = "libsvm"
     version = "3.22"
