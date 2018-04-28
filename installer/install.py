@@ -20,7 +20,8 @@ sys_info = {
     "CUDA": None,
     "cudnn": None,
     "mpi": None,
-    "tensorflow": None
+    "tensorflow": None,
+    "cuda80": False
 }
 fail_install = []
 
@@ -328,7 +329,31 @@ def detect_tf_version():
 
 def detect_cuda():
     if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
-        detect_cuda_win()
+        return detect_cuda_win()
+    return True
+
+
+# def detect_cuda_win(option):
+#     logger.info("Begin to detect cuda version on Windows ...")
+#     status, stdout = _run_cmd("nvcc", ["-V"], True)
+#     if status and re.search(r"release\s*8.0,\s*V8.0", stdout):
+#         sys_info["CUDA"] = "8.0"
+#     elif status and re.search(r"release\s*9.0,\s*V9.0", stdout):
+#         sys_info["CUDA"] = "9.0"
+#
+#     if sys_info["CUDA"]:
+#         logger.info("Detect cuda version information: {0}".format(sys_info["CUDA"]))
+#         if sys_info["CUDA"] == "8.0":
+#             logger.warning("We recommend cuda 9.0 (https://developer.nvidia.com/cuda-toolkit.), "
+#                            "otherwise some functions will not work properly.")
+#             if option:
+#
+#             return False
+#     else:
+#         logger.warning("Not detect cuda! We recommend cuda 9.0, please download and install cuda 9.0 from https://developer.nvidia.com/cuda-toolkit. ")
+#         logger.warning("Not detect cuda! The install script will install dependency package for cuda 9.0.")
+#         sys_info["CUDA"] = "9.0"
+#     return True
 
 
 def detect_cuda_win():
@@ -336,16 +361,24 @@ def detect_cuda_win():
     status, stdout = _run_cmd("nvcc", ["-V"], True)
     if status and re.search(r"release\s*8.0,\s*V8.0", stdout):
         sys_info["CUDA"] = "8.0"
+        logger.info("Detect cuda version information: {0}".format(sys_info["CUDA"]))
+        if sys_info["cuda80"]:
+            logger.warning("Detect parameter '--cuda80', the install script will be forced to install dependency package for cuda 8.0.")
+        else:
+            logger.warning("We recommend cuda 9.0 (https://developer.nvidia.com/cuda-toolkit)."
+                           "If you want to install dependency package for cuda 8.0, please run the install script with '--cuda80' again.")
+            return False
     elif status and re.search(r"release\s*9.0,\s*V9.0", stdout):
         sys_info["CUDA"] = "9.0"
-
-    if sys_info["CUDA"]:
         logger.info("Detect cuda version information: {0}".format(sys_info["CUDA"]))
-        if sys_info["CUDA"] == "8.0":
-            logger.warning("We recommend cuda 9.0 (https://developer.nvidia.com/cuda-toolkit.), "
-                           "otherwise some functions will not work properly.")
+        if sys_info["cuda80"]:
+            sys_info["CUDA"] = "8.0"
+            logger.warning("Detect parameter '--cuda80', the install script will be forced to install dependency package for cuda 8.0.")
     else:
-        logger.warning("Not detect cuda 8.0 or 9.0! We recommend cuda 9.0, please download and install cuda 9.0 from https://developer.nvidia.com/cuda-toolkit. ")
+        sys_info["CUDA"] = "9.0"
+        logger.warning("Not detect cuda! We recommend cuda 9.0 (https://developer.nvidia.com/cuda-toolkit). "
+                       "The install script will install dependency package for cuda 9.0 by default.")
+    return True
 
 def detect_cudnn():
     if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
@@ -412,10 +445,6 @@ def install_cntk(target_dir):
     if sys_info["OS"] != TOOLSFORAI_OS_WIN and sys_info["OS"] != TOOLSFORAI_OS_LINUX:
         logger.warning("CNTK(BrainScript) is not supported on your OS, we recommend 64-bit Windows-10 OS or 64-bit Linux OS.")
         return False
-    # Temporarily disable installing CNTK on Linux
-    # If 'sudo' is used, the effective and real users don't match.
-    # if sys_info["OS"] == TOOLSFORAI_OS_LINUX:
-    #    return
     if sys_info["CUDA"] == "8.0":
         ver = "2.3.1"
     else:
@@ -647,18 +676,6 @@ def pip_install_cntk(options):
     if not ((sys_info["OS"] == TOOLSFORAI_OS_WIN) or (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
         logger.info("CNTK(Python) can not be supported on your OS, we recommend 64-bit Windows-10 OS or 64-bit Linux OS.")
         return
-    # name = "cntk"
-    # wheel_ver = sys_info["python"]
-    # arch = "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64"
-    # gpu_type = "GPU" if sys_info["GPU"] else "CPU-Only"
-    # cntk_type = "cntk_gpu" if sys_info["GPU"] else "cntk"
-    # if sys_info["CUDA"] == "8.0":
-    #     version = "2.3.1"
-    #     pkg =  "https://cntk.ai/PythonWheel/{0}/cntk-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch)
-    # else:
-    #     version = "2.5"
-    #     pkg = "https://cntk.ai/PythonWheel/{0}/{4}-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch,
-    #                                                                             cntk_type)
     if sys_info["GPU"]:
         name = "cntk-gpu"
     else:
@@ -920,6 +937,8 @@ def main():
     args, unknown = parser.parse_known_args()
     if args.verbose:
         logger.setLevel(logging.DEBUG)
+    if args.cuda80:
+        sys_info["cuda80"] = True
 
     if not detect_os() or not detect_python_version() or not detect_gpu():
         return
@@ -934,10 +953,8 @@ def main():
         detect_vs()
 
     if (sys_info["GPU"]):
-        detect_cuda()
-        if args.cuda80:
-            sys_info["CUDA"] = "8.0"
-            logger.warning("Force the installation of the dependency packages for cuda 8.0!")
+        if not detect_cuda():
+            return
         detect_cudnn()
 
     if not install_cntk(target_dir):
