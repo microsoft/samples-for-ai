@@ -691,12 +691,15 @@ def pip_install_theano(options):
 
 
 def pip_install_mxnet(options):
-    version = "1.0.0"
-    if sys_info["GPU"] and sys_info["CUDA"] == "8.0":
-        name = "mxnet-cu80"
+    version = "1.1.0.post0"
+    if sys_info["GPU"]:
+        if sys_info["CUDA"] == "9.0":
+            name = "mxnet-cu90"
+        elif sys_info["CUDA"] == "8.0":
+            name = "mxnet-cu80"
     else:
         name = "mxnet"
-        logger.warning("On windows, mxnet {0} doesn't support cuda 9.0. Instead, we install mxnet-cpu-only.".format(version))
+
     return pip_install_package(name, options, version)
 
 
@@ -704,23 +707,22 @@ def pip_install_chainer(options):
     # cupy installation for GPU linux
     logger.info("Begin to install chainer(cupy, chainer) ...")
     name = "cupy"
-    version = "2.5.0"
+    version = "4.0.0"
     if (sys_info["GPU"] and (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
         logger.info("Install cupy to support CUDA for chainer.")
         pip_install_package(name, options, version)
     elif (sys_info["GPU"] and (sys_info["OS"] == TOOLSFORAI_OS_WIN)):
         try:
             cupy = importlib.import_module(name)
-            if (not _version_compare("2.0", cupy.__version__)):
+            if (not _version_compare(version, cupy.__version__)):
                 logger.warning("Cupy's version is too low, please manually upgrade cupy >= 2.0.0.")
             else:
-                logger.info("Detect cupy already installed.")
+                logger.info("cupy is already installed.")
         except ImportError:
-            logger.warning("On windows, automatic installation for cupy can't be supported.")
-            logger.warning("Please manully install cupy. You can reference this link https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer.")
+            logger.warning("On windows, please manully install cupy. You can reference this link https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer.")
 
     name = "chainer"
-    version = "3.5.0"
+    version = "4.0.0"
     pip_install_package(name, options, version)
 
 
@@ -729,7 +731,7 @@ def pip_install_winmltools(options):
     name = "winmltools"
     version = ""
     if module_exists(name):
-        logger.info("Detect {0} already installed.".format(name))
+        logger.info("{0} is already installed.".format(name))
     else:
         pip_install_package(name, options)
 
@@ -746,18 +748,18 @@ def pip_install_coremltools(options):
 
 def pip_install_onnx(options):
     name = "onnx"
-    version = "1.0.1"
+    version = "1.1.2"
     return pip_install_package(name, options, version)
 
 
 def pip_install_tf2onnx(options):
     name = "tf2onnx"
     version = "0.0.0.1"
-    # pkg = "git+https://github.com/tocean/tensorflow-onnx.git@r0.1"
     pkg = "git+https://github.com/onnx/tensorflow-onnx.git@r0.1"
     if module_exists(name):
-        logger.info("Detect {0} already installed. To install the latest version, we will uninstall {0} and reinstall {0}.".format(name))
+        logger.info("{0} is already installed. We will uninstall it and upgrade to the latest version.".format(name))
         pip_uninstall_packge(name, options, version)
+
     return pip_install_package(name, options, version, pkg)
 
 
@@ -766,21 +768,21 @@ def pip_install_extra_software(options):
     name = "jupyter"
     version = ""
     if module_exists(name):
-        logger.info("Detect {0} already installed.".format(name))
+        logger.info("{0} is already installed.".format(name))
     else:
         pip_install_package(name, options, version)
 
     name = "matplotlib"
     version = ""
     if module_exists(name):
-        logger.info("Detect {0} already installed.".format(name))
+        logger.info("{0} is already installed.".format(name))
     else:
         pip_install_package(name, options, version)
 
     name = "pandas"
     version = ""
     if module_exists(name):
-        logger.info("Detect {0} already installed.".format(name))
+        logger.info("{0} is already installed.".format(name))
     else:
         pip_install_package(name, options, version)
 
@@ -798,7 +800,7 @@ def pip_install_converter(options):
         pip_install_winmltools(options)
     except Exception as e:
         # logger.error("Fail to install converter, unexpected error: {0}".format(e))
-        logger.error("Fail to install converter, unexpected error! Please try to run installer script again!")
+        logger.error("Fail to install converter, unexpected error! Please run installer again!")
 
 
 def pip_install_ml_software(options):
