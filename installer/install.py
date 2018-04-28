@@ -647,19 +647,24 @@ def pip_install_cntk(options):
     if not ((sys_info["OS"] == TOOLSFORAI_OS_WIN) or (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
         logger.info("CNTK(Python) can not be supported on your OS, we recommend 64-bit Windows-10 OS or 64-bit Linux OS.")
         return
-    name = "cntk"
-    wheel_ver = sys_info["python"]
-    arch = "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64"
-    gpu_type = "GPU" if sys_info["GPU"] else "CPU-Only"
-    cntk_type = "cntk_gpu" if sys_info["GPU"] else "cntk"
-    if sys_info["CUDA"] == "8.0":
-        version = "2.3.1"
-        pkg =  "https://cntk.ai/PythonWheel/{0}/cntk-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch)
+    # name = "cntk"
+    # wheel_ver = sys_info["python"]
+    # arch = "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64"
+    # gpu_type = "GPU" if sys_info["GPU"] else "CPU-Only"
+    # cntk_type = "cntk_gpu" if sys_info["GPU"] else "cntk"
+    # if sys_info["CUDA"] == "8.0":
+    #     version = "2.3.1"
+    #     pkg =  "https://cntk.ai/PythonWheel/{0}/cntk-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch)
+    # else:
+    #     version = "2.5"
+    #     pkg = "https://cntk.ai/PythonWheel/{0}/{4}-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch,
+    #                                                                             cntk_type)
+    if sys_info["GPU"]:
+        name = "cntk-gpu"
     else:
-        version = "2.5"
-        pkg = "https://cntk.ai/PythonWheel/{0}/{4}-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch,
-                                                                                cntk_type)
-    return pip_install_package(name, options, version, pkg)
+        name = "cntk"
+    version = "2.5.1"
+    return pip_install_package(name, options, version)
 
 def pip_install_keras(options):
     name = "Keras"
@@ -705,7 +710,7 @@ def pip_install_mxnet(options):
 
 def pip_install_chainer(options):
     # cupy installation for GPU linux
-    logger.info("Begin to install chainer(cupy, chainer) ...")
+    logger.info("Begin to install chainer(cupy, chainer, chainermn) ...")
     name = "cupy"
     version = "4.0.0"
     if (sys_info["GPU"] and (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
@@ -725,6 +730,17 @@ def pip_install_chainer(options):
     version = "4.0.0"
     pip_install_package(name, options, version)
 
+    name = "chainermn"
+    version = ""
+    pip_install_package(name, options)
+
+def pip_install_onnxmltools(options):
+    name = "onnxmltools"
+    version = ""
+    if module_exists(name):
+        logger.info("{0} is already installed.".format(name))
+    else:
+        pip_install_package(name, options)
 
 # converter related
 def pip_install_winmltools(options):
@@ -738,13 +754,12 @@ def pip_install_winmltools(options):
 
 def pip_install_coremltools(options):
     name = "coremltools"
-    version = "0.8"
-    pkg = "git+https://github.com/apple/coremltools@v0.8"
-    # if module_exists(name):
-    #     logger.info("Detect {0} already installed. To install the latest version, we will uninstall {0} and reinstall {0}.".format(name))
-    #     pip_uninstall_packge(name, options, version)
-    return pip_install_package(name, options, version, pkg)
-
+    version = ""
+    if sys_info["OS"] == TOOLSFORAI_OS_WIN:
+        pkg = "git+https://github.com/apple/coremltools@v0.8"
+        return pip_install_package(name, options, version, pkg)
+    else:
+        return pip_install_package(name, options)
 
 def pip_install_onnx(options):
     name = "onnx"
@@ -788,11 +803,12 @@ def pip_install_extra_software(options):
 
 
 def pip_install_converter(options):
-    logger.info("Begin to install converter(coremltools, onnx, tf2onnx and winmltools) ...")
+    logger.info("Begin to install converter(coremltools, onnx, tf2onnx, onnxmltools and winmltools) ...")
     try:
         pip_install_coremltools(options)
         pip_install_onnx(options)
         pip_install_tf2onnx(options)
+        pip_install_onnxmltools(options)
         pip_install_winmltools(options)
     except Exception as e:
         # logger.error("Fail to install converter, unexpected error: {0}".format(e))
