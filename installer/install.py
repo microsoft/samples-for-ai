@@ -822,15 +822,15 @@ def pip_install_ml_software(options):
     pip_install_package(name, options, version)
 
     name = "xgboost"
-    version = "0.7"
+    version = "0.71"
     if sys_info["OS"] != TOOLSFORAI_OS_WIN:
         logger.warning("C++ compiler is needed.")
         pip_install_package(name, options, version)
     else:
         if sys_info["python"] == "35":
-            pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/xgboost/0.7/xgboost-0.7-cp35-cp35m-win_amd64.whl"
+            pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/xgboost/{0}/xgboost-{0}-cp35-cp35m-win_amd64.whl".format(version)
         elif sys_info["python"] == "36":
-            pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/xgboost/0.7/xgboost-0.7-cp36-cp36m-win_amd64.whl"
+            pkg = "https://raw.githubusercontent.com/linmajia/ai-package/master/xgboost/{0}/xgboost-{0}-cp36-cp36m-win_amd64.whl".format(version)
         pip_install_package(name, options, version, pkg)
 
     name = "libsvm"
