@@ -559,7 +559,7 @@ def pip_install_package(name, options, version="", pkg=None):
         logger.debug("pkg : {0}".format(pkg))
         res = -1
         # res = pip.main(["install", *options, pkg])
-        res = subprocess.check_call([sys.executable, '-m', 'pip', 'install', *options,  pkg])
+        res = subprocess.check_call([sys.executable, '-m', 'pip', 'install', *options, "-q", pkg])
         if res != 0:
             logger.error("Fail to pip-install {0}.".format(name))
             fail_install.append("%s %s" % (name, version))
@@ -580,7 +580,7 @@ def pip_uninstall_packge(name, options, version=""):
             options.pop(0)
         res = -1
         # res = pip.main(["uninstall", *options, name])
-        res = subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', *options, name])
+        res = subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', *options, "-y", "-q", name])
         if res != 0:
             logger.error("Fail to pip-uninstall {0}.".format(name))
         else:
