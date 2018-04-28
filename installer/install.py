@@ -939,7 +939,6 @@ def main():
         logger.setLevel(logging.DEBUG)
     if args.cuda80:
         sys_info["cuda80"] = True
-
     if not detect_os() or not detect_python_version() or not detect_gpu():
         return
 
