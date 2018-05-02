@@ -9,6 +9,7 @@ import re
 import ctypes
 import stat
 import importlib
+import _thread
 
 TOOLSFORAI_OS_WIN = "win"
 TOOLSFORAI_OS_LINUX = "linux"
@@ -444,6 +445,7 @@ def install_cntk(target_dir):
     logger.info("Begin to install CNTK(BrainScript) ...")
     if sys_info["OS"] != TOOLSFORAI_OS_WIN and sys_info["OS"] != TOOLSFORAI_OS_LINUX:
         logger.warning("CNTK(BrainScript) is not supported on your OS, we recommend 64-bit Windows-10 OS or 64-bit Linux OS.")
+        # fail_install.append("CNTK(BrainScript)")
         return False
     if sys_info["CUDA"] == "8.0":
         ver = "2.3.1"
@@ -463,6 +465,7 @@ def install_cntk(target_dir):
         except:
             logger.error('Fail to install CNTK(BrainScript), the error message: can not remove old version in directory {0}.'
                          'Please manually remove old version, and run the installer script again.'.format(cntk_root))
+            # fail_install.append("CNTK(BrainScript)")
             return False
     if not os.path.isdir(target_dir):
         try:
@@ -470,6 +473,7 @@ def install_cntk(target_dir):
         except:
             logger.error('Fail to install CNTK(BrainScript), the error message: can not create directory {0}.'
                          'Please check if there is permission for creating directory.'.format(target_dir))
+            # fail_install.append("CNTK(BrainScript)")
             return False
     cntk_file_name = "{}-{}-64bit-{}.{}".format(target_version, "Windows" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "Linux",
                                                 "GPU" if sys_info["GPU"] else "CPU-Only", "zip" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "tar.gz")
@@ -488,10 +492,12 @@ def install_cntk(target_dir):
         if not _download_file(cntk_url, download_dir):
             logger.error('Fail to install CNTK(BrainScript), the error message: cannot download {0}.'
                          'Please check your network.'.format(cntk_url))
+            # fail_install.append("CNTK(BrainScript)")
             return False
 
     if (not (_unzip_file(download_dir, target_dir) if sys_info["OS"] == TOOLSFORAI_OS_WIN else _extract_tar(download_dir, target_dir))):
         logger.error('Fail to install CNTK(BrainScript), the error message: cannot decompress the downloaded package.')
+        # fail_install.append("CNTK(BrainScript)")
         return False
 
     if not skip_downloading:
@@ -512,6 +518,7 @@ def install_cntk(target_dir):
         logger.error("Fail to install CNTK(BrainScript).")
         logger.warning("Please manually install {0} and update PATH environment.".format(target_version))
         logger.warning("You can reference this link based on your OS: https://docs.microsoft.com/en-us/cognitive-toolkit/Setup-CNTK-on-your-machine")
+        # fail_install.append("CNTK(BrainScript)")
         return False
     return True
 
@@ -956,8 +963,12 @@ def main():
         target_dir = os.path.sep.join([os.getenv("APPDATA"), "Microsoft", "ToolsForAI", "RuntimeSDK"])
     elif sys_info["OS"] == TOOLSFORAI_OS_LINUX:
         target_dir = os.path.sep.join([os.path.expanduser('~'), '.toolsforai', 'RuntimeSDK'])
-    if not install_cntk(target_dir):
-        fail_install.append("CNTK(BrainScript)")
+
+    try:
+        _thread.start_new_thread(install_cntk, (target_dir, ))
+    except:
+        logger.error("Fail to startup install_cntk thread!")
+
     pip_software_install(args.options, args.user, args.verbose)
     fix_directory_ownership()
     for pkg in fail_install:
