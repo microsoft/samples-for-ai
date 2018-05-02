@@ -762,10 +762,10 @@ def pip_install_chainer(options):
 
     name = "chainermn"
     version = ""
-    if sys_info["OS"] == TOOLSFORAI_OS_WIN:
+    try:
         pip_install_package(name, options)
-    else:
-        logger.warning("On Linux or Mac, in order to install chainermn, please manually download source code and install it. ")
+    except:
+        logger.error("Fail to install chainermn. On Linux, in order to install chainermn, libmpich-dev is needed! ")
 
 def pip_install_onnxmltools(options):
     name = "onnxmltools"
