@@ -235,12 +235,12 @@ def _update_pathenv_win(path, add):
 
 
 def detect_os():
-    logger.info("Begin to detect OS ...")
+    # logger.info("Begin to detect OS ...")
     os_name = platform.platform(terse=True)
     os_bit = platform.architecture()[0]
     is_64bit = (os_bit == "64bit")
 
-    logger.info("Detect OS information: {0}, {1}".format(os_name, os_bit))
+    logger.info("OS: {0}, {1}".format(os_name, os_bit))
 
     if (os_name.startswith("Windows")):
         sys_info["OS"] = TOOLSFORAI_OS_WIN
@@ -262,7 +262,7 @@ def detect_os():
 
 
 def detect_gpu():
-    logger.info("Begin to detect NVIDIA GPU ...")
+    # logger.info("Begin to detect NVIDIA GPU ...")
     gpu_detector_name = 'gpu_detector_' + sys_info["OS"]
     if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         gpu_detector_name = gpu_detector_name + '.exe'
@@ -276,12 +276,12 @@ def detect_gpu():
     sys_info["GPU"], return_stdout = _run_cmd(gpu_detector_path, return_stdout=True)
     if not sys_info["GPU"]:
         return_stdout = 'None'
-    logger.info('Detect NVIDIA GPU information: {0}'.format(return_stdout))
+    logger.info('NVIDIA GPU: {0}'.format(return_stdout))
     return True
 
 
 def detect_vs():
-    logger.info("Begin to detect Visual Studio version...")
+    # logger.info("Begin to detect Visual Studio version...")
     vs = []
     vs_2015_path = _registry_read(winreg.HKEY_LOCAL_MACHINE, r"SOFTWARE\WOW6432Node\Microsoft\VisualStudio\14.0",
                                   "InstallDir")
@@ -295,17 +295,17 @@ def detect_vs():
         logger.warning("Not detect Visual Studio 2017 or 2015! We recommend Visual Studio 2017, "
                        "please manually download and install Visual Studio 2017 form https://www.visualstudio.com/downloads/.")
     else:
-        logger.info("Detect Visual Studio version informatinon: {0}".format(" ".join(vs)))
+        logger.info("Visual Studio: {0}".format(" ".join(vs)))
 
 
 def detect_python_version():
-    logger.info("Begin to detect python version ...")
+    # logger.info("Begin to detect python version ...")
     py_architecture = platform.architecture()[0]
     py_version = ".".join(map(str, sys.version_info[0:2]))
     py_full_version = ".".join(map(str, sys.version_info[0:3]))
     sys_info["python"] = py_version.replace('.', '')
     logger.debug("sys_info['python']: {0}".format(sys_info["python"]))
-    logger.info("Detect python version information: {0}, {1}".format(py_full_version, py_architecture))
+    logger.info("Python: {0}, {1}".format(py_full_version, py_architecture))
     if not (_version_compare("3.5", py_version) and py_architecture == '64bit'):
         logger.error("64-bit Python 3.5 or higher is required to run this installer."
                      " We recommend latest Python 3.5 (https://www.python.org/downloads/release/python-355/).")
@@ -357,11 +357,11 @@ def detect_cuda():
 
 
 def detect_cuda_win():
-    logger.info("Begin to detect cuda version on Windows ...")
+    # logger.info("Begin to detect cuda version on Windows ...")
     status, stdout = _run_cmd("nvcc", ["-V"], True)
     if status and re.search(r"release\s*8.0,\s*V8.0", stdout):
         sys_info["CUDA"] = "8.0"
-        logger.info("Detect cuda version information: {0}".format(sys_info["CUDA"]))
+        logger.info("Cuda: {0}".format(sys_info["CUDA"]))
         if sys_info["cuda80"]:
             logger.warning("Detect parameter '--cuda80', the install script will be forced to install dependency package for cuda 8.0.")
         else:
@@ -370,7 +370,7 @@ def detect_cuda_win():
             return False
     elif status and re.search(r"release\s*9.0,\s*V9.0", stdout):
         sys_info["CUDA"] = "9.0"
-        logger.info("Detect cuda version information: {0}".format(sys_info["CUDA"]))
+        logger.info("Cuda: {0}".format(sys_info["CUDA"]))
         if sys_info["cuda80"]:
             sys_info["CUDA"] = "8.0"
             logger.warning("Detect parameter '--cuda80', the install script will be forced to install dependency package for cuda 8.0.")
@@ -386,7 +386,7 @@ def detect_cudnn():
 
 
 def detect_cudnn_win():
-    logger.info("Begin to detect cudnn version on Windows ...")
+    # logger.info("Begin to detect cudnn version on Windows ...")
     if sys_info["CUDA"] == "8.0":
         required_cndunn = {'6': 'cudnn64_6.dll', '7': 'cudnn64_7.dll'}
     else:
@@ -397,19 +397,19 @@ def detect_cudnn_win():
         status, cudnn = _run_cmd(cmd, args, True)
         if status and next(filter(os.path.isfile, cudnn.split('\n')), None):
             sys_info["cudnn"] = version
-            logger.info("Detect cudnn version information: {0}".format(version))
+            logger.info("Cudnn: {0}".format(version))
     if not sys_info["cudnn"]:
         logger.warning("Not detect cudnn! We recommand cudnn 7, please download and install cudnn 7 from https://developer.nvidia.com/rdp/cudnn-download.")
 
 def detect_mpi_win():
-    logger.info("Begin to detect MPI version on Windows ...")
+    # logger.info("Begin to detect MPI version on Windows ...")
     target_version = "7.0.12437.6"
 
     mpi_path = _registry_read(winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\MPI", "InstallRoot")
     if (mpi_path and os.path.isfile(os.path.sep.join([mpi_path, "bin", "mpiexec.exe"]))):
         sys_info["mpi"] = _registry_read(winreg.HKEY_LOCAL_MACHINE, r"Software\Microsoft\MPI", "Version")
     if sys_info["mpi"]:
-        logger.info("Detect MPI vesion information: {0}".format(sys_info["mpi"]))
+        logger.info("MPI: {0}".format(sys_info["mpi"]))
         if not _version_compare(target_version, sys_info["mpi"]):
             logger.warning("CNTK suggests MPI version to be {0}, please manually upgrade MPI.".format(target_version))
             return False
@@ -420,7 +420,7 @@ def detect_mpi_win():
 
 
 def detect_visualcpp_runtime_win():
-    logger.info("Begin to detect Visuall C++ runtime ...")
+    # logger.info("Begin to detect Visuall C++ runtime ...")
     pattern = re.compile(
         "(^Microsoft Visual C\+\+ 201(5|7) x64 Additional Runtime)|(^Microsoft Visual C\+\+ 201(5|7) x64 Minimum Runtime)")
     items = [(winreg.HKEY_CURRENT_USER, r"SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall"),
@@ -939,6 +939,7 @@ def main():
         logger.setLevel(logging.DEBUG)
     if args.cuda80:
         sys_info["cuda80"] = True
+    logger.info("Detecting system information ...")
     if not detect_os() or not detect_python_version() or not detect_gpu():
         return
 
