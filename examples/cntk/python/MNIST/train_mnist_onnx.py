@@ -28,6 +28,7 @@ except ImportError:
 # - loadLabels reads the corresponding labels data, 1 for each image
 # - load packs the downloaded image and labels data into a combined format to be read later by 
 #   CNTK text reader 
+
 def loadData(src, cimg):
     print ('Downloading ' + src)
     gzfname, h = urlretrieve(src, './delete.me')
@@ -262,7 +263,9 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--learning_rate', type=float, default=0.2, help='learning rate')
     parser.add_argument('--minibatch_size', type=int, default=64, help='minibatch size')
-
+    parser.add_argument('--input_dir', help="Input directory where where training dataset and meta data are saved", required=True)
+    parser.add_argument('--output_dir', help="Output directory where output such as logs are saved.", required=True)
+    
     args = parser.parse_args()
 
     download_data()
