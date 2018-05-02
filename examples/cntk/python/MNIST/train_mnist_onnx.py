@@ -263,8 +263,8 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument('--learning_rate', type=float, default=0.2, help='learning rate')
     parser.add_argument('--minibatch_size', type=int, default=64, help='minibatch size')
-    parser.add_argument('--input_dir', help="Input directory where where training dataset and meta data are saved", required=True)
-    parser.add_argument('--output_dir', help="Output directory where output such as logs are saved.", required=True)
+    parser.add_argument('--input_dir', help="Input directory where where training dataset and meta data are saved")
+    parser.add_argument('--output_dir', help="Output directory where output such as logs are saved.")
     
     args = parser.parse_args()
 
