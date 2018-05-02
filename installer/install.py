@@ -684,11 +684,15 @@ def pip_install_cntk(options):
     if not ((sys_info["OS"] == TOOLSFORAI_OS_WIN) or (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
         logger.info("CNTK(Python) can not be supported on your OS, we recommend 64-bit Windows-10 OS or 64-bit Linux OS.")
         return
+    name = ""
     if sys_info["GPU"]:
         name = "cntk-gpu"
     else:
         name = "cntk"
-    version = "2.5.1"
+    if sys_info["CUDA"] == "8.0":
+        version = "2.3.1"
+    else:
+        version = "2.5.1"
     return pip_install_package(name, options, version)
 
 def pip_install_keras(options):
@@ -722,11 +726,12 @@ def pip_install_theano(options):
 
 def pip_install_mxnet(options):
     version = "1.1.0.post0"
+    name = ""
     if sys_info["GPU"]:
-        if sys_info["CUDA"] == "9.0":
-            name = "mxnet-cu90"
-        elif sys_info["CUDA"] == "8.0":
+        if sys_info["CUDA"] == "8.0":
             name = "mxnet-cu80"
+        else:
+            name = "mxnet-cu90"
     else:
         name = "mxnet"
 
@@ -739,7 +744,7 @@ def pip_install_chainer(options):
     name = "cupy"
     version = "4.0.0"
     if (sys_info["GPU"] and (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
-        logger.info("Install cupy to support CUDA for chainer.")
+        # logger.info("Install cupy to support CUDA for chainer.")
         pip_install_package(name, options, version)
     elif (sys_info["GPU"] and (sys_info["OS"] == TOOLSFORAI_OS_WIN)):
         try:
@@ -757,7 +762,10 @@ def pip_install_chainer(options):
 
     name = "chainermn"
     version = ""
-    pip_install_package(name, options)
+    if sys_info["OS"] == TOOLSFORAI_OS_WIN:
+        pip_install_package(name, options)
+    else:
+        logger.warning("On Linux or Mac, in order to install chainermn, please manually download source code and install it. ")
 
 def pip_install_onnxmltools(options):
     name = "onnxmltools"
