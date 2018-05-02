@@ -6,7 +6,7 @@
     <ProjectGuid>e319c9e6-b0d4-4f39-891d-a21d6aa266fb</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <ProjectTypeGuids>{E2A2EEF0-14BE-4BFE-B65C-5669125F62A7};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
-    <StartupFile>ConvNet_MNIST.py</StartupFile>
+    <StartupFile>train_mnist_onnx.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -27,6 +27,7 @@
     <Compile Include="ConvNet_MNIST.py" />
     <Compile Include="install_mnist.py" />
     <Compile Include="mnist_utils.py" />
+    <Compile Include="train_mnist_onnx.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
