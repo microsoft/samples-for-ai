@@ -857,7 +857,7 @@ def pip_install_ml_software(options):
     name = "xgboost"
     version = "0.71"
     if sys_info["OS"] != TOOLSFORAI_OS_WIN:
-        logger.warning("C++ compiler is needed.")
+        logger.warning("In order to install xgboost, C++ compiler is needed.")
         pip_install_package(name, options, version)
     else:
         if sys_info["python"] == "35":
