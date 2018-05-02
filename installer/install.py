@@ -165,7 +165,7 @@ def _download_file(url, local_path):
         myssl.check_hostname = False
         myssl.verify_mode = ssl.CERT_NONE
         with urllib.request.urlopen(url, context=myssl) as fin, \
-                open(local_path, 'wb') as fout:
+                open(local_path, 'ab') as fout:
             fout.write(fin.read())
         return True
     except:
@@ -208,14 +208,14 @@ def _version_compare(ver1, ver2):
 
 
 def _get_cntk_version(cntk_root):
-    logger.debug("In _get_cntk_version, cntk_root: {0}".format(cntk_root))
+    logger.debug("In _get_cntk_version(), cntk_root: {0}".format(cntk_root))
     version = ''
     version_file = os.path.join(cntk_root, "cntk", "version.txt")
 
     if os.path.isfile(version_file):
         with open(version_file) as fin:
             version = fin.readline().strip()
-    logger.debug("In _get_cntk_version, find cntk_version: {0}".format(version))
+    logger.debug("In _get_cntk_version(), find cntk_version: {0}".format(version))
     return version
 
 
@@ -448,14 +448,14 @@ def install_cntk(target_dir):
     if sys_info["CUDA"] == "8.0":
         ver = "2.3.1"
     else:
-        ver = "2.5"
+        ver = "2.5.1"
     target_version = 'CNTK-{0}'.format(ver.replace('.', '-'))
-    logger.debug("CNTK(BrainScript) target_version: {0}".format(target_version))
+    logger.debug("In install_cntk() target_version: {0}".format(target_version))
     version = _get_cntk_version(target_dir)
     if target_version == version:
         logger.info('CNTK(BrainScript)-{0} is already installed.'.format(ver))
         return True
-    logger.debug('CNTK(BrainScript) target dir: {0}'.format(target_dir))
+    logger.debug('In install_cntk() target_dir: {0}'.format(target_dir))
     cntk_root = os.path.join(target_dir, 'cntk')
     if os.path.isdir(cntk_root):
         try:
@@ -471,30 +471,32 @@ def install_cntk(target_dir):
             logger.error('Fail to install CNTK(BrainScript), the error message: can not create directory {0}.'
                          'Please check if there is permission for creating directory.'.format(target_dir))
             return False
-    cntk_file_name = "{}-{}-64bit-{}.{}".format(target_version,
-                                                "Windows" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "Linux",
-                                                "GPU" if sys_info["GPU"] else "CPU-Only",
-                                                "zip" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "tar.gz")
-    cntk_file_path = os.path.join(target_dir, cntk_file_name)
+    cntk_file_name = "{}-{}-64bit-{}.{}".format(target_version, "Windows" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "Linux",
+                                                "GPU" if sys_info["GPU"] else "CPU-Only", "zip" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "tar.gz")
+    logger.debug("In install_cntk() cntk_file_name: {0}".format(cntk_file_name))
     cntk_url = "https://cntk.ai/BinaryDrop/{0}".format(cntk_file_name)
-    logger.debug("CNTK(BrainScript) cntk_file_name: {0}".format(cntk_file_name))
+    logger.debug("In install_cntk() cntk_url: {0}".format(cntk_url))
+    cntk_file_path = os.path.join(target_dir, cntk_file_name)
+    logger.debug("In install_cntk() cntk_file_path: {0}".format(cntk_file_path))
 
+    if sys_info["OS"] == TOOLSFORAI_OS_WIN:
+        download_dir = cntk_file_path
+    elif sys_info["OS"] == TOOLSFORAI_OS_LINUX:
+        download_dir = os.path.join(r"/tmp", cntk_file_name)
     skip_downloading = False
     if not skip_downloading:
-        if not _download_file(cntk_url, cntk_file_path):
+        if not _download_file(cntk_url, download_dir):
             logger.error('Fail to install CNTK(BrainScript), the error message: cannot download {0}.'
                          'Please check your network.'.format(cntk_url))
             return False
 
-    if (not (
-    _unzip_file(cntk_file_path, target_dir) if sys_info["OS"] == TOOLSFORAI_OS_WIN else _extract_tar(cntk_file_path,
-                                                                                                     target_dir))):
+    if (not (_unzip_file(download_dir, target_dir) if sys_info["OS"] == TOOLSFORAI_OS_WIN else _extract_tar(download_dir, target_dir))):
         logger.error('Fail to install CNTK(BrainScript), the error message: cannot decompress the downloaded package.')
         return False
 
     if not skip_downloading:
-        if os.path.isfile(cntk_file_path):
-            os.remove(cntk_file_path)
+        if os.path.isfile(download_dir):
+            os.remove(download_dir)
 
     if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
         suc = install_cntk_win(cntk_root)
@@ -566,7 +568,6 @@ def install_cntk_win(cntk_root):
         suc = False
         logger.error("Fail to install CNTK(BrainScript). The error massage: {0}".format(sys.exc_info()))
 
-    logger.debug("Set CNTK(BrainScript) root path...")
     if (_run_cmd("SETX", ["AITOOLS_CNTK_ROOT", cntk_root])):
         logger.debug("Set CNTK(BrainScript) root path successfully.")
     else:
@@ -939,24 +940,22 @@ def main():
         logger.setLevel(logging.DEBUG)
     if args.cuda80:
         sys_info["cuda80"] = True
+
     logger.info("Detecting system information ...")
     if not detect_os() or not detect_python_version() or not detect_gpu():
         return
+    if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
+       detect_vs()
+    if (sys_info["GPU"]):
+        if not detect_cuda():
+            return
+        detect_cudnn()
 
     target_dir = ''
     if sys_info["OS"] == TOOLSFORAI_OS_WIN:
         target_dir = os.path.sep.join([os.getenv("APPDATA"), "Microsoft", "ToolsForAI", "RuntimeSDK"])
     elif sys_info["OS"] == TOOLSFORAI_OS_LINUX:
         target_dir = os.path.sep.join([os.path.expanduser('~'), '.toolsforai', 'RuntimeSDK'])
-
-    if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
-        detect_vs()
-
-    if (sys_info["GPU"]):
-        if not detect_cuda():
-            return
-        detect_cudnn()
-
     if not install_cntk(target_dir):
         fail_install.append("CNTK(BrainScript)")
     pip_software_install(args.options, args.user, args.verbose)
