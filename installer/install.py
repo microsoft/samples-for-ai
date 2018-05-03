@@ -305,7 +305,7 @@ def detect_python_version():
     py_version = ".".join(map(str, sys.version_info[0:2]))
     py_full_version = ".".join(map(str, sys.version_info[0:3]))
     sys_info["python"] = py_version.replace('.', '')
-    logger.debug("sys_info['python']: {0}".format(sys_info["python"]))
+    logger.debug("In detect_python_version(), sys_info['python']: {0}".format(sys_info["python"]))
     logger.info("Python: {0}, {1}".format(py_full_version, py_architecture))
     if not (_version_compare("3.5", py_version) and py_architecture == '64bit'):
         logger.error("64-bit Python 3.5 or higher is required to run this installer."
@@ -452,12 +452,12 @@ def install_cntk(target_dir):
     else:
         ver = "2.5.1"
     target_version = 'CNTK-{0}'.format(ver.replace('.', '-'))
-    logger.debug("In install_cntk() target_version: {0}".format(target_version))
+    logger.debug("In install_cntk(), target_version: {0}".format(target_version))
     version = _get_cntk_version(target_dir)
     if target_version == version:
         logger.info('CNTK(BrainScript)-{0} is already installed.'.format(ver))
         return True
-    logger.debug('In install_cntk() target_dir: {0}'.format(target_dir))
+    logger.debug('In install_cntk(), target_dir: {0}'.format(target_dir))
     cntk_root = os.path.join(target_dir, 'cntk')
     if os.path.isdir(cntk_root):
         try:
@@ -477,11 +477,11 @@ def install_cntk(target_dir):
             return False
     cntk_file_name = "{}-{}-64bit-{}.{}".format(target_version, "Windows" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "Linux",
                                                 "GPU" if sys_info["GPU"] else "CPU-Only", "zip" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "tar.gz")
-    logger.debug("In install_cntk() cntk_file_name: {0}".format(cntk_file_name))
+    logger.debug("In install_cntk(), cntk_file_name: {0}".format(cntk_file_name))
     cntk_url = "https://cntk.ai/BinaryDrop/{0}".format(cntk_file_name)
-    logger.debug("In install_cntk() cntk_url: {0}".format(cntk_url))
+    logger.debug("In install_cntk(), cntk_url: {0}".format(cntk_url))
     cntk_file_path = os.path.join(target_dir, cntk_file_name)
-    logger.debug("In install_cntk() cntk_file_path: {0}".format(cntk_file_path))
+    logger.debug("In install_cntk(), cntk_file_path: {0}".format(cntk_file_path))
 
     if sys_info["OS"] == TOOLSFORAI_OS_WIN:
         download_dir = cntk_file_path
@@ -762,9 +762,7 @@ def pip_install_chainer(options):
 
     name = "chainermn"
     version = ""
-    try:
-        pip_install_package(name, options)
-    except:
+    if not pip_install_package(name, options):
         logger.error("Fail to install chainermn. On Linux, in order to install chainermn, libmpich-dev is needed! ")
 
 def pip_install_onnxmltools(options):
