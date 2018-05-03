@@ -613,11 +613,12 @@ def pip_install_package(name, options, version="", pkg=None):
 def pip_uninstall_packge(name, options, version=""):
     try:
         logger.info("Begin to pip-uninstall {0} {1} ...".format(name, version))
-        if len(options) != 0 and options[0] == "--user":
-            options.pop(0)
+        options_copy = options.copy()
+        if len(options_copy) != 0 and options_copy[0] == "--user":
+            options_copy.pop(0)
         res = -1
         # res = pip.main(["uninstall", *options, name])
-        res = subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', *options, "-y", "-q", name])
+        res = subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', *options_copy, "-y", "-q", name])
         if res != 0:
             logger.error("Fail to pip-uninstall {0}.".format(name))
         else:
