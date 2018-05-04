@@ -77,7 +77,7 @@ resume_kimg             = <previous trained images in thousands>,
 
 ### 5. Using main.py (optional)
 
-We provide **main.py** for remote training for Visual Stdio or Visual Stdio Code users. So you can directely start the training process using command line or VS Debugger, which will be convenient in remote job submission.
+We provide **main.py** for remote training for Visual Studio or Visual Studio Code users. So you can directely start the training process using command line or VS Debugger, which will be convenient in remote job submission.
 
 ```
 $ python3 main.py 	--data_dir = <dataset h5 file directory> 	\
