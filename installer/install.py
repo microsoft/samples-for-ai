@@ -329,37 +329,41 @@ def detect_tf_version():
         logger.error("Unexpected error: {0}, please manually check the installation of tensorflow.".format(sys.exc_info()[0]))
 
 
+# def detect_cuda():
+#     if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
+#         return detect_cuda_win()
+#     return True
+
 def detect_cuda():
-    if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
-        return detect_cuda_win()
+    if (sys_info["OS"] == TOOLSFORAI_OS_WIN or sys_info["OS"] == TOOLSFORAI_OS_LINUX):
+        return detect_cuda_()
     return True
 
-
-# def detect_cuda_win(option):
-#     logger.info("Begin to detect cuda version on Windows ...")
+# def detect_cuda_win():
+#     # logger.info("Begin to detect cuda version on Windows ...")
 #     status, stdout = _run_cmd("nvcc", ["-V"], True)
 #     if status and re.search(r"release\s*8.0,\s*V8.0", stdout):
 #         sys_info["CUDA"] = "8.0"
+#         logger.info("Cuda: {0}".format(sys_info["CUDA"]))
+#         if sys_info["cuda80"]:
+#             logger.warning("Detect parameter '--cuda80', the install script will be forced to install dependency package for cuda 8.0.")
+#         else:
+#             logger.warning("We recommend cuda 9.0 (https://developer.nvidia.com/cuda-toolkit)."
+#                            "If you want to install dependency package for cuda 8.0, please run the install script with '--cuda80' again.")
+#             return False
 #     elif status and re.search(r"release\s*9.0,\s*V9.0", stdout):
 #         sys_info["CUDA"] = "9.0"
-#
-#     if sys_info["CUDA"]:
-#         logger.info("Detect cuda version information: {0}".format(sys_info["CUDA"]))
-#         if sys_info["CUDA"] == "8.0":
-#             logger.warning("We recommend cuda 9.0 (https://developer.nvidia.com/cuda-toolkit.), "
-#                            "otherwise some functions will not work properly.")
-#             if option:
-#
-#             return False
+#         logger.info("Cuda: {0}".format(sys_info["CUDA"]))
+#         if sys_info["cuda80"]:
+#             sys_info["CUDA"] = "8.0"
+#             logger.warning("Detect parameter '--cuda80', the install script will be forced to install dependency package for cuda 8.0.")
 #     else:
-#         logger.warning("Not detect cuda! We recommend cuda 9.0, please download and install cuda 9.0 from https://developer.nvidia.com/cuda-toolkit. ")
-#         logger.warning("Not detect cuda! The install script will install dependency package for cuda 9.0.")
 #         sys_info["CUDA"] = "9.0"
+#         logger.warning("Not detect cuda! We recommend cuda 9.0 (https://developer.nvidia.com/cuda-toolkit). "
+#                        "The install script will install dependency package for cuda 9.0 by default.")
 #     return True
 
-
-def detect_cuda_win():
-    # logger.info("Begin to detect cuda version on Windows ...")
+def detect_cuda_():
     status, stdout = _run_cmd("nvcc", ["-V"], True)
     if status and re.search(r"release\s*8.0,\s*V8.0", stdout):
         sys_info["CUDA"] = "8.0"
@@ -373,13 +377,14 @@ def detect_cuda_win():
     elif status and re.search(r"release\s*9.0,\s*V9.0", stdout):
         sys_info["CUDA"] = "9.0"
         logger.info("Cuda: {0}".format(sys_info["CUDA"]))
-        if sys_info["cuda80"]:
-            sys_info["CUDA"] = "8.0"
-            logger.warning("Detect parameter '--cuda80', the install script will be forced to install dependency package for cuda 8.0.")
     else:
         sys_info["CUDA"] = "9.0"
         logger.warning("Not detect cuda! We recommend cuda 9.0 (https://developer.nvidia.com/cuda-toolkit). "
                        "The install script will install dependency package for cuda 9.0 by default.")
+    if sys_info["cuda80"]:
+        sys_info["CUDA"] = "8.0"
+        logger.warning(
+            "Detect parameter '--cuda80', the install script will be forced to install dependency package for cuda 8.0.")
     return True
 
 def detect_cudnn():
