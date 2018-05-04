@@ -22,7 +22,8 @@ sys_info = {
     "cudnn": None,
     "mpi": None,
     "tensorflow": None,
-    "cuda80": False
+    "cuda80": False,
+    "git": False
 }
 fail_install = []
 
@@ -441,6 +442,14 @@ def detect_visualcpp_runtime_win():
     logger.warning("Not detect Visual C++ runtime.")
     return False
 
+def detect_git():
+    res = _run_cmd("git", ["--version"])
+    sys_info["git"] = res
+    if res:
+        logger.info("Git: {0}".format(res))
+    else:
+        logger.info("Git: {0} (Git is needed, otherwise some dependency packages can't be installed.)".format(res))
+
 def install_cntk(target_dir):
     logger.info("Begin to install CNTK(BrainScript) ...")
     if sys_info["OS"] != TOOLSFORAI_OS_WIN and sys_info["OS"] != TOOLSFORAI_OS_LINUX:
@@ -788,8 +797,13 @@ def pip_install_coremltools(options):
     name = "coremltools"
     version = ""
     if sys_info["OS"] == TOOLSFORAI_OS_WIN:
-        pkg = "git+https://github.com/apple/coremltools@v0.8"
-        return pip_install_package(name, options, version, pkg)
+        if sys_info["git"]:
+            pkg = "git+https://github.com/apple/coremltools@v0.8"
+            return pip_install_package(name, options, version, pkg)
+        else:
+            fail_install.append("%s %s" % (name, version))
+            logger.warning("Fail to install {0}. Please manually install git and run installer script again.".format(name))
+            return False
     else:
         return pip_install_package(name, options)
 
@@ -802,6 +816,11 @@ def pip_install_onnx(options):
 def pip_install_tf2onnx(options):
     name = "tf2onnx"
     version = "0.0.0.1"
+    if not sys_info["git"]:
+        fail_install.append("%s %s" % (name, version))
+        logger.warning("Fail to install {0}. Please manually install git and run installer script again.".format(name))
+        return False
+
     pkg = "git+https://github.com/onnx/tensorflow-onnx.git@r0.1"
     if module_exists(name):
         logger.info("{0} is already installed. We will uninstall it and upgrade to the latest version.".format(name))
@@ -958,6 +977,7 @@ def main():
     logger.info("Detecting system information ...")
     if not detect_os() or not detect_python_version() or not detect_gpu():
         return
+    detect_git()
     if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
        detect_vs()
     if (sys_info["GPU"]):
