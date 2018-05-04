@@ -773,7 +773,7 @@ def pip_install_chainer(options):
     name = "chainermn"
     version = ""
     if not pip_install_package(name, options):
-        logger.error("Fail to install chainermn. On Linux, in order to install chainermn, libmpich-dev is needed! ")
+        logger.warning("On Linux, in order to install chainermn, please manually install libmpich-dev and run installer script again.")
 
 def pip_install_onnxmltools(options):
     name = "onnxmltools"
