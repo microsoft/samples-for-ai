@@ -36,7 +36,8 @@ or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any addi
     - For CNTK BrainScript MNIST project, in the "input" folder, run "python install_mnist.py" to download data.
 
 ## Preparing development environment
-Before training deep learning models on your local or remote computer you should make sure you have the latest applicable prerequisites installed. This includes making sure the latest drivers and libraries for your NVIDIA GPU (if you have one). You should also ensure you have installed Python and Python libraries such as NumPy, SciPy, Python support for Visual Studio, and appropriate deep learning frameworks such as Microsoft Cognitive Toolkit (CNTK), TensorFlow, Caffe2, MXNet, Keras, Theano, PyTorch and/or Chainer.
+Before training deep learning models on your local or remote computer, please make sure you have the deep learning software installed.
+This includes the latest drivers and libraries for your NVIDIA GPU (if you have one). You also need to install Python and libraries such as NumPy, SciPy, Python support for Visual Studio, and frameworks such as Microsoft Cognitive Toolkit (CNTK), TensorFlow, Caffe2, MXNet, Keras, Theano, PyTorch and/or Chainer.
 
 Please visit [here](https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md) for detailed instruction.
 
@@ -44,9 +45,15 @@ Please visit [here](https://github.com/Microsoft/vs-tools-for-ai/blob/master/doc
 
 Currently, this installer works on Windows, macOS and Linux:
 
-- Install latest NVIDIA GPU driver, CUDA 8.0, and cuDNN 6 and 7 if applicable.
+- Install latest NVIDIA GPU driver, CUDA 9.0, and cuDNN 7.0 if applicable.
 - Install latest **Python 3.5 or 3.6**. Other Python versions are not supported.
 - Run the following commands in a terminal:
+    > [!NOTE]
+    >
+    > - If your Python distribution is installed in the system directory (e.g. the one shipped with Visual Studio 2017, or the built-in one on Linux), administrative permission (e.g. "sudo" on Linux) is required to launch the installer.
+    > - Pass "**--user**" argument, if you want to install to the Python user install directory for your platform. Typically ~/.local/, or %APPDATA%\Python on Windows.
+    > - The installer will detect whether NVIDIA GPU cards are available and set up software for CUDA 9.0 by default. You can pass "**--cuda80**" argument to force installing software for CUDA 8.0 .
+
     ```bash
     git clone https://github.com/Microsoft/samples-for-ai.git
     cd samples-for-ai
@@ -56,9 +63,6 @@ Currently, this installer works on Windows, macOS and Linux:
     - Non-Windows:
         python3 install.py
     ```
-> [!NOTE]
->
-> On Linux, you may need 'sudo' to install deep learning frameworks into system directory.
 
 
 ## Runing samples locally

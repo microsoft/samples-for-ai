@@ -24,3 +24,6 @@ __pycache__/
 
 # Temp files
 *.log
+
+# pycharm files
+.idea/
