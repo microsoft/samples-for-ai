@@ -1,0 +1,37 @@
+{
+  "dependencies": [],
+  "description": "Add styles from famous paintings to any photo in a fraction of a second.",
+  "location": "",
+  "name": "StarryTransfer",
+  "params": {
+    "model": {
+      "frameworkVersion": "1.2.0",
+      "graphVersion": 22,
+      "interfaces": [
+        {
+          "inputs": [
+            {
+              "description": "Raw image.",
+              "internalName": "img_placeholder:0",
+              "name": "input",
+              "shape": "[1, 480, 640, 3]",
+              "type": "DATA_TYPE_FLOAT"
+            }
+          ],
+          "name": "Transfer",
+          "outputs": [
+            {
+              "description": "New image.",
+              "internalName": "add_37:0",
+              "name": "output",
+              "shape": "[1, 480, 640, 3]",
+              "type": "DATA_TYPE_FLOAT"
+            }
+          ]
+        }
+      ]
+    }
+  },
+  "typeName": "TensorFlowModel",
+  "version": 1
+}
