@@ -1,5 +1,7 @@
 # Introduction
 
+[简体中文](/zh-hans/examples/keras/README.md)
+
 The example is used to train a simple deep CNN model on the cifar10 small images dataset.
 
 **Project cifar10_tf** is with Tensorflow backend, while **Project cifar10_th** is with Theano backend.

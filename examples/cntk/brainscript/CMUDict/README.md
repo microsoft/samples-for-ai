@@ -1,4 +1,6 @@
 
+[简体中文](/zh-hans/examples/cntk/brainscript/CMUDict/README.md)
+
 This example demonstrates the use of CNTK for grapheme-to-phoneme (letter-to-sound)
 conversion using a sequence-to-sequence model with attention, using the CMUDict dictionary.
 

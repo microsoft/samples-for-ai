@@ -1,5 +1,7 @@
 # Build Neural Language Model using Sampled Softmax
 
+[简体中文](/zh-hans/examples/cntk/python/ptb/README.md)
+
 This example demonstrates how to use sampled softmax for training a token based neural language model.
 The model predicts the next word in a text given the previous ones where the probability of the next word is computed using a softmax.
 As the number of different words might be very high this final softmax step can turn out to be costly.
