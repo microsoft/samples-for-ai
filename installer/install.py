@@ -589,10 +589,11 @@ def install_cntk_win(cntk_root):
         suc = False
         logger.error("Fail to install CNTK(BrainScript). The error massage: {0}".format(sys.exc_info()))
 
-    if (_run_cmd("SETX", ["AITOOLS_CNTK_ROOT", cntk_root])):
-        logger.debug("Set CNTK(BrainScript) root path successfully.")
-    else:
-        logger.debug("Fail to set CNTK(BrainScript) root path.")
+    #if (_run_cmd("SETX", ["AITOOLS_CNTK_ROOT", cntk_root])):
+    #    logger.debug("Set CNTK(BrainScript) root path successfully.")
+    #else:
+    #    logger.debug("Fail to set CNTK(BrainScript) root path.")
+
     return suc
 
 
