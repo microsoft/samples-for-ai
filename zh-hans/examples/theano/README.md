@@ -1,10 +1,8 @@
 # 介绍
 
-[English](/examples/theano/README.md)
+The examples is from <http://deeplearning.net/software/theano/tutorial/examples.html#a-real-example-logistic-regression>.
 
-样例来自于<http://deeplearning.net/software/theano/tutorial/examples.html#a-real-example-logistic-regression>。
-
-这是一个简单的逻辑回归的样例。 数据是随机生成的。
+It is a simple logistic regression examples. And data is generated randomly.
 
 # 如何运行
 
