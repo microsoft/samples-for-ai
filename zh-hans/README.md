@@ -1,8 +1,8 @@
 # 介绍
 
-[简体中文](zh-hans/README.md)
+[English](/README.md)
 
-Samples in Visual Studio solution format are provided for users to get started with deep learning using [Microsoft Visual Studio Tools for AI](https://github.com/Microsoft/vs-tools-for-ai). Each solution has one or more sample projects. Solutions are separated by different deep learning frameworks they use:
+通过Visual Studio解决方案的格式提供示例，让用户使用[Microsoft Visual Studio Tools for AI](https://github.com/Microsoft/vs-tools-for-ai)入门深度学习。 每个解决方案有一个或多个示例项目。 解决方案是按照不同的深度学习框架组织的：
 
 - CNTK (包含BrainScript和Python语言)
 - Tensorflow
@@ -14,11 +14,11 @@ Samples in Visual Studio solution format are provided for users to get started w
 
 # 贡献
 
-This project welcomes contributions and suggestions. Most contributions require you to agree to a Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us the rights to use your contribution. For details, visit https://cla.microsoft.com.
+本项目欢迎任何贡献和建议。 大多数贡献都需要你同意参与者许可协议（CLA），来声明你有权，并实际上授予我们有权使用你的贡献。 有关详细信息，请访问 https://cla.microsoft.com。
 
-When you submit a pull request, a CLA-bot will automatically determine whether you need to provide a CLA and decorate the PR appropriately (e.g., label, comment). Simply follow the instructions provided by the bot. You will only need to do this once across all repositories using our CLA.
+当你提交拉取请求时，CLA机器人会自动检查你是否需要提供CLA，并修饰这个拉取请求(例如，标签、注释)。 只需要按照机器人提供的说明进行操作即可。 CLA只需要通过一次，就能应用到所有的存储库上。
 
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/). For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or contact <opencode@microsoft.com> with any additional questions or comments.
+该项目采用了 [ Microsoft 开源行为准则 ](https://opensource.microsoft.com/codeofconduct/)。 有关详细信息,请参阅 [ 行为守则常见问题解答 ](https://opensource.microsoft.com/codeofconduct/faq/) 或联系<opencode@microsoft.com>咨询问题或评论。
 
 # 准备工作
 
@@ -31,32 +31,32 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 
 ## 准备开发环境
 
-Before training deep learning models on your local or remote computer, please make sure you have the deep learning software installed. This includes the latest drivers and libraries for your NVIDIA GPU (if you have one). You also need to install Python and libraries such as NumPy, SciPy, Python support for Visual Studio, and frameworks such as Microsoft Cognitive Toolkit (CNTK), TensorFlow, Caffe2, MXNet, Keras, Theano, PyTorch and/or Chainer.
+在本地或远程计算机上训练深度学习模型之前，确保安装了相应的深度学习软件。 如果有NVIDIA显卡，要安装最新的驱动和软件库。 还要确保安装了Python和必要的Python库，包括NumPy，SciPy，Python的Visual Studio支持，以及相应的深度学习框架，例如，微软认知工具包(CNTK)，TensorFlow, Caffe2, MXNet, Keras, Theano, PyTorch和Chainer。
 
-Please visit [here](https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md) for detailed instruction.
+请访问[这里](https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md)获得更详细的说明。
 
 ## 一键式安装深度学习框架
 
-Currently, this installer works on Windows, macOS and Linux:
+当前，安装文件适用于Windows，macOS和Linux：
 
-- Install latest NVIDIA GPU driver, CUDA 9.0, and cuDNN 7.0 if applicable.
+- 如果有NIVIDA显卡，需要安装最新的驱动，CUDA 9.0, 以及cuDNN 7.0。
 - 安装最新的**Python 3.5或3.6**。 不支持其它Python版本。
-- Run the following commands in a terminal:
+- 在终端中运行以下命令：
     
-    > [!NOTE]
+    > [!注意]
     > 
-    > - If your Python distribution is installed in the system directory (e.g. the one shipped with Visual Studio 2017, or the built-in one on Linux), administrative permission (e.g. "sudo" on Linux) is required to launch the installer.
-    > - Pass "**--user**" argument, if you want to install to the Python user install directory for your platform. Typically ~/.local/, or %APPDATA%\Python on Windows.
-    > - The installer will detect whether NVIDIA GPU cards are available and set up software for CUDA 9.0 by default. You can pass "**--cuda80**" argument to force installing software for CUDA 8.0 .
+    > - 如果Python安装在了系统目录中（如，与Visual Studio 2017一同发布的版本，或Linux的内置版本），则需要管理员权限（如，Linux下使用"sudo"）来运行安装脚本。
+    > - 如果想安装到Python的用户目录中，可使用 "**--user**"参数。 通常在 ~/.local/，或windows下的%APPDATA%\Python目录。
+    > - 安装程序会检测是否有可用的NVIDIA显卡，并默认安装CUDA 9.0软件。 可以使用"**--cuda80**"参数来强制安装CUDA 8.0 。
     
     ```bash
 git clone https://github.com/Microsoft/samples-for-ai.git
 cd samples-for-ai
 cd installer
 
-- Windows:
+- Windows运行：
     python.exe install.py
-- Non-Windows:
+- 非Windows运行：
     python3 install.py
 ```
 
@@ -75,18 +75,18 @@ cd installer
 
 # 许可证
 
-The samples scripts are from official github of each framework. They are under different licenses.
+样例脚本来源于每个框架的官方github。 它们遵循不同的许可。
 
-The scripts of CNTK are under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
+CNTK脚本遵循[MIT许可](https://en.wikipedia.org/wiki/MIT_License)。
 
-The scripts of Tensorflow samples are under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0). There are no changes on the original code.
+Tensorflow脚本遵循[Apache 2.0许可](https://en.wikipedia.org/wiki/Apache_License#Version_2.0)。 在原始代码上没有改动。
 
-For the scripts of Caffe2, different versions released with different licenses. Currently, the master branch is under Apache 2.0 license. But the version 0.7 and 0.8.1 were released with [BSD 2-Clause license](https://github.com/caffe2/caffe2/tree/v0.8.1). The scripts in our solution are based on caffe2 github source tree version 0.7 and 0.8.1, with BSD 2-Clause license.
+对于Caffe2的脚本，不同的发布版本有不同的许可。 当前，主分支遵循Apache 2.0许可。 但版本0.7和0.8.1是在[BSD 2-Clause许可](https://github.com/caffe2/caffe2/tree/v0.8.1)下发布的。 我们的解决方案基于Caffe2的版本0.7和0.8.1的脚本源代码，遵循BSD 2-Clause许可。
 
-The scripts of Keras are under [MIT license](https://github.com/fchollet/keras/blob/master/LICENSE).
+Keras脚本遵循[MIT 许可](https://github.com/fchollet/keras/blob/master/LICENSE)。
 
-The scripts of Theano are under [BSD license](https://en.wikipedia.org/wiki/BSD_licenses).
+Theano脚本遵循[BSD许可](https://en.wikipedia.org/wiki/BSD_licenses)。
 
-The scripts of MXNet are under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0). There are no changes on the original code.
+MXNet脚本遵循[Apache 2.0许可](https://en.wikipedia.org/wiki/Apache_License#Version_2.0)。 在原始代码上没有改动。
 
-The scripts of Chainer are under [MIT license](https://github.com/chainer/chainer/blob/master/LICENSE).
+Chainer脚本遵循[MIT许可](https://github.com/chainer/chainer/blob/master/LICENSE)。
