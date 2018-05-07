@@ -1,14 +1,14 @@
 # Tensorflow中的神经图灵机
 
-[简体中文](/zh-hans/examples/tensorflow/NTM/README.md)
+[English](/examples/tensorflow/NTM/README.md)
 
-Tensorflow implementation of [Neural Turing Machine](http://arxiv.org/abs/1410.5401). This implementation uses an LSTM controller. NTM models with multiple read/write heads are supported.
+Tensorflow的[Neural Turing Machine](http://arxiv.org/abs/1410.5401)实现。 该实现用了LSTM控制器。 NTM模型支持多次读写头。
 
-![alt_tag](etc/NTM.gif)
+![交换标签](etc/NTM.gif)
 
-The referenced torch code can be found [here](https://github.com/kaishengtai/torch-ntm).
+参考的torch代码可在[这里](https://github.com/kaishengtai/torch-ntm)找到。
 
-** 1. Loss sometimes goes to nan even with the gradient clipping ([#2](https://github.com/carpedm20/NTM-tensorflow/issues/2)).** ** 2. The code is very poorly design to support NTM inputs with variable lengths. Just use this code as a reference.**
+** 1. 有时甚至在修剪了梯度值的情况下，也会出现非法值 ([#2](https://github.com/carpedm20/NTM-tensorflow/issues/2)).** ** 2. 代码对于变长的NTM输入支持很有限。 请仅将此代码作为参考。**
 
 ## 先决条件
 
@@ -18,27 +18,27 @@ The referenced torch code can be found [here](https://github.com/kaishengtai/tor
 
 ## 用法
 
-To train a copy task:
+训练复制的任务：
 
     $ python main.py --task copy --is_train True
     
 
-To test a *quick* copy task:
+测试*快速*复制任务：
 
     $ python main.py --task copy --test_max_length 10
     
 
 ## 结果
 
-More detailed results can be found [here](ipynb/NTM\ Test.ipynb).
+在[这里](ipynb/NTM\ Test.ipynb)有更多详细结果。
 
-**Copy task:**
+**复制任务：**
 
-![alt_tag](etc/result4.png) ![alt_tag](etc/result3.png)
+![交换标签](etc/result4.png) ![交换标签](etc/result3.png)
 
-**Recall task:**
+**召回任务：**
 
-(in progress)
+(正在进行中)
 
 ## 作者
 
@@ -46,4 +46,4 @@ Taehoon Kim / [@carpedm20](http://carpedm20.github.io/)
 
 ## 许可证
 
-MIT License
+MIT许可证
