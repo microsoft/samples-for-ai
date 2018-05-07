@@ -1,5 +1,7 @@
 # GeneGAN: 从未配对的数据中学习对象变形和属性子空间
 
+[简体中文](/zh-hans/examples/tensorflow/GeneGAN/README.md)
+
 By Shuchang Zhou, Taihong Xiao, Yi Yang, Dieqiao Feng, Qinyao He, Weiran He
 
 If you use this code for your research, please cite our paper:
