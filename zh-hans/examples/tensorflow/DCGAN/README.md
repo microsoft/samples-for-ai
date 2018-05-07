@@ -1,10 +1,10 @@
 # Tensorflow中实现DCGAN
 
-[简体中文](/zh-hans/examples/tensorflow/DCGAN/README.md)
+[English](/examples/tensorflow/DCGAN/README.md)
 
-Tensorflow implementation of [Deep Convolutional Generative Adversarial Networks](http://arxiv.org/abs/1511.06434) which is a stabilize Generative Adversarial Networks. The referenced torch code can be found [here](https://github.com/soumith/dcgan.torch).
+Tensorflow实现了[Deep Convolutional Generative Adversarial Networks](http://arxiv.org/abs/1511.06434)描述的稳定的生成对抗网络。 引用的torch代码[在这里](https://github.com/soumith/dcgan.torch)。
 
-![alt tag](DCGAN.png)
+![替换标签](DCGAN.png)
 
 - 基于这个代码库，[Brandon Amos](http://bamos.github.io/)写了非常好的[博客](http://bamos.github.io/2016/08/09/deep-completion/)和[图像完整的代码](https://github.com/bamos/dcgan-completion.tensorflow)。
 - *与原始论文不同的是，为了避免D（判别）网络快速汇聚，在每次D网络更新时，G（生成）网络会更新两次。*
@@ -13,7 +13,7 @@ Tensorflow implementation of [Deep Convolutional Generative Adversarial Networks
 
 [![](https://raw.githubusercontent.com/carpedm20/blog/master/content/images/face.png)](http://carpedm20.github.io/faces/)
 
-[link](http://carpedm20.github.io/faces/)
+[链接](http://carpedm20.github.io/faces/)
 
 ## 先决条件
 
@@ -26,24 +26,24 @@ Tensorflow implementation of [Deep Convolutional Generative Adversarial Networks
 
 ## 用法
 
-First, download dataset with:
+首先，用下面的命令下载数据集：
 
     $ python download.py mnist celebA
     
 
-To train a model with downloaded dataset:
+用下载的数据集训练模型：
 
     $ python main.py --dataset mnist --input_height=28 --output_height=28 --train
     $ python main.py --dataset celebA --input_height=108 --train --crop
     
 
-To test with an existing model:
+测试已有的模型：
 
     $ python main.py --dataset mnist --input_height=28 --output_height=28
     $ python main.py --dataset celebA --input_height=108 --crop
     
 
-Or, you can use your own dataset (without central crop) by:
+或者用自己的数据集（不带中心裁剪）：
 
     $ mkdir data/DATASET_NAME
     ... add images to data/DATASET_NAME ...
@@ -53,7 +53,7 @@ Or, you can use your own dataset (without central crop) by:
     $ python main.py --dataset=eyes --input_fname_pattern="*_cropped.png" --train
     
 
-If your dataset is located in a different root directory:
+如果你的数据集在不同的根目录中：
 
     $ python main.py --dataset DATASET_NAME --data_dir DATASET_ROOT_DIR --train
     $ python main.py --dataset DATASET_NAME --data_dir DATASET_ROOT_DIR
@@ -63,47 +63,47 @@ If your dataset is located in a different root directory:
 
 ## 结果
 
-![result](assets/training.gif)
+![结果](assets/training.gif)
 
 ### celebA
 
-After 6th epoch:
+6批次以后：
 
-![result3](assets/result_16_01_04_.png)
+![结果3](assets/result_16_01_04_.png)
 
-After 10th epoch:
+10批次以后：
 
-![result4](assets/test_2016-01-27%2015:08:54.png)
+![结果4](assets/test_2016-01-27%2015:08:54.png)
 
 ### 亚洲人脸数据集
 
 ![自定义结果1](web/img/change5.png)
 
-![custom_result1](web/img/change2.png)
+![自定义结果1](web/img/change2.png)
 
-![custom_result2](web/img/change4.png)
+![自定义结果2](web/img/change4.png)
 
 ### MNIST
 
-MNIST codes are written by [@PhoenixDai](https://github.com/PhoenixDai).
+MNIST代码作者是[@PhoenixDai](https://github.com/PhoenixDai)。
 
-![mnist_result1](assets/mnist1.png)
+![mnist_结果1](assets/mnist1.png)
 
-![mnist_result2](assets/mnist2.png)
+![mnist_结果2](assets/mnist2.png)
 
-![mnist_result3](assets/mnist3.png)
+![mnist_结果3](assets/mnist3.png)
 
-More results can be found [here](./assets/) and [here](./web/img/).
+可以在[这里](./assets/)和[这里](./web/img/)找到更多结果。
 
 ## 训练详情
 
-Details of the loss of Discriminator and Generator (with custom dataset not celebA).
+判别器和生成器损失率的详细信息(基于自定义数据集，而非celebA)。
 
 ![d_loss](assets/d_loss.png)
 
 ![g_loss](assets/g_loss.png)
 
-Details of the histogram of true and fake result of discriminator (with custom dataset not celebA).
+判别器真假结果的柱状图(基于自定义数据集，而非celebA)。
 
 ![d_hist](assets/d_hist.png)
 
@@ -121,4 +121,4 @@ Taehoon Kim / [@carpedm20](http://carpedm20.github.io/)
 
 ## 许可证
 
-MIT License
+MIT许可证
