@@ -1,5 +1,7 @@
 # Keras中实现密集卷积网络(Dense Net)
 
+[简体中文](/zh-hans/examples/keras/DenseNet/README.md)
+
 DenseNet implementation of the paper [Densely Connected Convolutional Networks](https://arxiv.org/pdf/1608.06993v3.pdf) in Keras
 
 Now supports the more efficient DenseNet-BC (DenseNet-Bottleneck-Compressed) networks. Using the DenseNet-BC-190-40 model, it obtaines state of the art performance on CIFAR-10 and CIFAR-100
