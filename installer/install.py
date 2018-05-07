@@ -379,6 +379,7 @@ def detect_cuda_():
         logger.info("Cuda: {0}".format(sys_info["CUDA"]))
         if sys_info["cuda80"]:
             logger.warning("Detect parameter '--cuda80', the installer script will be forced to install dependency package for cuda 8.0.")
+            return True
         else:
             logger.warning("We recommend cuda 9.0 (https://developer.nvidia.com/cuda-toolkit)."
                            "If you want to install dependency package for cuda 8.0, please run the installer script with '--cuda80' again.")
