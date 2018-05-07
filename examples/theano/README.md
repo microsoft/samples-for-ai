@@ -10,6 +10,6 @@ It is a simple logistic regression examples. And data is generated randomly.
 
 2. Set **LR project** as "Startup Project" (By right-click the project name).
 
-3. Set the script **logistic_regression.py** as "Startup File" (By right-click the project name).
+3. Set the script **logistic_regression.py** as "Startup File" (By right-click the file name).
 
 4. Right-click the script -> Start without Debugging

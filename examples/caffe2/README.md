@@ -1,6 +1,6 @@
 # Introduction
 
-The visual solution involve two projects:
+The Visual Studio solution involve two projects:
 
 1. **MNIST project**: It is a common examples for digit recognition. The project trained MNIST dataset with LeNet model.
 
