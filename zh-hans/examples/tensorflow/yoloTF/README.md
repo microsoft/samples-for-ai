@@ -1,6 +1,6 @@
 # 如何使用YOLO模型？
 
-[简体中文](/zh-hans/examples/tensorflow/yoloTF/README.md)
+[English](/examples/tensorflow/yoloTF/README.md)
 
 > 此项目用于重现YOLO模型。
 
@@ -25,9 +25,9 @@ python yoloTF.py
 
 ### 通过VS2017测试
 
-You need to install VS2017, and configure it with tensorflow, python and opencv.
+需要安装VS2017，并配置集成tensorflow, python和OpenCV。
 
-Open yoloTF project, find yoloTF.py file, and click "Run" button.
+打开yoloTF项目，找到yoloTF.py文件，并点击"运行"按钮。
 
 ![](yoloTF/vs2017.png)
 
@@ -81,7 +81,7 @@ Open yoloTF project, find yoloTF.py file, and click "Run" button.
     python tools/train.py -c conf/train.cfg
     
 
-Or use VS2017 to run the code.
+或用VS2017来运行代码
 
 #### 在自己的数据上训练
 
@@ -91,4 +91,4 @@ Or use VS2017 to run the code.
 
 ## 许可证
 
-MIT License （See <LICENSE.md>）
+MIT许可证（参阅<LICENSE.md>）
