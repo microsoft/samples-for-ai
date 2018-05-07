@@ -1,6 +1,6 @@
 # CNTK样例：MNIST
 
-[简体中文](/zh-hans/examples/cntk/brainscript/MNIST/README.md)
+[English](/examples/cntk/brainscript/MNIST/README.md)
 
 ## 概述
 
@@ -15,11 +15,11 @@
 
 ### 获取数据
 
-The MNIST dataset is not included in the CNTK distribution but can be easily downloaded and converted by running the following command from the 'AdditionalFiles' folder:
+MNIST数据集不包括在CNTK的分发包中，但能够很容易的被下载并通过运行'AdditionalFiles'目录中的命令来转换格式：
 
 `python mnist_convert.py`
 
-The script will download all required files and convert them to CNTK-supported format. The resulting files (Train-28x28_cntk_text.txt and Test-28x28_cntk_text.txt) will be stored in the 'Data' folder. In case you don't have Python installed, there are 2 options:
+脚本会下载所有需要的文件，并转换为CNTK支持的格式。 结果文件 (Train-28x28_cntk_text.txt和Test-28x28_cntk_text.txt) 会存储在'Data'文件夹中。 如果还没有安装Python，则有两个选择：
 
 1. 从 https://www.python.org/downloads/ 安装最新版的Python 2.7 然后通过以下指示来安装numpy包： http://www.scipy.org/install.html#individual-packages
 
@@ -27,29 +27,29 @@ The script will download all required files and convert them to CNTK-supported f
 
 ### 设置
 
-Compile the sources to generate the cntk executable (not required if you downloaded the binaries).
+编译源文件来生成的CNTK可执行文件 (如果下载的是可执行文件，则请跳过这一步)。
 
-**Windows:** Add the folder of the cntk executable to your path (e.g. `set PATH=%PATH%;c:/src/cntk/x64/Debug/;`) or prefix the call to the cntk executable with the corresponding folder.
+**Windows:** 将CNTK可执行文件的文件夹加入到路径中 (例如 `set PATH=%PATH%;c:/src/cntk/x64/Debug/;`) 或者在调用CNTK可执行文件时，加上相应的路径。
 
-**Linux:** Add the folder of the cntk executable to your path (e.g. `export PATH=$PATH:$HOME/src/cntk/build/debug/bin/`) or prefix the call to the cntk executable with the corresponding folder.
+**Linux:** 将CNTK可执行文件的文件夹加入到路径中 (例如 `export PATH=$PATH:$HOME/src/cntk/build/debug/bin/`) 或者在调用CNTK可执行文件时，加上相应的路径。
 
 ### 运行
 
-Run the example from the Image/MNIST/Data folder using:
+用下面的命令来运行Image/MNIST/Data文件夹中的样例：
 
 `cntk configFile=../Config/01_OneHidden_ndl_deprecated.cntk`
 
-or run from any folder and specify the Data folder as the `currentDirectory`, e.g. running from the Image/MNIST folder using:
+也可以从任意文件夹运行，并将`currentDirectory`指定到Data文件夹，例如从Image/MNIST目录运行时：
 
 `cntk configFile=Config/01_OneHidden_ndl_deprecated.cntk currentDirectory=Data`
 
-The output folder will be created inside Image/MNIST/.
+输出文件会创建在Image/MNIST/下。
 
 ## 详细说明
 
 ### 配置文件
 
-There are four config files and the corresponding network description files in the 'Config' folder:
+'Config'文件夹中有4个配置文件和相应的网络描述文件：
 
 1. 01_OneHidden.ndl 是简单的单层隐藏网络，它的错误率为2.3%。 要运行样例，打开Data文件夹，并运行此命令：  
     `cntk configFile=../Config/01_OneHidden_ndl_deprecated.cntk`
@@ -64,8 +64,8 @@ There are four config files and the corresponding network description files in t
     要运行样例，打开Data文件夹并运行以下命令：  
     `cntk configFile=../Config/04_DeConv_ndl_deprecated.cntk`
 
-For more details, refer to .ndl and the corresponding .cntk files.
+更多信息，参考.ndl文件和对应的.cntk文件。
 
 ### 其它文件
 
-The 'AdditionalFiles' folder contains the python script to download and convert the data.
+'AdditionalFiles'目录包含了下载和转换数据用的python脚本。
