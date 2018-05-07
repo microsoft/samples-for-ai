@@ -1,8 +1,6 @@
-[English](/examples/cntk/brainscript/CMUDict/README.md)
+This example demonstrates the use of CNTK for grapheme-to-phoneme (letter-to-sound) conversion using a sequence-to-sequence model with attention, using the CMUDict dictionary.
 
-此样例演示了通过CNTK来使用CMUDict字典，通过序列到序列的注意力模型来实现书写位到音素（字母到声音）的转换。
-
-该代码支持多种替代配置。 当前的配置如下：
+The code supports a number of alternative configurations. As configured currently, it implements
 
 * 3隐藏层的单向LSTM编码网络，隐藏层维度均为512。
 * 3隐藏层的单向LSTM解码网络，隐藏层维度均为512。
@@ -12,12 +10,12 @@
 
 ## 如何使用
 
-根据需要，修改G2P.cntk文件的内容：
+Modify the following in G2P.cntk as needed:
 
 * pathnames
 * deviceId 用来指定到某个CPU (-1) 或 GPU (>=0或"auto")
 
-运行：
+Run:
 
 * 命令行： ```cntk  configFile=Examples/SequenceToSequence/CMUDict/Config/G2P.cntk  RunRootDir=g2p```
 * VS调试： ```configFile=$(SolutionDir)Examples/SequenceToSequence/CMUDict/Config/G2P.cntk  RunRootDir=$(SolutionDir)Examples/SequenceToSequence/CMUDict```
