@@ -1,6 +1,6 @@
 # bidaf入门说明
 
-[简体中文](/zh-hans/examples/cntk/python/RNet/README.md)
+[English](/examples/cntk/python/RNet/README.md)
 
 ## 下载微软MARCO数据集
 
@@ -20,27 +20,27 @@
     python3 -m nltk.downloader -d $HOME/nltk_data punkt
     
 
-or
+或者
 
     python -m nltk.downloader -d %USERPROFILE%/nltk_data punkt
     
 
 ## 运行`convert_msmarco.py`
 
-It should create `train.tsv`, `dev.tsv`, and `test.tsv`, and only keep querys that query_type is "description".
+运行后会创建`train.tsv`，`dev.tsv`以及`test.tsv`，并会在query_type为"description"时保留查询。
 
-It does a fair amount of preprocessing therefore converting data to cntk text format reader starts from these files
+这会进行大量的数据预处理来将数据转换为cntk的文本格式。
 
 ## 运行`tsv2ctf.py`
 
-It creates a `vocabs.pkl` and `train.ctf`, `val.ctf`, and `dev.ctf`
+运行后会创建`vocabs.pkl`和`train.ctf`，`val.ctf`，以及`dev.ctf`。
 
-The data is ready now.
+到这里，数据就准备完成了。
 
 ## 在GPU上运行'rnetmodel.py'
 
-you can see the model structure from here
+在这里面可以看到模型的结构
 
 ## 在GPU上运行'train_rnet.py'
 
-this train code mainly from here https://github.com/Microsoft/CNTK/tree/nikosk/bidaf/Examples/Text/BidirectionalAttentionFlow
+训练代码主要来源于下面的位置 https://github.com/Microsoft/CNTK/tree/nikosk/bidaf/Examples/Text/BidirectionalAttentionFlow
