@@ -1,5 +1,7 @@
 # 介绍
 
+[简体中文](/zh-hans/examples/caffe2/README.md)
+
 The visual solution involve two projects:
 
 1. **MNIST 项目**: 这是数字识别的常见样例。 这个项目用LeNet模型训练了MNIST数据集。
