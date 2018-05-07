@@ -1,10 +1,10 @@
 # 介绍
 
-[简体中文](/zh-hans/examples/keras/README.md)
+[English](/examples/keras/README.md)
 
-The example is used to train a simple deep CNN model on the cifar10 small images dataset.
+此样例在cifar10小图片数据集上训练了一个简单的深度卷积网络模型。
 
-**Project cifar10_tf** is with Tensorflow backend, while **Project cifar10_th** is with Theano backend.
+**cifar10_tf项目**以Tensorflow为后端，而**cifar10_th项目**以Theano为后端。
 
 # 如何运行
 
