@@ -1,13 +1,13 @@
 # Windows上的TransR
 
-[简体中文](/zh-hans/examples/tensorflow/TransR/README.md)
+[English](/examples/tensorflow/TransR/README.md)
 
-This is a reimplementation of [Learning Entity and Relation Embeddings for Knowledge Graph Completion](https://aaai.org/ocs/index.php/AAAI/AAAI15/paper/view/9571)(AAAI 15')
+这是[Learning Entity and Relation Embeddings for Knowledge Graph Completion](https://aaai.org/ocs/index.php/AAAI/AAAI15/paper/view/9571)(AAAI 15')的实现
 
 # 数据
 
-The algorithm mainly uses triple datasets of knowledge graphs. Two datasets-WN18 and FB15K are often used in evaluation , which are attached in the files.
+算法主要使用了知识图谱的三元组数据集。 WN18和FB15K这两个数据集经常用在评估中，已经在附加的文件中了。
 
 # 许可证
 
-The code is under MIT license.
+代码由MIT许可。
