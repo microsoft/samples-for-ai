@@ -1,8 +1,8 @@
 # 介绍
 
-[简体中文](/zh-hans/examples/tensorflow/README.md)
+[English](/examples/tensorflow/README.md)
 
-These examples are from tensorflow examples and tensorflow model zoo tutorials, without any change.
+这些样例来源于Tensorflow样例和Tensorflow模型集合教程，未作任何改动。
 
 ## 项目列表
 
@@ -14,7 +14,7 @@ These examples are from tensorflow examples and tensorflow model zoo tutorials, 
 
 4. **MNIST**: ([脚本来源](https://github.com/tensorflow/models/tree/master/tutorials/image/mnist))
 
-For more details, you can see the tensorflow githubs. [Tensorflow](https://github.com/tensorflow/tensorflow) and [Tensorflow Model Zoo](https://github.com/tensorflow/models).
+详细信息可查看Tensorflow GitHub。 [Tensorflow](https://github.com/tensorflow/tensorflow)和[Tensorflow模型集合](https://github.com/tensorflow/models)。
 
 # 如何运行
 
