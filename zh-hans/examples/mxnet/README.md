@@ -1,10 +1,10 @@
 # 介绍
 
-[简体中文](/zh-hans/examples/mxnet/README.md)
+[English](/examples/mxnet/README.md)
 
-This is a common handwritten digit recognition examples on MNIST dataset.
+这是基于常用的手写体数字识别MNIST数据集上的样例。
 
-For more details, please view <http://mxnet.incubator.apache.org/tutorials/python/mnist.html>
+更多信息请参考<http://mxnet.incubator.apache.org/tutorials/python/mnist.html>
 
 # 如何运行
 
