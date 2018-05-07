@@ -1,5 +1,7 @@
 # CNTK样例：MNIST
 
+[简体中文](/zh-hans/examples/cntk/brainscript/MNIST/README.md)
+
 ## 概述
 
 | 数据： | MNIST手写体数据集(http://yann.lecun.com/exdb/mnist/)。          |
