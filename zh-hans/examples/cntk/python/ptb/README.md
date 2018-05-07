@@ -1,18 +1,16 @@
 # 用基于采样的软最大值(SoftMax) 方法来构建神经网络语言模型
 
-[English](/examples/cntk/python/ptb/README.md)
+This example demonstrates how to use sampled softmax for training a token based neural language model. The model predicts the next word in a text given the previous ones where the probability of the next word is computed using a softmax. As the number of different words might be very high this final softmax step can turn out to be costly.
 
-此样例演示了如何用采样的软最大值方法来训练基于令牌的神经网络语言模型。 此模型在给定一些词语的情况下，使用软最大值来计算下一个词的概率，并进行预测。 由于词库的数量非常大，因此最后的软最大值步骤会非常的花时间。
+Sampled-softmax is a technique to reduce this cost at training time. For details see also the [sampled softmax tutorial](https://github.com/Microsoft/CNTK/blob/v2.0.beta12.0/Tutorials/CNTK_207_Training_with_Sampled_Softmax.ipynb)
 
-基于采样的软最大值是用来减少训练时间的方法。 详情查看[基于采样的软最大值教程](https://github.com/Microsoft/CNTK/blob/v2.0.beta12.0/Tutorials/CNTK_207_Training_with_Sampled_Softmax.ipynb)
-
-注意，这里提供的数据集只有10000个不同的词语。 这个数量不算多，因此基于采样的软最大值方法还不能展示出对性能上的显著提升。 显著的性能收益需要更大的词汇表才能更明显。
+Note the provided data set has only 10,000 distinct words. This number is still not very high and sampled softmax doesn't show any significant perf improvements here. The real perf gains will show up with larger vocabularies.
 
 ## 指南
 
-此样例使用的Penn Treebank数据没有保存在GitHub中，需要先下载。 请运行一次download_data.py来下载数据。 这条命令会创建一个./ptb的文件夹，这里面包含了样例所需的所有数据。
+This example uses Penn Treebank Data which is not stored in GitHub but must be downloaded first. To download the data please run download_data.py once. This will create a directory ./ptb that contains all the data we need for running the example.
 
-运行word-rnn.py来训练模型。 word-rnn的主要章节定义了一些参数来控制训练过程。
+Run word-rnn.py to train a model. The main section of word-rnn defines some parameters to control the training.
 
 * `use_sampled_softmax`用来在基于采样的软最大值和全软最大值之间切换。
 * `softmax_sample_size`设置在基于采样的软最大值中随机样本的数量。
