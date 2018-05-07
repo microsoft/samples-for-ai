@@ -1,7 +1,7 @@
-[简体中文](/zh-hans/projects/StyleTransfer/Readme.md)
+[English](/projects/StyleTransfer/Readme.md)
 
-# Style Transfer Experiment
+# 风格迁移实验
 
-Demo for style transfer.
+风格迁移演示。
 
-- The StyleTransferTraining project is originally from https://github.com/gongwuji/style-demo, with minor modification.
+- StyleTransferTraining项目的原始代码来自于 https://github.com/gongwuji/style-demo ，并进行了少量改动。
