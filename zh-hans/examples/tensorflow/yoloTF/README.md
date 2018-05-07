@@ -1,5 +1,7 @@
 # 如何使用YOLO模型？
 
+[简体中文](/zh-hans/examples/tensorflow/yoloTF/README.md)
+
 > 此项目用于重现YOLO模型。
 
 ## 必需组件
