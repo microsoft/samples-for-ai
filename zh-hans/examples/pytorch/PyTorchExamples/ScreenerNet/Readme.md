@@ -1,13 +1,15 @@
 这是 [ScreenerNet: Learning Self-Paced Curriculum for Deep Neural Networks](https://arxiv.org/abs/1801.00904) 的实现。
 
+[简体中文](/zh-hans/examples/pytorch/PyTorchExamples/ScreenerNet/Readme.md)
+
 # prerequisites
 
-如果要在pascal voc2012数据集上训练，确保下载了它，并放在了PWD/VOC2012目录下。
+If you want to train on pascal voc2012 dataset, make sure that you have download it and put it in PWD/VOC2012
 
 # 如何运行
 
-输入 `python snet.py -h`  
-查看所有训练和测试的选项。
+please type `python snet.py -h`  
+to see all train and test options.
 
-例如 `python snet.py train mnist
+For example: `python snet.py train mnist
 python snet.py test mnist --modelname=your_model_name`
