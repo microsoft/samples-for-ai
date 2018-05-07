@@ -1,38 +1,38 @@
 # Tensorflow 中的端到端内存网络
 
-[简体中文](/zh-hans/examples/tensorflow/MemN2N/README.md)
+[English](/examples/tensorflow/MemN2N/README.md)
 
-Tensorflow implementation of [End-To-End Memory Networks](http://arxiv.org/abs/1503.08895v4) for language modeling (see Section 5). The original torch code from Facebook can be found [here](https://github.com/facebook/MemNN/tree/master/MemN2N-lang-model).
+Tensorflow的[End-To-End Memory Networks](http://arxiv.org/abs/1503.08895v4)语言模型（见第5章）的实现。 Facebook的原始torch代码在[这里](https://github.com/facebook/MemNN/tree/master/MemN2N-lang-model)。
 
-![alt tag](http://i.imgur.com/nv89JLc.png)
+![替换标签](http://i.imgur.com/nv89JLc.png)
 
 ## 先决条件
 
-This code requires [Tensorflow](https://www.tensorflow.org/). There is a set of sample Penn Tree Bank (PTB) corpus in `data` directory, which is a popular benchmark for measuring quality of these models. But you can use your own text data set which should be formated like [this](data/).
+需安装[Tensorflow](https://www.tensorflow.org/)。 在`data`文件夹中有Penn Tree Bank (PTB) 语料的样例集，这是一个常用的衡量多种模型质量的基准数据集。 也可将自己的数据按照[这样](data/)格式化后使用此模型。
 
-When you use docker image tensorflw/tensorflow:latest-gpu, you need to python package future.
+当使用docker图像tensorflw/tensorflow:latest-gpu时，还需要Python future 包。
 
     $ pip install future
     
 
-If you want to use `--show True` option, you need to install python package `progress`.
+如果要使用`--show True`选项，还需要安装Python `progress`包。
 
     $ pip install progress
     
 
 ## 用法
 
-To train a model with 6 hops and memory size of 100, run the following command:
+要训练6个跃点，且内存大小为100的模型，运行下列命令：
 
     $ python main.py --nhop 6 --mem_size 100
     
 
-To see all training options, run:
+查看所有训练选项，运行：
 
     $ python main.py --help
     
 
-which will print:
+输出为（下为译文）：
 
     用法: main.py [-h] [--edim EDIM] [--lindim LINDIM] [--nhop NHOP]
                   [--mem_size MEM_SIZE] [--batch_size BATCH_SIZE]
@@ -66,18 +66,18 @@ which will print:
       --noshow
     
 
-(Optional) If you want to see a progress bar, install `progress` with `pip`:
+（可选）如果要查看进度条，用`pip`安装`progress`：
 
     $ pip install progress
     $ python main.py --nhop 6 --mem_size 100 --show True
     
 
-After training is finished, you can test and validate with:
+训练完成后用下面的命令来测试并验证：
 
     $ python main.py --is_test True --show True
     
 
-The training output looks like:
+训练输出样例：
 
     $ python main.py --nhop 6 --mem_size 100 --show True
     Read 929589 words from data/ptb.train.txt
@@ -119,7 +119,7 @@ The training output looks like:
 
 ## 性能
 
-The perplexity on the test sets of Penn Treebank corpora.
+Penn Treebank语料测试集上的困惑度。
 
 | 隐藏数量 | 跃点数量 | 存储大小 | MemN2N (Sukhbaatar 2015) |    本代码库     |
 |:----:|:----:|:----:|:------------------------:|:-----------:|
@@ -132,4 +132,4 @@ Taehoon Kim / [@carpedm20](http://carpedm20.github.io/)
 
 ## 许可证
 
-MIT License
+MIT许可证
