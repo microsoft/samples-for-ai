@@ -1,8 +1,8 @@
 # Windows上的ATNRE
 
-[简体中文](/zh-hans/examples/tensorflow/Atnre/README.md)
+[English](/examples/tensorflow/Atnre/README.md)
 
-This is a reimplementation of [Adversarial Training for Relation Extraction](https://www.researchgate.net/publication/322590918_Adversarial_Training_for_Relation_Extraction)
+这是[Adversarial Training for Relation Extraction](https://www.researchgate.net/publication/322590918_Adversarial_Training_for_Relation_Extraction)的实现
 
 # 如何运行
 
@@ -11,14 +11,14 @@ This is a reimplementation of [Adversarial Training for Relation Extraction](htt
 
 # 数据
 
-You can get data from [jxwuyi/AtNRE](https://github.com/jxwuyi/AtNRE).
+从[jxwuyi/AtNRE](https://github.com/jxwuyi/AtNRE)下载数据。
 
 # 感谢
 
-The original author has allowed us to use this code in this project.
+原作者允许我们在本项目中使用此代码。
 
-The original code is from [jxwuyi/AtNRE](https://github.com/jxwuyi/AtNRE).
+原始代码来自于[jxwuyi/AtNRE](https://github.com/jxwuyi/AtNRE)。
 
 # 许可证
 
-The code is under BSD-3 license.
+代码由BSD-3许可。
