@@ -1,6 +1,6 @@
 This is a reimplementation of [ScreenerNet: Learning Self-Paced Curriculum for Deep Neural Networks](https://arxiv.org/abs/1801.00904)
 
-# prerequiest
+# prerequisites
 If you want to train on pascal voc2012 dataset, make sure that you have download it and put it in PWD/VOC2012
 
 # how to run

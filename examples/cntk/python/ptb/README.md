@@ -6,7 +6,7 @@ As the number of different words might be very high this final softmax step can 
 
 Sampled-softmax is a technique to reduce this cost at training time. For details see also the [sampled softmax tutorial](https://github.com/Microsoft/CNTK/blob/v2.0.beta12.0/Tutorials/CNTK_207_Training_with_Sampled_Softmax.ipynb)
 
-Note the provided data set has only 10.000 distinct words. This number is still not very high and sampled softmax doesn't show any significant perf improvements here.
+Note the provided data set has only 10,000 distinct words. This number is still not very high and sampled softmax doesn't show any significant perf improvements here.
 The real perf gains will show up with larger vocabularies.
 
 ## HOWTO
