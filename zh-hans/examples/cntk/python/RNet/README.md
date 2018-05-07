@@ -1,5 +1,7 @@
 # bidaf入门说明
 
+[简体中文](/zh-hans/examples/cntk/python/RNet/README.md)
+
 ## 下载微软MARCO数据集
 
     wget https://msmarco.blob.core.windows.net/msmarco/train_v1.1.json.gz
