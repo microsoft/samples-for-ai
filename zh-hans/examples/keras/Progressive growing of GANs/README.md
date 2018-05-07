@@ -1,5 +1,7 @@
 # Keras-progressive_growing_of_gans
 
+[简体中文](/zh-hans/examples/keras/Progressive%20growing%20of%20GANs/README.md)
+
 ## 介绍
 
 Keras implementation of Progressive Growing of GANs for Improved Quality, Stability, and Variation.
