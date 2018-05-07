@@ -1,8 +1,6 @@
 # 介绍
 
-[English](/examples/cntk/README.md)
-
-CNTK的样例在两个Visual Studio解决方案中。 一个是BrainScript语言的，另一个是python语言的。
+CNTK examples have two Visual Studio solutions. One is for BrainScript lauguage, the other is for python lauguage binding.
 
 # 如何运行
 
