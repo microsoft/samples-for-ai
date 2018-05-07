@@ -1,10 +1,8 @@
 # 介绍
 
-[English](/examples/chainer/README.md)
+This example trained MNIST dataset with a feed-forward net.
 
-本样例使用前馈网络来训练MNINST数据集。
-
-本代码由三部分组成：数据集准备，网络和优化定义，以及学习循环。
+The code consists of three parts: dataset preparation, network and optimizer definition and learning loop.
 
 # 如何运行
 
