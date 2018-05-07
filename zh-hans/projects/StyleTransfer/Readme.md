@@ -1,3 +1,5 @@
+[简体中文](/zh-hans/projects/StyleTransfer/Readme.md)
+
 # Style Transfer Experiment
 
 Demo for style transfer.
