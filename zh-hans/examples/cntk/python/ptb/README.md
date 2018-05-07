@@ -1,5 +1,7 @@
 # 用基于采样的软最大值(SoftMax) 方法来构建神经网络语言模型
 
+[简体中文](/zh-hans/examples/cntk/python/ptb/README.md)
+
 This example demonstrates how to use sampled softmax for training a token based neural language model. The model predicts the next word in a text given the previous ones where the probability of the next word is computed using a softmax. As the number of different words might be very high this final softmax step can turn out to be costly.
 
 Sampled-softmax is a technique to reduce this cost at training time. For details see also the [sampled softmax tutorial](https://github.com/Microsoft/CNTK/blob/v2.0.beta12.0/Tutorials/CNTK_207_Training_with_Sampled_Softmax.ipynb)
