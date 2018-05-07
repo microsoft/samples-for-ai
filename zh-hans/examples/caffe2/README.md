@@ -1,8 +1,8 @@
 # 介绍
 
-[简体中文](/zh-hans/examples/caffe2/README.md)
+[English](/examples/caffe2/README.md)
 
-The visual solution involve two projects:
+Visual Studio解决方案包括两个项目：
 
 1. **MNIST 项目**: 这是数字识别的常见样例。 这个项目用LeNet模型训练了MNIST数据集。
 
@@ -10,7 +10,7 @@ The visual solution involve two projects:
 
 # 许可证
 
-The script of Caffe2 examples are from Caffe2's github, on version 0.8.1. Caffe2 v0.8.1 is released under the [BSD 2-Clause license](https://github.com/caffe2/caffe2/tree/v0.8.1).
+Caffe2脚本样例来自于Caffe2的github，并基于version 0.8.1。 Caffe2 v0.8.1在[BSD 2-Clause 许可](https://github.com/caffe2/caffe2/tree/v0.8.1)下发布。
 
 # 如何运行
 
