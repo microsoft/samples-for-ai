@@ -1,1 +1,1 @@
-Download training data images using [Microsoft COCO](http://cocodataset.org])
+在[Microsoft COCO](http://cocodataset.org])下载图像训练数据
