@@ -721,9 +721,14 @@ def pip_install_cntk(options):
         name = "cntk"
     if sys_info["CUDA"] == "8.0":
         version = "2.3.1"
+        wheel_ver = sys_info["python"]
+        arch =  "win_amd64" if sys_info["OS"] == TOOLSFORAI_OS_WIN else "linux_x86_64"
+        gpu_type = "GPU" if sys_info["GPU"] else "CPU-Only"
+        pkg = "https://cntk.ai/PythonWheel/{0}/cntk-{1}-cp{2}-cp{2}m-{3}.whl".format(gpu_type, version, wheel_ver, arch)
+        return pip_install_package(name, options, version, pkg)
     else:
         version = "2.5.1"
-    return pip_install_package(name, options, version)
+        return pip_install_package(name, options, version)
 
 def pip_install_keras(options):
     name = "Keras"
