@@ -1,5 +1,7 @@
 # Instructions for getting started with bidaf 
 
+[简体中文](/zh-hans/examples/cntk/python/RNet/README.md)
+
 ## Download the MS MARCO  dataset
 ```
 wget https://msmarco.blob.core.windows.net/msmarco/train_v1.1.json.gz

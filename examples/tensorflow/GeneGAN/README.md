@@ -1,5 +1,7 @@
 # GeneGAN: Learning Object Transfiguration and Attribute Subspace from Unpaired Data
 
+[简体中文](/zh-hans/examples/tensorflow/GeneGAN/README.md)
+
 By Shuchang Zhou, Taihong Xiao, Yi Yang, Dieqiao Feng, Qinyao He, Weiran He
 
 If you use this code for your research, please cite our paper:

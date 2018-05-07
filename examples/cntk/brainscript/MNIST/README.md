@@ -1,5 +1,7 @@
 # CNTK example: MNIST 
 
+[简体中文](/zh-hans/examples/cntk/brainscript/MNIST/README.md)
+
 ## Overview
 
 |Data:     |The MNIST database (http://yann.lecun.com/exdb/mnist/) of handwritten digits.

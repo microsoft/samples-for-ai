@@ -1,4 +1,7 @@
 # FCN in tensorflow
+
+[简体中文](/zh-hans/examples/tensorflow/FCN/README.md)
+
 The implementation of Fully Convolutional Networks in the tensorflow framework.
  - FCN based on VGG19
 

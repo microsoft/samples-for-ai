@@ -1,4 +1,7 @@
 # Content
+
+[简体中文](/zh-hans/examples/cntk/python/NumpyExperiment/README.md)
+
 This is a CNTK implement of [Independently Recurrent Neural Network (IndRNN): Building A Longer and Deeper RNN](https://arxiv.org/abs/1803.04831)
 
 ## Effectiveness
