@@ -1,18 +1,18 @@
-[简体中文](/zh-hans/projects/StyleTransfer/StyleTransferTraining/src/README.md)
+[English](/projects/StyleTransfer/StyleTransferTraining/src/README.md)
 
-# Style Transfer Experiment
+# 风格迁移实验
 
-Demo for style transfer
+风格迁移演示
 
-## Prerequisites
+## 先决条件
 
-- Training data images using [Microsoft COCO](http://cocodataset.org]) 
+- 在[Microsoft COCO](http://cocodataset.org])下载图像训练数据。 
 - [VGG-19 Mat](http://www.vlfeat.org/matconvnet/pretrained/)
 
-## Reference
+## 参考
 
-- The project is based on the paper: [Perceptual Losses for Real-Time Style Transfer and Super-Resolution](https://arxiv.org/abs/1603.08155)
-- The training code in this repository mostly based on the following nice work, thanks to the author.\[tensorflow-fast-neuralstyle\] (https://github.com/antlerros/tensorflow-fast-neuralstyle)
-- We also leveraged work from the following projects, thanks to the author 
-    - \[neural-style\] (https://github.com/anishathalye/neural-style)
-    - \[fast-style-transfer\] (https://github.com/lengstrom/fast-style-transfer)
+- 此项目基于论文：[Perceptual Losses for Real-Time Style Transfer and Super-Resolution](https://arxiv.org/abs/1603.08155)
+- 本代码库的训练代码主要基于下面的工作。感谢作者！ \[tensorflow-fast-neuralstyle\](https://github.com/antlerros/tensorflow-fast-neuralstyle)
+- 同事也参考了下列项目。同样感谢作者！ 
+    - \[neural-style\](https://github.com/anishathalye/neural-style)
+    - \[fast-style-transfer\](https://github.com/lengstrom/fast-style-transfer)
