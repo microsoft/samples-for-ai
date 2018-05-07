@@ -1,13 +1,13 @@
 # Windows上的TransD
 
-[简体中文](/zh-hans/examples/tensorflow/TransD/README.md)
+[English](/examples/tensorflow/TransD/README.md)
 
-This is a reimplementation of [Knowledge Graph Embedding via Dynamic Mapping Matrix](http://www.nlpr.ia.ac.cn/cip/~liukang/liukangPageFile/Knowledge%20Graph%20Embedding%20via%20Dynamic%20Mapping%20Matrix.pdf)(ACL 15')
+这是[Knowledge Graph Embedding via Dynamic Mapping Matrix](http://www.nlpr.ia.ac.cn/cip/~liukang/liukangPageFile/Knowledge%20Graph%20Embedding%20via%20Dynamic%20Mapping%20Matrix.pdf)(ACL 15')的实现
 
 # 数据
 
-The algorithm mainly uses triple datasets of knowledge graphs. Two datasets-WN18 and FB15K are often used in evaluation , which are attached in the files.
+算法主要使用了知识图谱的三元组数据集。 WN18和FB15K这两个数据集经常用在评估中，已经在附加的文件中了。
 
 # 许可证
 
-The code is under MIT license.
+代码由MIT许可。
