@@ -96,6 +96,15 @@ def _registry_write(hkey, keypath, name, value):
         logger.debug("Fail to write registry key: {0}, name: {1}, value: {2}, unexpected error: {3}".format(keypath, name, value, e))
         return False
 
+def _registry_delete(hkey, keypath, name):
+    try:
+        registry_key = winreg.OpenKey(hkey, keypath, 0, winreg.KEY_SET_VALUE)
+        winreg.DeleteValue(registry_key, name)
+        winreg.CloseKey(registry_key)
+        return True
+    except Exception as e:
+        logger.debug("Fail to delete registry key: {0}, name: {1},  unexpected error: {2}".format(keypath, name, e))
+        return False
 
 def _registry_subkeys(hkey, keypath):
     key = winreg.OpenKey(hkey, keypath, 0, winreg.KEY_READ)
@@ -588,6 +597,10 @@ def install_cntk_win(cntk_root):
     except:
         suc = False
         logger.error("Fail to install CNTK(BrainScript). The error massage: {0}".format(sys.exc_info()))
+
+    if "AITOOLS_CNTK_ROOT" in os.environ:
+        logger.debug("Delete environment variable: AITOOLS_CNTK_ROOT")
+        _registry_delete(winreg.HKEY_CURRENT_USER, "Environment", "AITOOLS_CNTK_ROOT")
 
     #if (_run_cmd("SETX", ["AITOOLS_CNTK_ROOT", cntk_root])):
     #    logger.debug("Set CNTK(BrainScript) root path successfully.")
