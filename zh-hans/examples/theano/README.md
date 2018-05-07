@@ -1,5 +1,7 @@
 # 介绍
 
+[简体中文](/zh-hans/examples/theano/README.md)
+
 The examples is from <http://deeplearning.net/software/theano/tutorial/examples.html#a-real-example-logistic-regression>.
 
 It is a simple logistic regression examples. And data is generated randomly.
