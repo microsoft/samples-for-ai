@@ -1,10 +1,8 @@
 # GeneGAN: 从未配对的数据中学习对象变形和属性子空间
 
-[English](/examples/tensorflow/GeneGAN/README.md)
+By Shuchang Zhou, Taihong Xiao, Yi Yang, Dieqiao Feng, Qinyao He, Weiran He
 
-作者：Shuchang Zhou, Taihong Xiao, Yi Yang, Dieqiao Feng, Qinyao He, Weiran He
-
-如果在研究里使用了这些代码，请引用此论文：
+If you use this code for your research, please cite our paper:
 
     @inproceedings{DBLP:conf/bmvc/ZhouXYFHH17,
       author    = {Shuchang Zhou and
@@ -24,7 +22,7 @@
 
 ### 介绍
 
-官方的源代码来源于论文：[GeneGAN: Learning Object Transfiguration and Attribute Subspace from Unpaired Data](https://arxiv.org/abs/1705.04932v1)。 所有试验最初都在我们专门的深度学习框架中完成。 为了方便使用，我们用Tensorflow重现了结果。
+This is the official source code for the paper [GeneGAN: Learning Object Transfiguration and Attribute Subspace from Unpaired Data](https://arxiv.org/abs/1705.04932v1). All the experiments are initially done in our proprietary deep learning framework. For convenience, we reproduce the results using TensorFlow.
 
 <div align="center">
 <img align="center" src="images/cross.jpg" width="450" alt="交叉">
@@ -33,7 +31,7 @@
   
 
 
-GeneGAN是一种确定性条件生成模型，它从训练数据的弱监督分类的0/1标记中学习，将目标特征从特征空间的其它因素里分离出来。 它允许在某个属性上连续的控制生成图像的细节颗粒度。
+GeneGAN is a deterministic conditional generative model that can learn to disentangle the object features from other factors in feature space from weak supervised 0/1 labeling of training data. It allows fine-grained control of generated images on a certain attribute in a continous way.
 
 ### 必需组件
 
@@ -60,11 +58,11 @@ GeneGAN是一种确定性条件生成模型，它从训练数据的弱监督分�
 
 ### 测试
 
-有三种测试模式。 运行`python test.py -h`查看详细帮助。 下面的样例是在`Bangs`属性上训练的GeneGAN模型。 玩得高兴！
+We provide three kinds of mode for test. Run `python test.py -h` for detailed help. The following example is running on our GeneGAN model trained on the attribute `Bangs`. Have fun!
 
 #### 1. 交换属性
 
-运行以下命令来将一个人的刘海添加到另一个人上
+You can easily add the bangs of one person to another person without bangs by running
 
     python test.py -m swap -i datasets/celebA/align_5p/182929.jpg -t datasets/celebA/align_5p/022344.jpg
     
@@ -82,7 +80,7 @@ GeneGAN是一种确定性条件生成模型，它从训练数据的弱监督分�
 
 #### 2. 图像属性的线性插值
 
-此外，通过图像属性的线性插值，还能控制刘海样式的程度。 运行下列代码。
+Besides, we can control to which extent the bangs style is added to your input image through linear interpolation of image attribute. Run the following code.
 
     python test.py -m interpolation -i datasets/celebA/align_5p/182929.jpg -t datasets/celebA/align_5p/035460.jpg -n 5
     
@@ -100,7 +98,7 @@ GeneGAN是一种确定性条件生成模型，它从训练数据的弱监督分�
 
 #### 3. 属性子空间中的矩阵插值
 
-还有更酷的操作。 同时给出4个有刘海属性的图像，能观察到混合了不同刘海样式的渐近变化过程。
+We can do something cooler. Given four images with bangs attributes at hand, we can observe the gradual change process of our input images with a mixing of difference bangs style.
 
     python test.py -m matrix -i datasets/celebA/align_5p/182929.jpg --targets datasets/celebA/align_5p/035460.jpg datasets/celebA/align_5p/035451.jpg datasets/celebA/align_5p/035463.jpg datasets/celebA/align_5p/035474.jpg -s 5 5
     
