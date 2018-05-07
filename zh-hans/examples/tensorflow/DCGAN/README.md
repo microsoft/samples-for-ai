@@ -1,5 +1,7 @@
 # Tensorflow中实现DCGAN
 
+[简体中文](/zh-hans/examples/tensorflow/DCGAN/README.md)
+
 Tensorflow implementation of [Deep Convolutional Generative Adversarial Networks](http://arxiv.org/abs/1511.06434) which is a stabilize Generative Adversarial Networks. The referenced torch code can be found [here](https://github.com/soumith/dcgan.torch).
 
 ![alt tag](DCGAN.png)
@@ -75,9 +77,9 @@ After 10th epoch:
 
 ### 亚洲人脸数据集
 
-![custom_result1](web/img/change5.png)
+![自定义结果1](web/img/change5.png)
 
-![自定义结果1](web/img/change2.png)
+![custom_result1](web/img/change2.png)
 
 ![custom_result2](web/img/change4.png)
 
