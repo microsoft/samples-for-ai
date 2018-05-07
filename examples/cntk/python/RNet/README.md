@@ -21,7 +21,7 @@ python -m nltk.downloader -d %USERPROFILE%/nltk_data punkt
 ```
 
 ## Run `convert_msmarco.py`
-It should create `train.tsv`, `dev.tsv`, and `test.tsv, and only keep querys that query_type is "description". 
+It should create `train.tsv`, `dev.tsv`, and `test.tsv`, and only keep querys that query_type is "description". 
 
 It does a fair amount of preprocessing therefore converting data to cntk text format reader starts from these files
 
