@@ -1,8 +1,8 @@
 # Tensorflow中实现FCN
 
-[简体中文](/zh-hans/examples/tensorflow/FCN/README.md)
+[English](/examples/tensorflow/FCN/README.md)
 
-The implementation of Fully Convolutional Networks in the tensorflow framework.
+这是tensorflow框架中实现的完全卷积网络。
 
 - FCN基于VGG19
 
@@ -21,6 +21,6 @@ The implementation of Fully Convolutional Networks in the tensorflow framework.
 
 ### 许可证
 
-MIT License
+MIT许可证
 
-Note: If you find this project useful, please include reference link in your work.
+注意：如果你觉得这个项目有用，请在著作中包含引用。
