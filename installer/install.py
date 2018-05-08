@@ -599,9 +599,9 @@ def install_cntk_win(cntk_root):
         suc = False
         logger.error("Fail to install CNTK(BrainScript). The error massage: {0}".format(sys.exc_info()))
 
-    if "AITOOLS_CNTK_ROOT" in os.environ:
-        logger.debug("Delete environment variable: AITOOLS_CNTK_ROOT")
-        _registry_delete(winreg.HKEY_CURRENT_USER, "Environment", "AITOOLS_CNTK_ROOT")
+    # if "AITOOLS_CNTK_ROOT" in os.environ:
+    #     logger.debug("Delete environment variable: AITOOLS_CNTK_ROOT")
+    #     _registry_delete(winreg.HKEY_CURRENT_USER, "Environment", "AITOOLS_CNTK_ROOT")
 
     #if (_run_cmd("SETX", ["AITOOLS_CNTK_ROOT", cntk_root])):
     #    logger.debug("Set CNTK(BrainScript) root path successfully.")
@@ -610,6 +610,13 @@ def install_cntk_win(cntk_root):
 
     return suc
 
+def delete_env(name):
+    if name in os.environ:
+        logger.debug("Delete environment variable: {0}".format(name))
+        return _registry_delete(winreg.HKEY_CURRENT_USER, "Environment", name)
+    else:
+        logger.debug("Environment variable {0} doesn't exist.".format(name))
+        return True
 
 def pip_install_package(name, options, version="", pkg=None):
     try:
@@ -1022,6 +1029,7 @@ def main():
         logger.error("Fail to startup install_cntk thread!")
 
     pip_software_install(args.options, args.user, args.verbose)
+    delete_env("AITOOLS_CNTK_ROOT")
     fix_directory_ownership()
     for pkg in fail_install:
         logger.info("Fail to install {0}. Please try to run installer script again!".format(pkg))
