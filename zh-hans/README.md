@@ -50,15 +50,15 @@
     > - 安装程序会检测是否有可用的NVIDIA显卡，并默认安装CUDA 9.0软件。 可以使用"**--cuda80**"参数来强制安装CUDA 8.0 。
     
     ```bash
-git clone https://github.com/Microsoft/samples-for-ai.git
-cd samples-for-ai
-cd installer
+    git clone https://github.com/Microsoft/samples-for-ai.git
+    cd samples-for-ai
+    cd installer
 
-- Windows运行：
-    python.exe install.py
-- 非Windows运行：
-    python3 install.py
-```
+    - Windows运行：
+        python.exe install.py
+    - 非Windows运行：
+        python3 install.py
+    ```
 
 ## 在本地运行样例
 
