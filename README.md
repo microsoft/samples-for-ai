@@ -1,5 +1,7 @@
 # Introduction 
 
+[简体中文](zh-hans/README.md)
+
 Samples in Visual Studio solution format are provided for users to get started with deep learning using [Microsoft Visual Studio Tools for AI](https://github.com/Microsoft/vs-tools-for-ai).
 Each solution has one or more sample projects.
 Solutions are separated by different deep learning frameworks they use:
@@ -64,7 +66,6 @@ Currently, this installer works on Windows, macOS and Linux:
         python3 install.py
     ```
 
-
 ## Runing samples locally
 
 - CNTK BrainScript Projects
@@ -98,4 +99,3 @@ The scripts of MXNet are under [Apache 2.0 license](https://en.wikipedia.org/wik
 There are no changes on the original code.
 
 The scripts of Chainer are under [MIT license](https://github.com/chainer/chainer/blob/master/LICENSE).
-

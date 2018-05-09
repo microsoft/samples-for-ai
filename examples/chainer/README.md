@@ -1,5 +1,7 @@
 # Introduction
 
+[简体中文](/zh-hans/examples/chainer/README.md)
+
 This example trained MNIST dataset with a feed-forward net. 
 
 The code consists of three parts: dataset preparation, network and optimizer definition and learning loop. 

@@ -1,5 +1,7 @@
 # Introduction
 
+[简体中文](/zh-hans/examples/tensorflow/README.md)
+
 These examples are from tensorflow examples and tensorflow model zoo tutorials, without any change.
 
 ## List of Projects

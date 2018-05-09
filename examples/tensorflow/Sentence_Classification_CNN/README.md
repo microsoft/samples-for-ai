@@ -1,5 +1,7 @@
 # Sentence_Classification_CNN on Windows
 
+[简体中文](/zh-hans/examples/tensorflow/Sentence_Classification_CNN/README.md)
+
 This is a reimplementation of [Convolutional Neural Networks for Sentence Classification](http://www.aclweb.org/anthology/D14-1181)(EMNLP 14')
 
 # NOTIFICATION

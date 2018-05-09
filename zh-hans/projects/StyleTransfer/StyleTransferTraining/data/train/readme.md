@@ -1,0 +1,1 @@
+在[Microsoft COCO](http://cocodataset.org])下载图像训练数据
