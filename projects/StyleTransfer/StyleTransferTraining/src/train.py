@@ -13,17 +13,19 @@ def get_available_gpus():
     local_device_protos = device_lib.list_local_devices()
     return [x.name for x in local_device_protos if x.device_type == 'GPU']
 
-def build_parser():    
+def build_parser():
     parser = ArgumentParser(description='Real-time style transfer')
+    parser.add_argument("--model_dir", '-model', help="Final model directory.")
+    parser.add_argument("--log_dir", '-log', help="TensorBoard log directory.")
     parser.add_argument('--gpu', '-g', type=int,
                         help='GPU ID (negative value indicates CPU)')
     parser.add_argument('--dataset', '-d', default='../data', type=str,
-                        help='dataset directory path (according to the paper, use MSCOCO 80k images)')
+                        help='Top-level data directory path (according to the paper, use MSCOCO 80k images)')
     parser.add_argument('--style_image', '-s', default='starry_night.jpg' ,type=str,
                         help='style image')
-    parser.add_argument('--batchsize', '-b', type=int, default=1,
+    parser.add_argument('--batchsize', '-b', type=int, default=16,
                         help='batch size (default value is 1)')
-    parser.add_argument('--ckpt', '-c', default='ckpt', type=str,
+    parser.add_argument('--ckpt', '-c', type=str,
                         help='the global step of checkpoint file desired to restore.')
     parser.add_argument('--lambda_tv', '-l_tv', default=2e2, type=float,
                         help='weight of total variation regularization according to the paper to be set between 10e-4 and 10e-6.')
@@ -42,31 +44,59 @@ def main():
 
     print("options: ", options)
     vgg_path = options.dataset + '/vgg/imagenet-vgg-verydeep-19.mat'
-    model_name = options.style_image.replace('.jpg', '.ckpt')
     style_image = options.dataset + '/style_images/' + options.style_image
     training_path = options.dataset + '/train'
-    model_dir = env.get("OUTPUT_DIR", options.ckpt)
-    
-    tensorboard_dir = env.get("LOG_DIR", options.dataset)
 
-    print("style_image: ", style_image)
-    print("vgg: ", vgg_path)
-    print("trainingpath: ", training_path)
-    print("modelname: ", model_name)
 
-    
+    if options.model_dir == None:
+        options.model_dir = options.dataset + '/model'
 
+    model_dir = options.model_dir
+    if os.path.isfile(model_dir):
+        print("model directory: {0} should not be a file.".format(model_dir))
+        return
+
+    if not os.path.exists(model_dir):
+        os.makedirs(model_dir)
+
+    model_name = options.style_image.replace('.jpg', '.ckpt')
+
+
+    if options.log_dir == None:
+        options.log_dir = options.dataset + '/log'
+
+    log_dir = options.log_dir
+    if os.path.isfile(log_dir):
+        print("log directory: {0} should not be a file.".format(log_dir))
+        return
+
+    if not os.path.exists(log_dir):
+        os.makedirs(log_dir)
+
+    print("style image path: ", style_image)
+    print("vgg path: ", vgg_path)
+    print("training image path: ", training_path)
+    print("model path: ", model_name)
+    print("log path: ", log_dir)
+
+    if not os.path.isfile(vgg_path):
+        print('Pre-trained VGG model: {0} does not exist.'.format(vgg_path))
+        print('Plese download it from http://www.vlfeat.org/matconvnet/models/beta16/imagenet-vgg-verydeep-19.mat')
+        return;
+
+    if not os.path.isdir(options.training_path):
+        print('Training image directory: {0} does not exist.'.format(training_path))
+        print('Plese download COCO 2014 train images from http://images.cocodataset.org/zips/train2014.zip')
+        return;
+
+    device = '/gpu:0'
     if options.gpu == None:
         available_gpus = get_available_gpus()
         if len(available_gpus) > 0:
             device = '/gpu:0'
-        else:
-            device = '/cpu:0'
     else:
         if options.gpu > -1:
             device = '/gpu:{}'.format(options.gpu)
-        else:
-             device = '/cpu:0'
 
     batchsize = options.batchsize
 
