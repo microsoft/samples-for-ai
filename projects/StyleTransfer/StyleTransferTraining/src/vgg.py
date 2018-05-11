@@ -7,20 +7,19 @@ import pdb
 import scipy.misc, os, sys
 import functools
 
+
 MEAN_PIXEL = np.array([ 123.68 ,  116.779,  103.939])
+FEATURES = ('relu1_1', 'relu2_1', 'relu3_1', 'relu4_1', 'relu5_1')
+
 
 def net(data_path, input_image):
     layers = (
         'conv1_1', 'relu1_1', 'conv1_2', 'relu1_2', 'pool1',
-
         'conv2_1', 'relu2_1', 'conv2_2', 'relu2_2', 'pool2',
-
         'conv3_1', 'relu3_1', 'conv3_2', 'relu3_2', 'conv3_3',
         'relu3_3', 'conv3_4', 'relu3_4', 'pool3',
-
         'conv4_1', 'relu4_1', 'conv4_2', 'relu4_2', 'conv4_3',
         'relu4_3', 'conv4_4', 'relu4_4', 'pool4',
-
         'conv5_1', 'relu5_1', 'conv5_2', 'relu5_2', 'conv5_3',
         'relu5_3', 'conv5_4', 'relu5_4'
     )
@@ -28,7 +27,7 @@ def net(data_path, input_image):
     mean = data['normalization'][0][0][0]
     mean_pixel = np.mean(mean, axis=(0, 1))
     weights = data['layers'][0]
-
+    
     net = {}
     current = input_image
     for i, name in enumerate(layers):
@@ -45,7 +44,7 @@ def net(data_path, input_image):
         elif kind == 'pool':
             current = _pool_layer(current)
         net[name] = current
-
+    
     assert len(net) == len(layers)
     return net
 
@@ -68,16 +67,16 @@ def preprocess(image):
 def unprocess(image):
     return image + MEAN_PIXEL
 
-feature = ('relu1_1', 'relu2_1', 'relu3_1', 'relu4_1', 'relu5_1')
 
 def get_style_vgg(vggstyletarget, style_image, style_pre):
     style_vgg = {}
-    for layer in feature:
+    for layer in FEATURES:
         features = vggstyletarget[layer].eval(feed_dict={style_image:style_pre})
         features = np.reshape(features, (-1, features.shape[3]))
         gram = np.matmul(features.T, features) / features.size
         style_vgg[layer] = gram
     return style_vgg
+
 
 # total variation denoising
 def total_variation_regularization(x, bsize, bshape, beta=1):
@@ -89,10 +88,10 @@ def total_variation_regularization(x, bsize, bshape, beta=1):
     tv = 2*(x_tv/tv_x_size + y_tv/tv_y_size)/bsize
     return tv
 
+
 def total_style_loss(net, style_vgg, bsize):
-    
     style_losses = []
-    for style_layer in feature:
+    for style_layer in FEATURES:
         layer = net[style_layer]
         bs, height, width, filters = map(lambda i:i.value,layer.get_shape())
         size = height * width * filters
@@ -103,11 +102,13 @@ def total_style_loss(net, style_vgg, bsize):
         style_losses.append(2 * tf.nn.l2_loss(grams - style_gram)/style_gram.size)
     return functools.reduce(tf.add, style_losses) / bsize
 
+
 def total_content_loss(net, content_vgg, bsize):
     content_size = _tensor_size(content_vgg['relu4_2'])*bsize
     assert _tensor_size(content_vgg['relu4_2']) == _tensor_size(net['relu4_2'])
     return 2 * tf.nn.l2_loss(net['relu4_2'] - content_vgg['relu4_2']) / content_size
-    
+
+
 def _tensor_size(tensor):
     from operator import mul
     return functools.reduce(mul, (d.value for d in tensor.get_shape()[1:]), 1)
@@ -117,6 +118,7 @@ def save_img(out_path, img):
     img = np.clip(img, 0, 255).astype(np.uint8)
     scipy.misc.imsave(out_path, img)
 
+
 def scale_img(style_path, style_scale):
     scale = float(style_scale)
     o0, o1, o2 = scipy.misc.imread(style_path, mode='RGB').shape
@@ -125,16 +127,3 @@ def scale_img(style_path, style_scale):
     #style_target = _get_img(style_path, img_size=new_shape)
     style_target = scipy.misc.imresize(scipy.misc.imread(style_path, mode='RGB'), new_shape)
     return style_target
-
-def read_img(src):
-   img = scipy.misc.imread(src, mode='RGB')
-   return img
-
-
-def list_files(in_path):
-    files = []
-    for (dirpath, dirnames, filenames) in os.walk(in_path):
-        files.extend(filenames)
-        break
-
-    return files
