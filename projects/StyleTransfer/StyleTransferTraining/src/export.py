@@ -19,7 +19,7 @@ def export(args):
     # Construct the serving graph
     batch_shape = (args.batch_size, args.height, args.width, 3)
     img_placeholder = tf.placeholder(tf.float32, shape=batch_shape)
-    preds = net(img_placeholder / 255.0)
+    preds = net(img_placeholder)
     saver = tf.train.Saver()
     builder = tf.saved_model.builder.SavedModelBuilder(export_dir)
     
