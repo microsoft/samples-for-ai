@@ -1,97 +1,59 @@
-﻿import argparse
+import argparse
 import os
 import shutil
-import subprocess as sp
 import sys
 import tensorflow as tf
-import time
 
 sys.path.insert(0, '.')
 from stylenet import net
-
-
-json_tempalte = """{
-  "name": "%s",
-  "version": 1,
-  "description": "Add styles from famous paintings to any photo in a fraction of a second.",
-  "srcPath": "%s",
-  "destPath": "%s",
-  "interfaces": [
-    {
-      "name": "Transfer",
-      "inputs": [
-        {
-          "name": "input",
-          "internalName": "%s",
-          "description": "Raw image."
-        }
-      ],
-      "outputs": [
-        {
-          "name": "output",
-          "internalName": "%s",
-          "description": "New image."
-        }
-      ]
-    }
-  ]
-}
-"""
-
-
-def normalize(model_name):
-    return ''.join(model_name.split())
+from utils import info, error, fail
 
 
 def export(args):
+    ckpt_dir = os.path.expanduser(args.ckpt_dir)
+    export_dir = os.path.expanduser(args.export_dir)
+    if os.path.exists(export_dir):
+        info('Deleting the folder containing SavedModel at ' + export_dir)
+        shutil.rmtree(export_dir)
+    
+    # Construct the serving graph
     batch_shape = (args.batch_size, args.height, args.width, 3)
-    img_placeholder = tf.placeholder(tf.float32, shape=batch_shape, name='img_placeholder')
-    preds = net(img_placeholder)
-    model_dir = args.checkpoint
-    
+    img_placeholder = tf.placeholder(tf.float32, shape=batch_shape)
+    preds = net(img_placeholder / 255.0)    
     saver = tf.train.Saver()
+    builder = tf.saved_model.builder.SavedModelBuilder(export_dir)
+    
     with tf.Session() as sess:
-        if os.path.isdir(args.checkpoint):
-            ckpt = tf.train.get_checkpoint_state(args.checkpoint)
-            if ckpt and ckpt.model_checkpoint_path:
-                saver.restore(sess, ckpt.model_checkpoint_path)
-            else:
-                raise Exception("No checkpoint found...")
+        # Restore the checkpoint
+        ckpt = tf.train.get_checkpoint_state(ckpt_dir)
+        if ckpt and ckpt.model_checkpoint_path:
+            info('Restoring from ' + ckpt.model_checkpoint_path)
+            saver.restore(sess, ckpt.model_checkpoint_path)
         else:
-            saver.restore(sess, args.checkpoint)
-            model_dir = os.path.dirname(args.checkpoint)
-
-        serving_dir = os.path.abspath(model_dir.rstrip('\\/') + '.serving')
-        if os.path.exists(serving_dir):
-            shutil.rmtree(serving_dir)
-            time.sleep(1)
-        os.makedirs(serving_dir)
-        saver.save(sess, os.path.join(serving_dir, 'fns.ckpt'))
-    
-    transfer_name = normalize(args.name)
-    json_path = os.path.join(serving_dir, 'export.json')
-    export_dir = serving_dir.rstrip('\\/') + '.export'
-    if os.path.exists(export_dir): shutil.rmtree(export_dir)
-    with open(json_path, 'w') as fout:
-        fout.write(json_tempalte % (transfer_name, repr(serving_dir).strip('\'\"'), repr(export_dir).strip('\'\"'), img_placeholder.name, preds.name))
-    
-    process = sp.Popen(['sonoma_tf_export', json_path], shell=True)
-    process.wait()
-    if process.returncode != 0:
-        raise Exception('Fail to run sonoma_tf_export! Either no Sonoma Python package is installed or %s is of wrong format.' % json_path);
+            fail("No checkpoint found int " + ckpt_dir)
+        
+        # Write the SavedModel
+        info('Exporting SavedModel to ' + export_dir)
+        serving_signatures = {
+            'Transfer': #tf.saved_model.signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY:
+            tf.saved_model.signature_def_utils.predict_signature_def(
+                { tf.saved_model.signature_constants.PREDICT_INPUTS: img_placeholder },
+                { tf.saved_model.signature_constants.PREDICT_OUTPUTS: preds }
+            )
+        }
+        builder.add_meta_graph_and_variables(sess, [tf.saved_model.tag_constants.SERVING],
+                                             signature_def_map=serving_signatures,
+                                             legacy_init_op=tf.saved_model.main_op.main_op(),
+                                             clear_devices=True)
+        builder.save()
 
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
-    parser.add_argument('--checkpoint', type=str, required=True,
-                        help='dir or .ckpt file to load checkpoint from')
-    parser.add_argument('--name', type=str, default='StyleTransferNetwork',
-                        help='model name used in Sonoma')
-    parser.add_argument('--height', type=int, default=240,
-                        help='image height')
-    parser.add_argument('--width', type=str, default=320,
-                        help='image width')
-    parser.add_argument('--batch-size', type=int, default=1,
-                        help='batch size')
+    parser.add_argument('--ckpt_dir', type=str, required=True, help='where the checkpoint is stored')
+    parser.add_argument('--export_dir', type=str, default='export', help='where to write SavedModel')
+    parser.add_argument('--height', type=int, default=240, help='image height')
+    parser.add_argument('--width', type=str, default=320, help='image width')
+    parser.add_argument('--batch-size', type=int, default=1, help='batch size')
     args, _ = parser.parse_known_args()
     export(args)

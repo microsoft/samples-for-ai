@@ -101,10 +101,9 @@ def _registry_delete(hkey, keypath, name):
         registry_key = winreg.OpenKey(hkey, keypath, 0, winreg.KEY_SET_VALUE)
         winreg.DeleteValue(registry_key, name)
         winreg.CloseKey(registry_key)
-        return True
     except Exception as e:
-        logger.debug("Fail to delete registry key: {0}, name: {1},  unexpected error: {2}".format(keypath, name, e))
-        return False
+        # logger.debug("Fail to delete registry key: {0}, name: {1},  unexpected error: {2}".format(keypath, name, e))
+        raise e
 
 def _registry_subkeys(hkey, keypath):
     key = winreg.OpenKey(hkey, keypath, 0, winreg.KEY_READ)
@@ -611,12 +610,13 @@ def install_cntk_win(cntk_root):
     return suc
 
 def delete_env(name):
-    if name in os.environ:
+    try:
         logger.debug("Delete environment variable: {0}".format(name))
         return _registry_delete(winreg.HKEY_CURRENT_USER, "Environment", name)
-    else:
+    except:
         logger.debug("Environment variable {0} doesn't exist.".format(name))
         return True
+
 
 def pip_install_package(name, options, version="", pkg=None):
     try:
