@@ -15,7 +15,8 @@ def get_available_gpus():
 
 def build_parser():
     parser = ArgumentParser(description='Real-time style transfer')
-    parser.add_argument("--model_dir", '-model', help="Final model directory.")
+    parser.add_argument("--model_dir", '-model', help="Checkpoint directory.")
+    parser.add_argument("--export_dir", '-model', help="SavedModel directory.")
     parser.add_argument("--log_dir", '-log', help="TensorBoard log directory.")
     parser.add_argument('--gpu', '-g', type=int,
                         help='GPU ID (negative value indicates CPU)')
@@ -59,8 +60,13 @@ def main():
     if not os.path.exists(model_dir):
         os.makedirs(model_dir)
 
-    model_name = options.style_image.replace('.jpg', '.ckpt')
+    export_dir = options.export_dir
 
+    if os.path.isdir(export_dir):
+        shutil.rmtree(export_dir)
+
+    model_name = options.style_image.replace('.jpg', '.ckpt')
+    save_path = model_dir + '/' + model_name
 
     if options.log_dir == None:
         options.log_dir = options.dataset + '/log'
@@ -71,12 +77,12 @@ def main():
         return
 
     if not os.path.exists(log_dir):
-        os.makedirs(log_dir)
+-        os.makedirs(log_dir)
 
     print("style image path: ", style_image)
     print("vgg path: ", vgg_path)
     print("training image path: ", training_path)
-    print("model path: ", model_name)
+    print("model path: ", save_path)
     print("log path: ", log_dir)
 
     if not os.path.isfile(vgg_path):
@@ -142,36 +148,46 @@ def main():
         # total loss
         loss = loss_f + loss_s + loss_tv
 
-        
-    with tf.Session() as sess:    
-                
-        if not os.path.exists(options.ckpt):
-            os.makedirs(options.ckpt)
+        # Create summary
+        tf.summary.scalar("loss", loss)
+        merged = tf.summary.merge_all()
 
-        save_path = model_dir + '/' + model_name
+        # Used to save model
+        saver = tf.train.Saver()
+        builder = tf.saved_model.builder.SavedModelBuilder(export_dir)
+
+    with tf.Session() as sess:
+        # Run all the initializers to prepare the trainable parameters.
+        tf.global_variables_initializer().run()
+        ckpt = tf.train.get_checkpoint_state(model_dir)
+        if ckpt and ckpt.model_checkpoint_path:
+            print('Load from ' + ckpt.model_checkpoint_path)
+            saver.restore(sess, ckpt.model_checkpoint_path)
+
+        writer = tf.summary.FileWriter(log_dir, sess.graph)
 
         # op to write logs to Tensorboard
 
         #training
         train_step = tf.train.AdamOptimizer(options.lr).minimize(loss)
         sess.run(tf.global_variables_initializer())        
-    
+
         total_step = 0
         for epoch in range(options.epoch):
             print('epoch: ', epoch)
             step = 0
             while step * batchsize < len(content_targets):
                 time_start = time.time()
-                
+
                 batch = np.zeros(batch_shape, dtype=np.float32)
                 for i, img in enumerate(content_targets[step * batchsize : (step + 1) * batchsize]):
                    batch[i] = read_img(img).astype(np.float32) # (224,224,3)
 
                 step += 1
                 total_step += 1
-            
-                loss_, summary= sess.run([loss, train_step,], feed_dict= {inputs:batch})
-                
+
+                loss_, summary = sess.run([train_step, merged], feed_dict= {inputs:batch})
+                writer.add_summary(summary, total_step)
              
                 time_elapse = time.time() - time_start
                 
@@ -185,10 +201,20 @@ def main():
                     print('Saving checkpoint')
                     saver = tf.train.Saver()
                     res = saver.save(sess, save_path)
-        
-        print('Saving final result to ' + save_path)
-        saver = tf.train.Saver()
-        res = saver.save(sess, save_path)
+
+        print('Saving final result to ' + export_dir)
+        serving_signatures = {
+            'Transfer': #tf.saved_model.signature_constants.DEFAULT_SERVING_SIGNATURE_DEF_KEY:
+            tf.saved_model.signature_def_utils.predict_signature_def(
+                { tf.saved_model.signature_constants.PREDICT_INPUTS: inputs },
+                { tf.saved_model.signature_constants.PREDICT_OUTPUTS: outputs }
+            )
+        }
+        builder.add_meta_graph_and_variables(sess, [tf.saved_model.tag_constants.SERVING],
+                                             signature_def_map=serving_signatures,
+                                             legacy_init_op=tf.saved_model.main_op.main_op(),
+                                             clear_devices=True)
+        builder.save()
 
 
 if __name__ == '__main__':
