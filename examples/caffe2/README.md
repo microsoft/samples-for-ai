@@ -1,6 +1,8 @@
 # Introduction
 
-The visual solution involve two projects:
+[简体中文](/zh-hans/examples/caffe2/README.md)
+
+The Visual Studio solution involve two projects:
 
 1. **MNIST project**: It is a common examples for digit recognition. The project trained MNIST dataset with LeNet model.
 

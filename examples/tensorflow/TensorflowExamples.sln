@@ -11,6 +11,18 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MNIST", "MNIST\MNIST.pyproj
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "cifar10", "cifar10\cifar10.pyproj", "{16A0ED44-98A5-4DCB-B8DB-58ADB8D25AAE}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Twitter_Sentiment_Analysis", "Twitter_Sentiment_Analysis\Twitter_Sentiment_Analysis.pyproj", "{1E07E512-FAAC-4A7C-A52A-E80CDCF94B07}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "FCN", "FCN\FCN.pyproj", "{C09AE90A-9BF0-4871-B39A-9F65EA316F52}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "DCGAN", "DCGAN\DCGAN.pyproj", "{3F7DA856-85F1-4662-A967-BBBCB1A235B3}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MemN2N", "MemN2N\MemN2N.pyproj", "{9F10CDDC-8B86-4F1E-BE76-2B15B5CCBCBF}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "NTM", "NTM\NTM.pyproj", "{03DD61EA-936F-4A70-95D8-30101B22A62C}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "GeneGAN", "GeneGAN\GeneGAN.pyproj", "{03620336-1702-44E7-A941-4A567698556E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -25,8 +37,23 @@ Global
 		{1A8C8511-61BB-4F82-BC27-C82CBC6ACA3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{16A0ED44-98A5-4DCB-B8DB-58ADB8D25AAE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{16A0ED44-98A5-4DCB-B8DB-58ADB8D25AAE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1E07E512-FAAC-4A7C-A52A-E80CDCF94B07}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1E07E512-FAAC-4A7C-A52A-E80CDCF94B07}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C09AE90A-9BF0-4871-B39A-9F65EA316F52}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C09AE90A-9BF0-4871-B39A-9F65EA316F52}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3F7DA856-85F1-4662-A967-BBBCB1A235B3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3F7DA856-85F1-4662-A967-BBBCB1A235B3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F10CDDC-8B86-4F1E-BE76-2B15B5CCBCBF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F10CDDC-8B86-4F1E-BE76-2B15B5CCBCBF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03DD61EA-936F-4A70-95D8-30101B22A62C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03DD61EA-936F-4A70-95D8-30101B22A62C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{03620336-1702-44E7-A941-4A567698556E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{03620336-1702-44E7-A941-4A567698556E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {2DA67F13-B232-433E-A38C-CB4A6975548D}
 	EndGlobalSection
 EndGlobal

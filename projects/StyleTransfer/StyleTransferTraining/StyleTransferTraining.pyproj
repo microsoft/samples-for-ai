@@ -1,0 +1,38 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" DefaultTargets="Build">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{ca9b2877-7a9d-440a-bcb5-8f0f32ca7dff}</ProjectGuid>
+    <ProjectHome>
+    </ProjectHome>
+    <SearchPath />
+    <WorkingDirectory>.</WorkingDirectory>
+    <OutputPath>.</OutputPath>
+    <CommandLineArguments>--dataset ../data</CommandLineArguments>
+    <ProjectTypeGuids>{D22814C2-A430-4A53-8052-A3A64BFB2240};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
+    <StartupFile>src\train.py</StartupFile>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
+  <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
+  <PropertyGroup />
+  <ItemGroup>
+    <Content Include="src\dlvm.json" />
+    <Content Include="src\LICENSE" />
+    <Content Include="src\Parameter Sweep.json" />
+    <Content Include="src\README.md" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="src\export.py" />
+    <Compile Include="src\Inference.py" />
+    <Compile Include="src\stylenet.py" />
+    <Compile Include="src\train.py" />
+    <Compile Include="src\vgg.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="src\" />
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
+</Project>

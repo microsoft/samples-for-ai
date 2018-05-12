@@ -1,0 +1,20 @@
+files:
+  - source: /**/*.md
+    ignore:
+      - /**/Progressive growing of GANs*.md
+      - /**/ThirdPartyNotice.md
+      - /**/LICENSE.md
+    translation: /%locale_with_underscore%/%original_path%/%original_file_name%
+    languages_mapping:
+      locale_with_underscore:
+        zh-CN: zh-hans
+  - source: /**/*.png
+    translation: /%locale_with_underscore%/%original_path%/%original_file_name%
+    languages_mapping:
+      locale_with_underscore:
+        zh-CN: zh-hans
+  - source: /**/*.gif
+    translation: /%three_letters_code%/%original_path%/%original_file_name%
+    languages_mapping:
+      three_letters_code:
+        zh-CN: zh-hans
