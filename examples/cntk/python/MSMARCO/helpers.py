@@ -1,17 +1,47 @@
 import numpy as np
 import cntk as C
 from cntk.layers.blocks import _INFERRED
-
 from pprint import pprint
+def argument_by_name(func, name):
+    found = [arg for arg in func.arguments if arg.name == name]
+    if len(found) == 0:
+        raise ValueError('no matching names in arguments')
+    elif len(found) > 1:
+        raise ValueError('multiple matching names in arguments')
+    else:
+        return found[0]
+def get_input_variables(func):
+    print(func)
+    res =  {'cnw': argument_by_name(func,'cnw'),
+            'qnw': argument_by_name(func,'qnw'),
+            'cgw': argument_by_name(func,'cgw'),
+            'qgw': argument_by_name(func,'qgw'),
+            'cc':argument_by_name(func, 'cc'),
+            'qc':argument_by_name(func,'qc'),
+            'ab':argument_by_name(func,'ab'),
+            'ae':argument_by_name(func,'ae') }
+    try:
+        df = argument_by_name(func, 'doc_feature')
+        res['df'] = df
+    except ValueError:
+        print('no df')
+    try:
+        qf = argument_by_name(func, 'query_feature')
+        res['qf'] = df
+    except ValueError:
+        print('no qf')
+    print(res)
+    return res
 def print_para_info(dummy, ema):
-    '''
-    @dummy: the ops combines parameters
-    @ema: a dict  ops:(uid, shape)
-    '''
-    res = dummy.eval()
-    for k,v in ema.items():
-        pprint('{}:{}'.format(res[k], v))
-    print("===================")
+	'''
+	@dummy: the ops combines parameters
+	@ema: a dict  ops:(uid, shape)
+	'''
+	res = dummy.eval()
+	for k,v in ema.items():
+		pprint('{}:{}'.format(res[k], v))
+	print("===================")
+
 def OptimizedRnnStack(hidden_dim, num_layers=1, recurrent_op='gru', bidirectional=False, use_cudnn=True, name=''):
     if use_cudnn:
         W = C.parameter(_INFERRED + (hidden_dim,), init=C.glorot_uniform())
@@ -26,22 +56,23 @@ def OptimizedRnnStack(hidden_dim, num_layers=1, recurrent_op='gru', bidirectiona
                         name=name)
         return func
 
-def HighwayBlock(dim, # ideally this should be inferred, but times does not allow inferred x inferred parameter for now
-                 name=''):
-    transform_weight_initializer=0
-    transform_bias_initializer=0
-    update_weight_initializer=0
-    update_bias_initializer=0
+def HighwayBlock(dim, # ideally this should be inferred, but times does not allow inferred x inferred parameter for now    transform_weight_initializer=0
+        transform_weight_initializer=0,
+        transform_bias_initializer=0,
+        update_weight_initializer=0,
+        update_bias_initializer=0,
+        name=''):
+    WT = C.Parameter((dim,dim,), init=transform_weight_initializer, name=name+'_WT')
+    bT = C.Parameter(dim,        init=transform_bias_initializer,   name=name+'_bT')
+    WU = C.Parameter((dim,dim,), init=update_weight_initializer,    name=name+'_WU')
+    bU = C.Parameter(dim,        init=update_bias_initializer,      name=name+'_bU')
+    @C.Function
     def func(x_var):
         x  = C.placeholder()
-        WT = C.Parameter((dim,dim,), init=transform_weight_initializer, name=name+'_WT')
-        bT = C.Parameter(dim,        init=transform_bias_initializer,   name=name+'_bT')
-        WU = C.Parameter((dim,dim,), init=update_weight_initializer,    name=name+'_WU')
-        bU = C.Parameter(dim,        init=update_bias_initializer,      name=name+'_bU')
         transform_gate = C.sigmoid(C.times(x, WT, name=name+'_T') + bT)
         update = C.relu(C.times(x, WU, name=name+'_U') + bU)
         return C.as_block(
-            x + transform_gate * (update - x),
+            x + transform_gate * (update - x), # trans(x)*u(x)+(1-f(x))*x
             [(x, x_var)],
             'HighwayBlock',
             'HighwayBlock'+name)
@@ -72,13 +103,9 @@ def all_spans_loss(start_logits, start_y, end_logits, end_y):
     return logZ - C.sequence.last(C.sequence.gather(start_logits, start_y)) - C.sequence.last(C.sequence.gather(end_logits, end_y))
 
 def seq_hardmax(logits):
-    # [#][dim=1]
     seq_max = C.layers.Fold(C.element_max, initial_state=C.constant(-1e+30, logits.shape))(logits)
-    # [#,c][dim] 找到最大单词的位置
     s = C.equal(logits, C.sequence.broadcast_as(seq_max, logits))
-    # [#,c][dim] 找到第一个出现的最大单词的位置
     s_acc = C.layers.Recurrence(C.plus)(s)
-    # 除了最大单词为其logits外，其他都为0
     return s * C.equal(s_acc, 1) # only pick the first one
 
 class LambdaFunc(C.ops.functions.UserFunction):

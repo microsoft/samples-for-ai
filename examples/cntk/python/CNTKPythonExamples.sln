@@ -13,9 +13,9 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MNIST", "MNIST\MNIST.pyproj
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ptb", "ptb\ptb.pyproj", "{324469C2-258E-4672-B41D-46F6B3FAD81C}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "RNet", "RNet\RNet.pyproj", "{2425B9C4-CBEE-4B13-8FD0-E6717A7B5546}"
-EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "NumpyExperiment", "NumpyExperiment\NumpyExperiment.pyproj", "{A675D77D-78E3-4F5F-B8BC-A70EF8BE4D89}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MSMARCO", "MSMARCO\MSMARCO.pyproj", "{73A46C91-C970-4E2E-84E2-BD8C69B8DC11}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,10 +33,10 @@ Global
 		{E319C9E6-B0D4-4F39-891D-A21D6AA266FB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{324469C2-258E-4672-B41D-46F6B3FAD81C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{324469C2-258E-4672-B41D-46F6B3FAD81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{2425B9C4-CBEE-4B13-8FD0-E6717A7B5546}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{2425B9C4-CBEE-4B13-8FD0-E6717A7B5546}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A675D77D-78E3-4F5F-B8BC-A70EF8BE4D89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A675D77D-78E3-4F5F-B8BC-A70EF8BE4D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73A46C91-C970-4E2E-84E2-BD8C69B8DC11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73A46C91-C970-4E2E-84E2-BD8C69B8DC11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
