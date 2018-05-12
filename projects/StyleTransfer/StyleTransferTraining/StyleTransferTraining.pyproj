@@ -26,10 +26,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\inference.py" />
+    <Compile Include="src\export.py" />
     <Compile Include="src\stylenet.py" />
     <Compile Include="src\train.py" />
     <Compile Include="src\vgg.py" />
-    <Compile Include="src\export.py" />
+    <Compile Include="src\utils.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />

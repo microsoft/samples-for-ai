@@ -33,7 +33,7 @@ def parse_arguments():
     if len(unknown):
         info('Unknown arguments: ' + ','.join(unknown))
     return options
-    
+
 
 def main():
     # Get the ENV context
@@ -62,16 +62,16 @@ def main():
     export_dir = os.path.join(output_dir, 'savedmodel')
     if os.path.isdir(output_dir):
         if not os.path.isdir(model_dir):
-            info('Creating a folder to store checkpoint ' + model_dir)
+            info('Creating a folder to store checkpoint at ' + model_dir)
             os.makedirs(model_dir)
         if os.path.isdir(export_dir):
             info('Deleting the folder containing SavedModel at ' + export_dir)
             shutil.rmtree(export_dir)
     else:
-        info('Creating a folder to store checkpoint ' + model_dir)
+        info('Creating a folder to store checkpoint at ' + model_dir)
         os.makedirs(model_dir)
     
-    # Select the TensorBoard folder
+    # Set the TensorBoard folder
     log_dir = os.path.expanduser(options.log_dir) if options.log_dir \
         else env.get('LOG_DIR', os.path.join(script_dir, '..', 'log'))
     if not os.path.isdir(log_dir):
@@ -99,7 +99,7 @@ def main():
     lambda_feat = options.lambda_feat
     lambda_style = options.lambda_style
     
-    # Print IO arguments
+    # Print parsed arguments
     info('--------- Training parameters -------->')
     info('Style image path: ' + style_path)
     info('VGG model path: ' + vgg_path)
@@ -133,7 +133,7 @@ def main():
         # Compute gram maxtrix of style target
         style_image = tf.placeholder(tf.float32, shape=style_shape, name='style_image')
         vggstyletarget = vgg.net(vgg_path, vgg.preprocess(style_image))
-        style_vgg = vgg.get_style_vgg(vggstyletarget, style_image, np.array([style_target]))        
+        style_vgg = vgg.get_style_vgg(vggstyletarget, style_image, np.array([style_target]))
         
         # Content target feature 
         content_vgg = {}
@@ -141,8 +141,8 @@ def main():
         content_net = vgg.net(vgg_path, vgg.preprocess(inputs))
         content_vgg['relu4_2'] = content_net['relu4_2']
         
-        # Feature after transformation 
-        outputs = stylenet.net(inputs/255.0)        
+        # Feature after transformation
+        outputs = stylenet.net(inputs / 255.0)
         vggoutputs = vgg.net(vgg_path, vgg.preprocess(outputs))
         
         # Compute feature loss
@@ -188,7 +188,7 @@ def main():
                 # Load one batch
                 batch = np.zeros(batch_shape, dtype=np.float32)
                 for i, img in enumerate(content_targets[step * batch_size : (step + 1) * batch_size]):
-                   batch[i] = read_img(img, image_shape).astype(np.float32) # (224,224,3)
+                    batch[i] = read_img(img, image_shape).astype(np.float32) # (224,224,3)
                 
                 # Proceed one step
                 step += 1

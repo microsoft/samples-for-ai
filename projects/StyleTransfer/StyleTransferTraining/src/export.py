@@ -12,14 +12,14 @@ from utils import info, error, fail
 def export(args):
     ckpt_dir = os.path.expanduser(args.ckpt_dir)
     export_dir = os.path.expanduser(args.export_dir)
-    if os.path.exists(export_dir):
+    if os.path.isdir(export_dir):
         info('Deleting the folder containing SavedModel at ' + export_dir)
         shutil.rmtree(export_dir)
     
     # Construct the serving graph
     batch_shape = (args.batch_size, args.height, args.width, 3)
     img_placeholder = tf.placeholder(tf.float32, shape=batch_shape)
-    preds = net(img_placeholder / 255.0)    
+    preds = net(img_placeholder)
     saver = tf.train.Saver()
     builder = tf.saved_model.builder.SavedModelBuilder(export_dir)
     
@@ -30,7 +30,7 @@ def export(args):
             info('Restoring from ' + ckpt.model_checkpoint_path)
             saver.restore(sess, ckpt.model_checkpoint_path)
         else:
-            fail("No checkpoint found int " + ckpt_dir)
+            fail("Found no checkpoint in " + ckpt_dir)
         
         # Write the SavedModel
         info('Exporting SavedModel to ' + export_dir)
@@ -49,11 +49,11 @@ def export(args):
 
 
 if __name__ == '__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--ckpt_dir', type=str, required=True, help='where the checkpoint is stored')
-    parser.add_argument('--export_dir', type=str, default='export', help='where to write SavedModel')
-    parser.add_argument('--height', type=int, default=240, help='image height')
-    parser.add_argument('--width', type=str, default=320, help='image width')
-    parser.add_argument('--batch-size', type=int, default=1, help='batch size')
+    parser = argparse.ArgumentParser('Export SavedModel from the checkpoint of style transfer')
+    parser.add_argument('--ckpt_dir', type=str, required=True, help='Where the checkpoint is stored')
+    parser.add_argument('--export_dir', type=str, default='export', help='Where to write SavedModel')
+    parser.add_argument('--height', type=int, default=240, help='Image height')
+    parser.add_argument('--width', type=str, default=320, help='Image width')
+    parser.add_argument('--batch_size', type=int, default=1, help='Batch size for inference')
     args, _ = parser.parse_known_args()
     export(args)
