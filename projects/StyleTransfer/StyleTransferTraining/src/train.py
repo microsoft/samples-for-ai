@@ -5,23 +5,19 @@ import numpy as np
 import os
 import shutil
 import sys
-import tensorflow as tf
 import time
 
 sys.path.insert(0, '.')
-import vgg
-import stylenet
-from utils import info, error, fail, get_available_gpus, list_jpgs, read_img
-
 
 def parse_arguments():
     parser = argparse.ArgumentParser(description='Real-time style transfer')
     parser.add_argument('--input_dir', type=str,
                         help='Top-level data directory path (according to the paper, use MSCOCO 80k images)')
-    parser.add_argument('--style_image', type=str, default='starry_night.jpg', help='Style image')
     parser.add_argument('--output_dir', type=str, help='Checkpoint & SavedModel directory.')
     parser.add_argument('--log_dir', type=str, help='TensorBoard directory.')
     parser.add_argument('--gpu_id', type=int, default=-1, help='GPU ID (negative value indicates CPU)')
+    parser.add_argument('--set_cuda_visible_devices', type=bool, default=True, help='Set CUDA_VISIBLE_DEVICES to gpu_id')
+    parser.add_argument('--style_image', type=str, default='starry_night.jpg', help='Style image')
     parser.add_argument('--batch_size', type=int, default=1, help='Batch size for training (default value is 16)')
     parser.add_argument('--epoch', default=2, type=int, help='Epoch count.')
     parser.add_argument('--lambda_tv', type=float, default=10e-4,
@@ -35,9 +31,28 @@ def parse_arguments():
     return options
 
 
+options =  parse_arguments()
+
+# Set the computation device
+device = '/cpu:0'
+if options.gpu_id >= 0:
+    if options.set_cuda_visible_devices:
+        os.environ['CUDA_VISIBLE_DEVICES'] = str(options.gpu_id)
+        device = '/gpu:0'
+    else:
+        device = '/gpu:%d' % options.gpu_id
+    #if len(get_available_gpus()) > options.gpu_id:
+
+import tensorflow as tf
+import vgg
+import stylenet
+from utils import info, error, fail, get_available_gpus, list_jpgs, read_img
+
+
 def main():
+    global options, device
+
     # Get the ENV context
-    options =  parse_arguments()
     script_dir = os.path.dirname(__file__)
     env = os.environ.copy()
     
@@ -85,12 +100,7 @@ def main():
     ckpt_path = os.path.join(model_dir, style_name + '.ckpt')
     if not os.path.isfile(style_path):
         fail('Failed to find the style image at ' + style_path)
-    
-    # Set the calculation device
-    device = '/cpu:0'
-    if options.gpu_id >= 0 and len(get_available_gpus()) > options.gpu_id:
-        device = '/gpu:%d' % options.gpu_id
-    
+
     # Set hyper parameters
     batch_size = options.batch_size
     epochs = options.epoch
