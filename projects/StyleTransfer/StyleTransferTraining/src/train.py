@@ -22,9 +22,9 @@ def parse_arguments():
     parser.add_argument('--output_dir', type=str, help='Checkpoint & SavedModel directory.')
     parser.add_argument('--log_dir', type=str, help='TensorBoard directory.')
     parser.add_argument('--gpu_id', type=int, default=-1, help='GPU ID (negative value indicates CPU)')
-    parser.add_argument('--batch_size', type=int, default=16, help='Batch size for training (default value is 16)')
+    parser.add_argument('--batch_size', type=int, default=1, help='Batch size for training (default value is 16)')
     parser.add_argument('--epoch', default=2, type=int, help='Epoch count.')
-    parser.add_argument('--lambda_tv', type=float, default=2e2,
+    parser.add_argument('--lambda_tv', type=float, default=10e-4,
                         help='Weight of total variation regularization according to the paper to be set between 10e-4 and 10e-6.')
     parser.add_argument('--lambda_feat', type=float, default=7.5e0)
     parser.add_argument('--lambda_style', type=float, default=15)
