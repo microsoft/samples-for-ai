@@ -315,10 +315,10 @@ def detect_python_version():
     py_full_version = ".".join(map(str, sys.version_info[0:3]))
     sys_info["python"] = py_version.replace('.', '')
     logger.debug("In detect_python_version(), sys_info['python']: {0}".format(sys_info["python"]))
-    logger.info("Python: {0}, {1}".format(py_full_version, py_architecture))
+    logger.info("PYTHON: {0}, {1}".format(py_full_version, py_architecture))
     if not (_version_compare("3.5", py_version) and py_architecture == '64bit'):
-        logger.error("64-bit Python 3.5 or higher is required to run this installer."
-                     " We recommend latest Python 3.5 (https://www.python.org/downloads/release/python-355/).")
+        logger.error("64-bit PYTHON 3.5 or higher is required to run this installer."
+                     " We recommend latest PYTHON 3.5 (https://www.python.org/downloads/release/python-355/).")
         return False
     return True
 
@@ -375,25 +375,25 @@ def detect_cuda_():
     status, stdout = _run_cmd("nvcc", ["-V"], True)
     if status and re.search(r"release\s*8.0,\s*V8.0", stdout):
         sys_info["CUDA"] = "8.0"
-        logger.info("Cuda: {0}".format(sys_info["CUDA"]))
+        logger.info("CUDA: {0}".format(sys_info["CUDA"]))
         if sys_info["cuda80"]:
-            logger.warning("Detect parameter '--cuda80', the installer script will be forced to install dependency package for cuda 8.0.")
+            logger.warning("Detect parameter '--cuda80', the installer script will be forced to install dependency package for CUDA 8.0.")
             return True
         else:
-            logger.warning("We recommend cuda 9.0 (https://developer.nvidia.com/cuda-toolkit)."
-                           "If you want to install dependency package for cuda 8.0, please run the installer script with '--cuda80' again.")
+            logger.warning("We recommend CUDA 9.0 (https://developer.nvidia.com/cuda-toolkit)."
+                           "If you want to install dependency package for CUDA 8.0, please run the installer script with '--cuda80' again.")
             return False
     elif status and re.search(r"release\s*9.0,\s*V9.0", stdout):
         sys_info["CUDA"] = "9.0"
-        logger.info("Cuda: {0}".format(sys_info["CUDA"]))
+        logger.info("CUDA: {0}".format(sys_info["CUDA"]))
     else:
         sys_info["CUDA"] = "9.0"
-        logger.warning("Not detect cuda! We recommend cuda 9.0 (https://developer.nvidia.com/cuda-toolkit). "
-                       "The installer script will install dependency package for cuda 9.0 by default.")
+        logger.warning("Not detect CUDA! We recommend CUDA 9.0 (https://developer.nvidia.com/cuda-toolkit). "
+                       "The installer script will install dependency package for CUDA 9.0 by default.")
     if sys_info["cuda80"]:
         sys_info["CUDA"] = "8.0"
         logger.warning(
-            "Detect parameter '--cuda80', the installer script will be forced to install dependency package for cuda 8.0.")
+            "Detect parameter '--cuda80', the installer script will be forced to install dependency package for CUDA 8.0.")
     return True
 
 def detect_cudnn():
@@ -415,7 +415,7 @@ def detect_cudnn_win():
             sys_info["cudnn"] = version
             logger.info("Cudnn: {0}".format(version))
     if not sys_info["cudnn"]:
-        logger.warning("Not detect cudnn! We recommand cudnn 7, please download and install cudnn 7 from https://developer.nvidia.com/rdp/cudnn-download.")
+        logger.warning("Not detect Cudnn! We recommand cudnn 7, please download and install Cudnn 7 from https://developer.nvidia.com/rdp/cudnn-download.")
 
 def detect_mpi_win():
     # logger.info("Begin to detect MPI version on Windows ...")
@@ -787,14 +787,18 @@ def pip_install_chainer(options):
     version = "4.0.0"
     if (sys_info["GPU"] and (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
         # logger.info("Install cupy to support CUDA for chainer.")
-        pip_install_package(name, options, version)
+        if sys_info["CUDA"] == "8.0":
+            name = "cupy-cuda80"
+        elif sys_info["CUDA"] == "9.0":
+            name = "cupy-cuda90"
+        pip_install_package(name, options)
     elif (sys_info["GPU"] and (sys_info["OS"] == TOOLSFORAI_OS_WIN)):
         try:
             cupy = importlib.import_module(name)
             if (not _version_compare(version, cupy.__version__)):
                 logger.warning("Cupy's version is too low, please manually upgrade cupy >= 2.0.0.")
             else:
-                logger.info("cupy is already installed.")
+                logger.info("Cupy is already installed.")
         except ImportError:
             logger.warning("On windows, please manully install cupy. You can reference this link https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer.")
 
