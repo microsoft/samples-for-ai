@@ -27,7 +27,7 @@ def parse_arguments():
     parser.add_argument('--lr', default=1e-3, type=float, help='Initial learning rate.')
     options, unknown = parser.parse_known_args()
     if len(unknown):
-        info('Unknown arguments: ' + ','.join(unknown))
+        print('Unknown arguments: ' + ','.join(unknown))
     return options
 
 
