@@ -5,28 +5,28 @@
   "Environment": "",
   "EnableRunInDocker": false,
   "EnableConcurrency": true,
-  "CommonParameter": null,
+  "CommonParameter": " --input_dir ~/styletransfer --lambda_style 15",
   "ExtraParameter": "",
   "HyperParameters": [
     {
       "JobID": "mosaic",
-      "HyperParameter": "--style_image mosaic.jpg --dataset ~/styletransfer --ckpt ~/ckpt_mosaic --lambda_style 15"
+      "HyperParameter": "--style_image mosaic.jpg --gpu_id=0"
     },
     {
       "JobID": "candy",
-      "HyperParameter": "--style_image candy.jpg --dataset ~/styletransfer --ckpt ~/ckpt_mosaic --lambda_style 15"
+      "HyperParameter": "--style_image candy.jpg --gpu_id=1"
     },
     {
       "JobID": "starry_night",
-      "HyperParameter": "--style_image starry_night.jpg --dataset ~/styletransfer --ckpt ~/ckpt_mosaic --lambda_style 15"
+      "HyperParameter": "--style_image starry_night.jpg --gpu_id=2"
     },
     {
       "JobID": "the_scream",
-      "HyperParameter": "--style_image the_scream.jpg --dataset ~/styletransfer --ckpt ~/ckpt_mosaic --lambda_style 15"
+      "HyperParameter": "--style_image the_scream.jpg --gpu_id=3"
     },
     {
       "JobID": "wave",
-      "HyperParameter": "--style_image wave.jpg --dataset ~/styletransfer --ckpt ~/ckpt_mosaic --lambda_style 15"
+      "HyperParameter": "--style_image wave.jpg"
     }
   ]
 }

@@ -1,1 +1,1 @@
-Download training data images using [Microsoft COCO](http://cocodataset.org]) 
+Download training data images using [Microsoft COCO](http://images.cocodataset.org/zips/train2014.zip]) 

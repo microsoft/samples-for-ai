@@ -9,7 +9,7 @@
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <CommandLineArguments>--dataset ../data</CommandLineArguments>
+    <CommandLineArguments></CommandLineArguments>
     <ProjectTypeGuids>{D22814C2-A430-4A53-8052-A3A64BFB2240};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
     <StartupFile>src\train.py</StartupFile>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
@@ -25,11 +25,12 @@
     <Content Include="src\README.md" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\inference.py" />
     <Compile Include="src\export.py" />
-    <Compile Include="src\Inference.py" />
     <Compile Include="src\stylenet.py" />
     <Compile Include="src\train.py" />
     <Compile Include="src\vgg.py" />
+    <Compile Include="src\utils.py" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="src\" />
