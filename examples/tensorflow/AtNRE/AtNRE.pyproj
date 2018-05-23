@@ -6,14 +6,17 @@
     <ProjectGuid>cfd8b6fe-7051-49d2-8bf2-1bb13c2b1703</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <ProjectTypeGuids>{D22814C2-A430-4A53-8052-A3A64BFB2240};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
-    <StartupFile>AtNRE.py</StartupFile>
+    <StartupFile>bag_runner.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <CommandLineArguments>--input_dir . --output_dir .</CommandLineArguments>
+    <CommandLineArguments>
+    </CommandLineArguments>
     <Name>AtNRE</Name>
     <RootNamespace>AtNRE</RootNamespace>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,7 +27,13 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="AtNRE.py" />
+    <Compile Include="bag_loader.py" />
+    <Compile Include="bag_model.py" />
+    <Compile Include="bag_runner.py" />
+    <Compile Include="bag_trainer.py" />
+    <Compile Include="create_plk.py" />
+    <Compile Include="mycommon.py" />
+    <Compile Include="nyt_miml_loader.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in

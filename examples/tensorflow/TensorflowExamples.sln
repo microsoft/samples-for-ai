@@ -23,6 +23,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "NTM", "NTM\NTM.pyproj", "{0
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "GeneGAN", "GeneGAN\GeneGAN.pyproj", "{03620336-1702-44E7-A941-4A567698556E}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "AtNRE", "AtNRE\AtNRE.pyproj", "{CFD8B6FE-7051-49D2-8BF2-1BB13C2B1703}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +51,8 @@ Global
 		{03DD61EA-936F-4A70-95D8-30101B22A62C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03620336-1702-44E7-A941-4A567698556E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{03620336-1702-44E7-A941-4A567698556E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFD8B6FE-7051-49D2-8BF2-1BB13C2B1703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFD8B6FE-7051-49D2-8BF2-1BB13C2B1703}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
