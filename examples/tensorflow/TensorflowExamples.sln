@@ -37,6 +37,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TransH", "TransH\TransH.pyp
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TransR", "TransR\TransR.pyproj", "{376A2685-4665-4A29-B693-EE3E1F8FBB32}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "yoloTF", "yoloTF\yoloTF.pyproj", "{9A2D606A-3C97-4945-A5FC-6A8C5BFC2A85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -77,6 +79,8 @@ Global
 		{4514F180-1B1F-459A-9891-B6DC4A03DF44}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{376A2685-4665-4A29-B693-EE3E1F8FBB32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{376A2685-4665-4A29-B693-EE3E1F8FBB32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A2D606A-3C97-4945-A5FC-6A8C5BFC2A85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A2D606A-3C97-4945-A5FC-6A8C5BFC2A85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
