@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27130.2024
+VisualStudioVersion = 15.0.27703.2000
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "SampleCode", "SampleCode\SampleCode.pyproj", "{605E94F9-6BD6-4DE2-B88B-0AF5D5BEA4FF}"
-EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ScreenerNet", "ScreenerNet\ScreenerNet.pyproj", "{CAE6595F-7D7A-4822-9BFD-345B97A9E60E}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Image_Captioning", "Image_Captioning\Image_Captioning.pyproj", "{4961F807-50D9-4BD3-8974-C7752C3B3C9B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,15 +13,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{605E94F9-6BD6-4DE2-B88B-0AF5D5BEA4FF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{605E94F9-6BD6-4DE2-B88B-0AF5D5BEA4FF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CAE6595F-7D7A-4822-9BFD-345B97A9E60E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{CAE6595F-7D7A-4822-9BFD-345B97A9E60E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4961F807-50D9-4BD3-8974-C7752C3B3C9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4961F807-50D9-4BD3-8974-C7752C3B3C9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {4D10CE93-D37D-44F0-B70E-04977F54404E}
+		SolutionGuid = {4C5F2E7A-2344-40B6-BBE3-EC47DE72470B}
 	EndGlobalSection
 EndGlobal

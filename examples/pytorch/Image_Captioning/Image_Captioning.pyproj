@@ -3,17 +3,17 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
-    <ProjectGuid>605e94f9-6bd6-4de2-b88b-0af5d5bea4ff</ProjectGuid>
+    <ProjectGuid>4961f807-50d9-4bd3-8974-c7752c3b3c9b</ProjectGuid>
     <ProjectHome>.</ProjectHome>
-    <ProjectTypeGuids>{8B0147FC-7A0C-481F-99C4-C90CCB52692E};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
-    <StartupFile>SampleCode.py</StartupFile>
+    <ProjectTypeGuids>{D22814C2-A430-4A53-8052-A3A64BFB2240};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
+    <StartupFile>Image_Captioning.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
     <CommandLineArguments>--input_dir . --output_dir .</CommandLineArguments>
-    <Name>SampleCode</Name>
-    <RootNamespace>SampleCode</RootNamespace>
+    <Name>Image_Captioning</Name>
+    <RootNamespace>Image_Captioning</RootNamespace>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>
@@ -24,7 +24,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="SampleCode.py" />
+    <Compile Include="Image_Captioning.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
