@@ -807,9 +807,15 @@ def pip_install_chainer(options):
     pip_install_package(name, options, version)
 
     name = "chainermn"
-    version = ""
-    if not pip_install_package(name, options):
-        logger.warning("On Linux, in order to install chainermn, please manually install libmpich-dev and run installer script again.")
+    version = "1.3.0"
+    if not pip_install_package(name, options, version):
+        if (sys_info["OS"] == TOOLSFORAI_OS_LINUX):
+            dep_name = "libmpich-dev"
+        elif (sys_info["OS"] == TOOLSFORAI_OS_MACOS):
+            dep_name = "libopenmpi-dev"
+        else:
+            dep_name = "MPI development package"
+        logger.warning("To install chainermn, C++ compiler and {0} are required. Please manually install them and then run the installer script again.".format(dep_name))
 
 def pip_install_onnxmltools(options):
     name = "onnxmltools"
