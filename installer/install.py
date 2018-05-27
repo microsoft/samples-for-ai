@@ -196,7 +196,7 @@ def _unzip_file(file_path, target_dir):
                 zip_file.extract(names, target_dir)
         return True
     except:
-        logger.error("Fail to unzip. Error: ", sys.exc_info())
+        logger.error("Fail to unzip. Error: {0}.".format(sys.exc_info()))
         return False
 
 
@@ -207,7 +207,7 @@ def _extract_tar(file_path, target_dir):
         with tarfile.open(file_path) as tar:
             tar.extractall(path=target_dir)
     except:
-        logger.error("Fail to extract. Error: ", sys.exc_info())
+        logger.error("Fail to extract. Error: {0}.".format(sys.exc_info()))
         return False
     return True
 
