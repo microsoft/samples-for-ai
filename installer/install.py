@@ -810,7 +810,7 @@ def pip_install_chainer(options):
     version = "1.3.0"
     if not pip_install_package(name, options, version):
         if (sys_info["OS"] == TOOLSFORAI_OS_LINUX):
-            dep_name = "libmpich-dev"
+            dep_name = "libopenmpi-dev"
         elif (sys_info["OS"] == TOOLSFORAI_OS_MACOS):
             dep_name = "libopenmpi-dev"
         else:
