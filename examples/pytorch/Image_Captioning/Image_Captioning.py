@@ -25,12 +25,13 @@ from keras.models import Model
 from keras.models import load_model
 from keras.utils import plot_model
 from IPython.display import clear_output
+import os
 
 
 
 #The dataset can be obtained in  http://lixirong.net/datasets/flickr8kcn
 
-token = '/datasets/Flicker8k_text/Flickr8k.token.txt'
+token = './input/Flickr8k_text/Flickr8k.token.txt'
 captions = open(token, 'r').read().strip().split('\n')
 d = {}
 
@@ -45,10 +46,10 @@ for i, row in enumerate(captions):
 
 
 
-images = '/datasets/Flicker8k_Dataset/'
+images = './input/Flicker8k_Dataset/'
 img = glob.glob(images+'*.jpg')
 
-train_images_file = '/datasets/Flicker8k_text/Flickr_8k.trainImages.txt'
+train_images_file = './input/Flickr8k_text/Flickr_8k.trainImages.txt'
 train_images = set(open(train_images_file, 'r').read().strip().split('\n'))
 
 def split_data(l):
@@ -60,13 +61,13 @@ def split_data(l):
 train_img = split_data(train_images)
 
 
-val_images_file = '/datasets/Flicker8k_text/Flickr_8k.devImages.txt'
+val_images_file = './input/Flickr8k_text/Flickr_8k.devImages.txt'
 val_images = set(open(val_images_file, 'r').read().strip().split('\n'))
 
 # Getting the validation images from all the images
 val_img = split_data(val_images)
 len(val_img)
-test_images_file = '/datasets/Flicker8k_text/Flickr_8k.testImages.txt'
+test_images_file = './input/Flickr8k_text/Flickr_8k.testImages.txt'
 test_images = set(open(test_images_file, 'r').read().strip().split('\n'))
 
 # Getting the testing images from all the images
