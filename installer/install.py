@@ -196,7 +196,7 @@ def _unzip_file(file_path, target_dir):
                 zip_file.extract(names, target_dir)
         return True
     except:
-        logger.error("Fail to unzip. Error: ", sys.exc_info())
+        logger.error("Fail to unzip. Error: {0}.".format(sys.exc_info()))
         return False
 
 
@@ -207,7 +207,7 @@ def _extract_tar(file_path, target_dir):
         with tarfile.open(file_path) as tar:
             tar.extractall(path=target_dir)
     except:
-        logger.error("Fail to extract. Error: ", sys.exc_info())
+        logger.error("Fail to extract. Error: {0}.".format(sys.exc_info()))
         return False
     return True
 
@@ -807,9 +807,15 @@ def pip_install_chainer(options):
     pip_install_package(name, options, version)
 
     name = "chainermn"
-    version = ""
-    if not pip_install_package(name, options):
-        logger.warning("On Linux, in order to install chainermn, please manually install libmpich-dev and run installer script again.")
+    version = "1.3.0"
+    if not pip_install_package(name, options, version):
+        if (sys_info["OS"] == TOOLSFORAI_OS_LINUX):
+            dep_name = "libopenmpi-dev"
+        elif (sys_info["OS"] == TOOLSFORAI_OS_MACOS):
+            dep_name = "libopenmpi-dev"
+        else:
+            dep_name = "MPI development package"
+        logger.warning("To install chainermn, C++ compiler and {0} are required. Please manually install them and then run the installer script again.".format(dep_name))
 
 def pip_install_onnxmltools(options):
     name = "onnxmltools"
