@@ -15,8 +15,6 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ptb", "ptb\ptb.pyproj", "{3
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "NumpyExperiment", "NumpyExperiment\NumpyExperiment.pyproj", "{A675D77D-78E3-4F5F-B8BC-A70EF8BE4D89}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MSMARCO", "MSMARCO\MSMARCO.pyproj", "{73A46C91-C970-4E2E-84E2-BD8C69B8DC11}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -35,13 +33,12 @@ Global
 		{324469C2-258E-4672-B41D-46F6B3FAD81C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A675D77D-78E3-4F5F-B8BC-A70EF8BE4D89}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{A675D77D-78E3-4F5F-B8BC-A70EF8BE4D89}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{73A46C91-C970-4E2E-84E2-BD8C69B8DC11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{73A46C91-C970-4E2E-84E2-BD8C69B8DC11}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
-		SolutionGuid = {16B54AD7-4D92-4530-8E10-A6D643380E89}
+		        SolutionGuid = {16B54AD7-4D92-4530-8E10-A6D643380E89}
+		SolutionGuid = {76F2C9C6-E361-49F6-A4D5-89A313B83264}
 	EndGlobalSection
 EndGlobal

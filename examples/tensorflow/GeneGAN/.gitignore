@@ -1,9 +1,0 @@
-train_log
-*DS_Store
-*.swo
-*.pyc
-*.out
-*.jpg
-*.png
-datasets
-/.vs
