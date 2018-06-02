@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.16
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "imagenet", "imagenet\imagenet.pyproj", "{82D9546F-5924-4A16-8F9C-F3B853B883F1}"
 EndProject
@@ -38,6 +38,10 @@ EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TransR", "TransR\TransR.pyproj", "{376A2685-4665-4A29-B693-EE3E1F8FBB32}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "yoloTF", "yoloTF\yoloTF.pyproj", "{9A2D606A-3C97-4945-A5FC-6A8C5BFC2A85}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Resnet", "Resnet\Resnet.pyproj", "{7390307B-A964-4216-BDEE-A3CF6F0D0C64}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MobileNet", "MobileNet\MobileNet.pyproj", "{DC611166-E07D-43BF-9BA6-DCFE61144210}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,6 +85,10 @@ Global
 		{376A2685-4665-4A29-B693-EE3E1F8FBB32}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{9A2D606A-3C97-4945-A5FC-6A8C5BFC2A85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{9A2D606A-3C97-4945-A5FC-6A8C5BFC2A85}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7390307B-A964-4216-BDEE-A3CF6F0D0C64}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7390307B-A964-4216-BDEE-A3CF6F0D0C64}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DC611166-E07D-43BF-9BA6-DCFE61144210}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{DC611166-E07D-43BF-9BA6-DCFE61144210}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
