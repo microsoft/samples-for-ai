@@ -901,9 +901,9 @@ def pip_install_converter(options):
     try:
         pip_install_coremltools(options)
         pip_install_onnx(options)
-        pip_install_tf2onnx(options)
         pip_install_onnxmltools(options)
         pip_install_winmltools(options)
+        pip_install_tf2onnx(options)
     except Exception as e:
         # logger.error("Fail to install converter, unexpected error: {0}".format(e))
         logger.error("Fail to install converter, unexpected error! Please run installer again!")
