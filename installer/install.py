@@ -714,8 +714,8 @@ def pip_install_pytorch(options):
         logger.warning("Pytorch installation can not be supported on your OS! We recommand 64-bit Windows-10, Linux and Macos.")
 
     name = "torchvision"
-    version = ""
-    pip_install_package(name, options)
+    version = "0.2.1"
+    pip_install_package(name, options, version)
 
 def pip_install_cntk(options):
     if not ((sys_info["OS"] == TOOLSFORAI_OS_WIN) or (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
@@ -805,7 +805,7 @@ def pip_install_chainer(options):
     name = "chainer"
     version = "4.0.0"
     pip_install_package(name, options, version)
-
+    """
     name = "chainermn"
     version = "1.3.0"
     if not pip_install_package(name, options, version):
@@ -816,28 +816,29 @@ def pip_install_chainer(options):
         else:
             dep_name = "MPI development package"
         logger.warning("To install chainermn, C++ compiler and {0} are required. Please manually install them and then run the installer script again.".format(dep_name))
+    """
 
 def pip_install_onnxmltools(options):
     name = "onnxmltools"
-    version = ""
+    version = "1.0.0.0"
     if module_exists(name):
         logger.info("{0} is already installed.".format(name))
     else:
-        pip_install_package(name, options)
+        pip_install_package(name, options, version)
 
 # converter related
 def pip_install_winmltools(options):
     name = "winmltools"
-    version = ""
+    version = "0.1.0.5072"
     if module_exists(name):
         logger.info("{0} is already installed.".format(name))
     else:
-        pip_install_package(name, options)
+        pip_install_package(name, options, version)
 
 
 def pip_install_coremltools(options):
     name = "coremltools"
-    version = ""
+    version = "0.8"
     if sys_info["OS"] == TOOLSFORAI_OS_WIN:
         if sys_info["git"]:
             pkg = "git+https://github.com/apple/coremltools@v0.8"
@@ -847,7 +848,7 @@ def pip_install_coremltools(options):
             logger.warning("Fail to install {0}. Please manually install git and run installer script again.".format(name))
             return False
     else:
-        return pip_install_package(name, options)
+        return pip_install_package(name, options, version)
 
 def pip_install_onnx(options):
     name = "onnx"
