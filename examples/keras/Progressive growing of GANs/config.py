@@ -64,7 +64,7 @@ loss = dict(                                # Loss function:
 if 1:
     run_desc = 'celeba'
 
-    dataset = dict(h5_path='celeba-128x128_channel_last.h5', resolution=128, max_labels=0, mirror_augment=True)
+    dataset = dict(h5_path='celeba-128x128.h5', resolution=128, max_labels=0, mirror_augment=True)
 
     train.update(lod_training_kimg=800, lod_transition_kimg=800, rampup_kimg=0, total_kimg=10000, minibatch_overrides={})
     G.update(fmap_base=2048)

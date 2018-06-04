@@ -3,6 +3,8 @@ import numpy as np
 import sys
 import os
 import argparse
+from datadownload import download_celeb_a
+from h5tool import create_celeba_channel_last
 
 
 ###################################################################
@@ -64,16 +66,24 @@ def main():
     globals()[func_name](**func_params)
     exit(0)
 
+def download():
+    if os.path.exists('./datasets/celeba_128x128.h5'):
+        print('Found Celeb-A.h5 - skip')
+        return
+    download_celeb_a(config.data_dir)
+    data_dir = 'celebA'
+    create_celeba_channel_last('./datasets/celeba_128x128.h5', os.path.join(config.data_dir, data_dir), cx=89, cy=121)
+
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_dir", type=str, 
-                        default='datasets', 
+                        default='./datasets', 
                         help="Input directory where where training dataset and meta data are saved", 
-                        required=True
+                        required=False
                         )
     parser.add_argument("--result_dir", type=str, 
-                        default='results', 
+                        default='./results', 
                         help="Input directory where where logs and models are saved", 
                         required=False
                         )
@@ -92,5 +102,5 @@ if __name__ == "__main__":
         config.train.update(resume_network=args.resume_dir)
     if hasattr(args,'resume_kimg') and args.resume_kimg != None:
         config.train.update(resume_kimg=args.resume_kimg)
-
+    download()
     main()
