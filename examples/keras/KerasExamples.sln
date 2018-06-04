@@ -19,10 +19,6 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "wgan_tf", "wgan_tf\wgan_tf.
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "infogan_tf", "infogan_tf\infogan_tf.pyproj", "{EE68784F-A500-433A-9806-E7202E6A9DE8}"
 EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "discogan_tf", "discogan_tf\discogan_tf.pyproj", "{3E170CE8-B38B-4CEA-93A9-95B0A975F390}"
-EndProject
-Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Progressive growing of GANs", "Progressive growing of GANs\Progressive growing of GANs.pyproj", "{E2CF5042-D835-4161-A6A7-07FE74D8135C}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,10 +41,6 @@ Global
 		{95821350-188B-44B2-BDE2-B7256B330B66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE68784F-A500-433A-9806-E7202E6A9DE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EE68784F-A500-433A-9806-E7202E6A9DE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3E170CE8-B38B-4CEA-93A9-95B0A975F390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3E170CE8-B38B-4CEA-93A9-95B0A975F390}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E2CF5042-D835-4161-A6A7-07FE74D8135C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2CF5042-D835-4161-A6A7-07FE74D8135C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
