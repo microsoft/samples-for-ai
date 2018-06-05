@@ -32,7 +32,7 @@ A Pretrained weight see ```./pretrained```.
 
 **train_top1_error**
 <div align="center">
-<img src=https://github.com/SugarMasuo/4-seu-AIGO/blob/master/ResNet-on-Tensorflow/result/train_top1_error.png"><br><br>
+<img src="https://github.com/SugarMasuo/4-seu-AIGO/blob/master/ResNet-on-Tensorflow/result/train_top1_error.png"><br><br>
 </div>
 
 **validate_top1_error**

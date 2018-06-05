@@ -115,18 +115,14 @@ class Classifier(object):
             train_batch_data, train_batch_labels = self.generate_augment_train_batch(all_data, all_labels, FLAGS.train_batch_size)
 
 
-            validation_batch_data, validation_batch_labels = self.generate_vali_batch(vali_data,
-                                                           vali_labels, FLAGS.validation_batch_size)
+            validation_batch_data, validation_batch_labels = self.generate_vali_batch(vali_data,vali_labels, FLAGS.validation_batch_size)
 
             # Want to validate once before training. You may check the theoretical validation
             # loss first
             if step % FLAGS.report_freq == 0:
 
                 if FLAGS.is_full_validation is True:
-                    validation_loss_value, validation_error_value = self.full_validation(loss=self.vali_loss,
-                                            top1_error=self.vali_top1_error, vali_data=vali_data,
-                                            vali_labels=vali_labels, session=sess,
-                                            batch_data=train_batch_data, batch_label=train_batch_labels)
+                    validation_loss_value, validation_error_value = self.full_validation(loss=self.vali_loss,top1_error=self.vali_top1_error, vali_data=vali_data, vali_labels=vali_labels, session=sess, batch_data=train_batch_data, batch_label=train_batch_labels)
 
                     vali_summ = tf.Summary()
                     vali_summ.value.add(tag='full_validation_error',
@@ -149,8 +145,7 @@ class Classifier(object):
 
             start_time = time.time()
 
-            _, _, train_loss_value, train_error_value = sess.run([self.train_op, self.train_ema_op,
-                                                           self.full_loss, self.train_top1_error],
+            _, _, train_loss_value, train_error_value = sess.run([self.train_op, self.train_ema_op,self.full_loss, self.train_top1_error],
                                 {self.image_placeholder: train_batch_data,
                                   self.label_placeholder: train_batch_labels,
                                   self.vali_image_placeholder: validation_batch_data,
