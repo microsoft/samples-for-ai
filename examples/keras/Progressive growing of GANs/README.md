@@ -1,7 +1,5 @@
 # Keras-progressive_growing_of_gans
 
-[简体中文](/zh-hans/examples/keras/Progressive%20growing%20of%20GANs/README.md)
-
 ## Introduction
 
 Keras implementation of Progressive Growing of GANs for Improved Quality, Stability, and Variation. 
@@ -20,11 +18,46 @@ Developers: Jiaqi Wang, Junjie Wu
 3. [CelebA Dataset](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html)
 
 
-## How to run
+## How to run (For Visual Studio/ VSCode Users)
 
 ### 1. Clone the repository
 
-### 2. Prepare the dataset 
+### 2. Open it as Visual Studio solution
+
+#### To train
+
+1. Set **main.py** as the Startup File. 
+2. Right click **main.py**, click "Start without Debugging" or "Start with Debugging" context menus.
+3. Please read the "Prepare the dataset" carefully if you had dataset issues.
+
+### 3. Prepare the dataset 
+
+1. If you're able to access Google Drive, when you run **main.py**, it will automatically download the [CelebA Dataset](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html) (1.5GB) to **/datasets** directory and unzip it to **/datasets/CelebA** directory.
+2. If you can not access Google Drive, please download the  [CelebA Dataset](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html) (It has Baidu Cloud Disk link), notice that we only need the **"img_align_celeba.zip"** file.  Unzip it to **/datasets/CelebA** directory. Then when you run **main.py** it will skip the download process and begin training.
+
+**Notice: /datasets/CelebA** should just contains 202599 pictures.
+
+### 4. Save and resume training weights
+
+Parameters in **train.py** will determine the frequency of saving the training result snapshot. And if you want to resume a previous result, just modify **train.py**:
+
+```
+# In train.py:
+image_grid_type         = 'default',
+# modify this line bellow
+# resume_network          = None,
+# to:
+resume_network          = <weights snapshot directory>,
+resume_kimg             = <previous trained images in thousands>,
+```
+
+
+
+## How to run (For other Users)
+
+### 1. Clone the repository
+
+### 2. Prepare the dataset
 
 First download [CelebA Dataset](http://mmlab.ie.cuhk.edu.hk/projects/CelebA.html).
 
@@ -33,7 +66,9 @@ Run **h5tool.py** to create HDF5 format datatset. Default settings of **h5tool.p
 ```
 $ python3 h5tool.py create_celeba_channel_last <h5 file name> <CelebA directory>
 ```
+
 Modify **config.py** to your own settings.
+
 ```
 # In config.py:
 data_dir = 'datasets'
@@ -45,7 +80,7 @@ dataset = dict(h5_path=<h5 file name>, resolution=128, max_labels=0, mirror_augm
 
 We only support CelebA dataset for now, you may need to modify the code in **dataset.py** and **h5tools.py** if you want to switch to another dataset.
 
-### 3. Begin training!
+### 3. Begin training
 ```
 $ python3 train.py
 ```
@@ -60,40 +95,34 @@ speed_factor = 20
 
 "speed_factor" parameter will speed up the transition procedure of progressive growing of gans(switch resolution), at the price of reducing images' vividness, this parameter is aimed for speed up the validation progress in our development, however it is useful to see the progressive growing procedure more quickly, set it to "1" if you don't need it.
 
+### 4.Save and resume training weights
+
+The operations are the same as VStdio/VSCode users.
 
 
-**So far, if your settings have no problem, you should see running information like our [running_log_example](running_log_example.txt)**
 
-### 4. Save and resume training weights
+**So far, if your settings have no problem, you should see running information like our [running_log_example](Example/running_log_example.txt)**
 
-Parameters in **train.py** will determine the frequency of saving the training result snapshot. And if you want to resume a previous result, just modify **train.py**:
-```
-# In train.py:
-image_grid_type         = 'default',
-# modify this line bellow
-# resume_network          = None,
-# to:
-resume_network          = <weights snapshot directory>,
-resume_kimg             = <previous trained images in thousands>,
-```
 
-### 5. Using main.py (optional)
-
-We provide **main.py** for remote training for Visual Studio or Visual Studio Code users. So you can directely start the training process using command line or VS Debugger, which will be convenient in remote job submission.
-
-```
-$ python3 main.py 	--data_dir = <dataset h5 file directory> 	\
-			--resume_dir = <weights snapshot directory> 	\
-			--resume_kimg = <previous trained images in thousands>
-```
 
 ## Results
 
-These two pictures are the training result we get so far, trained for 5 days on a NVIDIA GeForce 1080-ti GPU. You should be able to see the changes of resolution during the  progressively growing procedure of our model. Pretrained weight will be available later.
+These two pictures are the training result we get so far, trained for 5 days on a NVIDIA GeForce 1080-ti GPU. You should be able to see the changes of resolution during the  progressively growing procedure of our model. 
 
-![fakes003800](fakes003800.png)
+![fakes003800](Example/fakes003800.png)
 
-![fakes008080](fakes008080.png)
+![fakes008080](Example/fakes008080.png)
+
+## Pre-trained weight
+
+We provide a set of pre-trained weights. Available at [Google Drive](https://drive.google.com/open?id=1c1YrBmwJ6b_ovoLY2E81wYlTRbyM7BHd) and [Baidu Cloud Disk](https://pan.baidu.com/s/1NbclLikgQOKpTXq7j8JI4w#list/path=%2F).
+
+There are two ways to use the pretrained weight:
+
+1. Use it as trained network to resume training.
+2. Use it to generate fake CelebA faces directly.
+
+For the second purpose, we provide **predict.py**, download the weights and put it **/pre-trained_weight** directory (Under the same directory as **/datasets** )
 
 ## Contact us
 
