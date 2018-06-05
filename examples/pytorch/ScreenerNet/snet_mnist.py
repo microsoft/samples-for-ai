@@ -10,13 +10,16 @@ from collections import OrderedDict
 # =========== configuration ==============
 M = 1.0
 alpha = 0.01
-trainset = torchvision.datasets.MNIST(root='.', train=True,
-        transform=transforms.ToTensor())
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=64,
-        shuffle=True, num_workers=4)
-
-testset = torchvision.datasets.MNIST(root='.', train=False, transform=transforms.ToTensor())
-testloader = torch.utils.data.DataLoader(testset, batch_size=1, shuffle=False, num_workers=1)
+def getLoader(phase, download=False):
+    if phase=='train':
+        trainset = torchvision.datasets.MNIST(root='.', train=True,
+            transform=transforms.ToTensor(), download=download)
+        loader = torch.utils.data.DataLoader(trainset, batch_size=64,
+            shuffle=True, num_workers=4)
+    else:
+        testset = torchvision.datasets.MNIST(root='.', train=False, transform=transforms.ToTensor(), download=download)
+        loader = torch.utils.data.DataLoader(testset, batch_size=1, shuffle=False, num_workers=1)
+    return loader
 def create_net():
     net, snet = BaseNet(),Screener()
     return net, snet
