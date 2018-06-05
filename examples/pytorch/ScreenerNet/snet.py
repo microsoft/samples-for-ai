@@ -24,7 +24,7 @@ def snet_loss(snet_out, cls_err, variables, M, alpha):
 
 def multilabel_soft_margin_loss(inp, target):
     bce = nn.MultiLabelSoftMarginLoss(size_average=False)
-    res = Variable(torch.zeros(inp.shape[0])).cuda()
+    res = Variable(torch.zeros(inp.shape[0]))
     for i,row in enumerate(inp):
         #print(target[i], row)
         res[i]=bce(row, target[i])
@@ -49,13 +49,13 @@ def validate(val_loader, model, criterion, epoch):
 
     print('EPOCH {}|Accuracy:{:.3f} |Loss:{:.3f}'.format(epoch, acc.avg, losses.avg))
 
-def train(dataname, max_epoch, no_snet, modelpath=None):
+def train(dataname, max_epoch, no_snet, modelpath=None, download=False, use_gpu=False):
     savename=modelpath if modelpath else dataname
     if dataname=="mnist":
         modellib = importlib.import_module('snet_mnist')
         net, snet = modellib.create_net()
         M = modellib.M; alpha = modellib.alpha
-        criterion_f=nn.CrossEntropyLoss(reduce=False).cuda()
+        criterion_f=nn.CrossEntropyLoss(reduce=False)
         optimizer_f=optim.SGD(net.parameters(), lr=0.01, momentum=0.9)
         optimizer_s=optim.Adam(snet.parameters(), lr=0.0001)
     elif dataname=="voc":
@@ -69,15 +69,17 @@ def train(dataname, max_epoch, no_snet, modelpath=None):
         modellib = importlib.import_module('snet_cifar')
         net, snet=modellib.create_net()
         M = modellib.M; alpha = modellib.alpha
-        criterion_f=nn.CrossEntropyLoss(reduce=False).cuda()
+        criterion_f=nn.CrossEntropyLoss(reduce=False)
         optimizer_f=optim.SGD(net.parameters(), lr=0.01, momentum=0.9)
         optimizer_s=optim.Adam(snet.parameters(), lr=0.001)
 
-    trainloader = modellib.trainloader
+    trainloader = modellib.getLoader('train', download)
     net.train()
     snet.train()
-    net = net.cuda()
-    snet = snet.cuda()
+    if use_gpu==True:
+        net = net.cuda()
+        snet = snet.cuda()
+        criterion_f = criterion_f.cuda()
 
     for epoch in range(max_epoch):  # loop over the dataset multiple times
         running_loss = 0.0
@@ -85,8 +87,10 @@ def train(dataname, max_epoch, no_snet, modelpath=None):
             # get the inputs
             inputs, labels = data
             # wrap them in Variable
-            inputs, labels = Variable(inputs).cuda(), Variable(labels).cuda()
-
+            inputs, labels = Variable(inputs), Variable(labels)
+            if use_gpu==True:
+                inputs = inputs.cuda()
+                labels = labels.cuda()
             # zero the parameter gradients
             optimizer_f.zero_grad()
             # forward + backward + optimize
@@ -123,7 +127,6 @@ def train(dataname, max_epoch, no_snet, modelpath=None):
                         (epoch + 1, i + 1, running_loss / 50))
                     running_loss = 0.0
 
-
         if epoch%10000==9999:
             torch.save(net.state_dict(), '{}_net_checkpoint.pm.{}'.format(savename,epoch+1))
             if not no_snet:
@@ -136,7 +139,7 @@ def train(dataname, max_epoch, no_snet, modelpath=None):
         torch.save(snet.state_dict(),'{}_snet.pm'.format(savename))
     print('Finished Training')
 
-def test(model, loader, dataname):
+def test(model, loader, dataname, use_gpu=False):
     model = model.cuda()
     model.eval()
 
@@ -145,7 +148,9 @@ def test(model, loader, dataname):
         img_gt = []
         for i,data in enumerate(loader):
             imgs, labels = data
-            inputs = Variable(imgs).cuda()
+            inputs = Variable(imgs)
+            if use_gpu==True:
+                inputs = inputs.cuda()
             preds = model(inputs)
             smax = nn.Softmax()
             smax_out = smax(preds)[0].cpu()
@@ -196,7 +201,9 @@ def test(model, loader, dataname):
     elif dataname in ['mnist', 'cifar']:
         for i, data in enumerate(loader):
             imgs, labels = data
-            inputs = Variable(imgs).cuda()
+            inputs = Variable(imgs)
+            if use_gpu==True:
+                inputs = inputs.cuda()
             preds = model(inputs)
             smax = nn.Softmax()
             smax_out = smax(preds)[0].cpu()
@@ -224,18 +231,19 @@ if __name__=='__main__':
     parser.add_argument('--modelpath', help='save dir',  default='.')
     parser.add_argument('--max_epoch', type=int, default=100)
     parser.add_argument('--no_snet', action='store_true')
+    parser.add_argument('--download', help="switch if you want to download pytorch dataset(only valid for mnist and cifar)", action='store_true')
+    parser.add_argument('--gpu', help="train on gpu", action='store_true')
     args = parser.parse_args()
 
     modelpath = os.path.join(args.modelpath, args.modelname)
     if args.phase=="train":
         print("train on {} for {} epoches".format(args.dataname, args.max_epoch))
-        train(args.dataname, args.max_epoch, args.no_snet, modelpath)
+        train(args.dataname, args.max_epoch, args.no_snet, modelpath, download=args.download, use_gpu=args.gpu)
 
     if args.phase=='test':
         print("test model {} on {}".format(modelpath, args.dataname))
         modellib = importlib.import_module('snet_{}'.format(args.dataname))
-        testloader = modellib.testloader
+        testloader = modellib.getLoader('test', args.download)
         net, _ = modellib.create_net()
         net.load_state_dict(torch.load(modelpath))
-        test(net, testloader, args.dataname)
-
+        test(net, testloader, args.dataname, use_gpu=args.gpu)
