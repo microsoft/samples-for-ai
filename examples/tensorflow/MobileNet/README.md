@@ -30,9 +30,6 @@ Requirements: python3 and tensorflow(1.7.0). Tested on Windows 7 with GTX 750.
 | MobileNet |train|1.0| Same as Inception | 89.71% |
 | MobileNet |test |1.0| Same as Inception | 85.83% |
 
-## Pretrained weight 
-A Pretrained weight was trained on GTX 750.
-See ```./pretrained```.
 
 **Loss**
 <div align="center">

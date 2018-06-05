@@ -27,9 +27,6 @@ Requirements: python3 and tensorflow(1.7.0). Tested on Windows 7 with GTX 750.
 | ResNet_110 |train | 95.32% |
 | ResNet_110 |validate | 86.40% |
 
-## Pretrained weight 
-A Pretrained weight see ```./pretrained```.
-
 **train_top1_error**
 <div align="center">
 <img src="https://github.com/SugarMasuo/4-seu-AIGO/blob/master/ResNet-on-Tensorflow/result/train_top1_error.png"><br><br>
