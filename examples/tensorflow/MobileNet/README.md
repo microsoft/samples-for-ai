@@ -16,7 +16,7 @@ Requirements: python3 and tensorflow(1.7.0). Tested on Windows 7 with GTX 750.
 
 ### Train on CIFAR-10
 
-1. Prepare data. You can modify ```data_dir``` in ```download_and_convert_cifar10.py``` according to your environment, then use it to download CIFAR-10 and convert to TFRecord.
+1. Prepare data. You can modify ```data_dir``` in ```download_and_convert_cifar10.py``` according to your environment or use default setting, then use it to download CIFAR-10 and convert to TFRecord.
 2. Modify ```dataset_dir``` in ```train_image_classifier``` according to your environment.
 3. There are screen outputs, tensorboard statistics and tensorboard graph visualization to help you monitor the training process and visualize the model.
 
