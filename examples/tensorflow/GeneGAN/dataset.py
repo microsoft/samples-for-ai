@@ -11,11 +11,11 @@ from scipy import misc
 class Config:
     @property 
     def base_dir(self):
-        return os.path.abspath(os.curdir)
+        return os.getcwd()
          
     @property
     def data_dir(self):
-        data_dir = os.path.join(self.base_dir, './datasets/celebA/')
+        data_dir = os.path.join(self.base_dir, 'datasets','celebA')
         if not os.path.exists(data_dir):
             raise ValueError('Please specify a data dir.')
         return data_dir
@@ -97,7 +97,7 @@ class Dataset(object):
 
     @property
     def filenames1(self):
-        filenames = [os.path.join(self.data_dir, 'align_5p/{:06d}.jpg'.format(idx+1)) for idx in self.idxs1]
+        filenames = [os.path.join(self.data_dir, 'align_5p', '{:06d}.jpg'.format(idx+1)) for idx in self.idxs1]
         for f in filenames:
             if not tf.gfile.Exists(f):
                 raise ValueError('Failed to find file: ' + f)
@@ -105,7 +105,7 @@ class Dataset(object):
 
     @property
     def filenames2(self):
-        filenames = [os.path.join(self.data_dir, 'align_5p/{:06d}.jpg'.format(idx+1)) for idx in self.idxs2]
+        filenames = [os.path.join(self.data_dir, 'align_5p', '{:06d}.jpg'.format(idx+1)) for idx in self.idxs2]
         for f in filenames:
             if not tf.gfile.Exists(f):
                 raise ValueError('Failed to find file: ' + f)

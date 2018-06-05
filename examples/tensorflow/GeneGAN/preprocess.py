@@ -143,7 +143,7 @@ def main(data_dir, out_dir, thread_num):
     with open(os.path.join(data_dir, 'list_landmarks_celeba.txt'), 'r') as f:
         landmarks = [list(map(int, x.split()[1:11])) for x in f.read().strip().split('\n')[2:]]
 
-    im_list = glob.glob(os.path.join(data_dir, 'data/*.jpg'))
+    im_list = glob.glob(os.path.join(data_dir, 'data', '*.jpg'))
 
     pool = Pool(thread_num)
     # pool.starmap(work, zip(range(len(im_list)), repeat(data_dir), repeat(out_dir), repeat(landmarks)))
@@ -154,5 +154,7 @@ def main(data_dir, out_dir, thread_num):
 
 
 if __name__ == '__main__':  
-    os.environ["CUDA_VISIBLE_DEVICES"] = '' 
-    main('./datasets/celebA/', './datasets/celebA/align_5p/', 30)
+    os.environ["CUDA_VISIBLE_DEVICES"] = ''
+    data_dir = os.path.join(os.getcwd(), 'datasets', 'celebA')
+
+    main(data_dir, os.path.join(data_dir, 'align_5p'), 30)
