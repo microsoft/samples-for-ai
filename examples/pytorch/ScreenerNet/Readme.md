@@ -4,7 +4,12 @@ This is a reimplementation of [ScreenerNet: Learning Self-Paced Curriculum for D
 
 # prerequisites
 0.4.0=>pytorch>=0.3.0
+
+## extra dataset
 If you want to train on pascal voc2012 dataset, make sure that you have download it and put it in PWD/VOC2012
+download mirror: https://pjreddie.com/projects/pascal-voc-dataset-mirror/
+
+Else, MNIST and CIFAR10 can automatically be download by pytorch.
 
 # how to run
 please type
