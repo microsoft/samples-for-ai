@@ -669,13 +669,13 @@ def pip_uninstall_packge(name, options, version=""):
 def pip_install_scipy(options):
     logger.info("Begin to install scipy(numpy, scipy) ...")
     name = "numpy"
-    version = "1.14.2"
+    version = "1.14.3"
     if not pip_install_package(name, options, version):
         logger.error("Pip_install_scipy terminated due to numpy installation failure.")
         return False
 
     name = "scipy"
-    version = "1.0.1"
+    version = "1.1.0"
     if not pip_install_package(name, options, version):
         logger.error("Pip_install_scipy terminated due to scipy installation failure.")
         return False
@@ -739,7 +739,7 @@ def pip_install_cntk(options):
 
 def pip_install_keras(options):
     name = "Keras"
-    version = "2.1.5"
+    version = "2.1.6"
     return pip_install_package(name, options, version)
 
 
@@ -762,20 +762,23 @@ def pip_install_caffe2(options):
 
 def pip_install_theano(options):
     name = "Theano"
-    version = "1.0.1"
+    version = "1.0.2"
     return pip_install_package(name, options, version)
 
 
 def pip_install_mxnet(options):
-    version = "1.1.0.post0"
+    version = ""
     name = ""
     if sys_info["GPU"]:
         if sys_info["CUDA"] == "8.0":
             name = "mxnet-cu80"
+            version = "1.1.0.post0"
         else:
             name = "mxnet-cu90"
+            version = "1.2.0"
     else:
         name = "mxnet"
+        version = "1.2.0"
 
     return pip_install_package(name, options, version)
 
@@ -803,7 +806,7 @@ def pip_install_chainer(options):
             logger.warning("On windows, please manully install cupy. You can reference this link https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer.")
 
     name = "chainer"
-    version = "4.0.0"
+    version = "4.1.0"
     pip_install_package(name, options, version)
     """
     name = "chainermn"
