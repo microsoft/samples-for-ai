@@ -7,6 +7,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ScreenerNet", "ScreenerNet\
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Image_Captioning", "Image_Captioning\Image_Captioning.pyproj", "{4961F807-50D9-4BD3-8974-C7752C3B3C9B}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "mnist", "mnist\mnist.pyproj", "{A4824EB8-0EF2-4018-B8F6-CEACAFD26EE8}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -17,6 +19,8 @@ Global
 		{CAE6595F-7D7A-4822-9BFD-345B97A9E60E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4961F807-50D9-4BD3-8974-C7752C3B3C9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4961F807-50D9-4BD3-8974-C7752C3B3C9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A4824EB8-0EF2-4018-B8F6-CEACAFD26EE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A4824EB8-0EF2-4018-B8F6-CEACAFD26EE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
