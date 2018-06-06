@@ -67,23 +67,23 @@ def main():
     exit(0)
 
 def download():
-    if os.path.exists('./datasets/celeba_128x128.h5'):
+    h5path = os.path.join(os.getcwd(),'datasets','celeba-128x128.h5');
+    if os.path.exists(h5path):
         print('Found Celeb-A.h5 - skip')
         return
-    download_celeb_a(config.data_dir)
-    data_dir = 'celebA'
-    create_celeba_channel_last('./datasets/celeba_128x128.h5', os.path.join(config.data_dir, data_dir), cx=89, cy=121)
+    data_dir=download_celeb_a(config.data_dir)
+    create_celeba_channel_last(h5path, data_dir, cx=89, cy=121)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument("--data_dir", type=str, 
-                        default='./datasets', 
+                        default='datasets', 
                         help="Input directory where where training dataset and meta data are saved", 
                         required=False
                         )
     parser.add_argument("--result_dir", type=str, 
-                        default='./results', 
+                        default='results', 
                         help="Input directory where where logs and models are saved", 
                         required=False
                         )
@@ -96,8 +96,8 @@ if __name__ == "__main__":
                         help="previous trained images in thousands",
                         required = False)
     args, unknown = parser.parse_known_args()
-    config.data_dir = args.data_dir
-    config.result_dir = args.result_dir
+    config.data_dir = os.path.join(os.getcwd(),args.data_dir)
+    config.result_dir = os.path.join(os.getcwd(),args.result_dir)
     if hasattr(args,'resume_dir') and args.resume_dir != None:
         config.train.update(resume_network=args.resume_dir)
     if hasattr(args,'resume_kimg') and args.resume_kimg != None:

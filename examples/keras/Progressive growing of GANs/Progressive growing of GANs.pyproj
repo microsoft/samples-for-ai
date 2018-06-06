@@ -13,7 +13,8 @@
     <OutputPath>.</OutputPath>
     <Backend>KerasTensorFlow</Backend>
     <Environment>KERAS_BACKEND=tensorflow</Environment>
-    <CommandLineArguments>--data_dir D:/微软实践项目/progressive_growing_of_gans/</CommandLineArguments>
+    <CommandLineArguments>
+    </CommandLineArguments>
     <Name>Progressive growing of GANs</Name>
     <RootNamespace>Progressive growing of GANs</RootNamespace>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
@@ -29,12 +30,16 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="config.py" />
+    <Compile Include="datadownload.py">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Include="dataset.py" />
     <Compile Include="h5tool.py" />
     <Compile Include="layers.py" />
     <Compile Include="misc.py" />
     <Compile Include="model.py" />
     <Compile Include="main.py" />
+    <Compile Include="predict.py" />
     <Compile Include="train.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
