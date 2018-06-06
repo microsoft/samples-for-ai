@@ -12,8 +12,15 @@ M = 10.0; alpha = 0.01
 transform = transforms.Compose(
                 [transforms.ToTensor(),
                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
-trainset = torchvision.datasets.CIFAR10(root='.', train=True, transform=transform)
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True, num_workers=4)
+
+def getLoader(phase, download=False):
+    if phase=='train':
+        trainset = torchvision.datasets.CIFAR10(root='.', train=True, transform=transform, download=download)
+        loader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True, num_workers=4)
+    else:
+        testset = torchvision.datasets.CIFAR10(root='.', train=False, transform=transform, download=download)
+        loader = torch.utils.data.DataLoader(trainset, batch_size=1)
+    return loader
 
 class BaseNet(nn.Module):
     def __init__(self):
@@ -32,8 +39,10 @@ class BaseNet(nn.Module):
         x = F.relu(self.fc2(x))
         return x
 
-net = nn.Sequential(BaseNet(), nn.Linear(84,10)).cuda()
-snet = nn.Sequential(BaseNet(), nn.Linear(84, 1), nn.Sigmoid()).cuda()
+def create_net():
+    net = nn.Sequential(BaseNet(), nn.Linear(84,10))
+    snet = nn.Sequential(BaseNet(), nn.Linear(84, 1), nn.Sigmoid())
+    return net, snet
 
 if __name__=='__main__':
-    print(net)
+    pass

@@ -113,21 +113,24 @@ transform = transforms.Compose([transforms.RandomHorizontalFlip(),
     transforms.RandomRotation(75),
     transforms.Resize((224,224)),
     transforms.ToTensor(), transforms.Normalize(mean=[0.485, 0.456, 0.406],std= [0.229, 0.224, 0.225])])
-trainset = PascalVoc('./VOC2012','2012',True, transform=transform)
-trainloader = torch.utils.data.DataLoader(trainset, batch_size=32,
-        shuffle=True, num_workers=4) # , collate_fn=collnt_func)
 
-testset = PascalVoc('./VOC2012','2012', False, transform=
-        transforms.Compose(
-            [transforms.Resize((224,224)),
-            transforms.ToTensor(),
-            transforms.Normalize(mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225])])
-        )
-testloader = torch.utils.data.DataLoader(testset, batch_size=1, shuffle=False, num_workers=1)
+def getLoader(phase, download=None):
+    if phase=='train':
+        trainset = PascalVoc('./VOC2012','2012',True, transform=transform)
+        loader = torch.utils.data.DataLoader(trainset, batch_size=32,
+            shuffle=True, num_workers=4) # , collate_fn=collnt_func)
+    else:
+        testset = PascalVoc('./VOC2012','2012', False, transform=
+                transforms.Compose(
+                    [transforms.Resize((224,224)),
+                    transforms.ToTensor(),
+                    transforms.Normalize(mean=[0.485,0.456,0.406], std=[0.229,0.224,0.225])])
+                )
+        loader = torch.utils.data.DataLoader(testset, batch_size=1, shuffle=False, num_workers=1)
+    return loader
 def create_net():
     bnet = BaseNet()
     snet = SNet()
     return bnet, snet
 if __name__=="__main__":
-    for data in enumerate(testloader):
-        pass
+    pass
