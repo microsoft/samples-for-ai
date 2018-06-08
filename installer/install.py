@@ -247,8 +247,11 @@ def _update_pathenv_win(path, add):
 def detect_os():
     # logger.info("Begin to detect OS ...")
     os_name = platform.platform(terse=True)
-    os_bit = platform.architecture()[0]
-    is_64bit = (os_bit == "64bit")
+    is_64bit = False
+    os_bit = "32bit"
+    if platform.machine().endswith("64"):
+        is_64bit = True
+        os_bit = "64bit"
 
     logger.info("OS: {0}, {1}".format(os_name, os_bit))
 
@@ -261,7 +264,7 @@ def detect_os():
         sys_info["OS"] = TOOLSFORAI_OS_LINUX
     elif (os_name.startswith("Darwin")):
         sys_info["OS"] = TOOLSFORAI_OS_MACOS
-        is_64bit = sys.maxsize > 2 ** 32
+        # is_64bit = sys.maxsize > 2 ** 32
     else:
         logger.error("Your OS({0}-{1}) can't be supported! Only Windows, Linux and MacOS can be supported now.".format(os_name, os_bit))
         return False
