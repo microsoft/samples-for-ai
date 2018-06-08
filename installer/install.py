@@ -252,13 +252,9 @@ def is_64bit_os():
 def detect_os():
     # logger.info("Begin to detect OS ...")
     os_name = platform.platform(terse=True)
-    if is_64bit_os():
-        os_bit = "64bit"
-    else:
-        os_bit = "32bit"
-        logger.info("OS: {0}, {1}".format(os_name, os_bit))
-        logger.error("Your OS is not 64-bit OS. Now only 64-bit OS is supported.")
-        return False
+    is_64bit = is_64bit_os()
+    os_bit = "64bit" if is_64bit else "32bit"
+
     logger.info("OS: {0}, {1}".format(os_name, os_bit))
 
     if (os_name.startswith("Windows")):
@@ -273,6 +269,9 @@ def detect_os():
         # is_64bit = sys.maxsize > 2 ** 32
     else:
         logger.error("Your OS({0}-{1}) can't be supported! Only Windows, Linux and MacOS can be supported now.".format(os_name, os_bit))
+        return False
+    if not is_64bit:
+        logger.error("Your OS is not 64-bit OS. Now only 64-bit OS is supported.")
         return False
     return True
 
@@ -326,7 +325,7 @@ def detect_python_version():
         logger.error("Python 3.5 or higher is required to run this installer.")
         return False
     if not (py_architecture == "64bit"):
-        logger.error("Python 64bit is required to run this installer.")
+        logger.error("64bit Python is required to run this installer.")
         return False
     # if not (_version_compare("3.5", py_version) and py_architecture == '64bit'):
     #     logger.error("64-bit PYTHON 3.5 or higher is required to run this installer."
