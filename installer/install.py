@@ -1016,7 +1016,8 @@ logger = _init_logger()
 try:
     import pip
 except ImportError:
-    logger.error("you need to install pip first.")
+    logger.error("Installation cannot proceed because pip is missing. Please visit https://pip.pypa.io/en/stable/installing/ to install pip first.")
+    sys.exit(1)
 
 
 def main():
