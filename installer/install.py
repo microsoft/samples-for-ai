@@ -796,9 +796,9 @@ def pip_install_mxnet(options):
 
 def pip_install_chainer(options):
     # cupy installation for GPU linux
-    logger.info("Begin to install chainer(cupy, chainer, chainermn) ...")
+    logger.info("Begin to install chainer(cupy, chainer) ...")
     name = "cupy"
-    version = "4.0.0"
+    version = "4.1.0"
     if (sys_info["GPU"] and (sys_info["OS"] == TOOLSFORAI_OS_LINUX)):
         # logger.info("Install cupy to support CUDA for chainer.")
         if sys_info["CUDA"] == "8.0":
