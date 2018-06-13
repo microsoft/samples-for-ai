@@ -6,7 +6,7 @@
     <ProjectGuid>1a8c8511-61bb-4f82-bc27-c82cbc6aca3a</ProjectGuid>
     <ProjectHome>.</ProjectHome>
     <ProjectTypeGuids>{D22814C2-A430-4A53-8052-A3A64BFB2240};{888888A0-9F3D-457C-B088-3A5042F75D52}</ProjectTypeGuids>
-    <StartupFile>train_model.py</StartupFile>
+    <StartupFile>mnist.py</StartupFile>
     <SearchPath>
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
@@ -24,9 +24,7 @@
     <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="convolutional.py" />
     <Compile Include="mnist.py" />
-    <Compile Include="train_model.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
