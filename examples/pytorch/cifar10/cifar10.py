@@ -1,4 +1,11 @@
-﻿import numpy as np
+﻿# ==============================================================================
+# Copyright (c) Microsoft. All rights reserved.
+#
+# Licensed under the MIT license. See LICENSE.md file in the project root
+# for full license information.
+# ==============================================================================
+
+import numpy as np
 import os
 import sys
 import argparse
@@ -68,14 +75,16 @@ def train(args):
 
     for epoch in range(args.epochs):
         model.train()
-        for batch_idx, (data, label) in enumerate(train_loader):
+        count = 0
+        for data, label in train_loader:
             data, label = data.to(device), label.to(device)
             optimizer.zero_grad()
             output = model(data)
             loss = criterion(output, label)
             loss.backward()
             optimizer.step()
-            print('Epoch: {} ({}/{})\tLoss: {:.6f}'.format( epoch, (batch_idx * args.batch_size), len(train_loader.dataset), loss.item()), end='\r')
+            count += len(data)
+            print('Epoch: {} ({}/{})\tLoss: {:.6f}'.format(epoch, count, len(train_loader.dataset), loss.item()), end='\r')
 
         model.eval()
         test_loss = 0
