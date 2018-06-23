@@ -1,13 +1,23 @@
-﻿# ==============================================================================
-# Copyright (c) Microsoft. All rights reserved.
+﻿# ====================================================================================================== #
+# The MIT License (MIT)
+# Copyright (c) Microsoft Corporation
 #
-# Licensed under the MIT license. See LICENSE.md file in the project root
-# for full license information.
-# ==============================================================================
+# Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+# associated documentation files (the "Software"), to deal in the Software without restriction,
+# including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense,
+# and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so,
+# subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included in all copies or substantial
+# portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+# NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.
+# IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+# WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE
+# SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+# ====================================================================================================== #
 
-import numpy as np
-import os
-import sys
 import argparse
 
 import torch
@@ -35,26 +45,35 @@ class Model(nn.Module):
         x = self.fc2(x)
         return x
 
-
 def test_model_forward():
+    # Use random data to quick test network architecture connections
     x = torch.randn(2, 1, 28, 28)
     model = Model()
     out = model(x)
     print(out.size())
-    exit(0)
 
 def get_data_loader(train, batch_size = 1000, shuffle = True):
-    return torch.utils.data.DataLoader(
-        datasets.MNIST('./', train=train, download=True,
-                       transform=transforms.Compose([
-                           transforms.ToTensor(),
-                           transforms.Normalize((0.1307,), (0.3081,))
-                       ])),
-        batch_size = batch_size, shuffle = shuffle)
+    ts = transforms.Compose([transforms.ToTensor(), # Convert to tensor and scale to [0, 1]
+                             transforms.Normalize((0.13,), (0.31,))]);
+    ds = datasets.MNIST('./', train=train, download=True, transform = ts)
+    return torch.utils.data.DataLoader(ds, batch_size = batch_size, shuffle = shuffle)
+
+def validate(model, device, val_loader, criterion):
+    model.eval()
+    val_loss = 0
+    corrects = 0
+    with torch.no_grad():
+        for inputs, label in val_loader:
+            inputs, label = inputs.to(device), label.to(device)
+            output = model(inputs)
+            val_loss += criterion(output, label).item()
+            preds = output.max(1, keepdim=True)[1]
+            corrects += preds.eq(label.view_as(preds)).sum().item()
+    return val_loss, corrects, len(val_loader.dataset)
 
 def train(args):
-    train_loader = get_data_loader(True,  batch_size = args.batch_size)
-    test_loader  = get_data_loader(False, batch_size = args.batch_size, shuffle=False)
+    train_loader = get_data_loader(True, batch_size = args.batch_size)
+    val_loader = get_data_loader(False, batch_size = args.batch_size, shuffle = False)
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = Model().to(device)
@@ -64,31 +83,20 @@ def train(args):
     for epoch in range(args.epochs):
         model.train()
         count = 0
-        for data, label in train_loader:
-            data, label = data.to(device), label.to(device)
+        for inputs, label in train_loader:
+            inputs, label = inputs.to(device), label.to(device)
             optimizer.zero_grad()
-            output = model(data)
+            output = model(inputs)
             loss = criterion(output, label)
             loss.backward()
             optimizer.step()
-            count += len(data)
-            print('Epoch: {} ({}/{})\tLoss: {:.6f}'.format(epoch, count, len(train_loader.dataset), loss.item()), end='\r')
+            count += len(inputs)
+            print('Epoch {}: ({}/{})\tLoss: {:.4f}'.format(epoch, count, len(train_loader.dataset), loss.item()), end='\r')
 
-        model.eval()
-        test_loss = 0
-        correct = 0
-        with torch.no_grad():
-            for data, label in test_loader:
-                data, label = data.to(device), label.to(device)
-                output = model(data)
-                test_loss += criterion(output, label).item() 
-                preds = output.max(1, keepdim=True)[1]
-                correct += preds.eq(label.view_as(preds)).sum().item()
-
-        test_loss /= (len(test_loader.dataset) / args.batch_size)
-        print('\nTest: Average loss: {:.4f}, Accuracy: {}/{} ({:.02f}%)\n'.format(
-            test_loss, correct, len(test_loader.dataset),
-            100. * correct / len(test_loader.dataset)))
+        val_loss, corrects, num = validate(model, device, val_loader, criterion)
+        val_loss /= (num / args.batch_size)
+        print('\nValidation loss: {:.4f}, Validation accuracy: {}/{} ({:.02f}%)\n'.format(
+            val_loss, corrects, num, 100. * corrects / num))
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
