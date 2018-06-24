@@ -18,6 +18,7 @@
 # SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
 # ====================================================================================================== #
 
+import os
 import argparse
 
 import torch
@@ -37,12 +38,19 @@ def create_resnet():
     model.fc = nn.Linear(model.fc.in_features, 10)
     return model
 
-def get_data_loader(train, batch_size = 128, shuffle = True):
+def get_data_loader(args, train, shuffle = True):
+    if not os.path.exists(args.data_dir):
+        os.mkdir(args.data_dir)
     ts = transforms.Compose([transforms.Resize((H, W)),
                              transforms.ToTensor(), # Convert to tensor and scale to [0, 1]
                              transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))]);
-    ds = datasets.CIFAR10('./', train=train, download=True, transform = ts)
-    return torch.utils.data.DataLoader(ds, batch_size = batch_size, shuffle = shuffle)
+    ds = datasets.CIFAR10(args.data_dir, train=train, download=True, transform = ts)
+    return torch.utils.data.DataLoader(ds, batch_size = args.batch_size, shuffle = shuffle)
+
+def save_model(args, model, filename):
+    if not os.path.exists(args.model_dir):
+        os.mkdir(args.model_dir)
+    torch.save(model.state_dict(), os.path.join(args.model_dir, filename))
 
 def validate(model, device, val_loader, criterion):
     model.eval()
@@ -58,13 +66,14 @@ def validate(model, device, val_loader, criterion):
     return val_loss, corrects, len(val_loader.dataset)
 
 def train(args):
-    train_loader = get_data_loader(True, batch_size = args.batch_size)
-    val_loader = get_data_loader(False, batch_size = args.batch_size, shuffle = False)
+    train_loader = get_data_loader(args, True)
+    val_loader = get_data_loader(args, False, shuffle = False)
 
     device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
     model = create_resnet().to(device)
     criterion = nn.CrossEntropyLoss()
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
+    best_corrects = 0
 
     for epoch in range(args.epochs):
         model.train()
@@ -84,11 +93,17 @@ def train(args):
         print('\nValidation loss: {:.4f}, Validation accuracy: {}/{} ({:.02f}%)\n'.format(
             val_loss, corrects, num, 100. * corrects / num))
 
+        if corrects > best_corrects:
+            save_model(args, model, 'best_model.pth')
+            best_corrects = corrects
+
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--lr", type=float, default=0.001, help="Learning rate", required=False)
     parser.add_argument("--batch_size", type=int, default=128, help="Batch size", required=False)
     parser.add_argument('--epochs', type=int, default=20, help='Number of training epochs', required=False)
+    parser.add_argument('--data_dir', type=str, default='data', help='Data directory to put training data', required=False)
+    parser.add_argument('--model_dir', type=str, default='model', help='Directory to save models', required=False)
 
     args, unknown = parser.parse_known_args()
 
