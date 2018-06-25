@@ -7,7 +7,6 @@ import os
 import shutil
 import re
 import ctypes
-import stat
 import importlib
 import _thread
 
@@ -642,8 +641,7 @@ def pip_install_package(name, options, version="", pkg=None):
                 pkg = name
         logger.debug("pkg : {0}".format(pkg))
         res = -1
-        # res = pip.main(["install", *options, pkg])
-        res = subprocess.check_call([sys.executable, '-m', 'pip', 'install', *options, "-q", pkg])
+        res = subprocess.check_call([sys.executable, '-m', 'pip', 'install', *options, pkg], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if res != 0:
             logger.error("Fail to pip-install {0}.".format(name))
             fail_install.append("%s %s" % (name, version))
@@ -665,7 +663,7 @@ def pip_uninstall_packge(name, options, version=""):
             options_copy.pop(0)
         res = -1
         # res = pip.main(["uninstall", *options, name])
-        res = subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', *options_copy, "-y", "-q", name])
+        res = subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', *options_copy, "-y", name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if res != 0:
             logger.error("Fail to pip-uninstall {0}.".format(name))
         else:
