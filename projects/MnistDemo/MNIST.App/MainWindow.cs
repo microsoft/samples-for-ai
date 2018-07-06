@@ -79,19 +79,16 @@ namespace MNIST.App
                 */
 
                 // 1. begin to normalize data
-                Bitmap clonedBmp = (Bitmap)writeArea.Image.Clone();
-                Graphics gNormalized = Graphics.FromImage(clonedBmp);
-
                 // a. normalize the size to 28*28 as the training input
-                gNormalized.DrawImage(clonedBmp, 0, 0, MnistImageSize, MnistImageSize);
+                Bitmap normalizedBmp = new Bitmap(writeArea.Image, MnistImageSize, MnistImageSize);
 
                 // b. normalize the data structure to a float list as training input
                 var image = new List<float>(MnistImageSize * MnistImageSize);
-                for (var x = 0; x < MnistImageSize; x++)
+                for (var y = 0; y < MnistImageSize; y++)
                 {
-                    for (var y = 0; y < MnistImageSize; y++)
+                    for (var x = 0; x < MnistImageSize; x++)
                     {
-                        var color = clonedBmp.GetPixel(y, x);
+                        var color = normalizedBmp.GetPixel(x, y);
                         // c. normalize value
                         //      RGB to gray
                         //      Range to [-0.5,0.5]
