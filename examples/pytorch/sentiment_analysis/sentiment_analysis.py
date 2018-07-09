@@ -40,13 +40,6 @@ class Model(nn.Module):
             return att_result
         return self.fc(torch.transpose(hidden, 0, 1).contiguous().view(x.size(1), -1))
 
-def test_forward():
-    model = Model(1000).cuda()
-    inputs = torch.LongTensor(np.arange(20).reshape(5,4)).cuda()
-    print(inputs)
-    out = model(inputs)
-    print(out.size())
-
 def replace(matched):
     return " " + matched.group("m") + " "
 
@@ -103,6 +96,7 @@ def train(args):
     model = Model(len(vocab)).cuda()
     criterion = nn.BCELoss()
     optimizer = optim.Adam(model.parameters(), lr=args.lr)
+    best_val_corrects = 0
     train_corrects = 0
     nIteration = 0
     numTrain = 0
@@ -130,6 +124,10 @@ def train(args):
             val_loss /= (num / args.batch_size)
             print('\nVal Loss: {:.4f}, Val Acc: {}/{} ({:.02f}%)\n'.format(
                 val_loss, corrects, num, 100. * corrects / num))
+
+            if corrects > best_val_corrects:
+                save_model(args, model, 'best_model.pth')
+                best_val_corrects = corrects
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
