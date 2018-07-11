@@ -153,9 +153,9 @@ def train(args):
         train_corrects = preds.eq(batch.label.squeeze()).sum().item()
 
         numTrain += len(batch)
+        epoch = numTrain / len(train_iter.dataset)
         print('Epoch: {:.2f} \tLoss: {:.4f} Acc: {:.2f}% ({} / {})'
-            .format(numTrain / len(train_iter.dataset), loss.item(),
-            100. * train_corrects / len(batch), train_corrects, len(batch)), end='\r')
+            .format(epoch, loss.item(), 100. * train_corrects / len(batch), train_corrects, len(batch)), end='\r')
 
         if nIteration % 200 == 0:
             print('\n')
@@ -167,12 +167,14 @@ def train(args):
             if corrects > best_val_corrects:
                 save_model(args, model)
                 best_val_corrects = corrects
+        if epoch > args.epochs:
+            return
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--lr", type=float, default=0.002, help="Learning rate", required=False)
-    parser.add_argument("--batch_size", type=int, default=64, help="Batch size", required=False)
-    parser.add_argument('--epochs', type=int, default=10, help='Number of training epochs', required=False)
+    parser.add_argument("--batch_size", type=int, default=128, help="Batch size", required=False)
+    parser.add_argument('--epochs', type=int, default=20, help='Number of training epochs', required=False)
     parser.add_argument('--data_dir', type=str, default='data', help='Directory to put training data', required=False)
     parser.add_argument('--model_dir', type=str, default='model', help='Directory to save models', required=False)
     parser.add_argument('--model_name', type=str, default='best_model.pth', help='Directory to save models', required=False)
