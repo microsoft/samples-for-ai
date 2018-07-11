@@ -90,10 +90,10 @@ def get_imdb_iter(args):
         (train, test), batch_size=args.batch_size, device="cuda:0")
     return train_iter, test_iter, TEXT.vocab
 
-def save_model(args, model, filename):
+def save_model(args, model):
     if not os.path.exists(args.model_dir):
         os.mkdir(args.model_dir)
-    torch.save(model.state_dict(), os.path.join(args.model_dir, filename))
+    torch.save(model.state_dict(), os.path.join(args.model_dir, args.model_name))
 
 def validate(model, val_iter, criterion):
     model.eval()
@@ -110,6 +110,25 @@ def validate(model, val_iter, criterion):
             num += len(batch)
             print(num, end='\r')
     return val_loss, corrects, num
+
+def predict(movie_reviews, args):
+    _, _, vocab = get_imdb_iter(args)
+    model = Model(len(vocab)).cuda()
+    try:
+        model.load_state_dict(torch.load(os.path.join(args.model_dir, args.model_name)))
+    except:
+        print('Error loading model file, please train the model and make sure model file({}) exists.'
+            .format(os.path.join(args.model_dir, args.model_name)))
+    model.eval()
+
+    with torch.no_grad():
+        for movie_review in movie_reviews:
+            data = preprocessing(tokenize_line_en(movie_review))
+            data = [vocab.stoi[x] for x in data]
+            data = torch.LongTensor(data).unsqueeze(1).cuda()
+            positive_probablity = model(data).item()
+            prediction = 'positive' if positive_probablity >= 0.5 else 'negative'
+            print('\nMovie review: {}\nPrediction: {} ({:.4f})'.format(movie_review, prediction, positive_probablity))
 
 def train(args):
     train_iter, val_iter, vocab = get_imdb_iter(args)
@@ -146,17 +165,23 @@ def train(args):
                 val_loss, corrects, num, 100. * corrects / num))
 
             if corrects > best_val_corrects:
-                save_model(args, model, 'best_model.pth')
+                save_model(args, model)
                 best_val_corrects = corrects
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument("--lr", type=float, default=0.002, help="Learning rate", required=False)
-    parser.add_argument("--batch_size", type=int, default=128, help="Batch size", required=False)
-    parser.add_argument('--epochs', type=int, default=20, help='Number of training epochs', required=False)
+    parser.add_argument("--batch_size", type=int, default=64, help="Batch size", required=False)
+    parser.add_argument('--epochs', type=int, default=10, help='Number of training epochs', required=False)
     parser.add_argument('--data_dir', type=str, default='data', help='Directory to put training data', required=False)
     parser.add_argument('--model_dir', type=str, default='model', help='Directory to save models', required=False)
+    parser.add_argument('--model_name', type=str, default='best_model.pth', help='Directory to save models', required=False)
 
     args, unknown = parser.parse_known_args()
 
     train(args)
+    predict(['I love this movie!',
+        'This movie is too bad.',
+        'It\'s not Citizen Kane, but it does deliver. Cleavage, and lots of it. \
+        Badly acted and directed, poorly scripted. Who cares? I didn\'t watch it for the dialog.'
+        ], args)
