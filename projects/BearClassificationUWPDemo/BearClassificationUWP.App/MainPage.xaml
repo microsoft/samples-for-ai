@@ -1,0 +1,47 @@
+﻿<Page
+    x:Class="BearClassificationUWP.App.MainPage"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    mc:Ignorable="d"
+    Background="{ThemeResource ApplicationPageBackgroundThemeBrush}" Height="600" Width="800" FontFamily="Segoe UI" >
+
+    <Grid Margin="0,0,0,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="70" />
+            <RowDefinition Height="530"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="500" />
+                <ColumnDefinition Width="300" />
+            </Grid.ColumnDefinitions>
+            <Image Grid.Column="0"  x:Name="DisplayArea" Margin="10,0,0,10"  Source="{Binding BearImage,Mode=TwoWay}"  HorizontalAlignment="Center"  VerticalAlignment="Center" />
+
+            <Grid Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="150"/>
+                    <RowDefinition Height="380"/>
+                </Grid.RowDefinitions>
+
+                <TextBox BorderThickness="0" x:Name="DescribeArea" FontSize="17" Width="275"  FontWeight="ExtraBold" HorizontalAlignment="Left" VerticalAlignment="Bottom" TextWrapping="Wrap" Text="{Binding Description}" IsReadOnly="True"/>
+                <ListView Grid.Row="1" x:Name="ResultArea" ItemsSource="{Binding  Results}" HorizontalAlignment="Center" VerticalAlignment="Top" Width="300" Margin="0,0,0,0">
+                    <ListView.ItemTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Vertical" Margin="0">
+                                <TextBox BorderThickness="0" Width="275"  FontWeight="Bold" TextWrapping="Wrap" Text="{Binding }" IsReadOnly="True"/>
+                            </StackPanel>
+                        </DataTemplate>
+                    </ListView.ItemTemplate>
+                </ListView>
+            </Grid>
+        </Grid>
+
+        <Button Grid.Row="0"  x:Name="RecognizeButton" Command="{Binding RecognizeCommand}" x:Uid="RecognizeButton" HorizontalAlignment="Left" VerticalAlignment="Center" RenderTransformOrigin="1.54,3.961" Height="50" Width="147" Margin="643,0,0,0" />
+        <TextBox Grid.Row="0" x:Name="InputUriBox" Text="{Binding BearUrl, Mode=TwoWay}" HorizontalAlignment="Left" Height="50" Margin="10,0,0,0"  VerticalAlignment="Center" Width="490" FontSize="24" TextWrapping="NoWrap" FontFamily="Segoe UI"/>
+        <Button Grid.Row="0" Command="{Binding BrowseCommand}" x:Name="BrowseButton" x:Uid="BrowseButton" HorizontalAlignment="Left" Height="50" Margin="505,0,0,0" VerticalAlignment="Center" Width="133"/>
+
+    </Grid>
+</Page>
