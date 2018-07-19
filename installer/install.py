@@ -152,8 +152,10 @@ def _wait_process(processHandle, timeout=-1):
 
 def _run_cmd_admin(cmd, param, wait=True):
     try:
+        codepage_value = _registry_read(winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Control\Nls\CodePage", "OEMCP")
+        encoding_style =  "gbk" if (codepage_value == "936") else "utf-8"
         executeInfo = ShellExecuteInfo(fMask=0x00000040, hwnd=None, lpVerb='runas'.encode('utf-8'),
-                                       lpFile=cmd.encode('gbk'), lpParameters=param.encode('utf-8'),
+                                       lpFile=cmd.encode(encoding_style), lpParameters=param.encode('utf-8'),
                                        lpDirectory=None,
                                        nShow=5)
         if not ctypes.windll.shell32.ShellExecuteEx(ctypes.byref(executeInfo)):
