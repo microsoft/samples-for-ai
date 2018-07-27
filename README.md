@@ -37,7 +37,7 @@ or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any addi
 - Install [Microsoft Visual Studio](https://www.visualstudio.com/) 2017 or 2015.
 - Install [Microsoft Visual Studio Tools for AI](https://github.com/Microsoft/vs-tools-for-ai).
 - Pre-download data
-    - For CNTK BrainScript MNIST project, in the "input" folder, run "python install_mnist.py" to download data.
+    - For CNTK BrainScript MNIST project, in the `input` folder, run `python install_mnist.py` to download data.
 
 ## Preparing development environment
 Before training deep learning models on your local or remote computer, please make sure you have the deep learning software installed.
@@ -55,7 +55,7 @@ Currently, this installer works on Windows, macOS and Linux:
     > [!NOTE]
     >
     > - If your Python distribution is installed in the system directory (e.g. the one shipped with Visual Studio 2017, or the built-in one on Linux), administrative permission (e.g. "sudo" on Linux) is required to launch the installer.
-    > - Pass "**--user**" argument, if you want to install to the Python user install directory for your platform. Typically ~/.local/, or %APPDATA%\Python on Windows.
+    > - Pass "**--user**" argument, if you want to install to the Python user install directory for your platform. Typically `~/.local/`, or `%APPDATA%\Python` on Windows.
     > - The installer will detect whether NVIDIA GPU cards are available and set up software for CUDA 9.0 by default. You can pass "**--cuda80**" argument to force installing software for CUDA 8.0 .
 
     ```bash
