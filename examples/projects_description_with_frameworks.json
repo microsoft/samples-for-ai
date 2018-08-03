@@ -1,0 +1,760 @@
+{
+    "_links": {},
+    "value":
+    [
+        {
+            "framework" : "Tensorflow",
+            "projects" :
+            [
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/MNIST"
+                        },
+                        "name": "MNIST using TensorFlow",
+                        "summary": "MNIST project with TensorFlow framework.",
+                        "framework": "TensorFlow",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/MNIST",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/cifar10"
+                        },
+                        "name": "CIFAR10 using TensorFlow",
+                        "summary": "CIFAR10 project with TensorFlow framework.",
+                        "framework": "TensorFlow",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/cifar10",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/embedding"
+                        },
+                        "name": "Embedding using TensorFlow",
+                        "summary": "Embedding project with TensorFlow framework.",
+                        "framework": "TensorFlow",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/embedding",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/imagenet"
+                        },
+                        "name": "ImageNet using TensorFlow",
+                        "summary": "ImageNet project with TensorFlow framework.",
+                        "framework": "TensorFlow",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/imagenet",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/MemN2N"
+                        },
+                        "name": "MemN2N using TensorFlow",
+                        "summary": "MemN2N project with TensorFlow framework.",
+                        "framework": "TensorFlow",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/MemN2N",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/NTM"
+                        },
+                        "name": "NTM using TensorFlow",
+                        "summary": "NTM project with TensorFlow framework.",
+                        "framework": "TensorFlow",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/NTM",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "framework" : "PyTorch",
+            "projects" :
+            [
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/pytorch/mnist"
+                        },
+                        "name": "MNIST using PyTorch",
+                        "summary": "MNIST project with PyTorch framework.",
+                        "framework": "PyTorch",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/mnist",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/pytorch/cifar10"
+                        },
+                        "name": "CIFAR10 using PyTorch",
+                        "summary": "CIFAR10 project with PyTorch framework.",
+                        "framework": "PyTorch",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/cifar10",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/pytorch/sentiment_analysis"
+                        },
+                        "name": "Sentiment Analysis using PyTorch",
+                        "summary": "Sentiment Analysis project with PyTorch framework.",
+                        "framework": "PyTorch",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/sentiment_analysis",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/pytorch/transfer_learning"
+                        },
+                        "name": "Transfer Learning using PyTorch",
+                        "summary": "Transfer Learning project with PyTorch framework.",
+                        "framework": "PyTorch",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/transfer_learning",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/pytorch/Image_Captioning"
+                        },
+                        "name": "Image Captioning using PyTorch",
+                        "summary": "Image Captioning project with PyTorch framework.",
+                        "framework": "PyTorch",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/Image_Captioning",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/pytorch/ScreenerNet"
+                        },
+                        "name": "ScreenerNet using PyTorch",
+                        "summary": "ScreenerNet project with PyTorch framework.",
+                        "framework": "PyTorch",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/ScreenerNet",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "framework" : "CNTK-BrainScript",
+            "projects" :
+            [
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/brainscript/AN4"
+                        },
+                        "name": "AN4 using CNTK BrainScript",
+                        "summary": "AN4 project with CNTK BrainScript framework.",
+                        "framework": "CNTK-BrainScript",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/brainscript/AN4",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/brainscript/CMUDict"
+                        },
+                        "name": "CMUDict using CNTK BrainScript",
+                        "summary": "CMUDict project with CNTK BrainScript framework.",
+                        "framework": "CNTK-BrainScript",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/brainscript/CMUDict",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/brainscript/MNIST"
+                        },
+                        "name": "MNIST using CNTK BrainScript",
+                        "summary": "MNIST project with CNTK BrainScript framework.",
+                        "framework": "CNTK-BrainScript",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/brainscript/MNIST",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "framework" : "CNTK-Python",
+            "projects" :
+            [
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/python/ATIS"
+                        },
+                        "name": "ATIS using CNTK Python",
+                        "summary": "ATIS project with CNTK Python framework.",
+                        "framework": "CNTK-Python",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/ATIS",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/python/CIFAR10"
+                        },
+                        "name": "CIFAR10 using CNTK Python",
+                        "summary": "CIFAR10 project with CNTK Python framework.",
+                        "framework": "CNTK-Python",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/CIFAR10",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/python/CMUDict"
+                        },
+                        "name": "CMUDict using CNTK Python",
+                        "summary": "CMUDict project with CNTK Python framework.",
+                        "framework": "CNTK-Python",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/CMUDict",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/python/MNIST"
+                        },
+                        "name": "MNIST using CNTK Python",
+                        "summary": "MNIST project with CNTK Python framework.",
+                        "framework": "CNTK-Python",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/MNIST",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/python/ptb"
+                        },
+                        "name": "PTB using CNTK Python",
+                        "summary": "PTB project with CNTK Python framework.",
+                        "framework": "CNTK-Python",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/ptb",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/python/NumpyExperiment"
+                        },
+                        "name": "NumpyExperiment using CNTK Python",
+                        "summary": "NumpyExperiment project with CNTK Python framework.",
+                        "framework": "CNTK-Python",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/NumpyExperiment",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "framework" : "MxNet",
+            "projects" :
+            [
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/mxnet/MNIST"
+                        },
+                        "name": "MNIST using MxNet",
+                        "summary": "MNIST project with MxNet framework.",
+                        "framework": "MxNet",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/mxnet/MNIST",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "framework" : "Keras",
+            "projects" :
+            [
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/cifar10_tf"
+                        },
+                        "name": "CIFAR10 using Keras (TensorFlow Backend)",
+                        "summary": "CIFAR10 project with Keras framework and Tensorflow backend.",
+                        "framework": "Keras",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/cifar10_tf",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/cifar10_th"
+                        },
+                        "name": "CIFAR10 using Keras (Theano Backend)",
+                        "summary": "CIFAR10 project with Keras framework and Theano backend.",
+                        "framework": "Keras",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/cifar10_th",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/DenseNet"
+                        },
+                        "name": "DenseNet using Keras (TensorFlow Backend)",
+                        "summary": "DenseNet project with Keras framework and Tensorflow backend.",
+                        "framework": "Keras",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/DenseNet",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/acgan_tf"
+                        },
+                        "name": "ACGAN using Keras (TensorFlow Backend)",
+                        "summary": "Conditional Image Synthesis With Auxiliary Classifier GANs project with Keras framework and Tensorflow backend.",
+                        "framework": "Keras",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/acgan_tf",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/capsnet_tf"
+                        },
+                        "name": "Capsule Network using Keras (TensorFlow Backend)",
+                        "summary": "Train a simple Capsule Network (Dynamic Routing Between Capsules) on the CIFAR10 small images dataset, with Keras framework and Tensorflow backend.",
+                        "framework": "Keras",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/capsnet_tf",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/capsnet_tf"
+                        },
+                        "name": "Capsule Network using Keras (TensorFlow Backend)",
+                        "summary": "Train a simple Capsule Network (Dynamic Routing Between Capsules) on the CIFAR10 small images dataset, with Keras framework and Tensorflow backend.",
+                        "framework": "Keras",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/capsnet_tf",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/dcgan_tf"
+                        },
+                        "name": "DCGAN using Keras (TensorFlow Backend)",
+                        "summary": "Deep Convolution Generative Adversarial Networks to generate handwritten digits, with Keras framework and Tensorflow backend.",
+                        "framework": "Keras",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/dcgan_tf",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/infogan_tf"
+                        },
+                        "name": "InfoGAN using Keras (TensorFlow Backend)",
+                        "summary": "Information-theoretic extension to the Generative Adversarial Network to generate handwritten digits, with Keras framework and Tensorflow backend.",
+                        "framework": "Keras",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/infogan_tf",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/wgan_tf"
+                        },
+                        "name": "WGAN using Keras (TensorFlow Backend)",
+                        "summary": "Wasserstein Generative Adversarial Network to generate handwritten digits, with Keras framework and Tensorflow backend.",
+                        "framework": "Keras",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/wgan_tf",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "framework" : "Caffe2",
+            "projects" :
+            [
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/caffe2/MNIST"
+                        },
+                        "name": "MNIST using Caffe2",
+                        "summary": "MNIST project with Caffe2 framework.",
+                        "framework": "Caffe2",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/caffe2/MNIST",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                },
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/caffe2/cifar10"
+                        },
+                        "name": "MNIST using Caffe2",
+                        "summary": "CIFAR10 project with Caffe2 framework.",
+                        "framework": "Caffe2",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/caffe2/cifar10",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "framework" : "Theano",
+            "projects" :
+            [
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/theano/LR"
+                        },
+                        "name": "LR using Theano",
+                        "summary": "Logistic Regression project with Theano framework.",
+                        "framework": "Theano",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/theano/LR",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                }
+            ]
+        },
+        {
+            "framework" : "Chainer",
+            "projects" :
+            [
+                {
+                    "entity": {
+                        "hyperlink": {
+                            "caption": "View Project",
+                            "service_type": "GitHub",
+                            "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/chainer/mnist"
+                        },
+                        "name": "MNIST using Chainer",
+                        "summary": "MNIST project with Chainer framework.",
+                        "framework": "Chainer",
+                        "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/chainer/mnist",
+                        "image_url":"",
+                        "entity_type": "Project",
+                        "tags":[],
+                        "owner": {
+                            "owner_type": "Company",
+                            "name": "Microsoft"
+                        }
+                    }
+                }
+            ]
+        }
+    ]
+}
