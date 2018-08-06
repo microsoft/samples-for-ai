@@ -13,7 +13,7 @@
                 "framework": "",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/projects/MnistDemo",
                 "image_url":"",
-                "entity_type": "Inference  Project",
+                "entity_type": "Inference Project",
                 "tags":[],
                 "owner": {
                     "owner_type": "Company",
@@ -33,7 +33,7 @@
             "framework": "",
             "download_link": "https://api.github.com/repos/Microsoft/samples-for-ai/contents/projects/BearClassificationUWPDemo",
             "image_url": "",
-            "entity_type": "Inference  Project",
+            "entity_type": "Inference Project",
             "tags": [],
             "owner": {
               "owner_type": "Company",
