@@ -11,6 +11,7 @@
                 },
                 "name": "Handwritten Digit Recognition",
                 "summary": "This is a simple WinForm application for recognizing handwritten digit. This application used MNIST database for model training and VS Tools for AI for creating model inference library.",
+                "framework": "",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/projects/MnistDemo",
                 "image_url":"",
                 "entity_type": "Project",
@@ -22,42 +23,44 @@
             }
         },
         {
-            "entity": {
-                "hyperlink": {
-                    "caption": "View Project",
-                    "service_type": "GitHub",
-                    "address": "https://github.com/Microsoft/samples-for-ai/tree/master/projects/BearClassificationUWPDemo"
-                },
-                "name": "BearClassificationUWPDemo",
-                "summary": "This is a simple UWP application demonstrates how to use Custom Vision for model training and exporting and Windows ML for creating model inference library.",
-                "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/projects/BearClassificationUWPDemo",
-                "image_url":"",
-                "entity_type": "Project",
-                "tags":[],
-                "owner": {
-                    "owner_type": "Company",
-                    "name": "Microsoft"
-                }
+          "entity": {
+            "hyperlink": {
+              "caption": "View Project",
+              "service_type": "GitHub",
+              "address": "https://github.com/Microsoft/samples-for-ai/tree/master/projects/BearClassificationUWPDemo"
+            },
+            "name": "BearClassificationUWPDemo",
+            "summary": "This is a simple UWP application demonstrates how to use Custom Vision for model training and exporting and Windows ML for creating model inference library.",
+            "framework": "",
+            "download_link": "https://api.github.com/repos/Microsoft/samples-for-ai/contents/projects/BearClassificationUWPDemo",
+            "image_url": "",
+            "entity_type": "Project",
+            "tags": [],
+            "owner": {
+              "owner_type": "Company",
+              "name": "Microsoft"
             }
+          }
         },
         {
-            "entity": {
-                "hyperlink": {
-                    "caption": "View Project",
-                    "service_type": "GitHub",
-                    "address": "https://github.com/Microsoft/samples-for-ai/tree/master/projects/StyleTransfer"
-                },
-                "name": "StyleTransfer",
-                "summary": "The StyleTransferTraining project is originally from https://github.com/gongwuji/style-demo, with minor modification.",
-                "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/projects/StyleTransfer",
-                "image_url":"",
-                "entity_type": "Project",
-                "tags":[],
-                "owner": {
-                    "owner_type": "Company",
-                    "name": "Microsoft"
-                }
+          "entity": {
+            "hyperlink": {
+              "caption": "View Project",
+              "service_type": "GitHub",
+              "address": "https://github.com/Microsoft/samples-for-ai/tree/master/projects/StyleTransfer"
+            },
+            "name": "StyleTransfer",
+            "summary": "The StyleTransferTraining project is originally from https://github.com/gongwuji/style-demo, with minor modification.",
+            "framework": "",
+            "download_link": "https://api.github.com/repos/Microsoft/samples-for-ai/contents/projects/StyleTransfer",
+            "image_url": "",
+            "entity_type": "Project",
+            "tags": [],
+            "owner": {
+              "owner_type": "Company",
+              "name": "Microsoft"
             }
+          }
         }
     ]
 }
