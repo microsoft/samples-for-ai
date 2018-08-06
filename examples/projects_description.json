@@ -13,7 +13,7 @@
                 "framework": "TensorFlow",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/MNIST",
                 "image_url":"",
-                "entity_type": "Training Project",
+                "entity_type": "Training  Project",
                 "tags":[],
                 "owner": {
                     "owner_type": "Company",
