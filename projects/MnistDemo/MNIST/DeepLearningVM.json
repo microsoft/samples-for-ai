@@ -1,0 +1,10 @@
+{
+  "StartupBashScript": null,
+  "EnableBashScript": false,
+  "StartupProgram": "/anaconda/envs/py35/bin/python",
+  "Environment": null,
+  "EnableConcurrency": false,
+  "CommonParameter": null,
+  "ExtraParameter": null,
+  "HyperParameters": []
+}
