@@ -648,7 +648,7 @@
                     "service_type": "GitHub",
                     "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/caffe2/cifar10"
                 },
-                "name": "MNIST using Caffe2",
+                "name": "CIFAR10 using Caffe2",
                 "summary": "CIFAR10 project with Caffe2 framework.",
                 "framework": "Caffe2",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/caffe2/cifar10",
