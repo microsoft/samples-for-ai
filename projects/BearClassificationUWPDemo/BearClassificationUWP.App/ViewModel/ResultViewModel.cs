@@ -20,7 +20,7 @@ namespace BearClassificationUWP.App.ViewModel
     {
         public event PropertyChangedEventHandler PropertyChanged;
         private ResourceLoader resourceLoader;//for localization and globalization 
-
+        
         public ResultViewModel()
         {
             resourceLoader = ResourceLoader.GetForCurrentView();
