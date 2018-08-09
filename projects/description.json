@@ -28,7 +28,7 @@
               "service_type": "GitHub",
               "address": "https://github.com/Microsoft/samples-for-ai/tree/master/projects/BearClassificationUWPDemo"
             },
-            "name": "BearClassificationUWPDemo",
+            "name": "BearClassification UWP Demo",
             "summary": "This is a simple UWP application demonstrates how to use Custom Vision for model training and exporting and Windows ML for creating model inference library.",
             "framework": "",
             "download_link": "https://api.github.com/repos/Microsoft/samples-for-ai/contents/projects/BearClassificationUWPDemo",
