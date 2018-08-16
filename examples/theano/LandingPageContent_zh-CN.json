@@ -1,0 +1,72 @@
+{
+  "RightPane": [
+    {
+      "title": "AI 学习资源",
+      "content": [
+        {
+          "name": "微软人工智能课程",
+          "url": "https://school.azure.cn/curriculums/28"
+        },
+        {
+          "name": "AI 应用开发入门视频：看图识熊",
+          "url": "https://www.bilibili.com/video/av26004062/"
+        },
+        {
+          "name": "AI 应用开发入门博客：手写识别",
+          "url": "https://www.cnblogs.com/ms-uap/p/9182530.html"
+        }
+      ]
+    },
+    {
+      "title": "Github AI 热门项目",
+      "content": [
+        {
+          "name": "darts",
+          "url": "https://github.com/quark0/darts"
+        },
+        {
+          "name": "DensePose",
+          "url": "https://github.com/facebookresearch/DensePose"
+        },
+        {
+          "name": "decaNLP",
+          "url": "https://github.com/salesforce/decaNLP"
+        }
+      ]
+    },
+    {
+      "title": "更多资源",
+      "content": [
+        {
+          "name": "构建并训练你的第一个 AI 模型",
+          "url": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/MNIST"
+        },
+        {
+          "name": "更多 AI 模型示例",
+          "url": "https://github.com/Microsoft/samples-for-ai/tree/master/examples"
+        },
+        {
+          "name": "更多信息关于 Tools for AI",
+          "url": "https://github.com/Microsoft/vs-tools-for-ai#visual-studio-tools-for-ai"
+        }
+      ]
+    }
+  ],
+  "AILibraries": [
+    {
+      "name": "NumPy and Scipy"
+    },
+    {
+      "name": "Jupyter Notebook"
+    },
+    {
+      "name": "Pandas"
+    },
+    {
+      "name": "Matplotlib"
+    },
+    {
+      "name": "深度学习和机器学习框架，包括 CNTK, TensorFlow, PyTorch, Caffe2 等。"
+    }
+  ]
+}
