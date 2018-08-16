@@ -12,7 +12,7 @@
                 "summary": "MNIST project with TensorFlow framework.",
                 "framework": "TensorFlow",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/MNIST",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/MNIST.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -32,7 +32,7 @@
                 "summary": "CIFAR10 project with TensorFlow framework.",
                 "framework": "TensorFlow",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/cifar10",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -52,7 +52,7 @@
                 "summary": "Embedding project with TensorFlow framework.",
                 "framework": "TensorFlow",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/embedding",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -72,7 +72,7 @@
                 "summary": "ImageNet project with TensorFlow framework.",
                 "framework": "TensorFlow",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/imagenet",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -92,7 +92,7 @@
                 "summary": "MemN2N project with TensorFlow framework.",
                 "framework": "TensorFlow",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/MemN2N",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -112,7 +112,7 @@
                 "summary": "NTM project with TensorFlow framework.",
                 "framework": "TensorFlow",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/NTM",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -132,7 +132,7 @@
                 "summary": "MNIST project with PyTorch framework.",
                 "framework": "PyTorch",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/mnist",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/MNIST.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -152,7 +152,7 @@
                 "summary": "CIFAR10 project with PyTorch framework.",
                 "framework": "PyTorch",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/cifar10",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -172,7 +172,7 @@
                 "summary": "Sentiment Analysis project with PyTorch framework.",
                 "framework": "PyTorch",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/sentiment_analysis",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -192,7 +192,7 @@
                 "summary": "Transfer Learning project with PyTorch framework.",
                 "framework": "PyTorch",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/transfer_learning",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -212,7 +212,7 @@
                 "summary": "Image Captioning project with PyTorch framework.",
                 "framework": "PyTorch",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/Image_Captioning",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/Image_Captioning.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -232,7 +232,7 @@
                 "summary": "ScreenerNet project with PyTorch framework.",
                 "framework": "PyTorch",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/ScreenerNet",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -252,7 +252,7 @@
                 "summary": "AN4 project with CNTK BrainScript framework.",
                 "framework": "CNTK-BrainScript",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/brainscript/AN4",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -272,7 +272,7 @@
                 "summary": "CMUDict project with CNTK BrainScript framework.",
                 "framework": "CNTK-BrainScript",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/brainscript/CMUDict",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/CMUDict.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -292,7 +292,7 @@
                 "summary": "MNIST project with CNTK BrainScript framework.",
                 "framework": "CNTK-BrainScript",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/brainscript/MNIST",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/MNIST.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -312,7 +312,7 @@
                 "summary": "ATIS project with CNTK Python framework.",
                 "framework": "CNTK-Python",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/ATIS",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -332,7 +332,7 @@
                 "summary": "CIFAR10 project with CNTK Python framework.",
                 "framework": "CNTK-Python",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/CIFAR10",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -352,7 +352,7 @@
                 "summary": "CMUDict project with CNTK Python framework.",
                 "framework": "CNTK-Python",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/CMUDict",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/CMUDict.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -372,7 +372,7 @@
                 "summary": "MNIST project with CNTK Python framework.",
                 "framework": "CNTK-Python",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/MNIST",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/MNIST.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -392,7 +392,7 @@
                 "summary": "PTB project with CNTK Python framework.",
                 "framework": "CNTK-Python",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/ptb",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -412,7 +412,7 @@
                 "summary": "NumpyExperiment project with CNTK Python framework.",
                 "framework": "CNTK-Python",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/NumpyExperiment",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -432,7 +432,7 @@
                 "summary": "MNIST project with MxNet framework.",
                 "framework": "MxNet",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/mxnet/MNIST",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/MNIST.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -452,7 +452,7 @@
                 "summary": "CIFAR10 project with Keras framework and Tensorflow backend.",
                 "framework": "Keras",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/cifar10_tf",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/Cifar10.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -472,7 +472,7 @@
                 "summary": "CIFAR10 project with Keras framework and Theano backend.",
                 "framework": "Keras",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/cifar10_th",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/Cifar10.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -492,7 +492,7 @@
                 "summary": "DenseNet project with Keras framework and Tensorflow backend.",
                 "framework": "Keras",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/DenseNet",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -512,7 +512,7 @@
                 "summary": "Conditional Image Synthesis With Auxiliary Classifier GANs project with Keras framework and Tensorflow backend.",
                 "framework": "Keras",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/acgan_tf",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -532,27 +532,7 @@
                 "summary": "Train a simple Capsule Network (Dynamic Routing Between Capsules) on the CIFAR10 small images dataset, with Keras framework and Tensorflow backend.",
                 "framework": "Keras",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/capsnet_tf",
-                "image_url":"",
-                "entity_type": "Training Project",
-                "tags":[],
-                "owner": {
-                    "owner_type": "Company",
-                    "name": "Microsoft"
-                }
-            }
-        },
-        {
-            "entity": {
-                "hyperlink": {
-                    "caption": "View Project",
-                    "service_type": "GitHub",
-                    "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/capsnet_tf"
-                },
-                "name": "Capsule Network using Keras (TensorFlow Backend)",
-                "summary": "Train a simple Capsule Network (Dynamic Routing Between Capsules) on the CIFAR10 small images dataset, with Keras framework and Tensorflow backend.",
-                "framework": "Keras",
-                "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/capsnet_tf",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -572,7 +552,7 @@
                 "summary": "Deep Convolution Generative Adversarial Networks to generate handwritten digits, with Keras framework and Tensorflow backend.",
                 "framework": "Keras",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/dcgan_tf",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -592,7 +572,7 @@
                 "summary": "Information-theoretic extension to the Generative Adversarial Network to generate handwritten digits, with Keras framework and Tensorflow backend.",
                 "framework": "Keras",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/infogan_tf",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -612,7 +592,7 @@
                 "summary": "Wasserstein Generative Adversarial Network to generate handwritten digits, with Keras framework and Tensorflow backend.",
                 "framework": "Keras",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/wgan_tf",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -632,7 +612,7 @@
                 "summary": "MNIST project with Caffe2 framework.",
                 "framework": "Caffe2",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/caffe2/MNIST",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/MNIST.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -648,11 +628,11 @@
                     "service_type": "GitHub",
                     "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/caffe2/cifar10"
                 },
-                "name": "MNIST using Caffe2",
+                "name": "CIFAR10 using Caffe2",
                 "summary": "CIFAR10 project with Caffe2 framework.",
                 "framework": "Caffe2",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/caffe2/cifar10",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -672,7 +652,7 @@
                 "summary": "Logistic Regression project with Theano framework.",
                 "framework": "Theano",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/theano/LR",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
@@ -692,7 +672,7 @@
                 "summary": "MNIST project with Chainer framework.",
                 "framework": "Chainer",
                 "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/chainer/mnist",
-                "image_url":"",
+                "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/MNIST.png",
                 "entity_type": "Training Project",
                 "tags":[],
                 "owner": {
