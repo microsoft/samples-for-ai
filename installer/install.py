@@ -34,14 +34,14 @@ if platform.system() == "Windows":
         _fields_ = [('cbSize', DWORD),
                     ('fMask', ctypes.c_ulong),
                     ('hwnd', HWND),
-                    ('lpVerb', ctypes.c_char_p),
-                    ('lpFile', ctypes.c_char_p),
-                    ('lpParameters', ctypes.c_char_p),
-                    ('lpDirectory', ctypes.c_char_p),
+                    ('lpVerb', ctypes.c_wchar_p),
+                    ('lpFile', ctypes.c_wchar_p),
+                    ('lpParameters', ctypes.c_wchar_p),
+                    ('lpDirectory', ctypes.c_wchar_p),
                     ('nShow', ctypes.c_int),
                     ('hInstApp', HINSTANCE),
                     ('lpIDList', ctypes.c_void_p),
-                    ('lpClass', ctypes.c_char_p),
+                    ('lpClass', ctypes.c_wchar_p),
                     ('hKeyClass', HKEY),
                     ('dwHotKey', DWORD),
                     ('hIcon', HANDLE),
@@ -152,13 +152,11 @@ def _wait_process(processHandle, timeout=-1):
 
 def _run_cmd_admin(cmd, param, wait=True):
     try:
-        codepage_value = _registry_read(winreg.HKEY_LOCAL_MACHINE, r"SYSTEM\CurrentControlSet\Control\Nls\CodePage", "OEMCP")
-        encoding_style =  "gbk" if (codepage_value == "936") else "utf-8"
-        executeInfo = ShellExecuteInfo(fMask=0x00000040, hwnd=None, lpVerb='runas'.encode('utf-8'),
-                                       lpFile=cmd.encode(encoding_style), lpParameters=param.encode('utf-8'),
+        executeInfo = ShellExecuteInfo(fMask=0x00000040, hwnd=None, lpVerb='runas',
+                                       lpFile=cmd, lpParameters=param,
                                        lpDirectory=None,
                                        nShow=5)
-        if not ctypes.windll.shell32.ShellExecuteEx(ctypes.byref(executeInfo)):
+        if not ctypes.windll.shell32.ShellExecuteExW(ctypes.byref(executeInfo)):
             raise ctypes.WinError()
         if wait:
             _wait_process(executeInfo.hProcess)
@@ -443,7 +441,7 @@ def detect_mpi_win():
             return False
         return True
     else:
-        logger.warning("Not detect MPI, please manually download and isntall MPI.")
+        logger.warning("Not detect MPI, please manually download and install MPI.")
         return False
 
 
