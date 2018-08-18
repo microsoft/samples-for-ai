@@ -12,6 +12,7 @@ EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "capsnet_tf", "capsnet_tf\capsnet_tf.pyproj", "{0D453F38-0222-4321-80B1-AB2585558A57}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "DenseNet", "DenseNet\DenseNet.pyproj", "{5B91D130-03B2-415C-8EC3-92D224EE7C34}"
+EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "acgan_tf", "acgan_tf\acgan_tf.pyproj", "{11DC1594-FA9D-446B-8262-63F1048B55CD}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "wgan_tf", "wgan_tf\wgan_tf.pyproj", "{95821350-188B-44B2-BDE2-B7256B330B66}"
@@ -19,6 +20,8 @@ EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "infogan_tf", "infogan_tf\infogan_tf.pyproj", "{EE68784F-A500-433A-9806-E7202E6A9DE8}"
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "discogan_tf", "discogan_tf\discogan_tf.pyproj", "{3E170CE8-B38B-4CEA-93A9-95B0A975F390}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Progressive growing of GANs", "Progressive growing of GANs\Progressive growing of GANs.pyproj", "{E2CF5042-D835-4161-A6A7-07FE74D8135C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,6 +47,8 @@ Global
 		{EE68784F-A500-433A-9806-E7202E6A9DE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3E170CE8-B38B-4CEA-93A9-95B0A975F390}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3E170CE8-B38B-4CEA-93A9-95B0A975F390}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E2CF5042-D835-4161-A6A7-07FE74D8135C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E2CF5042-D835-4161-A6A7-07FE74D8135C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

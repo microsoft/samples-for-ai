@@ -23,6 +23,22 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "NTM", "NTM\NTM.pyproj", "{0
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "GeneGAN", "GeneGAN\GeneGAN.pyproj", "{03620336-1702-44E7-A941-4A567698556E}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "AtNRE", "AtNRE\AtNRE.pyproj", "{CFD8B6FE-7051-49D2-8BF2-1BB13C2B1703}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "ProjE", "ProjE\ProjE.pyproj", "{403A0EBB-A496-458F-9569-1B708CC66BE9}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Sentence_Classification_CNN", "Sentence_Classification_CNN\Sentence_Classification_CNN.pyproj", "{45EF6194-D84F-40E8-AFE7-13027F922DEB}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TransD", "TransD\TransD.pyproj", "{28198D93-6E26-4E9E-AF2C-A581686DB34D}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TransE", "TransE\TransE.pyproj", "{162983CF-5C2B-4279-A9CA-E7AA07B167D0}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TransH", "TransH\TransH.pyproj", "{4514F180-1B1F-459A-9891-B6DC4A03DF44}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "TransR", "TransR\TransR.pyproj", "{376A2685-4665-4A29-B693-EE3E1F8FBB32}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "yoloTF", "yoloTF\yoloTF.pyproj", "{9A2D606A-3C97-4945-A5FC-6A8C5BFC2A85}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -49,6 +65,22 @@ Global
 		{03DD61EA-936F-4A70-95D8-30101B22A62C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{03620336-1702-44E7-A941-4A567698556E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{03620336-1702-44E7-A941-4A567698556E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CFD8B6FE-7051-49D2-8BF2-1BB13C2B1703}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CFD8B6FE-7051-49D2-8BF2-1BB13C2B1703}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{403A0EBB-A496-458F-9569-1B708CC66BE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{403A0EBB-A496-458F-9569-1B708CC66BE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{45EF6194-D84F-40E8-AFE7-13027F922DEB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{45EF6194-D84F-40E8-AFE7-13027F922DEB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28198D93-6E26-4E9E-AF2C-A581686DB34D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28198D93-6E26-4E9E-AF2C-A581686DB34D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{162983CF-5C2B-4279-A9CA-E7AA07B167D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{162983CF-5C2B-4279-A9CA-E7AA07B167D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4514F180-1B1F-459A-9891-B6DC4A03DF44}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4514F180-1B1F-459A-9891-B6DC4A03DF44}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{376A2685-4665-4A29-B693-EE3E1F8FBB32}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{376A2685-4665-4A29-B693-EE3E1F8FBB32}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A2D606A-3C97-4945-A5FC-6A8C5BFC2A85}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A2D606A-3C97-4945-A5FC-6A8C5BFC2A85}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
