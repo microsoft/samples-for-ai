@@ -76,6 +76,7 @@ def train(dataname, max_epoch, no_snet, output_dir=None,use_tb=False, no_save=Fa
         optimizer_s=optim.Adam(snet.parameters(), lr=0.001)
 
     trainloader = modellib.getLoader('train', download)
+    testloader = modellib.getLoader('test', download)
     net.train()
     snet.train()
     if use_gpu==True:
@@ -128,12 +129,14 @@ def train(dataname, max_epoch, no_snet, output_dir=None,use_tb=False, no_save=Fa
                     print('[epoch:%d, minibatch:%5d] loss: %.4f' %(epoch, i, loss))
 
         if not no_save:
+            metric = test(net, testloader, dataname, use_gpu)
             if writer:
                 if not no_snet:
-                    writer.add_scalar('main_loss', loss_w, epoch)
+                    writer.add_scalar('true_loss', torch.mean(loss_w), epoch)
                     writer.add_scalar('snet_loss', loss_s, epoch)
                 else:
                     writer.add_scalar('main_loss', loss, epoch)
+                writer.add_scalar('metric', metric, epoch)
             if epoch%ckpt_step==0:
                 torch.save(net.state_dict(), '{}net_epoch{}.pm'.format(ckpt_path, epoch))
                 if not no_snet:
@@ -204,7 +207,7 @@ def test(model, loader, dataname, use_gpu=False):
 
         mmAP = np.mean(np.array(mAP))
         print('mAP:{}\n mAP:{}'.format(mAP,mmAP))
-
+        return mmAP
     elif dataname in ['mnist', 'cifar']:
         correct = 0; wrong=0
         for i, data in enumerate(loader):
@@ -224,6 +227,7 @@ def test(model, loader, dataname, use_gpu=False):
             else:
                 wrong+=1
         print('test correct number:{}, wrong prediction:{}, sample number:{}'.format(correct, wrong, len(loader)))
+        return correct/len(loader)
 def save_checkpoint(state, is_best, filename='checkpoint.pth'):
     torch.save(state, filename)
     if is_best:
@@ -248,7 +252,7 @@ if __name__=='__main__':
 
     modelpath = os.path.join(args.output_dir, 'log_'+datetime.datetime.now().strftime('%m-%d'))
     ckpt_step = args.save_step
-    if not os.path.exists(modelpath) and args.no_save:
+    if not os.path.exists(modelpath) and not args.no_save:
         os.makedirs(modelpath)
 
     if args.phase=="train":
