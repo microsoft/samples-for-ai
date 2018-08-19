@@ -9,6 +9,7 @@ from cntk.initializer import xavier, glorot_uniform, normal
 from cntk.ops.functions import UserFunction
 from cntk.logging import ProgressPrinter
 import numpy as np
+import argparse
 print(C.device.all_devices())
 try:
     C.device.try_set_default_device(C.device.gpu(0))
@@ -69,67 +70,80 @@ timesteps = 1000
 RECURRENT_MAX = pow(2, 1 / timesteps)
 U_lowbound=pow(1.0/2.0, 1.0 / timesteps)
 
-bs = 32
-base_lr = 0.0002*bs
+bs = 50
+base_lr = 0.2 #0.0002*bs
 
 if __name__=='__main__':
     HIDDEN_DIM=128
 
-    input_ph=C.sequence.input_variable(2)
-    targets_ph=C.input_variable(shape=1)
+    parser = argparse.ArgumentParser()
+    parser.add_argument('--lstm', action='store_true')
+    parser.add_argument('--lr', default=0.2)
+    parser.add_argument('--bs', default=50, help='batch size')
+    parser.add_argument('--time_step', default=1000, help='how long a sequence is')
+    args=parser.parse_args()
+
+    bs = args.bs
+    base_lr = args.lr
+    timesteps = args.time_step
+
     lrs = [(t, base_lr*(10**(-i))) for i,t in enumerate(range(1, 60000, 20000))]
     print(lrs)
     lr_schedule = C.learners.learning_parameter_schedule(lrs)
 
-    runit1 = IndRNNUnit(HIDDEN_DIM, 2, recurrent_max_abs=RECURRENT_MAX, recurrent_min_abs=0)
-    runit2 = IndRNNUnit(HIDDEN_DIM, HIDDEN_DIM, recurrent_max_abs=RECURRENT_MAX, recurrent_min_abs=U_lowbound)
-    model = C.layers.Sequential([
-        C.layers.Recurrence(runit1.build()),
-        C.layers.Fold(runit2.build()),
-        C.layers.Dense(1, init_bias=0.1, init=C.normal(0.001))
+    if not args.lstm:
+        input_ph=C.sequence.input_variable(2)
+        targets_ph=C.input_variable(shape=1)
+
+        runit1 = IndRNNUnit(HIDDEN_DIM, 2, recurrent_max_abs=RECURRENT_MAX, recurrent_min_abs=0)
+        runit2 = IndRNNUnit(HIDDEN_DIM, HIDDEN_DIM, recurrent_max_abs=RECURRENT_MAX, recurrent_min_abs=U_lowbound)
+        model = C.layers.Sequential([
+            C.layers.Recurrence(runit1.build()),
+            C.layers.Fold(runit2.build()),
+            C.layers.Dense(1, init_bias=0.1, init=C.normal(0.001))
+            ])
+        output = model(input_ph)
+
+        loss = C.reduce_mean(C.square(output-targets_ph)) #C.losses.squared_error(output, targets_ph)
+        comp = C.combine(output, loss)
+        tensorboard_writer = C.logging.TensorBoardProgressWriter(bs, log_dir='.',model=loss)
+        learner = C.learners.adam(loss.parameters, lr_schedule, 0.9)
+        trainer = C.Trainer(output, loss, learner,[ProgressPrinter(20), tensorboard_writer])
+
+        for step in range(60000):
+            input, target = get_batch(500, timesteps)
+            runit1.checkbound()
+            runit2.checkbound()
+            trainer.train_minibatch({input_ph:input, targets_ph:target})
+            if step % 200==0:
+                trainer.summarize_training_progress()
+                print('[training indrnn] lr:', learner.learning_rate())
+
+        res = output.eval({input_ph:input})
+        print('predict:{}\ntarget:{}'.format(res,target))
+    else:
+        # === just use lstm ===
+        input_ph2 = C.sequence.input_variable(2)
+        targets_ph2 = C.input_variable(shape=1)
+        model2 = C.layers.Sequential([
+            C.layers.Recurrence(C.layers.LSTM(HIDDEN_DIM)),
+            C.sequence.last,
+            C.layers.Dense(1, init_bias=0.1, init=C.normal(0.001))
         ])
-    output = model(input_ph)
+        output2 = model2(input_ph2)
 
-    loss = C.reduce_mean(C.square(output-targets_ph)) #C.losses.squared_error(output, targets_ph)
-    comp = C.combine(output, loss)
-    tensorboard_writer = C.logging.TensorBoardProgressWriter(bs, log_dir='.',model=loss)
-    learner = C.learners.adam(loss.parameters, lr_schedule, 0.9)
-    trainer = C.Trainer(output, loss, learner,[ProgressPrinter(20), tensorboard_writer])
+        loss2 = C.losses.squared_error(output2, targets_ph2)
+        comp2 = C.combine(output2, loss2)
+        tensorboard_writer2 = C.logging.TensorBoardProgressWriter(bs, log_dir='.',model=loss2)
+        learner2 = C.learners.adam(loss2.parameters, lr_schedule, 0.9)
+        trainer2 = C.Trainer(output2, loss2, learner2, [ProgressPrinter(20), tensorboard_writer2])
 
-    for step in range(60000):
-        input, target = get_batch(500, timesteps)
-        runit1.checkbound()
-        runit2.checkbound()
-        trainer.train_minibatch({input_ph:input, targets_ph:target})
-        if step % 200==0:
-            trainer.summarize_training_progress()
-            print('[training indrnn] lr:', learner.learning_rate())
+        for step in range(60000):
+            input, target = get_batch(10, timesteps)
+            trainer2.train_minibatch({input_ph2:input, targets_ph2:target})
+            if step % 200 == 0:
+                trainer2.summarize_training_progress()
 
-    res = output.eval({input_ph:input})
-    print('predict:{}\ntarget:{}'.format(res,target))
-
-    # === just use lstm ===
-    input_ph2 = C.sequence.input_variable(2)
-    targets_ph2 = C.input_variable(shape=1)
-    model2 = C.layers.Sequential([
-        C.layers.Recurrence(C.layers.LSTM(HIDDEN_DIM)),
-        C.sequence.last,
-        C.layers.Dense(1, init_bias=0.1, init=C.normal(0.001))
-    ])
-    output2 = model2(input_ph2)
-
-    loss2 = C.losses.squared_error(output2, targets_ph2)
-    comp2 = C.combine(output2, loss)
-    tensorboard_writer2 = C.logging.TensorBoardProgressWriter(bs, log_dir='.',model=loss2)
-    learner2 = C.learners.adam(loss2.parameters, lr_schedule, 0.9)
-    trainer2 = C.Trainer(output2, loss2, learner2, [ProgressPrinter(20), tensorboard_writer2])
-
-    for step in range(60000):
-        input, target = get_batch(10, timesteps)
-        trainer2.train_minibatch({input_ph2:input, targets_ph2:target})
-        if step % 200 == 0:
-            trainer2.summarize_training_progress()
-
-    res = output2.eval({input_ph2:input})
-    print('predict:{}\ntarget:{}'.format(res,target))
+        res = output2.eval({input_ph2:input})
+        print('predict:{}\ntarget:{}'.format(res,target))
 
