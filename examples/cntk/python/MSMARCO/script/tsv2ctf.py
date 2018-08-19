@@ -42,7 +42,7 @@ class ELMoCharacterMapper:
 
     bos_token = '<S>'
     eos_token = '</S>'
-    para_end_token = '<END>'
+    para_end_token = 'EENNDD'
     @staticmethod
     def convert_word_to_char_ids(word):
         if word == ELMoCharacterMapper.bos_token:
