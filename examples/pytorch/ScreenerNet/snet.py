@@ -9,6 +9,7 @@ import collections
 import os.path, os, shutil, importlib
 import numpy as np
 
+from tensorboardX import SummaryWriter
 from helpers import AverageMeter, accuracy
 
 def snet_loss(snet_out, cls_err, variables, M, alpha):
@@ -16,8 +17,7 @@ def snet_loss(snet_out, cls_err, variables, M, alpha):
     for p in variables:
         w = torch.cat((w, p.view(-1))) if w is not None else p.view(-1)
     l1 = F.l1_loss(w, torch.zeros_like(w))
-    loss = torch.pow((1-snet_out),2)
-    loss= loss*cls_err
+    loss = torch.pow((1-snet_out),2) * cls_err
     loss = loss + torch.pow(snet_out,2)*torch.clamp(M-cls_err, min=0)
     res = torch.sum(loss)+alpha*l1
     return res
@@ -49,8 +49,8 @@ def validate(val_loader, model, criterion, epoch):
 
     print('EPOCH {}|Accuracy:{:.3f} |Loss:{:.3f}'.format(epoch, acc.avg, losses.avg))
 
-def train(dataname, max_epoch, no_snet, modelpath=None, download=False, use_gpu=False):
-    savename=modelpath if modelpath else dataname
+def train(dataname, max_epoch, no_snet, output_dir=None,use_tb=False, no_save=False, download=False, use_gpu=False):
+    ckpt_path = os.path.join(output_dir, 'ckpt')
     if dataname=="mnist":
         modellib = importlib.import_module('snet_mnist')
         net, snet = modellib.create_net()
@@ -80,6 +80,10 @@ def train(dataname, max_epoch, no_snet, modelpath=None, download=False, use_gpu=
         net = net.cuda()
         snet = snet.cuda()
         criterion_f = criterion_f.cuda()
+    if use_tb:
+        writer = SummaryWriter(os.path.join(output_dir,'tb_log'))
+    else:
+        writer = None
 
     for epoch in range(max_epoch):  # loop over the dataset multiple times
         running_loss = 0.0
@@ -98,45 +102,42 @@ def train(dataname, max_epoch, no_snet, modelpath=None, download=False, use_gpu=
             loss = criterion_f(outputs, labels).squeeze()
             if not no_snet:
                 x_w = snet(inputs).squeeze()
-                loss_w = torch.mean(loss*x_w)
-                loss_w.backward(retain_graph=True)
+                xw_for_net = x_w.detach()
+                loss_w = torch.mean(loss*xw_for_net)
+                loss_w.backward()
                 optimizer_f.step() # update net
 
                 optimizer_s.zero_grad()
-                loss_s = snet_loss(x_w, loss, snet.parameters(), M, alpha)
+                loss_s = snet_loss(x_w, loss.detach(), snet.parameters(), M, alpha)
                 loss_s.backward()
                 optimizer_s.step()
 
                 # print statistics
-                running_loss += loss_w.data[0]
-                if i % 50 == 49:    # print every 2000 mini-batches
-                    if epoch % 10 == 9:
-                        print("x_w:{}".format(x_w))
-                    print('[%d, %5d] loss: %.3f' %
-                        (epoch + 1, i + 1, running_loss / 50))
-                    running_loss = 0.0
-
+                if i % 100 == 0:    # print every 2000 mini-batches
+                    print('[epoch:%d, minibatch:%5d] main_loss: %.4f, s_loss: %.4f' %\
+                        (epoch, i, loss_w, loss_s))
             else:
                 loss = torch.mean(loss)
                 loss.backward()
                 optimizer_f.step()
 
-                running_loss += loss.data[0]
-                if i % 50 == 49:    # print every 2000 mini-batches
-                    print('[%d, %5d] loss: %.3f' %
-                        (epoch + 1, i + 1, running_loss / 50))
-                    running_loss = 0.0
+                if i % 100 == 0:    # print every 2000 mini-batches
+                    print('[epoch:%d, minibatch:%5d] loss: %.4f' %(epoch, i, loss))
+        
+        if not no_save:
+            if writer:
+                writer.add_scalar('main_loss', loss_w, epoch)
+                if not no_snet:
+                    writer.add_scalar('snet_loss', loss_s, epoch)
+            if epoch%10000==9999:
+                torch.save(net.state_dict(), '{}net_epoch{}.pm'.format(ckpt_path, epoch))
+                if not no_snet:
+                    torch.save(snet.state_dict(), '{}snet_epoch{}.pm'.format(ckpt_path,epoch))
 
-        if epoch%10000==9999:
-            torch.save(net.state_dict(), '{}_net_checkpoint.pm.{}'.format(savename,epoch+1))
-            if not no_snet:
-                torch.save(snet.state_dict(), '{}_snet_checkpoint.pm.{}'.format(savename,epoch+1))
-        if epoch==0:
-            print('first epoch ok')
-
-    torch.save(net.state_dict(),'{}_net.pm'.format(savename))
-    if not no_snet:
-        torch.save(snet.state_dict(),'{}_snet.pm'.format(savename))
+    if not no_save:
+        torch.save(net.state_dict(),'{}net_epoch{}.pm'.format(ckpt_path, max_epoch))
+        if not no_snet:
+            torch.save(snet.state_dict(),'{}snet_epoch{}.pm'.format(ckpt_path, max_epoch))
     print('Finished Training')
 
 def test(model, loader, dataname, use_gpu=False):
@@ -223,22 +224,28 @@ def save_checkpoint(state, is_best, filename='checkpoint.pth'):
         shutil.copyfile(filename, 'model_best.pth')
 
 import argparse
+import datetime
 if __name__=='__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('phase',help="train or test", choices=["train", "test"])
     parser.add_argument('dataname',help="dataset name", choices=["mnist","cifar","voc"])
-    parser.add_argument('--modelname', help="saved name", default="model.pm")
-    parser.add_argument('--modelpath', help='save dir',  default='.')
+    parser.add_argument('--output_dir', help='save dir',  default='Outputs')
     parser.add_argument('--max_epoch', type=int, default=100)
     parser.add_argument('--no_snet', action='store_true')
     parser.add_argument('--download', help="switch if you want to download pytorch dataset(only valid for mnist and cifar)", action='store_true')
     parser.add_argument('--gpu', help="train on gpu", action='store_true')
+    parser.add_argument('--use_tensorboard', action='store_true')
+    parser.add_argument('--no_save', action='store_true', help='do not save anything')
     args = parser.parse_args()
 
-    modelpath = os.path.join(args.modelpath, args.modelname)
+    modelpath = os.path.join(args.output_dir, 'log_'+datetime.datetime.now().strftime('%m-%d'))
+    if not os.path.exists(modelpath) and args.no_save:
+        os.makedirs(modelpath)
+
     if args.phase=="train":
         print("train on {} for {} epoches".format(args.dataname, args.max_epoch))
-        train(args.dataname, args.max_epoch, args.no_snet, modelpath, download=args.download, use_gpu=args.gpu)
+        train(args.dataname, args.max_epoch, args.no_snet, modelpath, args.use_tensorboard, args.no_save, \
+              download=args.download, use_gpu=args.gpu)
 
     if args.phase=='test':
         print("test model {} on {}".format(modelpath, args.dataname))
