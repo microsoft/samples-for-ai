@@ -127,7 +127,7 @@ def convert(file, outfile, is_test):
                 j = json.loads(line)
                 p = j['passages']
                 if j['query_type'].lower() == 'description':
-                    context = preprocess(' '.join([pp['passage_text'] for pp in p]))
+                    context = preprocess(' <END> '.join([pp['passage_text'] for pp in p]))
                     ctokens = trim_empty(tokenize(context, context_mode=True))
                     normalized_context = ' '.join(ctokens)
                     nctokens = normalized_context.split()

@@ -36,19 +36,20 @@ class ELMoCharacterMapper:
     beginning_of_word_character = 258  # <begin word>
     end_of_word_character = 259  # <end word>
     padding_character = 260 # <padding>
-
+    # para_end_id = 261
     beginning_of_sentence_characters = [258, 256, 259]+[260]*47 
     end_of_sentence_characters = [258, 257, 259]+[260]*47
 
     bos_token = '<S>'
     eos_token = '</S>'
-
+    para_end_token = '<END>'
     @staticmethod
     def convert_word_to_char_ids(word):
         if word == ELMoCharacterMapper.bos_token:
             char_ids = ELMoCharacterMapper.beginning_of_sentence_characters
         elif word == ELMoCharacterMapper.eos_token:
             char_ids = ELMoCharacterMapper.end_of_sentence_characters
+        
         else:
             word_encoded = word.encode('utf-8', 'ignore')[:(ELMoCharacterMapper.max_word_length-2)]
             char_ids = [ELMoCharacterMapper.padding_character] * ELMoCharacterMapper.max_word_length
@@ -144,6 +145,11 @@ def populate_dicts(files):
             # polymath adds word to dict regardless of word_count_threshold when it's in GloVe
             if wdcnt[word] >= 1 or test_wdcnt[word] >= 1:
                 _ = vocab[word]
+    with open('glove.840B.300d.txt', 'a', encoding='utf-8') as f:
+        str = '<END>'+' 0.0'*300
+        f.writelines([str])
+        _ = vocab['<END>']
+
     known =len(vocab)
 
     # add the special markers
