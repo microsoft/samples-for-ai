@@ -544,8 +544,7 @@ def install_cntk(target_dir):
 
     version = _get_cntk_version(target_dir)
     if (suc and (target_version == version)):
-        logger.info("Install CNTK(BrainScript) successfully!")
-        logger.warning("Please open a new terminal to make the updated Path environment variable effective.")
+        logger.info("Install CNTK(BrainScript) successfully! Please open a new terminal to make the updated Path environment variable effective.")
         return True
     else:
         logger.error("Fail to install CNTK(BrainScript).")
