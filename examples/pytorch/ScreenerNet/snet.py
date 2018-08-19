@@ -12,14 +12,15 @@ import numpy as np
 from tensorboardX import SummaryWriter
 from helpers import AverageMeter, accuracy
 
+ckpt_step = 10
 def snet_loss(snet_out, cls_err, variables, M, alpha):
     w = None
     for p in variables:
         w = torch.cat((w, p.view(-1))) if w is not None else p.view(-1)
     l1 = F.l1_loss(w, torch.zeros_like(w))
-    loss = torch.pow((1-snet_out),2) * cls_err
-    loss = loss + torch.pow(snet_out,2)*torch.clamp(M-cls_err, min=0)
-    res = torch.sum(loss)+alpha*l1
+    loss = cls_err * torch.pow((1-snet_out),2)
+    loss = loss + torch.clamp(M-cls_err, min=0) * torch.pow(snet_out,2)
+    res = torch.mean(loss)+alpha*l1
     return res
 
 def multilabel_soft_margin_loss(inp, target):
@@ -36,7 +37,8 @@ def validate(val_loader, model, criterion, epoch):
 
     model.eval()
 
-    for i, (images, target) in enumerate(train_loader):
+    val_iter = iter(val_loader)
+    for i, (images, target) in enumerate(val_iter):
         target = target.cuda(async=True)
         image_var=torch.autograd.Variable(images)
         label_var = torch.autograd.Variable(target)
@@ -87,7 +89,8 @@ def train(dataname, max_epoch, no_snet, output_dir=None,use_tb=False, no_save=Fa
 
     for epoch in range(max_epoch):  # loop over the dataset multiple times
         running_loss = 0.0
-        for i, data in enumerate(trainloader):
+        trainiter = iter(trainloader)
+        for i, data in enumerate(trainiter):
             # get the inputs
             inputs, labels = data
             # wrap them in Variable
@@ -114,8 +117,8 @@ def train(dataname, max_epoch, no_snet, output_dir=None,use_tb=False, no_save=Fa
 
                 # print statistics
                 if i % 100 == 0:    # print every 2000 mini-batches
-                    print('[epoch:%d, minibatch:%5d] main_loss: %.4f, s_loss: %.4f' %\
-                        (epoch, i, loss_w, loss_s))
+                    print('[epoch:%d, minibatch:%5d] main_loss: %.4f, true_loss: %.4f, s_loss: %.4f' %\
+                        (epoch, i, loss_w, torch.mean(loss), loss_s))
             else:
                 loss = torch.mean(loss)
                 loss.backward()
@@ -123,13 +126,15 @@ def train(dataname, max_epoch, no_snet, output_dir=None,use_tb=False, no_save=Fa
 
                 if i % 100 == 0:    # print every 2000 mini-batches
                     print('[epoch:%d, minibatch:%5d] loss: %.4f' %(epoch, i, loss))
-        
+
         if not no_save:
             if writer:
-                writer.add_scalar('main_loss', loss_w, epoch)
                 if not no_snet:
+                    writer.add_scalar('main_loss', loss_w, epoch)
                     writer.add_scalar('snet_loss', loss_s, epoch)
-            if epoch%10000==9999:
+                else:
+                    writer.add_scalar('main_loss', loss, epoch)
+            if epoch%ckpt_step==0:
                 torch.save(net.state_dict(), '{}net_epoch{}.pm'.format(ckpt_path, epoch))
                 if not no_snet:
                     torch.save(snet.state_dict(), '{}snet_epoch{}.pm'.format(ckpt_path,epoch))
@@ -141,7 +146,8 @@ def train(dataname, max_epoch, no_snet, output_dir=None,use_tb=False, no_save=Fa
     print('Finished Training')
 
 def test(model, loader, dataname, use_gpu=False):
-    model = model.cuda()
+    if use_gpu:
+        model = model.cuda()
     model.eval()
 
     if dataname=='voc':
@@ -200,6 +206,7 @@ def test(model, loader, dataname, use_gpu=False):
         print('mAP:{}\n mAP:{}'.format(mAP,mmAP))
 
     elif dataname in ['mnist', 'cifar']:
+        correct = 0; wrong=0
         for i, data in enumerate(loader):
             imgs, labels = data
             inputs = Variable(imgs)
@@ -216,8 +223,7 @@ def test(model, loader, dataname, use_gpu=False):
                 correct+=1
             else:
                 wrong+=1
-            count = i
-        print('test correct number:{}, wrong prediction:{}, sample number:{}'.format(correct, wrong, count))
+        print('test correct number:{}, wrong prediction:{}, sample number:{}'.format(correct, wrong, len(loader)))
 def save_checkpoint(state, is_best, filename='checkpoint.pth'):
     torch.save(state, filename)
     if is_best:
@@ -230,15 +236,18 @@ if __name__=='__main__':
     parser.add_argument('phase',help="train or test", choices=["train", "test"])
     parser.add_argument('dataname',help="dataset name", choices=["mnist","cifar","voc"])
     parser.add_argument('--output_dir', help='save dir',  default='Outputs')
-    parser.add_argument('--max_epoch', type=int, default=100)
+    parser.add_argument('--max_epoch', type=int, default=70)
     parser.add_argument('--no_snet', action='store_true')
     parser.add_argument('--download', help="switch if you want to download pytorch dataset(only valid for mnist and cifar)", action='store_true')
     parser.add_argument('--gpu', help="train on gpu", action='store_true')
     parser.add_argument('--use_tensorboard', action='store_true')
     parser.add_argument('--no_save', action='store_true', help='do not save anything')
+    parser.add_argument('--load_ckpt', type=str, help='load checkpoint')
+    parser.add_argument('--save_step', type=int, default=5)
     args = parser.parse_args()
 
     modelpath = os.path.join(args.output_dir, 'log_'+datetime.datetime.now().strftime('%m-%d'))
+    ckpt_step = args.save_step
     if not os.path.exists(modelpath) and args.no_save:
         os.makedirs(modelpath)
 
@@ -252,5 +261,5 @@ if __name__=='__main__':
         modellib = importlib.import_module('snet_{}'.format(args.dataname))
         testloader = modellib.getLoader('test', args.download)
         net, _ = modellib.create_net()
-        net.load_state_dict(torch.load(modelpath))
+        net.load_state_dict(torch.load(args.load_ckpt))
         test(net, testloader, args.dataname, use_gpu=args.gpu)

@@ -8,7 +8,7 @@ from collections import OrderedDict
 import torchvision.transforms as transforms
 
 # =========== configuration ==============
-M = 10.0; alpha = 0.01
+M = 5.0; alpha = 0.01
 transform = transforms.Compose(
                 [transforms.ToTensor(),
                 transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))])
@@ -19,7 +19,7 @@ def getLoader(phase, download=False):
         loader = torch.utils.data.DataLoader(trainset, batch_size=64, shuffle=True, num_workers=4)
     else:
         testset = torchvision.datasets.CIFAR10(root='.', train=False, transform=transform, download=download)
-        loader = torch.utils.data.DataLoader(trainset, batch_size=1)
+        loader = torch.utils.data.DataLoader(testset, batch_size=1)
     return loader
 
 class BaseNet(nn.Module):
