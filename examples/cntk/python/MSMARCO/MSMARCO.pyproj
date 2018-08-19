@@ -4,7 +4,7 @@
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <SchemaVersion>2.0</SchemaVersion>
     <ProjectGuid>{3adb3708-6835-45f7-9186-e2475fbd6cc3}</ProjectGuid>
-    <ProjectHome>..\MSMARCO_</ProjectHome>
+    <ProjectHome>.</ProjectHome>
     <SearchPath />
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
@@ -16,15 +16,6 @@
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
   <PropertyGroup />
   <ItemGroup>
-    <Compile Include="ms_marco_eval\bleu\bleu.py" />
-    <Compile Include="ms_marco_eval\bleu\bleu_scorer.py" />
-    <Compile Include="ms_marco_eval\bleu\__init__.py" />
-    <Compile Include="ms_marco_eval\ms_marco_eval.py" />
-    <Compile Include="ms_marco_eval\ms_marco_eval_test.py" />
-    <Compile Include="ms_marco_eval\rouge\rouge.py" />
-    <Compile Include="ms_marco_eval\rouge\__init__.py" />
-    <Compile Include="script\ans_query2ctf.py" />
-    <Compile Include="script\compare_out.py" />
     <Compile Include="script\config.py" />
     <Compile Include="script\config_aoa.py" />
     <Compile Include="script\config_bidaf.py" />
@@ -48,9 +39,6 @@
     <Compile Include="script\visuallib.py" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ms_marco_eval" />
-    <Folder Include="ms_marco_eval\bleu" />
-    <Folder Include="ms_marco_eval\rouge" />
     <Folder Include="script" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
