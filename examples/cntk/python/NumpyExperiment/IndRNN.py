@@ -78,9 +78,9 @@ if __name__=='__main__':
 
     parser = argparse.ArgumentParser()
     parser.add_argument('--lstm', action='store_true')
-    parser.add_argument('--lr', default=0.2)
-    parser.add_argument('--bs', default=50, help='batch size')
-    parser.add_argument('--time_step', default=1000, help='how long a sequence is')
+    parser.add_argument('--lr', default=0.2, type=float)
+    parser.add_argument('--bs', default=50, help='batch size', type=int)
+    parser.add_argument('--time_step', default=1000, help='how long a sequence is', type=int)
     args=parser.parse_args()
 
     bs = args.bs

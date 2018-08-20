@@ -11,8 +11,29 @@ import numpy as np
 
 from tensorboardX import SummaryWriter
 from helpers import AverageMeter, accuracy
+import argparse
+import datetime
 
 ckpt_step = 10
+parser = argparse.ArgumentParser()
+parser.add_argument('phase',help="train or test", choices=["train", "test"])
+parser.add_argument('dataname',help="dataset name", choices=["mnist","cifar","voc"])
+parser.add_argument('--output_dir', help='save dir',  default='Outputs')
+parser.add_argument('--max_epoch', type=int, default=70)
+parser.add_argument('--no_snet', action='store_true')
+parser.add_argument('--download', help="switch if you want to download pytorch dataset(only valid for mnist and cifar)", action='store_true')
+parser.add_argument('--gpu', help="train on gpu", action='store_true')
+parser.add_argument('--use_tensorboard', action='store_true')
+parser.add_argument('--no_save', action='store_true', help='do not save anything')
+parser.add_argument('--load_ckpt', type=str, help='load checkpoint')
+parser.add_argument('--save_step', type=int, default=5)
+args = parser.parse_args()
+
+modelpath = os.path.join(args.output_dir, 'log_'+datetime.datetime.now().strftime('%m-%d'))
+ckpt_step = args.save_step
+if not os.path.exists(modelpath) and not args.no_save:
+    os.makedirs(modelpath)
+
 def snet_loss(snet_out, cls_err, variables, M, alpha):
     w = None
     for p in variables:
@@ -26,9 +47,12 @@ def snet_loss(snet_out, cls_err, variables, M, alpha):
 def multilabel_soft_margin_loss(inp, target):
     bce = nn.MultiLabelSoftMarginLoss(size_average=False)
     res = Variable(torch.zeros(inp.shape[0]))
+
     for i,row in enumerate(inp):
         #print(target[i], row)
         res[i]=bce(row, target[i])
+    if args.gpu:
+        res = res.cuda()
     return res
 
 def validate(val_loader, model, criterion, epoch):
@@ -58,22 +82,22 @@ def train(dataname, max_epoch, no_snet, output_dir=None,use_tb=False, no_save=Fa
         net, snet = modellib.create_net()
         M = modellib.M; alpha = modellib.alpha
         criterion_f=nn.CrossEntropyLoss(reduce=False)
-        optimizer_f=optim.SGD(net.parameters(), lr=0.01, momentum=0.9)
+        optimizer_f=optim.SGD(net.parameters(), lr=0.05, momentum=0.9)
         optimizer_s=optim.Adam(snet.parameters(), lr=0.0001)
     elif dataname=="voc":
         modellib = importlib.import_module('snet_voc')
         net, snet = modellib.create_net()
         M = modellib.M; alpha = modellib.alpha
         criterion_f = multilabel_soft_margin_loss
-        optimizer_f=optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+        optimizer_f=optim.SGD(net.parameters(), lr=0.005, momentum=0.9)
         optimizer_s=optim.Adam(snet.parameters(), lr=0.0025)
     else:
         modellib = importlib.import_module('snet_cifar')
         net, snet=modellib.create_net()
         M = modellib.M; alpha = modellib.alpha
         criterion_f=nn.CrossEntropyLoss(reduce=False)
-        optimizer_f=optim.SGD(net.parameters(), lr=0.01, momentum=0.9)
-        optimizer_s=optim.Adam(snet.parameters(), lr=0.001)
+        optimizer_f=optim.SGD(net.parameters(), lr=0.03, momentum=0.9)
+        optimizer_s=optim.Adam(snet.parameters(), lr=0.001) # 0.001
 
     trainloader = modellib.getLoader('train', download)
     testloader = modellib.getLoader('test', download)
@@ -82,7 +106,6 @@ def train(dataname, max_epoch, no_snet, output_dir=None,use_tb=False, no_save=Fa
     if use_gpu==True:
         net = net.cuda()
         snet = snet.cuda()
-        criterion_f = criterion_f.cuda()
     if use_tb:
         writer = SummaryWriter(os.path.join(output_dir,'tb_log'))
     else:
@@ -107,6 +130,7 @@ def train(dataname, max_epoch, no_snet, output_dir=None,use_tb=False, no_save=Fa
             if not no_snet:
                 x_w = snet(inputs).squeeze()
                 xw_for_net = x_w.detach()
+                # print(xw_for_net.device, loss.device)
                 loss_w = torch.mean(loss*xw_for_net)
                 loss_w.backward()
                 optimizer_f.step() # update net
@@ -233,27 +257,9 @@ def save_checkpoint(state, is_best, filename='checkpoint.pth'):
     if is_best:
         shutil.copyfile(filename, 'model_best.pth')
 
-import argparse
-import datetime
-if __name__=='__main__':
-    parser = argparse.ArgumentParser()
-    parser.add_argument('phase',help="train or test", choices=["train", "test"])
-    parser.add_argument('dataname',help="dataset name", choices=["mnist","cifar","voc"])
-    parser.add_argument('--output_dir', help='save dir',  default='Outputs')
-    parser.add_argument('--max_epoch', type=int, default=70)
-    parser.add_argument('--no_snet', action='store_true')
-    parser.add_argument('--download', help="switch if you want to download pytorch dataset(only valid for mnist and cifar)", action='store_true')
-    parser.add_argument('--gpu', help="train on gpu", action='store_true')
-    parser.add_argument('--use_tensorboard', action='store_true')
-    parser.add_argument('--no_save', action='store_true', help='do not save anything')
-    parser.add_argument('--load_ckpt', type=str, help='load checkpoint')
-    parser.add_argument('--save_step', type=int, default=5)
-    args = parser.parse_args()
 
-    modelpath = os.path.join(args.output_dir, 'log_'+datetime.datetime.now().strftime('%m-%d'))
-    ckpt_step = args.save_step
-    if not os.path.exists(modelpath) and not args.no_save:
-        os.makedirs(modelpath)
+if __name__=='__main__':
+
 
     if args.phase=="train":
         print("train on {} for {} epoches".format(args.dataname, args.max_epoch))
