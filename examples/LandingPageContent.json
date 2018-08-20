@@ -1,0 +1,68 @@
+{
+  "RightPane": [
+    {
+      "title": "AI Resource",
+      "content": [
+        {
+          "name": "Curriculum about AI",
+          "url":"https://www.edx.org/microsoft-professional-program-artificial-intelligence"
+        },
+        {
+          "name": "Microsoft AI Blog",
+          "url": "https://blogs.microsoft.com/ai/"
+        }
+      ]
+    },
+    {
+      "title": "Popular GitHub Projects",
+      "content": [
+        {
+          "name": "darts",
+          "url": "https://github.com/quark0/darts"
+        },
+        {
+          "name": "DensePose",
+          "url": "https://github.com/facebookresearch/DensePose"
+        },
+        {
+          "name": "decaNLP",
+          "url": "https://github.com/salesforce/decaNLP"
+        }
+      ]
+    },
+    {
+      "title": "Explore More",
+      "content": [
+        {
+          "name": "Build and train your first AI model",
+          "url": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/MNIST"
+        },
+        {
+          "name": "More AI model examples",
+          "url": "https://github.com/Microsoft/samples-for-ai/tree/master/examples"
+        },
+        {
+          "name": "More about Tools for AI",
+          "url": "https://github.com/Microsoft/vs-tools-for-ai#visual-studio-tools-for-ai"
+        }
+      ]
+    }
+  ],
+  "AILibraries": [
+    {
+      "name": "NumPy and Scipy"
+    },
+    {
+      "name": "Jupyter Notebook"
+    },
+    {
+      "name": "Pandas"
+    },
+    {
+      "name": "Matplotlib"
+    },
+    {
+      "name": "Deep learning and machine learning frameworks, including CNTK, TensorFlow, PyTorch, Caffe2, etc."
+    }
+  ]
+}
