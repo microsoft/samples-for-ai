@@ -1031,7 +1031,7 @@ def main():
         sys_info["cuda80"] = True
 
     logger.info("Detecting system information ...")
-    if not detect_os() or not detect_python_version() or not detect_gpu():
+    if not detect_python_version() or not detect_os() or not detect_gpu():
         return
     detect_git()
     if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
