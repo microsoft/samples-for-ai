@@ -160,6 +160,11 @@ namespace BearClassificationUWP.App.ViewModel
 
                 // 1. get picture from file picker
                 StorageFile file = await openPicker.PickSingleFileAsync();
+                if (file == null)  // Cancel pick file
+                {
+                    return;
+                }
+
                 var stream = await file.OpenReadAsync();
                 BearImage = new BitmapImage();
                 BearImage.SetSource(stream);
