@@ -1,7 +1,7 @@
 data_config = {
     'word_size' : 16,
     'word_count_threshold' : 10,
-    'char_count_threshold' : 50,
+    'char_count_threshold' : 12,
     'pickle_file' : 'vocabs.pkl',
     'word_embed_file': 'glove.840B.300d.txt',
     'char_embed_file': 'glove.840B.300d-char.txt'
