@@ -21,16 +21,16 @@
       "title": "Github AI 热门项目",
       "content": [
         {
-          "name": "darts",
-          "url": "https://github.com/quark0/darts"
+          "name": "SNIPER",
+          "url": "https://github.com/mahyarnajibi/SNIPER"
         },
         {
-          "name": "DensePose",
-          "url": "https://github.com/facebookresearch/DensePose"
+          "name": "mace",
+          "url": "https://github.com/XiaoMi/mace"
         },
         {
-          "name": "decaNLP",
-          "url": "https://github.com/salesforce/decaNLP"
+          "name": "robosat",
+          "url": "https://github.com/mapbox/robosat"
         }
       ]
     },
