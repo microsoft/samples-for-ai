@@ -7,6 +7,7 @@
 解決方案則是以它們所使用不同的深度學習框架來區分：
 - CNTK (同時包括 BrainScript 以及 Python 程式語言版本)
 - Tensorflow
+- PyTorch
 - Caffe2
 - Keras
 - MXNet
