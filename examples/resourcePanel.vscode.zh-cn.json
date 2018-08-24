@@ -1,21 +1,21 @@
 [
     {
-        "title": "人工智能学习资源",
+        "title": "AI 学习资源",
         "content": [
             {
-                "name": "人工智能课程",
+                "name": "微软 AI 课程",
                 "url": "https://school.azure.cn/curriculums/28",
                 "event": "homepage/openAICourse"
             },
             {
-                "name": "微软人工智能博客",
+                "name": "微软 AI 博客",
                 "url": "https://blogs.microsoft.com/ai/",
                 "event": "homepage/openAIBlog"
             }
         ]
     },
     {
-        "title": "热门 Github 项目",
+        "title": "Github 热门 AI 项目",
         "content": [
             {
                 "name": "SNIPER",
@@ -35,15 +35,15 @@
         ]
     },
     {
-        "title": "探索更多",
+        "title": "更多资源",
         "content": [
             {
-                "name": "更多人工智能样例",
-                "url": "https://github.com/Microsoft/samples-for-ai",
+                "name": "更多 AI 模型示例",
+                "url": "https://github.com/Microsoft/samples-for-ai/tree/master/examples",
                 "event": "homepage/openSamples4AIGithub"
             },
             {
-                "name": "更多关于 AI 工具",
+                "name": "关于 Tools for AI 更多信息",
                 "url": "https://github.com/Microsoft/vscode-tools-for-ai",
                 "event": "homepage/openTools4AIGithub"
             }
