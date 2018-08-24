@@ -1,9 +1,5 @@
 # Introduction 
 
-[Simplified Chinese (简体中文)](zh-hans/README.md) 
-
-[Traditional Chinese (正體中文)](zh-hant/README.md)
-
 Samples in Visual Studio solution format are provided for users to get started with deep learning using [Microsoft Visual Studio Tools for AI](https://github.com/Microsoft/vs-tools-for-ai).
 Each solution has one or more sample projects.
 Solutions are separated by different deep learning frameworks they use:
