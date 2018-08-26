@@ -7,7 +7,6 @@ import os
 import shutil
 import re
 import ctypes
-import stat
 import importlib
 import _thread
 
@@ -35,14 +34,14 @@ if platform.system() == "Windows":
         _fields_ = [('cbSize', DWORD),
                     ('fMask', ctypes.c_ulong),
                     ('hwnd', HWND),
-                    ('lpVerb', ctypes.c_char_p),
-                    ('lpFile', ctypes.c_char_p),
-                    ('lpParameters', ctypes.c_char_p),
-                    ('lpDirectory', ctypes.c_char_p),
+                    ('lpVerb', ctypes.c_wchar_p),
+                    ('lpFile', ctypes.c_wchar_p),
+                    ('lpParameters', ctypes.c_wchar_p),
+                    ('lpDirectory', ctypes.c_wchar_p),
                     ('nShow', ctypes.c_int),
                     ('hInstApp', HINSTANCE),
                     ('lpIDList', ctypes.c_void_p),
-                    ('lpClass', ctypes.c_char_p),
+                    ('lpClass', ctypes.c_wchar_p),
                     ('hKeyClass', HKEY),
                     ('dwHotKey', DWORD),
                     ('hIcon', HANDLE),
@@ -153,11 +152,11 @@ def _wait_process(processHandle, timeout=-1):
 
 def _run_cmd_admin(cmd, param, wait=True):
     try:
-        executeInfo = ShellExecuteInfo(fMask=0x00000040, hwnd=None, lpVerb='runas'.encode('utf-8'),
-                                       lpFile=cmd.encode('utf-8'), lpParameters=param.encode('utf-8'),
+        executeInfo = ShellExecuteInfo(fMask=0x00000040, hwnd=None, lpVerb='runas',
+                                       lpFile=cmd, lpParameters=param,
                                        lpDirectory=None,
                                        nShow=5)
-        if not ctypes.windll.shell32.ShellExecuteEx(ctypes.byref(executeInfo)):
+        if not ctypes.windll.shell32.ShellExecuteExW(ctypes.byref(executeInfo)):
             raise ctypes.WinError()
         if wait:
             _wait_process(executeInfo.hProcess)
@@ -321,16 +320,15 @@ def detect_python_version():
     sys_info["python"] = py_version.replace('.', '')
     logger.debug("In detect_python_version(), sys_info['python']: {0}".format(sys_info["python"]))
     logger.info("Python: {0}, {1}".format(py_full_version, py_architecture))
-    if not _version_compare("3.5", py_version):
-        logger.error("Python 3.5 or higher is required to run this installer.")
+    if not (py_version == "3.5" or py_version == "3.6"):
+        logger.error("To Run this installer, only python 3.5 or 3.6 is supported!")
         return False
+    # if not _version_compare("3.5", py_version):
+    #     logger.error("Python 3.5 or higher is required to run this installer.")
+    #     return False
     if not (py_architecture == "64bit"):
         logger.error("64bit Python is required to run this installer.")
         return False
-    # if not (_version_compare("3.5", py_version) and py_architecture == '64bit'):
-    #     logger.error("64-bit PYTHON 3.5 or higher is required to run this installer."
-    #                  " We recommend latest PYTHON 3.5 (https://www.python.org/downloads/release/python-355/).")
-    #     return False
     return True
 
 
@@ -442,7 +440,7 @@ def detect_mpi_win():
             return False
         return True
     else:
-        logger.warning("Not detect MPI, please manually download and isntall MPI.")
+        logger.warning("Not detect MPI, please manually download and install MPI.")
         return False
 
 
@@ -545,8 +543,7 @@ def install_cntk(target_dir):
 
     version = _get_cntk_version(target_dir)
     if (suc and (target_version == version)):
-        logger.info("Install CNTK(BrainScript) successfully!")
-        logger.warning("Please open a new terminal to make the updated Path environment variable effective.")
+        logger.info("Install CNTK(BrainScript) successfully! Please open a new terminal to make the updated Path environment variable effective.")
         return True
     else:
         logger.error("Fail to install CNTK(BrainScript).")
@@ -642,8 +639,7 @@ def pip_install_package(name, options, version="", pkg=None):
                 pkg = name
         logger.debug("pkg : {0}".format(pkg))
         res = -1
-        # res = pip.main(["install", *options, pkg])
-        res = subprocess.check_call([sys.executable, '-m', 'pip', 'install', *options, "-q", pkg])
+        res = subprocess.check_call([sys.executable, '-m', 'pip', 'install', *options, pkg], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if res != 0:
             logger.error("Fail to pip-install {0}.".format(name))
             fail_install.append("%s %s" % (name, version))
@@ -665,7 +661,7 @@ def pip_uninstall_packge(name, options, version=""):
             options_copy.pop(0)
         res = -1
         # res = pip.main(["uninstall", *options, name])
-        res = subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', *options_copy, "-y", "-q", name])
+        res = subprocess.check_call([sys.executable, '-m', 'pip', 'uninstall', *options_copy, "-y", name], stdout=subprocess.PIPE, stderr=subprocess.PIPE)
         if res != 0:
             logger.error("Fail to pip-uninstall {0}.".format(name))
         else:
@@ -1033,7 +1029,7 @@ def main():
         sys_info["cuda80"] = True
 
     logger.info("Detecting system information ...")
-    if not detect_os() or not detect_python_version() or not detect_gpu():
+    if not detect_python_version() or not detect_os() or not detect_gpu():
         return
     detect_git()
     if (sys_info["OS"] == TOOLSFORAI_OS_WIN):
