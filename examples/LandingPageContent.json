@@ -1,0 +1,76 @@
+{
+  "RightPane": [
+    {
+      "title": "AI Resource",
+      "content": [
+        {
+          "name": "Curriculum about AI",
+          "url":"https://www.edx.org/microsoft-professional-program-artificial-intelligence",
+          "key": "AI_Cur"
+        },
+        {
+          "name": "Microsoft AI Blog",
+          "url": "https://blogs.microsoft.com/ai/",
+          "key": "AI_Blog"
+        }
+      ]
+    },
+    {
+      "title": "Popular GitHub Projects",
+      "content": [
+        {
+          "name": "SNIPER",
+          "url": "https://github.com/mahyarnajibi/SNIPER",
+          "key": "popular_SNIPER"
+        },
+        {
+          "name": "mace",
+          "url": "https://github.com/XiaoMi/mace",
+          "key": "popular_mace"
+        },
+        {
+          "name": "robosat",
+          "url": "https://github.com/mapbox/robosat",
+          "key": "popular_robosat"
+        }
+      ]
+    },
+    {
+      "title": "Explore More",
+      "content": [
+        {
+          "name": "Build and train your first AI model",
+          "url": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/MNIST",
+          "key": "explore_trainfirstmodel"
+        },
+        {
+          "name": "More AI model examples",
+          "url": "https://github.com/Microsoft/samples-for-ai/tree/master/examples",
+          "key": "explore_moreAImodel"
+        },
+        {
+          "name": "More about Tools for AI",
+          "url": "https://github.com/Microsoft/vs-tools-for-ai#visual-studio-tools-for-ai",
+          "key": "explore_Tools4AI"
+        }
+      ]
+    }
+  ],
+  "AILibraries": [
+    {
+      "name": "NumPy and Scipy"
+    },
+    {
+      "name": "Jupyter Notebook"
+    },
+    {
+      "name": "Pandas"
+    },
+    {
+      "name": "Matplotlib"
+    },
+    {
+      "name": "Deep learning and machine learning frameworks, including CNTK, TensorFlow, PyTorch, Caffe2, etc."
+    }
+  ]
+}

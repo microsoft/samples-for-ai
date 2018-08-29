@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.27703.2018
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{502DBB36-0FD9-4532-B4E9-DD7F9C9A59B1}"
+	ProjectSection(SolutionItems) = preProject
+		README.md = README.md
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MNIST.App", "MNIST.App\MNIST.App.csproj", "{6AA60AF2-C466-4FEA-8D90-C93659291CAC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MNISTModelLibrary", "MNISTModelLibrary\MNISTModelLibrary.csproj", "{E156950D-6116-4BEF-8279-51BEE6765B3B}"
+EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "MNIST", "MNIST\MNIST.pyproj", "{1A8C8511-61BB-4F82-BC27-C82CBC6ACA3A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x64 = Debug|x64
+		Release|x64 = Release|x64
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6AA60AF2-C466-4FEA-8D90-C93659291CAC}.Debug|x64.ActiveCfg = Debug|x64
+		{6AA60AF2-C466-4FEA-8D90-C93659291CAC}.Debug|x64.Build.0 = Debug|x64
+		{6AA60AF2-C466-4FEA-8D90-C93659291CAC}.Release|x64.ActiveCfg = Release|x64
+		{6AA60AF2-C466-4FEA-8D90-C93659291CAC}.Release|x64.Build.0 = Release|x64
+		{E156950D-6116-4BEF-8279-51BEE6765B3B}.Debug|x64.ActiveCfg = Debug|x64
+		{E156950D-6116-4BEF-8279-51BEE6765B3B}.Debug|x64.Build.0 = Debug|x64
+		{E156950D-6116-4BEF-8279-51BEE6765B3B}.Release|x64.ActiveCfg = Release|x64
+		{E156950D-6116-4BEF-8279-51BEE6765B3B}.Release|x64.Build.0 = Release|x64
+		{1A8C8511-61BB-4F82-BC27-C82CBC6ACA3A}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{1A8C8511-61BB-4F82-BC27-C82CBC6ACA3A}.Release|x64.ActiveCfg = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4DE06984-F188-4945-A3E7-BE01CA7AACFF}
+	EndGlobalSection
+EndGlobal

@@ -24,6 +24,7 @@ flags.DEFINE_string("checkpoint_dir", "checkpoints", "checkpoint directory [chec
 flags.DEFINE_string("data_name", "ptb", "data set name [ptb]")
 flags.DEFINE_boolean("is_test", False, "True for testing, False for Training [False]")
 flags.DEFINE_boolean("show", False, "print progress [False]")
+flags.DEFINE_integer("nwords", 0 , "number of words")
 
 FLAGS = flags.FLAGS
 

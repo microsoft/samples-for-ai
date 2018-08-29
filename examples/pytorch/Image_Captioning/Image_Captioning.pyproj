@@ -11,9 +11,12 @@
     </SearchPath>
     <WorkingDirectory>.</WorkingDirectory>
     <OutputPath>.</OutputPath>
-    <CommandLineArguments>--input_dir . --output_dir .</CommandLineArguments>
+    <CommandLineArguments>
+    </CommandLineArguments>
     <Name>Image_Captioning</Name>
     <RootNamespace>Image_Captioning</RootNamespace>
+    <LaunchProvider>Standard Python launcher</LaunchProvider>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
     <DebugSymbols>true</DebugSymbols>

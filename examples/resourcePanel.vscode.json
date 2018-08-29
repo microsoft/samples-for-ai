@@ -1,0 +1,52 @@
+[
+    {
+        "title": "AI Learning Resources",
+        "content": [
+            {
+                "name": "Curriculum about AI",
+                "url": "https://www.edx.org/microsoft-professional-program-artificial-intelligence",
+                "event": "homepage/openAICourse"
+            },
+            {
+                "name": "Microsoft AI Blog",
+                "url": "https://blogs.microsoft.com/ai/",
+                "event": "homepage/openAIBlog"
+            }
+        ]
+    },
+    {
+        "title": "Popular Github AI Projects",
+        "content": [
+            {
+                "name": "SNIPER",
+                "url": "https://github.com/mahyarnajibi/SNIPER",
+                "event": "homepage/openGithubProject"
+            },
+            {
+                "name": "mace",
+                "url": "https://github.com/XiaoMi/mace",
+                "event": "homepage/openGithubProject"
+            },
+            {
+                "name": "robosat",
+                "url": "https://github.com/mapbox/robosat",
+                "event": "homepage/openGithubProject"
+            }
+        ]
+    },
+    {
+        "title": "Explore More",
+        "content": [
+            {
+                "name": "More AI Samples",
+                "url": "https://github.com/Microsoft/samples-for-ai",
+                "event": "homepage/openSamples4AIGithub"
+            },
+            {
+                "name": "More about Tools for AI",
+                "url": "https://github.com/Microsoft/vscode-tools-for-ai",
+                "event": "homepage/openTools4AIGithub"
+            }
+        ]
+    }
+]

@@ -20,6 +20,11 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="main.py" />
+    <Compile Include="ntm.py" />
+    <Compile Include="ntm_cell.py" />
+    <Compile Include="ops.py" />
+    <Compile Include="ops_test.py" />
+    <Compile Include="utils.py" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>

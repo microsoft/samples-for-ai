@@ -6,6 +6,7 @@
 
 - CNTK (包含BrainScript和Python语言)
 - Tensorflow
+- PyTorch
 - Caffe2
 - Keras
 - MXNet

@@ -43,7 +43,6 @@ def export(args):
         }
         builder.add_meta_graph_and_variables(sess, [tf.saved_model.tag_constants.SERVING],
                                              signature_def_map=serving_signatures,
-                                             legacy_init_op=tf.saved_model.main_op.main_op(),
                                              clear_devices=True)
         builder.save()
 

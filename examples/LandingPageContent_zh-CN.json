@@ -1,0 +1,82 @@
+{
+  "RightPane": [
+    {
+      "title": "AI 学习资源",
+      "content": [
+        {
+          "name": "微软人工智能课程",
+          "url": "https://school.azure.cn/curriculums/28",
+          "key": "AI_微软人工智能课程"
+        },
+        {
+          "name": "AI 应用开发入门视频：看图识熊",
+          "url": "https://www.bilibili.com/video/av26004062/",
+          "key": "AI_入门视频"
+        },
+        {
+          "name": "AI 应用开发入门博客：手写识别",
+          "url": "https://www.cnblogs.com/ms-uap/p/9182530.html",
+          "key": "AI_入门博客"
+
+        }
+      ]
+    },
+    {
+      "title": "Github 热门 AI 项目",
+      "content": [
+        {
+          "name": "SNIPER",
+          "url": "https://github.com/mahyarnajibi/SNIPER",
+          "key": "popular_SNIPER"
+        },
+        {
+          "name": "mace",
+          "url": "https://github.com/XiaoMi/mace",
+          "key": "popular_mace"
+        },
+        {
+          "name": "robosat",
+          "url": "https://github.com/mapbox/robosat",
+          "key": "popular_robosat"
+        }
+      ]
+    },
+    {
+      "title": "更多资源",
+      "content": [
+        {
+          "name": "构建并训练你的第一个 AI 模型",
+          "url": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/MNIST",
+          "key": "explore_trainfirstmodel"
+        },
+        {
+          "name": "更多 AI 模型示例",
+          "url": "https://github.com/Microsoft/samples-for-ai/tree/master/examples",
+          "key": "explore_moreAImodel"
+        },
+        {
+          "name": "关于 Tools for AI 的更多信息",
+          "url": "https://github.com/Microsoft/vs-tools-for-ai#visual-studio-tools-for-ai",
+          "key": "explore_Tools4AI"
+        }
+      ]
+    }
+  ],
+  "AILibraries": [
+    {
+      "name": "NumPy 和 Scipy"
+    },
+    {
+      "name": "Jupyter Notebook"
+    },
+    {
+      "name": "Pandas"
+    },
+    {
+      "name": "Matplotlib"
+    },
+    {
+      "name": "深度学习和机器学习框架，包括 CNTK, TensorFlow, PyTorch, Caffe2 等。"
+    }
+  ]
+}
