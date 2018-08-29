@@ -1,0 +1,52 @@
+[
+    {
+        "title": "AI 学习资源",
+        "content": [
+            {
+                "name": "微软 AI 课程",
+                "url": "https://school.azure.cn/curriculums/28",
+                "event": "homepage/openAICourse"
+            },
+            {
+                "name": "微软 AI 博客",
+                "url": "https://blogs.microsoft.com/ai/",
+                "event": "homepage/openAIBlog"
+            }
+        ]
+    },
+    {
+        "title": "Github 热门 AI 项目",
+        "content": [
+            {
+                "name": "SNIPER",
+                "url": "https://github.com/mahyarnajibi/SNIPER",
+                "event": "homepage/openGithubProject"
+            },
+            {
+                "name": "mace",
+                "url": "https://github.com/XiaoMi/mace",
+                "event": "homepage/openGithubProject"
+            },
+            {
+                "name": "robosat",
+                "url": "https://github.com/mapbox/robosat",
+                "event": "homepage/openGithubProject"
+            }
+        ]
+    },
+    {
+        "title": "更多资源",
+        "content": [
+            {
+                "name": "更多 AI 模型示例",
+                "url": "https://github.com/Microsoft/samples-for-ai/tree/master/examples",
+                "event": "homepage/openSamples4AIGithub"
+            },
+            {
+                "name": "关于 Tools for AI 更多信息",
+                "url": "https://github.com/Microsoft/vscode-tools-for-ai",
+                "event": "homepage/openTools4AIGithub"
+            }
+        ]
+    }
+]
