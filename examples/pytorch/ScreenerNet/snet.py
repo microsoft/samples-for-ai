@@ -96,7 +96,7 @@ def train(dataname, max_epoch, no_snet, output_dir=None,use_tb=False, no_save=Fa
         net, snet=modellib.create_net()
         M = modellib.M; alpha = modellib.alpha
         criterion_f=nn.CrossEntropyLoss(reduce=False)
-        optimizer_f=optim.SGD(net.parameters(), lr=0.03, momentum=0.9)
+        optimizer_f=optim.SGD(net.parameters(), lr=0.05, momentum=0.9)
         optimizer_s=optim.Adam(snet.parameters(), lr=0.001) # 0.001
 
     trainloader = modellib.getLoader('train', download)
