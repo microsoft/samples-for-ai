@@ -5,16 +5,51 @@
 These examples are from tensorflow examples and tensorflow model zoo tutorials, without any change.
 
 ## List of Projects
+1. **MNIST**: ([source of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/mnist))
+
+This is an example for training & evaluating the MNIST network using a feed dictionary. MNIST is a popular dataset for handwritten digits recognition. It contains 60000 examples as training set and 10000 examkples as test set.
+
+For more details, you can see the tensorflow githubs. [Tensorflow](https://github.com/tensorflow/tensorflow) and [Tensorflow Model Zoo](https://github.com/tensorflow/models).
+
 
 1. **cifar10**: ([source of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/cifar10))
 
-2. **embedding**: ([source of the script](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/tutorials/word2vec))
+CIFAR-10 is a common benchmark in machine learning for image recognition. (http://www.cs.toronto.edu/~kriz/cifar.html) 
 
-3. **imagenet**: ([source  of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/imagenet))
-
-4. **MNIST**: ([source of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/mnist))
+The code is a simple example to train and evaluate a convolutional neural network(CNN) on CPU.
 
 For more details, you can see the tensorflow githubs. [Tensorflow](https://github.com/tensorflow/tensorflow) and [Tensorflow Model Zoo](https://github.com/tensorflow/models).
+
+
+1. **embedding**: ([source of the script](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/tutorials/word2vec))
+
+This is an example for word embedding.
+
+The test data is downloaded from http://mattmahoney.net/dc/text8.zip
+
+The test data for the Large Text Compression Benchmark is the first 109 bytes of the English Wikipedia dump on Mar. 3, 2006. http://download.wikipedia.org/enwiki/20060303/enwiki-20060303-pages-articles.xml.bz2 (1.1 GB or 4.8 GB after decompressing with bzip2 - link no longer works). Results are also given for the first 108 bytes, which is also used for the Hutter Prize.
+
+We filter the 1 GB test file enwik9 to produce a 715 MB file fil9, and compress this with 17 compressors. Furthermore, we produce the file text8 by truncating fil9 to 100 MB, and test this on 25 compressors, including the 17 tested on fil9.  text8 is the first 108 bytes of fil9. (From: http://mattmahoney.net/dc/textdata.html )
+
+For more details, you can see the tensorflow githubs. [Tensorflow](https://github.com/tensorflow/tensorflow) and [Tensorflow Model Zoo](https://github.com/tensorflow/models).
+
+1. **imagenet**: ([source  of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/imagenet))
+
+This is an example for simple image classification with Inception model.
+
+Data is downloaded from http://download.tensorflow.org/models/image/imagenet/inception-2015-12-05.tgz
+
+See the tutorial and website for a detailed description of how to use this script to perform image recognition. https://tensorflow.org/tutorials/image_recognition/
+
+For more details, you can see the tensorflow githubs. [Tensorflow](https://github.com/tensorflow/tensorflow) and [Tensorflow Model Zoo](https://github.com/tensorflow/models).
+
+1. **MemN2N**
+
+This is TensorFlow implementation of End-To-End Memory Networks for language modeling. It use a set of sample Penn Tree Bank(PTB) as Dataset.
+
+1. **NTM**
+
+This is Tensorflow implementation of Neural Turing Machine. This implementation uses an LSTM controller. NTM models with multiple read/write heads are supported.
 
 # How to Run
 
