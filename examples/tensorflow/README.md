@@ -5,6 +5,7 @@
 These examples are from tensorflow examples and tensorflow model zoo tutorials, without any change.
 
 ## List of Projects
+
 1. **MNIST**: ([source of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/mnist))
 
 This is an example for training & evaluating the MNIST network using a feed dictionary. MNIST is a popular dataset for handwritten digits recognition. It contains 60000 examples as training set and 10000 examkples as test set.
@@ -33,6 +34,7 @@ We filter the 1 GB test file enwik9 to produce a 715 MB file fil9, and compress 
 
 For more details, you can see the tensorflow githubs. [Tensorflow](https://github.com/tensorflow/tensorflow) and [Tensorflow Model Zoo](https://github.com/tensorflow/models).
 
+
 4. **imagenet**: ([source  of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/imagenet))
 
 This is an example for simple image classification with Inception model.
@@ -43,13 +45,16 @@ See the tutorial and website for a detailed description of how to use this scrip
 
 For more details, you can see the tensorflow githubs. [Tensorflow](https://github.com/tensorflow/tensorflow) and [Tensorflow Model Zoo](https://github.com/tensorflow/models).
 
+
 5. **MemN2N**
 
 This is TensorFlow implementation of End-To-End Memory Networks for language modeling. It use a set of sample Penn Tree Bank(PTB) as Dataset.
 
+
 6. **NTM**
 
 This is Tensorflow implementation of Neural Turing Machine. This implementation uses an LSTM controller. NTM models with multiple read/write heads are supported.
+
 
 # How to Run
 
@@ -60,3 +65,13 @@ This is Tensorflow implementation of Neural Turing Machine. This implementation 
 3. Right click the script name to set the script want to run as "Startup File"
 
 4. Right-click the script -> Start without Debugging
+
+
+# Contributors
+
+Some projects are contributed by University Students from Microsoft Student Club. Below is the detail information.
+
+1. Project MemN2N, NTM
+
+    - Contributors: Tian-You Gao, Xiang Li
+    - University: Nanjing University of Aeronautics and Astronautics
