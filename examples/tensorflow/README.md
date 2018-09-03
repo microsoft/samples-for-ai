@@ -1,4 +1,4 @@
-# Introduction
+﻿# Introduction
 
 [简体中文](/zh-hans/examples/tensorflow/README.md)
 
@@ -12,7 +12,7 @@ This is an example for training & evaluating the MNIST network using a feed dict
 For more details, you can see the tensorflow githubs. [Tensorflow](https://github.com/tensorflow/tensorflow) and [Tensorflow Model Zoo](https://github.com/tensorflow/models).
 
 
-1. **cifar10**: ([source of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/cifar10))
+2. **cifar10**: ([source of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/cifar10))
 
 CIFAR-10 is a common benchmark in machine learning for image recognition. (http://www.cs.toronto.edu/~kriz/cifar.html) 
 
@@ -21,7 +21,7 @@ The code is a simple example to train and evaluate a convolutional neural networ
 For more details, you can see the tensorflow githubs. [Tensorflow](https://github.com/tensorflow/tensorflow) and [Tensorflow Model Zoo](https://github.com/tensorflow/models).
 
 
-1. **embedding**: ([source of the script](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/tutorials/word2vec))
+3. **embedding**: ([source of the script](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/tutorials/word2vec))
 
 This is an example for word embedding.
 
@@ -33,7 +33,7 @@ We filter the 1 GB test file enwik9 to produce a 715 MB file fil9, and compress 
 
 For more details, you can see the tensorflow githubs. [Tensorflow](https://github.com/tensorflow/tensorflow) and [Tensorflow Model Zoo](https://github.com/tensorflow/models).
 
-1. **imagenet**: ([source  of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/imagenet))
+4. **imagenet**: ([source  of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/imagenet))
 
 This is an example for simple image classification with Inception model.
 
@@ -43,11 +43,11 @@ See the tutorial and website for a detailed description of how to use this scrip
 
 For more details, you can see the tensorflow githubs. [Tensorflow](https://github.com/tensorflow/tensorflow) and [Tensorflow Model Zoo](https://github.com/tensorflow/models).
 
-1. **MemN2N**
+5. **MemN2N**
 
 This is TensorFlow implementation of End-To-End Memory Networks for language modeling. It use a set of sample Penn Tree Bank(PTB) as Dataset.
 
-1. **NTM**
+6. **NTM**
 
 This is Tensorflow implementation of Neural Turing Machine. This implementation uses an LSTM controller. NTM models with multiple read/write heads are supported.
 
