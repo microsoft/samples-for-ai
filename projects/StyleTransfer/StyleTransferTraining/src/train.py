@@ -213,7 +213,7 @@ def main():
                 # Write checkpoint
                 if total_step % 2000 == 0:                                        
                     info('Saving checkpoint to ' + ckpt_path)
-                    res = saver.save(sess, ckpt_path, global_step=total_step)
+                    saver.save(sess, ckpt_path, global_step=total_step)
         
         info('Exporting SavedModel to ' + export_dir)
         serving_signatures = {

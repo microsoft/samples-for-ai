@@ -1,3 +1,4 @@
+import numpy as np
 import os
 import scipy.misc
 import sys
@@ -27,7 +28,7 @@ def get_available_gpus():
 
 def list_jpgs(root_dir):
     jpgs = []
-    for root, dirs, files in os.walk(root_dir):
+    for root, _, files in os.walk(root_dir):
         for file in files:
             if file.endswith('jpg'):
                  jpgs.append(os.path.join(root, file))
@@ -39,3 +40,8 @@ def read_img(src, new_size = None):
    if new_size:
        img = scipy.misc.imresize(img, new_size)
    return img
+
+
+def save_img(out_path, img):
+    img = np.clip(img, 0, 255).astype(np.uint8)
+    scipy.misc.imsave(out_path, img)
