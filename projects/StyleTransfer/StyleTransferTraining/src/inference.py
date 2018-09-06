@@ -1,16 +1,16 @@
 ﻿import sys
 sys.path.insert(0, '.')
-import vgg, stylenet
+import stylenet, utils
 import numpy as np
 import argparse
 import tensorflow as tf
 import os
 
 parser = argparse.ArgumentParser(description='Real-time style transfer image generator')
-parser.add_argument('--input', '-i', type=str, help='content image')
+parser.add_argument('--input', '-i', required=True, type=str, help='content image')
 parser.add_argument('--gpu', '-g', default=-1, type=int,
                     help='GPU ID (negative value indicates CPU)')
-parser.add_argument('--ckpt', '-c', default='c1', type=str, help='checkpoint to be loaded')
+parser.add_argument('--ckpt', '-c', required=True, type=str, help='checkpoint to be loaded')
 parser.add_argument('--out', '-o', default='stylized_image.jpg', type=str, help='stylized image\'s name')
 
 args = parser.parse_args()
@@ -20,7 +20,7 @@ content_image_path = args.input
 ckpt = args.ckpt
 gpu = args.gpu
 
-original_image = vgg.read_img(content_image_path).astype(np.float32) / 255.0
+original_image = utils.read_img(content_image_path).astype(np.float32) / 255.0
 shaped_input = original_image.reshape((1,) + original_image.shape)
 
 
@@ -41,5 +41,4 @@ with tf.device(device):
         saver.restore(sess, input_checkpoint.model_checkpoint_path)           
         out = sess.run(net, feed_dict={inputs: shaped_input})
     
-vgg.save_img(outfile_path, out.reshape(out.shape[1:]))
-
+utils.save_img(outfile_path, out.reshape(out.shape[1:]))

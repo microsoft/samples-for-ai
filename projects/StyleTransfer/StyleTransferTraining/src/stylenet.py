@@ -74,4 +74,3 @@ def net(image):
     #y = batch_norm(conv2d(h, d3, name='t_deconv3'))
     y = batch_norm(deconv2d(h, d3, name='t_deconv3'))
     return tf.nn.tanh(y) * 150 + 127.5
-

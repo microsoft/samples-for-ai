@@ -3,8 +3,6 @@
 import tensorflow as tf
 import numpy as np
 import scipy.io
-import pdb
-import scipy.misc, os, sys
 import functools
 
 
@@ -24,8 +22,6 @@ def net(data_path, input_image):
         'relu5_3', 'conv5_4', 'relu5_4'
     )
     data = scipy.io.loadmat(data_path)
-    mean = data['normalization'][0][0][0]
-    mean_pixel = np.mean(mean, axis=(0, 1))
     weights = data['layers'][0]
     
     net = {}
@@ -112,18 +108,3 @@ def total_content_loss(net, content_vgg, bsize):
 def _tensor_size(tensor):
     from operator import mul
     return functools.reduce(mul, (d.value for d in tensor.get_shape()[1:]), 1)
-
-
-def save_img(out_path, img):
-    img = np.clip(img, 0, 255).astype(np.uint8)
-    scipy.misc.imsave(out_path, img)
-
-
-def scale_img(style_path, style_scale):
-    scale = float(style_scale)
-    o0, o1, o2 = scipy.misc.imread(style_path, mode='RGB').shape
-    scale = float(style_scale)
-    new_shape = (int(o0 * scale), int(o1 * scale), o2)
-    #style_target = _get_img(style_path, img_size=new_shape)
-    style_target = scipy.misc.imresize(scipy.misc.imread(style_path, mode='RGB'), new_shape)
-    return style_target
