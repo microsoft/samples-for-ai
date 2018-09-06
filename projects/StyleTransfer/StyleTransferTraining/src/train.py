@@ -41,7 +41,7 @@ if options.gpu_id >= 0:
         device = '/gpu:0'
     else:
         device = '/gpu:%d' % options.gpu_id
-    #if len(get_available_gpus()) > options.gpu_id:
+
 
 import tensorflow as tf
 import vgg
