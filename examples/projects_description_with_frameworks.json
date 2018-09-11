@@ -14,7 +14,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/MNIST"
                         },
                         "name": "MNIST using TensorFlow",
-                        "summary": "MNIST project with TensorFlow framework.",
+                        "summary": "Training & evaluating the MNIST network using a feed dictionary. MNIST is a popular dataset for handwritten digits recognition. It contains 60000 examples as training set and 10000 examkples as test set.",
                         "framework": "TensorFlow",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/MNIST",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/MNIST.png",
@@ -34,7 +34,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/cifar10"
                         },
                         "name": "CIFAR10 using TensorFlow",
-                        "summary": "CIFAR10 project with TensorFlow framework.",
+                        "summary": "Train and evaluate a CNN model on CPU with CIFAR10 dataset. CIFAR-10 is a common benchmark in machine learning for image recognition.",
                         "framework": "TensorFlow",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/cifar10",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/Cifar10.png",
@@ -54,7 +54,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/embedding"
                         },
                         "name": "Embedding using TensorFlow",
-                        "summary": "Embedding project with TensorFlow framework.",
+                        "summary": "An example for word embedding. Word embedding is the collective name for a set of language modeling and feature learning techniques in natural language processing (NLP) where words or phrases from the vocabulary are mapped to vectors of real numbers.",
                         "framework": "TensorFlow",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/embedding",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
@@ -74,7 +74,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/imagenet"
                         },
                         "name": "ImageNet using TensorFlow",
-                        "summary": "ImageNet project with TensorFlow framework.",
+                        "summary": "Simple image classification with Inception model",
                         "framework": "TensorFlow",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/imagenet",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
@@ -94,7 +94,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/MemN2N"
                         },
                         "name": "MemN2N using TensorFlow",
-                        "summary": "MemN2N project with TensorFlow framework.",
+                        "summary": "TensorFlow implementation of End-To-End Memory(MemN2N) Networks for language modeling. It use a set of sample Penn Tree Bank(PTB) as Dataset.",
                         "framework": "TensorFlow",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/MemN2N",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
@@ -114,7 +114,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/tensorflow/NTM"
                         },
                         "name": "NTM using TensorFlow",
-                        "summary": "NTM project with TensorFlow framework.",
+                        "summary": "Tensorflow implementation of Neural Turing Machine. This implementation uses an LSTM controller. NTM models with multiple read/write heads are supported.",
                         "framework": "TensorFlow",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/tensorflow/NTM",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
@@ -140,7 +140,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/pytorch/mnist"
                         },
                         "name": "MNIST using PyTorch",
-                        "summary": "MNIST project with PyTorch framework.",
+                        "summary": "This is a simple handwritten digits recognition project with MNIST dataset. MNIST is a popular dataset for handwritten digits recognition. It contains 60000 examples as training set and 10000 examkples as test set.",
                         "framework": "PyTorch",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/mnist",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/MNIST.png",
@@ -160,7 +160,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/pytorch/cifar10"
                         },
                         "name": "CIFAR10 using PyTorch",
-                        "summary": "CIFAR10 project with PyTorch framework.",
+                        "summary": "Train and evaluate a CNN on CPU with CIFAR10 dataset. CIFAR-10 is a common benchmark in machine learning for image recognition.",
                         "framework": "PyTorch",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/cifar10",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/Cifar10.png",
@@ -180,7 +180,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/pytorch/sentiment_analysis"
                         },
                         "name": "Sentiment Analysis using PyTorch",
-                        "summary": "Sentiment Analysis project with PyTorch framework.",
+                        "summary": "This project used a RNN model to train a document sentimenet analysis classifier on IMDB dataset. Then used the model to do inference.",
                         "framework": "PyTorch",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/sentiment_analysis",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
@@ -200,7 +200,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/pytorch/transfer_learning"
                         },
                         "name": "Transfer Learning using PyTorch",
-                        "summary": "Transfer Learning project with PyTorch framework.",
+                        "summary": "This is a transfer learning project. It trained a cifar10 classifier using resnet model on imagenet dataset.",
                         "framework": "PyTorch",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/transfer_learning",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
@@ -220,7 +220,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/pytorch/Image_Captioning"
                         },
                         "name": "Image Captioning using PyTorch",
-                        "summary": "Image Captioning project with PyTorch framework.",
+                        "summary": "A reimplementation of Framing Image Description as a Ranking Task. The data can be obtained in http://lixirong.net/datasets/flickr8kcn",
                         "framework": "PyTorch",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/Image_Captioning",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/Image_Captioning.png",
@@ -240,7 +240,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/pytorch/ScreenerNet"
                         },
                         "name": "ScreenerNet using PyTorch",
-                        "summary": "ScreenerNet project with PyTorch framework.",
+                        "summary": "A reimplementation of ScreenerNet: Learning Self-Paced Curriculum for Deep Neural Networks.",
                         "framework": "PyTorch",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/pytorch/ScreenerNet",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
@@ -266,7 +266,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/brainscript/AN4"
                         },
                         "name": "AN4 using CNTK BrainScript",
-                        "summary": "AN4 project with CNTK BrainScript framework.",
+                        "summary": "Training feed forward and LSTM networks for speech data. The traing data contents of this directory is a modified version of AN4 dataset (The AN4 dataset is a part of CMU audio databases) pre-processed and optimized for CNTK end-to-end testing.",
                         "framework": "CNTK-BrainScript",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/brainscript/AN4",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
@@ -286,7 +286,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/brainscript/CMUDict"
                         },
                         "name": "CMUDict using CNTK BrainScript",
-                        "summary": "CMUDict project with CNTK BrainScript framework.",
+                        "summary": "An example demonstrates the use of CNTK for grapheme-to-phoneme (letter-to-sound) conversion using a sequence-to-sequence model with attention, using the CMUDict dictionary. ",
                         "framework": "CNTK-BrainScript",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/brainscript/CMUDict",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/CMUDict.png",
@@ -306,7 +306,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/brainscript/MNIST"
                         },
                         "name": "MNIST using CNTK BrainScript",
-                        "summary": "MNIST project with CNTK BrainScript framework.",
+                        "summary": "An example demonstrates usage of the NDL (Network Description Language) to define networks, using MNIST dataset. MNIST is a popular dataset for handwritten digits recognition. It contains 60000 examples as training set and 10000 examkples as test set.",
                         "framework": "CNTK-BrainScript",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/brainscript/MNIST",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/MNIST.png",
@@ -332,7 +332,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/python/ATIS"
                         },
                         "name": "ATIS using CNTK Python",
-                        "summary": "ATIS project with CNTK Python framework.",
+                        "summary": "An example for training feed forward and LSTM networks for speech data ATIS.",
                         "framework": "CNTK-Python",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/ATIS",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
@@ -352,7 +352,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/python/CIFAR10"
                         },
                         "name": "CIFAR10 using CNTK Python",
-                        "summary": "CIFAR10 project with CNTK Python framework.",
+                        "summary": "The example applies CNN on the CIFAR-10 dataset. It is a popular image classification example.",
                         "framework": "CNTK-Python",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/CIFAR10",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/Cifar10.png",
@@ -372,7 +372,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/python/CMUDict"
                         },
                         "name": "CMUDict using CNTK Python",
-                        "summary": "CMUDict project with CNTK Python framework.",
+                        "summary": "An example for sequence-to-sequence modeling for grapheme-to-phoneme (aka letter-to-sound) conversion on the CMUDict dictionary.",
                         "framework": "CNTK-Python",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/CMUDict",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/CMUDict.png",
@@ -392,7 +392,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/python/MNIST"
                         },
                         "name": "MNIST using CNTK Python",
-                        "summary": "MNIST project with CNTK Python framework.",
+                        "summary": "An example for training a feedforward classification model for MNIST images. MNIST is a popular dataset for handwritten digits recognition. It contains 60000 examples as training set and 10000 examkples as test set.",
                         "framework": "CNTK-Python",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/MNIST",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/MNIST.png",
@@ -412,7 +412,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/python/ptb"
                         },
                         "name": "PTB using CNTK Python",
-                        "summary": "PTB project with CNTK Python framework.",
+                        "summary": "An example for creating and train an RNN language model. The dataset used in this project is a subset of the Penn Tree Bank dataset.",
                         "framework": "CNTK-Python",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/ptb",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
@@ -432,7 +432,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/cntk/python/NumpyExperiment"
                         },
                         "name": "NumpyExperiment using CNTK Python",
-                        "summary": "NumpyExperiment project with CNTK Python framework.",
+                        "summary": "A CNTK implement of Independently Recurrent Neural Network (IndRNN): Building A Longer and Deeper RNN",
                         "framework": "CNTK-Python",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/cntk/python/NumpyExperiment",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
@@ -458,7 +458,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/mxnet/MNIST"
                         },
                         "name": "MNIST using MXNet",
-                        "summary": "MNIST project with MXNet framework.",
+                        "summary": "A common handwritten digit recognition examples on MNIST dataset. MNIST is a popular dataset for handwritten digits recognition. It contains 60000 examples as training set and 10000 examkples as test set.",
                         "framework": "MXNet",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/mxnet/MNIST",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/MNIST.png",
@@ -484,7 +484,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/cifar10_tf"
                         },
                         "name": "CIFAR10 using Keras (TensorFlow Backend)",
-                        "summary": "CIFAR10 project with Keras framework and Tensorflow backend.",
+                        "summary": "Train a simple deep CNN model on the cifar10 small images dataset, with TensorFlow backend. CIFAR-10 is a common benchmark in machine learning for image recognition.",
                         "framework": "Keras",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/cifar10_tf",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/Cifar10.png",
@@ -504,7 +504,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/cifar10_th"
                         },
                         "name": "CIFAR10 using Keras (Theano Backend)",
-                        "summary": "CIFAR10 project with Keras framework and Theano backend.",
+                        "summary": "Train a simple deep CNN model on the cifar10 small images dataset, with Theano backend. CIFAR-10 is a common benchmark in machine learning for image recognition.",
                         "framework": "Keras",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/cifar10_th",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/Cifar10.png",
@@ -524,7 +524,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/DenseNet"
                         },
                         "name": "DenseNet using Keras (TensorFlow Backend)",
-                        "summary": "DenseNet project with Keras framework and Tensorflow backend.",
+                        "summary": "An implementation of the paper Densely Connected Convolutional Networks. Now supports the more efficient DenseNet-BC (DenseNet-Bottleneck-Compressed) networks. Using the DenseNet-BC-190-40 model, it obtaines state of the art performance on CIFAR-10 and CIFAR-100",
                         "framework": "Keras",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/DenseNet",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
@@ -564,7 +564,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/capsnet_tf"
                         },
                         "name": "Capsule Network using Keras (TensorFlow Backend)",
-                        "summary": "Train a simple Capsule Network (Dynamic Routing Between Capsules) on the CIFAR10 small images dataset, with Keras framework and Tensorflow backend.",
+                        "summary": "Train a simple Capsule Network (Dynamic Routing Between Capsules) on the CIFAR10 small images dataset, with Keras framework and Tensorflow backend. CIFAR-10 is a common benchmark in machine learning for image recognition.",
                         "framework": "Keras",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/capsnet_tf",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
@@ -650,7 +650,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/caffe2/MNIST"
                         },
                         "name": "MNIST using Caffe2",
-                        "summary": "MNIST project with Caffe2 framework.",
+                        "summary": "A common examples for digit recognition. The project trained MNIST dataset with LeNet model. MNIST is a popular dataset for handwritten digits recognition. It contains 60000 examples as training set and 10000 examkples as test set.",
                         "framework": "Caffe2",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/caffe2/MNIST",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/MNIST.png",
@@ -670,7 +670,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/caffe2/cifar10"
                         },
                         "name": "CIFAR10 using Caffe2",
-                        "summary": "CIFAR10 project with Caffe2 framework.",
+                        "summary": "A common examples for image recognition. CIFAR-10 is a common benchmark in machine learning for image recognition.",
                         "framework": "Caffe2",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/caffe2/cifar10",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/Cifar10.png",
@@ -722,7 +722,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/chainer/mnist"
                         },
                         "name": "MNIST using Chainer",
-                        "summary": "MNIST project with Chainer framework.",
+                        "summary": "Trained MNIST dataset with a feed-forward net. MNIST is a popular dataset for handwritten digits recognition. It contains 60000 examples as training set and 10000 examkples as test set.",
                         "framework": "Chainer",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/chainer/mnist",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/MNIST.png",

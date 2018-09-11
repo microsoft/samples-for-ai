@@ -15,7 +15,7 @@ For more details, you can see the tensorflow githubs. [Tensorflow](https://githu
 
 2. **cifar10**: ([source of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/cifar10))
 
-CIFAR-10 is a common benchmark in machine learning for image recognition. (http://www.cs.toronto.edu/~kriz/cifar.html) 
+CIFAR-10 is a common benchmark in machine learning for image recognition. (http://www.cs.toronto.edu/~kriz/cifar.html)
 
 The code is a simple example to train and evaluate a convolutional neural network(CNN) on CPU.
 
@@ -24,7 +24,7 @@ For more details, you can see the tensorflow githubs. [Tensorflow](https://githu
 
 3. **embedding**: ([source of the script](https://github.com/tensorflow/tensorflow/tree/master/tensorflow/examples/tutorials/word2vec))
 
-This is an example for word embedding.
+This is an example for word embedding. Word embedding is the collective name for a set of language modeling and feature learning techniques in natural language processing (NLP) where words or phrases from the vocabulary are mapped to vectors of real numbers.
 
 The test data is downloaded from http://mattmahoney.net/dc/text8.zip
 
