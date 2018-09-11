@@ -41,7 +41,7 @@ if options.gpu_id >= 0:
         device = '/gpu:0'
     else:
         device = '/gpu:%d' % options.gpu_id
-    #if len(get_available_gpus()) > options.gpu_id:
+
 
 import tensorflow as tf
 import vgg
@@ -213,7 +213,7 @@ def main():
                 # Write checkpoint
                 if total_step % 2000 == 0:                                        
                     info('Saving checkpoint to ' + ckpt_path)
-                    res = saver.save(sess, ckpt_path, global_step=total_step)
+                    saver.save(sess, ckpt_path, global_step=total_step)
         
         info('Exporting SavedModel to ' + export_dir)
         serving_signatures = {
