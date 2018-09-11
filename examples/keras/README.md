@@ -17,9 +17,9 @@ The example is used to train a simple deep CNN model on the cifar10 small images
 
 3. **DenseNet:**
 
-This project is an implementation of the paper [Densely Connected Convolutional Networks](https://arxiv.org/pdf/1608.06993v3.pdf) in Keras
+This project is an implementation of the paper [Densely Connected Convolutional Networks](https://arxiv.org/pdf/1608.06993v3.pdf) in Keras.
 
-Now supports the more efficient DenseNet-BC (DenseNet-Bottleneck-Compressed) networks. Using the DenseNet-BC-190-40 model, 
+Now supports the more efficient DenseNet-BC (DenseNet-Bottleneck-Compressed) networks. Using the DenseNet-BC-190-40 model,
 it obtaines state of the art performance on CIFAR-10 and CIFAR-100
 
 4. **acgan_tf:**
@@ -32,16 +32,16 @@ This is a Keras implementation of NIPS 2017 Paper: "Dynamic Routing Between Caps
 
 6. **dcgan_tf:**
 
-This is a project of using DCGAN (Deep Convolution Generative Adversarial Networks) to generate handwritten digits. 
+This is a project of using DCGAN (Deep Convolution Generative Adversarial Networks) to generate handwritten digits.
 Implement the network and the results of it can be visualized and saved as pictures.
 
 7  **infogan_tf:**
 
-This is a Keras implementation of InfoGAN, which can generates handwritten digits througth training.
+This is a Keras implementation of InfoGAN (Information-theoretic extension to the Generative Adversarial Network), which can generates handwritten digits througth training.
 
 8. **wgan_tf:**
 
-This is a Keras implementation of WGAN, which can generates handwritten digits througth training.
+This is a Keras implementation of WGAN (Wasserstein Generative Adversarial Network), which can generates handwritten digits througth training.
 
 # How to Run
 
@@ -62,12 +62,12 @@ These projects are contributed by University Students from Microsoft Student Clu
 
     - Contributors: Xin Fu, Yi Rong, Runnan Cao, Wenjun Lin, Zihan Chen
     - University: Wuhan University
-    
+
 2. Project infogan_tf, wgan_tf
 
     - Contributors: Wu Zhifan, Zhao Jiawei, He Hao
     - University: Nanjing University of Aeronautics and Astronautics
-    
+
 3. Project DenseNet
 
     - Contributors: Secone Liu, Zou Ji, Yaxuan Dai, Jie Lin
