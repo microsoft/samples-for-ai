@@ -1,12 +1,34 @@
 import os
+import re
 from collections import Counter
 
-def read_data(fname, count, word2idx):
-    if os.path.isfile(fname):
+from smart_open import smart_open
+
+# Change hdfs url to webhdfs and change port
+def UrlConvert(hdfspath):
+    regex=re.compile('^hdfs://')
+    if re.match(regex, hdfspath):
+        webhdfs = hdfspath.replace('hdfs', 'webhdfs', 1).replace(':9000', ':50070', 1)
+    return webhdfs
+
+def write_data_to_local(hdfspath, localdir, fname):
+    localpath = os.path.join(localdir, fname)
+    lines = list()
+    for line in smart_open(UrlConvert(hdfspath) + '/' + fname):
+        lines.append(line)
+    if not os.path.exists(localdir):
+        os.makedirs(localdir)
+    if os.path.isfile(localpath):
+        os.remove(localpath)
+    with open(localpath, 'w+') as f:
+        f.writelines(lines)
+
+def read_data(fname, count, word2idx, hdfs=False):
+    if os.path.exists(fname):
         with open(fname) as f:
             lines = f.readlines()
     else:
-        raise("[!] Data %s not found" % fname)
+        raise Exception("[!] Data %s not found" % fname)
 
     words = []
     for line in lines:

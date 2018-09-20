@@ -2,7 +2,7 @@ import os
 import pprint
 import tensorflow as tf
 
-from data import read_data
+from data import read_data, write_data_to_local
 from model import MemN2N
 
 pp = pprint.PrettyPrinter()
@@ -25,6 +25,10 @@ flags.DEFINE_string("data_name", "ptb", "data set name [ptb]")
 flags.DEFINE_boolean("is_test", False, "True for testing, False for Training [False]")
 flags.DEFINE_boolean("show", False, "print progress [False]")
 flags.DEFINE_integer("nwords", 0 , "number of words")
+# Submit job to microsoft PAI cluster
+# Read/Write WebHDFS
+flags.DEFINE_string("pai_data_dir", "", "PAI data directory")
+flags.DEFINE_boolean("hdfs", False, "True if read/write files on webhdfs")
 
 FLAGS = flags.FLAGS
 
@@ -33,11 +37,16 @@ def main(_):
     word2idx = {}
 
     if not os.path.exists(FLAGS.checkpoint_dir):
-      os.makedirs(FLAGS.checkpoint_dir)
+        os.makedirs(FLAGS.checkpoint_dir)
 
-    train_data = read_data('%s/%s.train.txt' % (FLAGS.data_dir, FLAGS.data_name), count, word2idx)
-    valid_data = read_data('%s/%s.valid.txt' % (FLAGS.data_dir, FLAGS.data_name), count, word2idx)
-    test_data = read_data('%s/%s.test.txt' % (FLAGS.data_dir, FLAGS.data_name), count, word2idx)
+    if FLAGS.hdfs:
+        write_data_to_local(FLAGS.pai_data_dir, FLAGS.data_dir, FLAGS.data_name + '.train.txt')
+        write_data_to_local(FLAGS.pai_data_dir, FLAGS.data_dir, FLAGS.data_name + '.valid.txt')
+        write_data_to_local(FLAGS.pai_data_dir, FLAGS.data_dir, FLAGS.data_name + '.test.txt')
+
+    train_data = read_data(os.path.join(FLAGS.data_dir, FLAGS.data_name + '.train.txt'), count, word2idx, FLAGS.hdfs)
+    valid_data = read_data(os.path.join(FLAGS.data_dir, FLAGS.data_name + '.valid.txt'), count, word2idx, FLAGS.hdfs)
+    test_data = read_data(os.path.join(FLAGS.data_dir, FLAGS.data_name + '.test.txt'), count, word2idx, FLAGS.hdfs)
 
     idx2word = dict(zip(word2idx.values(), word2idx.keys()))
     FLAGS.nwords = len(word2idx)
