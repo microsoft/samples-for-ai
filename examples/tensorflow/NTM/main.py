@@ -4,6 +4,11 @@ import importlib
 import tensorflow as tf
 from ntm_cell import NTMCell
 from ntm import NTM
+import os
+import re
+import sh
+from smart_open import smart_open
+import shutil
 
 from utils import pp
 
@@ -22,6 +27,11 @@ flags.DEFINE_integer("test_max_length", 120, "Maximum length of output sequence 
 flags.DEFINE_string("checkpoint_dir", "checkpoint", "Directory name to save the checkpoints [checkpoint]")
 flags.DEFINE_boolean("is_train", False, "True for training, False for testing [False]")
 flags.DEFINE_boolean("continue_train", None, "True to continue training from saved checkpoint. False for restarting. None for automatic [None]")
+# Submit job to microsoft PAI cluster
+# Read/Write WebHDFS
+#flags.DEFINE_string("pai_data_dir", "", "PAI data directory")
+#flags.DEFINE_boolean("hdfs", False, "True if read/write files on webhdfs")
+
 FLAGS = flags.FLAGS
 
 
@@ -38,6 +48,28 @@ def create_ntm(config, sess, **ntm_args):
         cell, sess, config.min_length, config.max_length,
         test_max_length=config.test_max_length, scope=scope, **ntm_args)
     return cell, ntm
+
+# Change hdfs url to webhdfs and change port
+def UrlConvert(hdfspath):
+    regex=re.compile('^hdfs://')
+    if re.match(regex, hdfspath):
+        webhdfs = hdfspath.replace('hdfs', 'webhdfs', 1).replace(':9000', ':50070', 1)
+    return webhdfs
+
+#def write_file_to_local(hdfspath, localpath):
+#    lines = list()
+#    for line in smart_open(UrlConvert(hdfspath)):
+#        lines.append(line)
+#    with open(localpath, 'wb+') as f:
+#        f.writelines(lines)
+
+#def write_data_to_local(src, dest):
+#    if not os.path.exists(dest):
+#        os.makedirs(dest)
+#    files = [line.rsplit(None,1)[-1] for line in sh.hdfs('dfs','-ls',src).split('\n') if len(line.rsplit(None,1))][1:]
+#    for f in files:
+#        print(f)
+#        write_file_to_local(f, os.path.join(dest, f.split('/')[-1]))
 
 
 def main(_):
@@ -56,6 +88,10 @@ def main(_):
         else:
             cell, ntm = create_ntm(FLAGS, sess, forward_only=True)
 
+        #if FLAGS.hdfs:
+        #    hdfspath = "%s/%s/%s_%s" % (FLAGS.pai_data_dir, FLAGS.checkpoint_dir, FLAGS.task, FLAGS.max_length)
+        #    localpath = "%s/%s_%s" % (FLAGS.checkpoint_dir, FLAGS.task, FLAGS.max_length)
+        #    write_data_to_local(hdfspath, localpath)
         ntm.load(FLAGS.checkpoint_dir, FLAGS.task)
 
         if FLAGS.task == 'copy':
