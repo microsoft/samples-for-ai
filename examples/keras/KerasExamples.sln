@@ -19,6 +19,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "wgan_tf", "wgan_tf\wgan_tf.
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "infogan_tf", "infogan_tf\infogan_tf.pyproj", "{EE68784F-A500-433A-9806-E7202E6A9DE8}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "Image_Captioning", "Image_Captioning\Image_Captioning.pyproj", "{4961F807-50D9-4BD3-8974-C7752C3B3C9B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -41,6 +43,8 @@ Global
 		{95821350-188B-44B2-BDE2-B7256B330B66}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{EE68784F-A500-433A-9806-E7202E6A9DE8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EE68784F-A500-433A-9806-E7202E6A9DE8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4961F807-50D9-4BD3-8974-C7752C3B3C9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4961F807-50D9-4BD3-8974-C7752C3B3C9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
