@@ -12,6 +12,9 @@
     <ProjectTypeGuids>{D22814C2-A430-4A53-8052-A3A64BFB2240};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
     <LaunchProvider>Standard Python launcher</LaunchProvider>
     <InterpreterId />
+    <CommandLineArguments>
+    </CommandLineArguments>
+    <EnableNativeCodeDebugging>False</EnableNativeCodeDebugging>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)' == 'Debug'" />
   <PropertyGroup Condition="'$(Configuration)' == 'Release'" />
@@ -20,11 +23,17 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="main.py" />
+    <Compile Include="tasks\copy.py" />
+    <Compile Include="tasks\recall.py" />
+    <Compile Include="tasks\__init__.py" />
     <Compile Include="ntm.py" />
     <Compile Include="ntm_cell.py" />
     <Compile Include="ops.py" />
     <Compile Include="ops_test.py" />
     <Compile Include="utils.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="tasks\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
 </Project>

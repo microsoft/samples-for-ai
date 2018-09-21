@@ -1,0 +1,20 @@
+{
+  "jobName": "tensorflow-memn2n",
+  "image": "openpai/pai.example.tensorflow",
+  "codeDir": "$PAI_DEFAULT_FS_URI/tiqint/memn2n/code",
+  "authFile": "",
+  "dataDir": "$PAI_DEFAULT_FS_URI/tiqint/memn2n/data",
+  "outputDir": "$PAI_DEFAULT_FS_URI/tiqint/memn2n/output",
+  "gpuType": "",
+  "retryCount": 0,
+  "taskRoles": [
+    {
+      "name": "memn2n_train",
+      "taskNumber": 1,
+      "cpuNumber": 8,
+      "memoryMB": 32768,
+      "gpuNumber": 0,
+      "command": "pip --quiet install smart_open future && python code/main.py --pai_data_dir=$PAI_DATA_DIR --hdfs=true"
+    }
+  ]
+}
