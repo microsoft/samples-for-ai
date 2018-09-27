@@ -22,6 +22,7 @@ import keras.backend as K
 import matplotlib.pyplot as plt
 
 import numpy as np
+import os
 
 class INFOGAN():
     def __init__(self):
@@ -244,4 +245,6 @@ class INFOGAN():
 
 if __name__ == '__main__':
     infogan = INFOGAN()
+    if not os.path.exists("./images"):
+        os.makedirs("./images")
     infogan.train(epochs=50000, batch_size=128, save_interval=50)
