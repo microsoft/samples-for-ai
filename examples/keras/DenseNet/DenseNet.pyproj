@@ -35,6 +35,15 @@
     <Compile Include="tensorflow_backend.py" />
     <Compile Include="theano_backend.py" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="images\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="images\accuracy_densenet.JPG" />
+    <Content Include="images\cheetah.jpg" />
+    <Content Include="images\dense_net.JPG" />
+    <Content Include="images\elephant.jpg" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.targets" />
   <!-- Uncomment the CoreCompile target to enable the Build command in
        Visual Studio and specify your pre- and post-build commands in

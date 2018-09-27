@@ -204,6 +204,8 @@ class WGAN():
 
 
 if __name__ == '__main__':
+    if not os.path.exists("images"):
+        os.makedirs("images")
     wgan = WGAN()
     wgan.train(epochs=4000, batch_size=32, save_interval=50)
 
