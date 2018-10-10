@@ -180,13 +180,14 @@ def moving_average(a, w=5):
 
 
 # Defines a utility that prints the training progress
-def print_training_progress(trainer, mb, frequency, verbose=1):
+def print_training_progress(trainer, mb, frequency, writer, verbose=1):
     training_loss = "NA"
     eval_error = "NA"
 
     if mb%frequency == 0:
         training_loss = trainer.previous_minibatch_loss_average
         eval_error = trainer.previous_minibatch_evaluation_average
+        writer.add_summary(eval_error*100, mb)
         if verbose: 
             print ("Minibatch: {0}, Loss: {1:.4f}, Error: {2:.2f}%".format(mb, training_loss, eval_error*100))
         
@@ -223,11 +224,20 @@ def train_test(train_reader, test_reader, model_func, x, y, learning_rate, minib
     # Start a timer
     start = time.time()
 
+    # Setup TensorBoard details
+    root_logdir = "tf_logs"
+    logdir = "{}/run-{}/".format(root_logdir, start)
+
+    mse_summary = tf.summary.scalar('error', label_error)
+    file_writer = tf.summary.FileWriter(logdir, tf.get_default_graph())
+
     for i in range(0, int(num_minibatches_to_train)):
         # Read a mini batch from the training data file
         data=train_reader.next_minibatch(minibatch_size, input_map=input_map) 
         trainer.train_minibatch(data)
-        print_training_progress(trainer, i, training_progress_output_freq, verbose=1)
+        print_training_progress(trainer, i, training_progress_output_freq, file_writer, verbose=1)
+
+    file_writer.close()
      
     # Print training time
     print("Training took {:.1f} sec".format(time.time() - start))
