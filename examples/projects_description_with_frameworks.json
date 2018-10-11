@@ -584,7 +584,7 @@
                             "address": "https://github.com/Microsoft/samples-for-ai/tree/master/examples/keras/dcgan_tf"
                         },
                         "name": "DCGAN using Keras (TensorFlow Backend)",
-                        "summary": "Deep Convolution Generative Adversarial Networks to generate handwritten digits, with Keras framework and Tensorflow backend.",
+                        "summary": "Deep Convolutional Generative Adversarial Networks to generate handwritten digits, with Keras framework and Tensorflow backend.",
                         "framework": "Keras",
                         "download_link":"https://api.github.com/repos/Microsoft/samples-for-ai/contents/examples/keras/dcgan_tf",
                         "image_url":"https://raw.githubusercontent.com/Microsoft/samples-for-ai/master/icons/General.png",
