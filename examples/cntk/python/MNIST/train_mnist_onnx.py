@@ -3,6 +3,7 @@
 # 2. https://github.com/Microsoft/CNTK/blob/master/Tutorials/CNTK_103D_MNIST_ConvolutionalNeuralNetwork.ipynb
 
 from __future__ import print_function
+from cntk.logging import TensorBoardProgressWriter
 import gzip
 import numpy as np
 import os
@@ -180,23 +181,27 @@ def moving_average(a, w=5):
 
 
 # Defines a utility that prints the training progress
-def print_training_progress(trainer, mb, frequency, writer, verbose=1):
+def print_training_progress(trainer, mb, frequency, verbose=1):
     training_loss = "NA"
     eval_error = "NA"
 
     if mb%frequency == 0:
         training_loss = trainer.previous_minibatch_loss_average
         eval_error = trainer.previous_minibatch_evaluation_average
-        writer.add_summary(eval_error*100, mb)
-        if verbose: 
+        if verbose:
             print ("Minibatch: {0}, Loss: {1:.4f}, Error: {2:.2f}%".format(mb, training_loss, eval_error*100))
         
     return mb, training_loss, eval_error
 
-def train_test(train_reader, test_reader, model_func, x, y, learning_rate, minibatch_size, num_sweeps_to_train_with=10):
-    
+def train_test(train_reader, test_reader, model_func, x, y, learning_rate, minibatch_size, num_sweeps_to_train_with=10, tensorboard_logdir=None):
+
     # Instantiate the model function; x is the input (feature) variable 
     model = model_func(x)
+
+    # Instantiate the Tensorboard writer
+    tensorboard_writer = None
+    if tensorboard_logdir is not None:
+        tensorboard_writer = TensorBoardProgressWriter(freq=10, log_dir="log_dir", model=model)
     
     # Instantiate the loss and error function
     loss, label_error = create_criterion_function(model, y)
@@ -205,7 +210,7 @@ def train_test(train_reader, test_reader, model_func, x, y, learning_rate, minib
     #learning_rate = 0.2
     lr_schedule = C.learning_parameter_schedule(learning_rate)
     learner = C.sgd(z.parameters, lr_schedule)
-    trainer = C.Trainer(z, (loss, label_error), [learner])
+    trainer = C.Trainer(z, (loss, label_error), [learner], progress_writers=tensorboard_writer)
     
     # Initialize the parameters for the trainer
     #minibatch_size = 64
@@ -224,21 +229,12 @@ def train_test(train_reader, test_reader, model_func, x, y, learning_rate, minib
     # Start a timer
     start = time.time()
 
-    # Setup TensorBoard details
-    root_logdir = "tf_logs"
-    logdir = "{}/run-{}/".format(root_logdir, start)
-
-    mse_summary = tf.summary.scalar('error', label_error)
-    file_writer = tf.summary.FileWriter(logdir, tf.get_default_graph())
-
     for i in range(0, int(num_minibatches_to_train)):
         # Read a mini batch from the training data file
         data=train_reader.next_minibatch(minibatch_size, input_map=input_map) 
         trainer.train_minibatch(data)
-        print_training_progress(trainer, i, training_progress_output_freq, file_writer, verbose=1)
+        print_training_progress(trainer, i, training_progress_output_freq, verbose=1)
 
-    file_writer.close()
-     
     # Print training time
     print("Training took {:.1f} sec".format(time.time() - start))
     
@@ -275,6 +271,8 @@ def main():
     parser.add_argument('--minibatch_size', type=int, default=64, help='minibatch size')
     parser.add_argument('--input_dir', help="Input directory where where training dataset and meta data are saved")
     parser.add_argument('--output_dir', help="Output directory where output such as logs are saved.")
+    parser.add_argument('--tensorboard_logdir', '--tensorboard_logdir',
+                        help='Directory where TensorBoard logs should be created', required=False, default=None)
     
     args = parser.parse_args()
 
@@ -309,7 +307,7 @@ def main():
     z = create_model(x, num_output_classes)
     reader_train = create_reader(train_file, True, input_dim, num_output_classes)
     reader_test = create_reader(test_file, False, input_dim, num_output_classes)
-    train_test(reader_train, reader_test, z, x, y, args.learning_rate, args.minibatch_size)
+    train_test(reader_train, reader_test, z, x, y, args.learning_rate, args.minibatch_size, args.tensorboard_logdir)
 
     z.save('mnist.onnx', format=C.ModelFormat.ONNX)
 
