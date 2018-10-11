@@ -6,8 +6,8 @@ from ntm_cell import NTMCell
 from ntm import NTM
 import os
 import re
-import sh
-from smart_open import smart_open
+# import sh
+# from smart_open import smart_open
 import shutil
 
 from utils import pp

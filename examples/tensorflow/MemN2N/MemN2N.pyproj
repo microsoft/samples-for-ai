@@ -29,6 +29,7 @@
     <Compile Include="utils.py" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="copydata.sh" />
     <Content Include="data\ptb.test.txt" />
     <Content Include="data\ptb.train.txt" />
     <Content Include="data\ptb.valid.txt" />
