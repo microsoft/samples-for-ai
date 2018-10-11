@@ -201,7 +201,7 @@ def train_test(train_reader, test_reader, model_func, x, y, learning_rate, minib
     # Instantiate the Tensorboard writer
     tensorboard_writer = None
     if tensorboard_logdir is not None:
-        tensorboard_writer = TensorBoardProgressWriter(freq=10, log_dir="log_dir", model=model)
+        tensorboard_writer = TensorBoardProgressWriter(freq=10, log_dir=tensorboard_logdir, model=model)
     
     # Instantiate the loss and error function
     loss, label_error = create_criterion_function(model, y)
@@ -271,8 +271,7 @@ def main():
     parser.add_argument('--minibatch_size', type=int, default=64, help='minibatch size')
     parser.add_argument('--input_dir', help="Input directory where where training dataset and meta data are saved")
     parser.add_argument('--output_dir', help="Output directory where output such as logs are saved.")
-    parser.add_argument('--tensorboard_logdir', '--tensorboard_logdir',
-                        help='Directory where TensorBoard logs should be created', required=False, default=None)
+    parser.add_argument('--tensorboard_logdir', type=str, default=None, help="Directory where TensorBoard logs should be saved.")
     
     args = parser.parse_args()
 
@@ -307,7 +306,7 @@ def main():
     z = create_model(x, num_output_classes)
     reader_train = create_reader(train_file, True, input_dim, num_output_classes)
     reader_test = create_reader(test_file, False, input_dim, num_output_classes)
-    train_test(reader_train, reader_test, z, x, y, args.learning_rate, args.minibatch_size, args.tensorboard_logdir)
+    train_test(reader_train, reader_test, z, x, y, args.learning_rate, args.minibatch_size, tensorboard_logdir=args.tensorboard_logdir)
 
     z.save('mnist.onnx', format=C.ModelFormat.ONNX)
 
