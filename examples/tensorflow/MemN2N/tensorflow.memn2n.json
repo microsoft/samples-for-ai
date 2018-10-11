@@ -14,7 +14,9 @@
       "cpuNumber": 8,
       "memoryMB": 32768,
       "gpuNumber": 0,
-      "command": "pip --quiet install smart_open future && python code/main.py --pai_data_dir=$PAI_DATA_DIR --hdfs=true"
+      "command": "pip --quiet install future && cd code && python main.py",
+      "minSucceededTaskCount": 1,
+      "minFailedTaskCount": 1
     }
   ]
 }
