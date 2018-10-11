@@ -73,7 +73,7 @@ def train(ntm, config, sess):
         ntm.load(config.checkpoint_dir, config.task, strict=config.continue_train is True)
 
     start_time = time.time()
-    for idx in xrange(config.epoch):
+    for idx in range(config.epoch):
         seq_length = randint(config.min_length, config.max_length)
         seq = generate_copy_sequence(seq_length, config.input_dim - 2)
 
@@ -105,6 +105,6 @@ def train(ntm, config, sess):
 
 def generate_copy_sequence(length, bits):
     seq = np.zeros([length, bits + 2], dtype=np.float32)
-    for idx in xrange(length):
+    for idx in range(length):
         seq[idx, 2:bits+2] = np.random.rand(bits).round()
     return list(seq)

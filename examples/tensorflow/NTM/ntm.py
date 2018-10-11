@@ -12,8 +12,8 @@ import ntm_cell
 import os
 from utils import progress
 
-def softmax_loss_function(labels, inputs):
-  return tf.nn.sigmoid_cross_entropy_with_logits(labels=labels, logits=inputs)
+def softmax_loss_function(labels, logits):
+  return tf.nn.sigmoid_cross_entropy_with_logits(labels=labels, logits=logits)
 
 class NTM(object):
     def __init__(self, cell, sess,
@@ -174,7 +174,8 @@ class NTM(object):
         print(" [*] Build a NTM model finished")
 
     def get_outputs(self, seq_length):
-        if not self.outputs.has_key(seq_length):
+        #if not self.outputs.has_key(seq_length):
+        if not seq_length in self.outputs:
             with tf.variable_scope(self.scope):
                 tf.get_variable_scope().reuse_variables()
 
@@ -193,10 +194,12 @@ class NTM(object):
         return self.outputs[seq_length]
 
     def get_loss(self, seq_length):
-        if not self.outputs.has_key(seq_length):
+        #if not self.outputs.has_key(seq_length):
+        if not seq_length in self.outputs:
             self.get_outputs(seq_length)
 
-        if not self.losses.has_key(seq_length):
+        #if not self.losses.has_key(seq_length):
+        if not seq_length in self.losses:
             loss = sequence_loss(
                 logits=self.output_logits[seq_length],
                 targets=self.true_outputs[0:seq_length],
@@ -211,7 +214,7 @@ class NTM(object):
     def get_output_states(self, seq_length):
         zeros = np.zeros(self.cell.input_dim, dtype=np.float32)
 
-        if not self.output_states.has_key(seq_length):
+        if not seq_length in self.output_states:
             with tf.variable_scope(self.scope):
                 tf.get_variable_scope().reuse_variables()
 
