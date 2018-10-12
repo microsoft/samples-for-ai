@@ -229,8 +229,6 @@ samples_per_epoch = 0
 for ca in captions:
     samples_per_epoch += len(ca.split()) - 1
 
-print("~~~~~~samples_per_epoch: {} ~~~~~~".format(samples_per_epoch))
-
 
 max_len = 40
 
