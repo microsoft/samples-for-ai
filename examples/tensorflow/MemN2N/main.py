@@ -2,7 +2,8 @@ import os
 import pprint
 import tensorflow as tf
 
-from data import read_data, write_data_to_local
+from data import read_data
+# from data import write_data_to_local
 from model import MemN2N
 
 pp = pprint.PrettyPrinter()
@@ -39,10 +40,10 @@ def main(_):
     if not os.path.exists(FLAGS.checkpoint_dir):
         os.makedirs(FLAGS.checkpoint_dir)
 
-    if FLAGS.hdfs:
-        write_data_to_local(FLAGS.pai_data_dir, FLAGS.data_dir, FLAGS.data_name + '.train.txt')
-        write_data_to_local(FLAGS.pai_data_dir, FLAGS.data_dir, FLAGS.data_name + '.valid.txt')
-        write_data_to_local(FLAGS.pai_data_dir, FLAGS.data_dir, FLAGS.data_name + '.test.txt')
+    #if FLAGS.hdfs:
+    #    write_data_to_local(FLAGS.pai_data_dir, FLAGS.data_dir, FLAGS.data_name + '.train.txt')
+    #    write_data_to_local(FLAGS.pai_data_dir, FLAGS.data_dir, FLAGS.data_name + '.valid.txt')
+    #    write_data_to_local(FLAGS.pai_data_dir, FLAGS.data_dir, FLAGS.data_name + '.test.txt')
 
     train_data = read_data(os.path.join(FLAGS.data_dir, FLAGS.data_name + '.train.txt'), count, word2idx, FLAGS.hdfs)
     valid_data = read_data(os.path.join(FLAGS.data_dir, FLAGS.data_name + '.valid.txt'), count, word2idx, FLAGS.hdfs)
