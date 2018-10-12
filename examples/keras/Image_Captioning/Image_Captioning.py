@@ -230,8 +230,6 @@ for ca in captions:
     samples_per_epoch += len(ca.split()) - 1
 
 
-
-
 max_len = 40
 
 
@@ -417,8 +415,7 @@ final_model = Sequential([
 final_model.compile(loss='categorical_crossentropy', optimizer=RMSprop(), metrics=['accuracy'])
 
 final_model.summary()
-final_model.fit_generator(data_generator(batch_size=512), steps_per_epoch=748,  validation_data=data_generator(batch_size = 512),validation_steps = 125, workers=4, use_multiprocessing=True,callbacks=[PlotLosses(final_model, 10)],
-                                         nb_epoch=57)
+final_model.fit_generator(data_generator(batch_size=512), steps_per_epoch=748,  validation_data=data_generator(batch_size = 512),validation_steps = 125, workers=4, use_multiprocessing=False,callbacks=[PlotLosses(final_model, 10)],epochs=57)
 # save the best weight after training
 
 file.close()
