@@ -2,42 +2,34 @@
 
 [简体中文](/zh-hans/examples/pytorch/README.md)
 
-These is a PyTorch example solution which has six projects.
+This is a PyTorch example solution which has five projects.
 
 ## List of Projects
 
-1. **Image_Captioning:**
-
-This is a reimplementation of [Framing Image Description as a Ranking Task](http://nlp.cs.illinois.edu/HockenmaierGroup/Framing_Image_Description/KCCA.html)
-The data can be obtained in http://lixirong.net/datasets/flickr8kcn
-
-You should download dataset by yourself follows this [tutorial](https://github.com/Microsoft/samples-for-ai/tree/master/examples/pytorch/Image_Captioning). 
-
-
-2. **ScreenerNet:**
+1. **ScreenerNet:**
 
 This is a reimplementation of [ScreenerNet: Learning Self-Paced Curriculum for Deep Neural Networks](https://arxiv.org/abs/1801.00904)
 
 
-3. **cifar10:**
+2. **cifar10:**
 
 CIFAR-10 is a common benchmark in machine learning for image recognition. (http://www.cs.toronto.edu/~kriz/cifar.html) 
 
 The code is a simple example to train and evaluate a convolutional neural network(CNN) on CPU.
 
 
-4. **mnist:**
+3. **mnist:**
 
 This is a simple handwritten digits recognition project with MNIST dataset. 
 MNIST is a popular dataset for handwritten digits recognition. It contains 60000 examples as training set and 10000 examkples as test set.
 
 
-5. **sentiment_analysis:**
+4. **sentiment_analysis:**
 
 This project used a RNN model to train a document sentimenet analysis classifier on IMDB dataset. Then used the model to do inference.
 
 
-6. **transfer_learning:**
+5. **transfer_learning:**
 
 This is a transfer learning project. It trained a cifar10 classifier using resnet model on imagenet dataset.
 
