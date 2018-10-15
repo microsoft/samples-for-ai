@@ -1,7 +1,7 @@
 
-# Introduction 
+# Introduction
 
-[Simplified Chinese (简体中文)](zh-hans/README.md) 
+[Simplified Chinese (简体中文)](zh-hans/README.md)
 
 [Traditional Chinese (正體中文)](zh-hant/README.md)
 
@@ -86,6 +86,18 @@ Currently, this installer works on Windows, macOS and Linux:
     - Right click the startup Python script, and click "Start without Debugging" or "Start with Debugging" context menus.
 
 
+## Submit samples to Microsoft PAI platform
+
+[**Microsoft OpenPAI**](https://github.com/Microsoft/pai) is an open source platform that provides complete AI model training and resource management capabiliies. These samples can submit to OpenPAI cluster. for each project, a json file is provided as an example to show how to configure the submit information. You can just use the example json file or set your specified configuration.
+
+### How to submit job to OpenPAI
+
+- Right-Click project name -> "Submit Job...".
+- In the pop-up dialog window, select your OpenPAI cluster.
+- Write your own configuration or "Import" json file.
+    - If you want use example json file as configuration: Click "Import..." button, select one json file
+- Click "Submit".
+
 # License
 
 The samples scripts are from official github of each framework. They are under different licenses.
@@ -95,7 +107,7 @@ The scripts of CNTK are under [MIT license](https://en.wikipedia.org/wiki/MIT_Li
 The scripts of Tensorflow samples are under [Apache 2.0 license](https://en.wikipedia.org/wiki/Apache_License#Version_2.0).
 There are no changes on the original code.
 
-For the scripts of Caffe2, different versions released with different licenses. 
+For the scripts of Caffe2, different versions released with different licenses.
 Currently, the master branch is under Apache 2.0 license. But the version 0.7 and 0.8.1 were released with [BSD 2-Clause license](https://github.com/caffe2/caffe2/tree/v0.8.1).
 The scripts in our solution are based on caffe2 github source tree version 0.7 and 0.8.1, with BSD 2-Clause license.
 
