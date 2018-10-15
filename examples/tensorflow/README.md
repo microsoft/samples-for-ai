@@ -59,8 +59,12 @@ This is Tensorflow implementation of Neural Turing Machine. This implementation 
 7. **DCGAN**
 
 Example of a deep convolutional generative adversarial network. A network able to reproduce detailed images.
-Train data must be supply in a folder with name input or passed as arg with --input_dir. Tweak the values if necessary
-.
+Train data can be supplied in a folder with name input or passed as arg with --input_dir, Tweak the values if necessary. Or it will use MNIST dataset as default.
+
+8. **yolo-tensorflow**
+
+YOLO (You Only Look Once) is a state-of-the-are, real-time object detection system. This example trained a yolo model with pascal-voc 2007 data.
+
 
 # How to Run
 
@@ -81,3 +85,10 @@ Some projects are contributed by University Students from Microsoft Student Club
 
     - Contributors: Tian-You Gao, Xiang Li
     - University: Nanjing University of Aeronautics and Astronautics
+
+2. Project DCGAN
+
+    - Contributors: pr0crustes
+
+3. Project yolo-tensorflwo
+    - Contributor: Wayfear

@@ -8,22 +8,26 @@
 
 ## Download pascal-voc 2007 data
 
+- Linux
 ```
 wget http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar
 tar xvf VOCtrainval_06-Nov-2007.tar
 ```
+- Windows
+
+download from website http://host.robots.ox.ac.uk/pascal/VOC/voc2007/VOCtrainval_06-Nov-2007.tar and unzip it.
 
 ## Train
 
 ```
-python train.py
+python3 train.py
 ```
 
 
 ## Test
 
 ```
-python test.py
+python3 test.py
 ```
 
 ## Demo
