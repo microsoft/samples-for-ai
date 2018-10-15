@@ -1,4 +1,4 @@
-﻿# Introduction
+# Introduction
 
 [简体中文](/zh-hans/examples/tensorflow/README.md)
 
@@ -55,6 +55,12 @@ This is TensorFlow implementation of End-To-End Memory Networks for language mod
 
 This is Tensorflow implementation of Neural Turing Machine. This implementation uses an LSTM controller. NTM models with multiple read/write heads are supported.
 
+
+7. **DCGAN**
+
+Example of a deep convolutional generative adversarial network. A network able to reproduce detailed images.
+Train data must be supply in a folder with name input or passed as arg with --input_dir. Tweak the values if necessary
+.
 
 # How to Run
 
