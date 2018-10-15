@@ -8,7 +8,7 @@ These examples are from tensorflow examples and tensorflow model zoo tutorials, 
 
 1. **MNIST**: ([source of the script](https://github.com/tensorflow/models/tree/master/tutorials/image/mnist))
 
-This is an example for training & evaluating the MNIST network using a feed dictionary. MNIST is a popular dataset for handwritten digits recognition. It contains 60000 examples as training set and 10000 examkples as test set.
+This is an example for training & evaluating the MNIST network using a feed dictionary. MNIST is a popular dataset for handwritten digits recognition. It contains 60000 examples as training set and 10000 examples as test set.
 
 For more details, you can see the tensorflow githubs. [Tensorflow](https://github.com/tensorflow/tensorflow) and [Tensorflow Model Zoo](https://github.com/tensorflow/models).
 
