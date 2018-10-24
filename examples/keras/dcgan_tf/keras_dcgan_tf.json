@@ -1,7 +1,7 @@
 {
   "jobName": "keras_dcgan_tf",
   "image": "openpai/pai.example.keras.tensorflow:v1.10",
-  "codeDir": "$PAI_DEFAULT_FS_URI/tiqint/dcgan_tf/code",
+  "codeDir": "$PAI_DEFAULT_FS_URI/tutorial/dcgan_tf/code",
   "authFile": "",
   "dataDir": "",
   "outputDir": "",

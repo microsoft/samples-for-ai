@@ -1,7 +1,7 @@
 {
   "jobName": "pytorch-sentimentanalysis",
   "image": "openpai/pai.example.pytorch",
-  "codeDir": "$PAI_DEFAULT_FS_URI/tiqint/sentiment/code",
+  "codeDir": "$PAI_DEFAULT_FS_URI/tutorial/sentiment/code",
   "authFile": "",
   "dataDir": "",
   "outputDir": "",

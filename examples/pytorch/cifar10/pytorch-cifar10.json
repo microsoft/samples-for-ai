@@ -1,7 +1,7 @@
 {
   "jobName": "pytorch-cifar10",
   "image": "openpai/pai.example.pytorch",
-  "codeDir": "$PAI_DEFAULT_FS_URI/tiqint/cifar10/code",
+  "codeDir": "$PAI_DEFAULT_FS_URI/tutorial/cifar10/code",
   "authFile": "",
   "dataDir": "",
   "outputDir": "",

@@ -1,7 +1,7 @@
 {
   "jobName": "keras_densenet",
   "image": "openpai/pai.example.keras.tensorflow:v1.10",
-  "codeDir": "$PAI_DEFAULT_FS_URI/tiqint/densenet/code",
+  "codeDir": "$PAI_DEFAULT_FS_URI/tutorial/densenet/code",
   "authFile": "",
   "dataDir": "",
   "outputDir": "",

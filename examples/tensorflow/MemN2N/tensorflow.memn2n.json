@@ -1,10 +1,10 @@
 {
   "jobName": "tensorflow-memn2n",
   "image": "openpai/pai.example.tensorflow",
-  "codeDir": "$PAI_DEFAULT_FS_URI/tiqint/memn2n/code",
+  "codeDir": "$PAI_DEFAULT_FS_URI/tutorial/memn2n/code",
   "authFile": "",
-  "dataDir": "$PAI_DEFAULT_FS_URI/tiqint/memn2n/data",
-  "outputDir": "$PAI_DEFAULT_FS_URI/tiqint/memn2n/output",
+  "dataDir": "$PAI_DEFAULT_FS_URI/tutorial/memn2n/data",
+  "outputDir": "$PAI_DEFAULT_FS_URI/tutorial/memn2n/output",
   "gpuType": "",
   "retryCount": 0,
   "taskRoles": [

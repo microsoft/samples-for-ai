@@ -1,7 +1,7 @@
 {
   "jobName": "keras_wgan_tf",
   "image": "openpai/pai.example.keras.tensorflow:v1.10",
-  "codeDir": "$PAI_DEFAULT_FS_URI/tiqint/wgan/code",
+  "codeDir": "$PAI_DEFAULT_FS_URI/tutorial/wgan/code",
   "authFile": "",
   "dataDir": "",
   "outputDir": "",

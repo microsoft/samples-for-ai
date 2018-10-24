@@ -1,10 +1,10 @@
 {
   "jobName": "tensorflow-embedding",
   "image": "openpai/pai.example.tensorflow",
-  "codeDir": "$PAI_DEFAULT_FS_URI/tiqint/embedding/code",
+  "codeDir": "$PAI_DEFAULT_FS_URI/tutorial/embedding/code",
   "authFile": "",
-  "dataDir": "$PAI_DEFAULT_FS_URI/tiqint/embedding/data",
-  "outputDir": "$PAI_DEFAULT_FS_URI/tiqint/embedding/output",
+  "dataDir": "$PAI_DEFAULT_FS_URI/tutorial/embedding/data",
+  "outputDir": "$PAI_DEFAULT_FS_URI/tutorial/embedding/output",
   "gpuType": "",
   "retryCount": 0,
   "taskRoles": [

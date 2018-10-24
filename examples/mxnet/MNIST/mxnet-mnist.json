@@ -1,7 +1,7 @@
 {
   "jobName": "mxnet-mnist",
   "image": "openpai/pai.example.mxnet",
-  "codeDir": "$PAI_DEFAULT_FS_URI/tiqint/mnist/code",
+  "codeDir": "$PAI_DEFAULT_FS_URI/tutorial/mnist/code",
   "authFile": "",
   "dataDir": "",
   "outputDir": "",

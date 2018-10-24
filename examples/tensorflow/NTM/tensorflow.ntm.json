@@ -1,9 +1,9 @@
 {
   "jobName": "tensorflow-ntm",
   "image": "openpai/pai.example.tensorflow",
-  "codeDir": "$PAI_DEFAULT_FS_URI/tiqint/ntm/code",
+  "codeDir": "$PAI_DEFAULT_FS_URI/tutorial/ntm/code",
   "authFile": "",
-  "dataDir": "$PAI_DEFAULT_FS_URI/tiqint/ntm/data",
+  "dataDir": "$PAI_DEFAULT_FS_URI/tutorial/ntm/data",
   "outputDir": "",
   "gpuType": "",
   "retryCount": 0,
