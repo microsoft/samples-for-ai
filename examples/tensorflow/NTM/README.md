@@ -35,7 +35,7 @@ To test a *quick* copy task:
 Results
 -------
 
-More detailed results can be found [here](ipynb/NTM\ Test.ipynb).
+More detailed results can be found [here](ipynb/NTM/Test.ipynb).
 
 **Copy task:**
 
