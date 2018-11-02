@@ -26,9 +26,9 @@ Solutions are separated by different deep learning frameworks they use:
 
 ### 3. Run Samples
 
-    - [Local Run](./docs/local_run.md)
+   - [Local Run](./docs/local_run.md)
 
-    - [Submit Job to OpenPAI](./docs/submit_job_to_pai.md)
+   - [Submit Job to OpenPAI](./docs/submit_job_to_pai.md)
 
 
 # Contributing
