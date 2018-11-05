@@ -79,7 +79,7 @@ Currently, this installer works on Windows, macOS and Linux:
 
 ## Submit samples to Microsoft PAI platform
 
-[**Microsoft OpenPAI**](https://github.com/Microsoft/pai) is an open source platform that provides complete AI model training and resource management capabiliies. These samples can submit to OpenPAI cluster. for each project, a json file is provided as an example to show how to configure the submit information. You can just use the example json file or set your specified configuration.
+[**Microsoft OpenPAI**](https://github.com/Microsoft/pai) is an open source platform that provides complete AI model training and resource management capabilities. These samples can submit to OpenPAI cluster. for each project, a json file is provided as an example to show how to configure the submit information. You can just use the example json file or set your specified configuration.
 
 ### How to submit job to OpenPAI
 
