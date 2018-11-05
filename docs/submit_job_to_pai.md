@@ -14,13 +14,13 @@
 
    (2) Submit Job to OpenPAI
    
-        - Right-Click project name -> "Submit Job...".
-        - In the pop-up dialog window, select your OpenPAI cluster.
-        - Write your own configuration or "Import" json file.
-        - If you want use example json file as configuration: Click "Import..." button, select one json file
-        - Click "Submit".
+      - Right-Click project name -> "Submit Job...".
+      - In the pop-up dialog window, select your OpenPAI cluster.
+      - Write your own configuration or "Import" json file.
+      - If you want use example json file as configuration: Click "Import..." button, select one json file
+      - Click "Submit".
         
-       Please visit [Job Submission to a PAI cluster](https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/pai.md#Job%20Submission%20to%20a%20PAI%20cluster) for details.
+      Please visit [Job Submission to a PAI cluster](https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/pai.md#Job%20Submission%20to%20a%20PAI%20cluster) for details.
 
 
 ## Submit from Microsoft Visual Studio Code Tools for AI
