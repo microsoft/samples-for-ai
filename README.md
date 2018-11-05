@@ -20,7 +20,7 @@ Solutions are separated by different deep learning frameworks they use:
 # Getting Started
 
 ### 1. [Prerequisites](./docs/prerequisites.md)
-   **Using a one-click installer to setup deep learning frameworks** has been moved to [here](./docs/prerequisites.md#Using a one-click installer to setup deep learning frameworks), please visit it for details.
+   **Using a one-click installer to setup deep learning frameworks** has been moved to [**here**](./docs/prerequisites.md#Using_a_one-click_installer_to_setup_deep_learning_frameworks), please visit it for details.
 
 ### 2. [Download Data](./docs/download_data.md)
 
