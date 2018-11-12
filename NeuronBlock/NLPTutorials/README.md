@@ -21,6 +21,7 @@ User can run these task in several ways:
 - Local run from Command line
 - Local run from Visual Studio
 - Submit job to Microsoft OpenPAI
+  
   Each task folder has a json file named as **_pai-[framework_name]-[taskname].json_**. It is the configuration file for submission job to OpenPAI.
 
 For more details about how to run from Visual Studio or Submit job to Microsoft OpenPAI, please follow this [documentation](../../examples/README.md#Getting-Started).
