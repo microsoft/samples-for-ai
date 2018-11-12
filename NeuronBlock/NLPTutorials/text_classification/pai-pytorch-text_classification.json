@@ -1,0 +1,22 @@
+{
+  "jobName": "pai-pytorch-text_classification",
+  "image": "openpai/pai.example.pytorch",
+  "codeDir": "$PAI_DEFAULT_FS_URI/tutorial/pytorch/text_classification/code",
+  "authFile": "",
+  "dataDir": "",
+  "outputDir": "",
+  "gpuType": "",
+  "retryCount": 2,
+  "taskRoles": [
+    {
+      "name": "text_classification",
+      "taskNumber": 1,
+      "cpuNumber": 1,
+      "memoryMB": 8192,
+      "gpuNumber": 1,
+      "command": "export LC_ALL=C && pip3 --quiet install torch torchvision torchtext==0.2.3 sklearn==0.0 && python3 code/text_classification.py --model_name TextCNN --batch_size 64 --epochs 10 ",
+      "minSucceededTaskCount": 1,
+      "minFailedTaskCount": 1
+    }
+  ]
+}

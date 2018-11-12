@@ -1,0 +1,22 @@
+{
+  "jobName": "pai-pytorch-language_model",
+  "image": "openpai/pai.example.pytorch",
+  "codeDir": "$PAI_DEFAULT_FS_URI/tutorial/pytorch/language_model/code",
+  "authFile": "",
+  "dataDir": "",
+  "outputDir": "",
+  "gpuType": "",
+  "retryCount": 2,
+  "taskRoles": [
+    {
+      "name": "language_model",
+      "taskNumber": 1,
+      "cpuNumber": 1,
+      "memoryMB": 8192,
+      "gpuNumber": 1,
+      "command": "export LC_ALL=C && pip3 --quiet install torch torchvision torchtext==0.2.3 sklearn==0.0 && python3 code/language_model.py --batch_size 20 --epochs 20 --gen_word_len 15 ",
+      "minSucceededTaskCount": 1,
+      "minFailedTaskCount": 1
+    }
+  ]
+}
