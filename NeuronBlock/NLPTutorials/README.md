@@ -24,9 +24,6 @@ User can run these task in several ways:
 
 For more details about how to run from Visual Studio or Submit job to Microsoft OpenPAI, please follow this [documentation](./examples/README.md#Getting-Started).
 
-This downloads the following data automatically:
-  - [Twenty Newsgroups Data Set](https://archive.ics.uci.edu/ml/datasets/Twenty+Newsgroups) (This data set consists of 20000 messages taken from 20 newsgroups)
-
 
 ## License
 These samlples are under MIT license.
