@@ -22,7 +22,7 @@ User can run these task in several ways:
 - Local run from Visual Studio
 - Submit job to Microsoft OpenPAI
 
-For more details about how to run from Visual Studio or Submit job to Microsoft OpenPAI, please follow this [documentation](./examples/README.md#Getting-Started).
+For more details about how to run from Visual Studio or Submit job to Microsoft OpenPAI, please follow this [documentation](../../examples/README.md#Getting-Started).
 
 
 ## License
