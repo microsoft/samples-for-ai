@@ -12,7 +12,7 @@
       "name": "qp_similarity",
       "taskNumber": 1,
       "cpuNumber": 1,
-      "memoryMB": 8192,
+      "memoryMB": 131072,
       "gpuNumber": 1,
       "command": "export LC_ALL=C && pip3 --quiet install torch torchvision torchtext==0.2.3 sklearn==0.0 && python3 code/qp_similarity.py --batch_size 64 --epochs 15 ",
       "minSucceededTaskCount": 1,
