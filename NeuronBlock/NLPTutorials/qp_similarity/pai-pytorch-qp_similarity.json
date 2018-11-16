@@ -1,0 +1,22 @@
+{
+  "jobName": "pai-pytorch-qp_similarity",
+  "image": "openpai/pai.example.pytorch",
+  "codeDir": "$PAI_DEFAULT_FS_URI/tutorial/pytorch/qp_similarity/code",
+  "authFile": "",
+  "dataDir": "",
+  "outputDir": "",
+  "gpuType": "",
+  "retryCount": 2,
+  "taskRoles": [
+    {
+      "name": "qp_similarity",
+      "taskNumber": 1,
+      "cpuNumber": 1,
+      "memoryMB": 131072,
+      "gpuNumber": 1,
+      "command": "export LC_ALL=C && pip3 --quiet install torch torchvision torchtext==0.2.3 sklearn==0.0 && python3 code/qp_similarity.py --batch_size 64 --epochs 15 ",
+      "minSucceededTaskCount": 1,
+      "minFailedTaskCount": 1
+    }
+  ]
+}

@@ -13,7 +13,7 @@ This includes the latest drivers and libraries for your NVIDIA GPU (if you have 
 
 Please visit [here](https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md) for detailed instruction.
 
-Besides, we provide a one-click installer to setup all the framworks automatically. Please follow below guidance if you want to use this installation tool.
+Besides, we provide a one-click installer to setup all the frameworks automatically. Please follow below guidance if you want to use this installation tool.
 
 ## Using a one-click installer to setup deep learning frameworks
 
