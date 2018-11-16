@@ -307,7 +307,7 @@ def detect_vs():
         vs.append("VS2017")
     if (len(vs) == 0):
         logger.warning("Not detect Visual Studio 2017 or 2015! We recommend Visual Studio 2017, "
-                       "please manually download and install Visual Studio 2017 form https://www.visualstudio.com/downloads/.")
+                       "please manually download and install Visual Studio 2017 from https://visualstudio.microsoft.com/downloads/.")
     else:
         logger.info("Visual Studio: {0}".format(" ".join(vs)))
 
@@ -718,7 +718,7 @@ def pip_install_pytorch(options):
         pip_install_package(name, options, version, pkg)
     else:
         logger.error("Fail to install pytorch.")
-        logger.warning("Pytorch installation can not be supported on your OS! We recommand 64-bit Windows-10, Linux and Macos.")
+        logger.warning("Pytorch installation can not be supported on your OS! We recommend 64-bit Windows-10, Linux and Macos.")
 
     name = "torchvision"
     version = "0.2.1"
@@ -810,7 +810,7 @@ def pip_install_chainer(options):
             else:
                 logger.info("Cupy is already installed.")
         except ImportError:
-            logger.warning("On windows, please manully install cupy. You can reference this link https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer.")
+            logger.warning("On windows, please manually install cupy. You can reference this link https://github.com/Microsoft/vs-tools-for-ai/blob/master/docs/prepare-localmachine.md#chainer.")
 
     name = "chainer"
     version = "4.1.0"
