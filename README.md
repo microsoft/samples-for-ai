@@ -1,5 +1,7 @@
 # Samples for AI
 
+[![MIT licensed](https://img.shields.io/badge/license-MIT-yellow.svg)](https://github.com/Microsoft/samples-for-ai/blob/master/LICENSE)
+
 Samples in Visual Studio solution format are provided for users to get started with deep learning using:
 - [Microsoft Visual Studio Tools for AI](https://github.com/Microsoft/vs-tools-for-ai)
 - [Open Platform for AI](https://github.com/Microsoft/pai)
