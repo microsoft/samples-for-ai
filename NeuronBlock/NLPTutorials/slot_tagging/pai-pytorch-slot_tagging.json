@@ -1,0 +1,22 @@
+{
+  "jobName": "pai-pytorch-slot_tagging",
+  "image": "openpai/pai.example.pytorch",
+  "codeDir": "$PAI_DEFAULT_FS_URI/tutorial/pytorch/slot_tagging/code",
+  "authFile": "",
+  "dataDir": "",
+  "outputDir": "",
+  "gpuType": "",
+  "retryCount": 2,
+  "taskRoles": [
+    {
+      "name": "slot_tagging",
+      "taskNumber": 1,
+      "cpuNumber": 1,
+      "memoryMB": 8192,
+      "gpuNumber": 1,
+      "command": "export LC_ALL=C && pip3 --quiet install torch torchvision torchtext==0.2.3 sklearn==0.0 && python3 code/slot_tagging.py --lr 0.001 --batch_size 64 --max_iter 5000 --data_dir data --model_dir model --model_name best_model.pth ",
+      "minSucceededTaskCount": 1,
+      "minFailedTaskCount": 1
+    }
+  ]
+}
