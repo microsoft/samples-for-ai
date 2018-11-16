@@ -1,6 +1,6 @@
 # Submit a job to Open Platform for AI (short for OpenPAI)
 
-[**Microsoft OpenPAI**](https://github.com/Microsoft/pai) is an open source platform that provides complete AI model training and resource management capabiliies. Most samples can submit to OpenPAI cluster. For each project, a json file is provided as an example to show how to configure the submit information. User can just use the example json file or set your specified configuration.
+[**Microsoft OpenPAI**](https://github.com/Microsoft/pai) is an open source platform that provides complete AI model training and resource management capabilities. Most samples can submit to OpenPAI cluster. For each project, a json file is provided as an example to show how to configure the submit information. User can just use the example json file or set your specified configuration.
 
 ## Submit from Microsoft Visual Studio Tools for AI
 
@@ -41,7 +41,7 @@
 
    In these samples, we uploaded code to $PAI_DEFAULT_FS_URI/tutorial/**_sample_name_**/code directory, and dataset to $PAI_DEFAULT_FS_URI/tutorial/**_sample_name_**/data directory if needed.
 
-   **NOTICE**: Most samples can download data from website automatically in the code, so you don't need to upload data manually. For details please view README.md file in each framwork folder.
+   **NOTICE**: Most samples can download data from website automatically in the code, so you don't need to upload data manually. For details please view README.md file in each framework folder.
 
 
 ### 2. Submit job to webportal
