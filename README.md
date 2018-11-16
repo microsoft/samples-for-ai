@@ -1,11 +1,10 @@
+# Samples for AI
 
-# Introduction
+Samples in Visual Studio solution format are provided for users to get started with deep learning using:
+- [Microsoft Visual Studio Tools for AI](https://github.com/Microsoft/vs-tools-for-ai)
+- [Open Platform for AI](https://github.com/Microsoft/pai)
+- Command line
 
-[Simplified Chinese (简体中文)](zh-hans/README.md)
-
-[Traditional Chinese (正體中文)](zh-hant/README.md)
-
-Samples in Visual Studio solution format are provided for users to get started with deep learning using [Microsoft Visual Studio Tools for AI](https://github.com/Microsoft/vs-tools-for-ai).
 Each solution has one or more sample projects.
 Solutions are separated by different deep learning frameworks they use:
 - CNTK (both BrainScript and Python languages)
@@ -16,6 +15,21 @@ Solutions are separated by different deep learning frameworks they use:
 - MXNet
 - Chainer
 - Theano
+
+
+# Getting Started
+
+### 1. [Prerequisites](./docs/prerequisites.md)
+   **Using a one-click installer to setup deep learning frameworks** has been moved to [**here**](./docs/prerequisites.md#Using_a_one-click_installer_to_setup_deep_learning_frameworks), please visit it for details.
+
+### 2. [Download Data](./docs/download_data.md)
+
+### 3. Run Samples
+
+   - [Local Run](./docs/local_run.md)
+
+   - [Submit Job to OpenPAI](./docs/submit_job_to_pai.md)
+
 
 # Contributing
 
@@ -100,7 +114,8 @@ Currently, this installer works on Windows, macOS and Linux:
 
 # License
 
-The samples scripts are from official GitHub of each framework. They are under different licenses.
+Most of the samples scripts are from official github of each framework. They are under different licenses.
+
 
 The scripts of CNTK are under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 

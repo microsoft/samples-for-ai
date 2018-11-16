@@ -2,7 +2,7 @@
 
 [简体中文](/zh-hans/examples/cntk/README.md)
 
-CNTK examples have two Visual Studio solutions. One is for BrainScript lauguage, the other is for python lauguage binding.
+CNTK examples have two Visual Studio solutions. One is for BrainScript language, the other is for python language binding.
 
 
 # How to Run
