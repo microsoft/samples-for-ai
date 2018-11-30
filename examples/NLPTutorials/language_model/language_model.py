@@ -1,17 +1,4 @@
-﻿from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
-import numpy as np
-import os
-import sys
-import argparse
-
-###################################################################
-# Variables                                                       #
-# When launching project or scripts from Visual Studio,           #
-# input_dir and output_dir are passed as arguments automatically. #
-# Users could set them from the project setting page.             ## ====================================================================================================== #
+﻿# ====================================================================================================== #
 # The MIT License (MIT)
 # Copyright (c) Microsoft Corporation
 #
@@ -187,14 +174,14 @@ def train(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description='Hyperparams')
-    parser.add_argument('--epochs', type=int, default=20, help='number of epochs for train')
-    parser.add_argument('--batch_size', type=int, default=20, help='batch_size')
-    parser.add_argument('--lr', type=float, default=0.0001, help='learning rate')
-    parser.add_argument('--grad_clip', type=float, default=0.25, help='max norm of the gradients')
-    parser.add_argument('--log_interval', type=int, default=100, help='print log every _')
-    parser.add_argument('--model_dir', type=str, default='.save/', help='directory to save the trained weights')
-    parser.add_argument('--model_name', type=str, default='lm_best_model.pt', help='the model file name')
-    parser.add_argument('--gen_word_len', type=int, default=15, help='word number of generations')
+    parser.add_argument('-epochs', type=int, default=20, help='number of epochs for train')
+    parser.add_argument('-batch_size', type=int, default=20, help='batch_size')
+    parser.add_argument('-lr', type=float, default=0.0001, help='learning rate')
+    parser.add_argument('-grad_clip', type=float, default=0.25, help='max norm of the gradients')
+    parser.add_argument('-log_interval', type=int, default=100, help='print log every _')
+    parser.add_argument('-model_dir', type=str, default='.save/', help='directory to save the trained weights')
+    parser.add_argument('-model_name', type=str, default='lm_best_model.pt', help='the model file name')
+    parser.add_argument('-gen_word_len', type=int, default=15, help='word number of generations')
     args = parser.parse_args()
     device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     train(args)
