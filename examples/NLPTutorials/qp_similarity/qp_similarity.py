@@ -92,10 +92,9 @@ def get_dataset(args):
                                                      ('label', LABEL)],
                                              skip_header=True)
     TEXT.build_vocab(train, vectors='glove.840B.300d')
-    device = args.device
     train_iter, dev_iter, test_iter = BucketIterator.splits((train, val, test), batch_size=args.batch_size,
                                                                   sort=False, shuffle=True, repeat=False,
-                                                                  device=device)
+                                                            device='cuda' if torch.cuda.is_available() else None)
     return train_iter, dev_iter, test_iter, TEXT.vocab
 
 
@@ -131,7 +130,7 @@ def validate(model, val_iter, criterion):
 def train(args):
     train_iter, dev_iter, test_iter, vocab = get_dataset(args)
 
-    device = torch.device('cuda', args.device) if args.device > -1 else torch.device('cpu')
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = Model(vocab).to(device)
     weight = torch.FloatTensor([0.1, 0.9]).to(device)
 
@@ -167,7 +166,6 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=64, help='Batch size')
     parser.add_argument('--epochs', type=int, default=15, help='Number of epochs')
     parser.add_argument('--lr', type=float, default=2e-4, help='Learning rate')
-    parser.add_argument('--device', type=int, default=0, help='Device, -1 for CPU')
     parser.add_argument('--model_dir', type=str, default='models', help='Directory to save models')
     parser.add_argument('--model_name', type=str, default='best_model.pth', help='Name of best model')
     args = parser.parse_args()
