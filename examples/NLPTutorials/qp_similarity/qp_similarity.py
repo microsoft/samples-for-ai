@@ -1,4 +1,4 @@
-﻿# ====================================================================================================== #
+# ====================================================================================================== #
 # The MIT License (MIT)
 # Copyright (c) Microsoft Corporation
 #
@@ -92,10 +92,9 @@ def get_dataset(args):
                                                      ('label', LABEL)],
                                              skip_header=True)
     TEXT.build_vocab(train, vectors='glove.840B.300d')
-    device = torch.device('cuda', args.device) if args.device > -1 else torch.device('cpu')
     train_iter, dev_iter, test_iter = BucketIterator.splits((train, val, test), batch_size=args.batch_size,
                                                                   sort=False, shuffle=True, repeat=False,
-                                                                  device=device)
+                                                            device='cuda' if torch.cuda.is_available() else None)
     return train_iter, dev_iter, test_iter, TEXT.vocab
 
 
@@ -110,35 +109,35 @@ def validate(model, val_iter, criterion):
     loss = 0
     batch_num = 0
     ref_list = []
-    pred_list = []
+    score_list = []
     with torch.no_grad():
         for batch in iter(val_iter):
             y = batch.label
             y_pred = model(batch)
             loss += criterion(y_pred, y).item()
-            preds = y_pred.max(dim=-1)[1]
+            y_score = F.softmax(y_pred, dim=-1)[:, 1]
             batch_num += 1
             ref_list += y.cpu().numpy().tolist()
-            pred_list += preds.cpu().numpy().tolist()
+            score_list += y_score.cpu().numpy().tolist()
     loss /= batch_num
-    precision = metrics.precision_score(ref_list, pred_list)
-    recall = metrics.recall_score(ref_list, pred_list)
-    f1 = metrics.f1_score(ref_list, pred_list)
 
-    return loss, precision, recall, f1
+    fpr, tpr, thresholds = metrics.roc_curve(ref_list, score_list)
+    auc = metrics.auc(fpr, tpr)
+
+    return loss, auc
 
 
 def train(args):
     train_iter, dev_iter, test_iter, vocab = get_dataset(args)
 
-    device = torch.device('cuda', args.device) if args.device > -1 else torch.device('cpu')
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     model = Model(vocab).to(device)
     weight = torch.FloatTensor([0.1, 0.9]).to(device)
 
     criterion = nn.CrossEntropyLoss(weight=weight)
     optimizer = torch.optim.Adam(filter(lambda p: p.requires_grad, model.parameters()), lr=args.lr)
 
-    best_val_f1 = 0
+    best_val_auc = 0
     for epoch in range(args.epochs):
         for batch in iter(train_iter):
             model.train()
@@ -148,19 +147,18 @@ def train(args):
             loss = criterion(y_pred, y)
             loss.backward()
             optimizer.step()
-            print('Epoch: {:d} \tLoss: {:.4f}'.format(epoch, loss.item()), end='\r')
+            print('Epoch: {:d}\tLoss: {:.4f}'.format(epoch, loss.item()), end='\r')
 
-        print('\n')
-        val_loss, val_precision, val_recall, val_f1 = validate(model, dev_iter, criterion)
-        print('Val Loss: {:.4f}, Precision: {:.4f}, Recall: {:.4f}, F1: {:.4f}\n'.format(val_loss, val_precision, val_recall, val_f1))
+        val_loss, val_auc = validate(model, dev_iter, criterion)
+        print('Epoch: {:d}\tVal Loss: {:.4f}\tAUC: {:.4f}\n'.format(epoch, val_loss, val_auc))
 
-        if val_f1 > best_val_f1:
+        if val_auc > best_val_auc:
             save_model(args, model)
-            best_val_f1 = val_f1
+            best_val_auc = val_auc
 
     model.load_state_dict(torch.load(os.path.join(args.model_dir, args.model_name)))
-    test_loss, test_precision, test_recall, test_f1 = validate(model, test_iter, criterion)
-    print('\nTest Loss: {:.4f}, Precision: {:.4f}, Recall: {:.4f}, F1: {:.4f}\n'.format(test_loss, test_precision, test_recall, test_f1))
+    test_loss, test_auc = validate(model, test_iter, criterion)
+    print('\nTest Loss: {:.4f}\tAUC: {:.4f}\n'.format(test_loss, test_auc))
 
 
 if __name__ == '__main__':
@@ -168,7 +166,6 @@ if __name__ == '__main__':
     parser.add_argument('--batch_size', type=int, default=64, help='Batch size')
     parser.add_argument('--epochs', type=int, default=15, help='Number of epochs')
     parser.add_argument('--lr', type=float, default=2e-4, help='Learning rate')
-    parser.add_argument('--device', type=int, default=0, help='Device, -1 for CPU')
     parser.add_argument('--model_dir', type=str, default='models', help='Directory to save models')
     parser.add_argument('--model_name', type=str, default='best_model.pth', help='Name of best model')
     args = parser.parse_args()

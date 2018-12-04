@@ -320,8 +320,8 @@ class NewsGroup(BasicDataset):
                     try:
                         with open(file_path) as f:
                             raw_data = f.read()
-                            if len(raw_data.split(' ')) > 100:
-                                raw_data = ' '.join(raw_data.split(' ')[0:100])
+                            if len(raw_data.split(' ')) > 400:
+                                raw_data = ' '.join(raw_data.split(' ')[0:400])
                             examples += [data.Example.fromlist([raw_data, class_dir_name], fields)]
                     except:
                         continue
@@ -334,7 +334,7 @@ def validate(model, val_iter, args):
 
         (inputs, inputs_length), target = batch.text, batch.label - 1
 
-        if args.cuda and args.device != -1:
+        if torch.cuda.is_available():
             inputs, inputs_length, target = inputs.cuda(), inputs_length.cuda(), target.cuda()
 
         logit = model(inputs, inputs_length)
@@ -360,7 +360,7 @@ def train(model, train_iter, val_iter, args):
     for epoch in range(1, args.epochs + 1):
         for batch in train_iter:
             (inputs, inputs_length), target = batch.text, batch.label - 1
-            if args.cuda and args.device != -1:
+            if torch.cuda.is_available():
                 inputs, inputs_length, target = inputs.cuda(), inputs_length.cuda(), target.cuda()
 
             optimizer.zero_grad()
@@ -385,13 +385,12 @@ def train(model, train_iter, val_iter, args):
 
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser()
     # MODEL
-    parser.add_argument('--model_name', type=str, default='LSTMSelfAttentionHighway', help='the model', required=False)
+    parser.add_argument('--model_name', type=str, default='TextCNN', help='the model', required=False)
 
     # common args
-    parser.add_argument('--cuda', type=bool, default=True, help='enable the cuda or not', required=False)
-    parser.add_argument('-device', type=int, default=0, help='device to use for iterate data, -1 mean cpu [default: -1]')
     parser.add_argument('-log-interval', type=int, default=1, help='how many steps to wait before logging training status [default: 1]')
     parser.add_argument('-test-interval', type=int, default=100, help='how many steps to wait before testing [default: 100]')
     # models args
@@ -411,15 +410,13 @@ if __name__ == "__main__":
     parser.add_argument('--lstm_hidden_dim', type=int, default=100, help='Number of lstm hidden dim', required=False)
     parser.add_argument('--lstm_num_layers', type=int, default=1, help='Number of lstm layer numbers', required=False)
     args, unknown = parser.parse_known_args()
-
     print("args : " + str(args))
     print("unknown args : " + str(unknown))
 
     train_iter, val_iter = get_dataset_iter(args)
 
     model = eval(args.model_name)(args)
-    torch.cuda.set_device(args.device)
-    if args.cuda and args.device != -1:
+    if torch.cuda.is_available():
         model = model.cuda()
 
     train(model, train_iter, val_iter, args)

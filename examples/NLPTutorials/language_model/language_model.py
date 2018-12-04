@@ -1,17 +1,4 @@
-﻿from __future__ import absolute_import
-from __future__ import division
-from __future__ import print_function
-
-import numpy as np
-import os
-import sys
-import argparse
-
-###################################################################
-# Variables                                                       #
-# When launching project or scripts from Visual Studio,           #
-# input_dir and output_dir are passed as arguments automatically. #
-# Users could set them from the project setting page.             ## ====================================================================================================== #
+﻿# ====================================================================================================== #
 # The MIT License (MIT)
 # Copyright (c) Microsoft Corporation
 #
