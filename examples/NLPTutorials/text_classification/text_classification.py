@@ -320,8 +320,8 @@ class NewsGroup(BasicDataset):
                     try:
                         with open(file_path) as f:
                             raw_data = f.read()
-                            if len(raw_data.split(' ')) > 100:
-                                raw_data = ' '.join(raw_data.split(' ')[0:100])
+                            if len(raw_data.split(' ')) > 400:
+                                raw_data = ' '.join(raw_data.split(' ')[0:400])
                             examples += [data.Example.fromlist([raw_data, class_dir_name], fields)]
                     except:
                         continue
@@ -391,14 +391,12 @@ if __name__ == "__main__":
     parser.add_argument('--model_name', type=str, default='TextCNN', help='the model', required=False)
 
     # common args
-    parser.add_argument('--cuda', type=bool, default=True, help='enable the cuda or not', required=False)
-    parser.add_argument('-device', type=int, default=0, help='device to use for iterate data, -1 mean cpu [default: -1]')
     parser.add_argument('-log-interval', type=int, default=1, help='how many steps to wait before logging training status [default: 1]')
     parser.add_argument('-test-interval', type=int, default=100, help='how many steps to wait before testing [default: 100]')
     # models args
     parser.add_argument("--lr", type=float, default=0.001, help="Learning rate", required=False)
     parser.add_argument("--batch_size", type=int, default=128, help="Batch size", required=False)
-    parser.add_argument('--epochs', type=int, default=3, help='Number of training epochs', required=False)
+    parser.add_argument('--epochs', type=int, default=256, help='Number of training epochs', required=False)
     parser.add_argument('--hidden_dim', type=int, default=128, help='the hidden size', required=False)
     parser.add_argument('--embed_dim', type=int, default=128, help='the embedding dim of word embedding', required=False)
 

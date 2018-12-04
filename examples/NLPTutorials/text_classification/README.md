@@ -113,7 +113,7 @@ Using the default parameters:
 ## Usage
 
 ```
-python/python3 text_classification.py --model_name <TextCNN|LSTMSelfAttentionHighway> --batch_size 128 --epochs 3
+python/python3 text_classification.py --model_name <TextCNN|LSTMSelfAttentionHighway> --batch_size 128 --epochs 32
 ```
 
 This downloads the following data automatically:
