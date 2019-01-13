@@ -4,6 +4,8 @@ import numpy as np
 import tensorflow as tf
 from random import randint
 
+from six.moves import xrange
+
 from ntm import NTM
 from utils import pprint
 from ntm_cell import NTMCell

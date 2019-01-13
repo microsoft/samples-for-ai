@@ -4,6 +4,8 @@
 # for full license information.
 # ==============================================================================
 
+import sys
+
 import cntk as C
 
 # Read the mapping of tokens to ids from a file (tab separated)
