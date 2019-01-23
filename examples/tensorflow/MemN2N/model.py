@@ -132,7 +132,7 @@ class MemN2N(object):
             bar = ProgressBar('Train', max=N)
 
         for idx in xrange(N):
-            if self.show: bar.next()
+            if self.show: next(bar)
             target.fill(0)
             for b in xrange(self.batch_size):
                 m = random.randrange(self.mem_size, len(data))
@@ -171,7 +171,7 @@ class MemN2N(object):
 
         m = self.mem_size
         for idx in xrange(N):
-            if self.show: bar.next()
+            if self.show: next(bar)
             target.fill(0)
             for b in xrange(self.batch_size):
                 target[b][data[m]] = 1

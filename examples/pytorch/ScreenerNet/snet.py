@@ -37,7 +37,7 @@ def validate(val_loader, model, criterion, epoch):
     model.eval()
 
     for i, (images, target) in enumerate(train_loader):
-        target = target.cuda(async=True)
+        target = target.cuda(non_blocking=True)
         image_var=torch.autograd.Variable(images)
         label_var = torch.autograd.Variable(target)
 

@@ -304,7 +304,7 @@ def DenseNetFCN(input_shape, nb_dense_block=5, growth_rate=16, nb_layers_per_blo
     if input_shape is None:
         raise ValueError('For fully convolutional models, input shape must be supplied.')
 
-    if type(nb_layers_per_block) is not list and nb_dense_block < 1:
+    if not isinstance(nb_layers_per_block, list) and nb_dense_block < 1:
         raise ValueError('Number of dense layers per block must be greater than 1. Argument '
                          'value was %d.' % (nb_layers_per_block))
 
@@ -593,7 +593,7 @@ def __create_dense_net(nb_classes, img_input, include_top, depth=40, nb_dense_bl
         assert reduction <= 1.0 and reduction > 0.0, 'reduction value must lie between 0.0 and 1.0'
 
     # layers in each dense block
-    if type(nb_layers_per_block) is list or type(nb_layers_per_block) is tuple:
+    if isinstance(nb_layers_per_block, (list, tuple)):
         nb_layers = list(nb_layers_per_block)  # Convert tuple to list
 
         assert len(nb_layers) == (nb_dense_block), 'If list, nb_layer is used as provided. ' \
@@ -704,7 +704,7 @@ def __create_fcn_dense_net(nb_classes, img_input, include_top, nb_dense_block=5,
                                                                     'than 12'
 
     # layers in each dense block
-    if type(nb_layers_per_block) is list or type(nb_layers_per_block) is tuple:
+    if isinstance(nb_layers_per_block, (list, tuple)):
         nb_layers = list(nb_layers_per_block)  # Convert tuple to list
 
         assert len(nb_layers) == (nb_dense_block + 1), 'If list, nb_layer is used as provided. ' \
