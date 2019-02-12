@@ -44,6 +44,7 @@ This is a Keras implementation of InfoGAN (Information-theoretic extension to th
 This is a Keras implementation of WGAN (Wasserstein Generative Adversarial Network), which can generates handwritten digits througth training.
 
 9. **Emojinator:**
+
 This is a Keras implementation inspired by Lobe.ai platform, which can classify different hand gestures into emojis through training.
 
 # How to Run
