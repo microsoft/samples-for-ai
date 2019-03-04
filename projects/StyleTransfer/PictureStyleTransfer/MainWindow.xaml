@@ -1,0 +1,115 @@
+﻿<Window x:Class="PictureStyleTransfer.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:PictureStyleTransfer"
+        mc:Ignorable="d"
+        DataContext="{Binding Main,Source={StaticResource Locator}}"
+        Title="MainWindow" Height="650" Width="928"
+        ResizeMode="CanMinimize"
+        WindowStartupLocation="CenterScreen"
+        IsEnabled="{Binding IsRunning, Mode=TwoWay}">
+
+    <Grid HorizontalAlignment="Left" Height="650" Margin="0,0,0,0" VerticalAlignment="Top" Width="900">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="600"/>
+            <RowDefinition Height="50"/>
+        </Grid.RowDefinitions>
+
+        <Grid HorizontalAlignment="Left" Grid.Row="0" Height="600" Margin="0,0,0,0" VerticalAlignment="Top" Width="900">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="500"/>
+                <ColumnDefinition Width="400"/>
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="600"/>
+                <!--<RowDefinition Height="100"/>-->
+            </Grid.RowDefinitions>
+            <Grid Grid.Row="0" Grid.Column="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="500"/>
+                    <RowDefinition Height="100"/>
+                </Grid.RowDefinitions>
+                <Image x:Name="ImageDisplay" Grid.Row="0"  Grid.Column="0" Source="{Binding OriginImageSource}" Margin="0,0,0,0" Stretch="Uniform" SourceUpdated="UpateSource" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Center" HorizontalAlignment="Center">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+                <Grid Grid.Row="1">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="330"/>
+
+                        <ColumnDefinition Width="150"/>
+                    </Grid.ColumnDefinitions>
+                    <Grid Grid.Column="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                            <RowDefinition Height="30"/>
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="200"/>
+                        </Grid.ColumnDefinitions>
+                        <Label Grid.Column="0" Grid.Row="0" HorizontalAlignment="Right" >Select Camera:</Label>
+                        <ComboBox Grid.Column="1"  Grid.Row="0"
+                                  Height="30"
+                                  ItemsSource= "{Binding CameraItems, Mode=OneWay}"
+                                  DisplayMemberPath="Name"
+                                  SelectedItem="{Binding SelectedCamera}"
+                                  IsEnabled="{Binding IsEnable}"
+                                  VerticalAlignment="Top" />
+
+                        <Label Grid.Column="0" Grid.Row="2" HorizontalContentAlignment="Right" >Select Styles:</Label>
+                        <ComboBox Grid.Column="1"  Grid.Row="2"
+                                  Height="30"
+                                  ItemsSource="{Binding StyleItems}"
+                                  SelectedItem="{Binding SelectedStyle}"         
+                                  IsEnabled="{Binding IsEnable}"
+                                  VerticalAlignment="Top" />
+                    </Grid>
+                    
+                    <StackPanel Grid.Column="2">
+                        <Button x:Name="TakePic" Width="150" Height="90" FontSize="20" 
+                                Command="{Binding TakeFrame}" 
+                                IsEnabled="{Binding IsEnable}">
+                            Take a picture!
+                        </Button>
+                    </StackPanel>
+
+                </Grid>
+
+            </Grid>
+            <Grid Grid.Row="0" Grid.Column="1">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="300"/>
+                    <RowDefinition Height="300"/>
+                </Grid.RowDefinitions>
+                
+                <Image x:Name="TranferredImageDisplay" Grid.Row="0" Source="{Binding TransferredImageSource}" Margin="0,0,0,0" Stretch="Uniform" SourceUpdated="UpateSource" RenderTransformOrigin="0.5,0.5" VerticalAlignment="Top">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+                <Image x:Name="FrameDisplay" Grid.Row="1" Source="{Binding FrameImageSource}" Margin="0,0,0,0" Stretch="Uniform" SourceUpdated="UpateSource" RenderTransformOrigin="0.5,0.5" HorizontalAlignment="Center" VerticalAlignment="Top">
+                    <Image.RenderTransform>
+                        <TransformGroup>
+                            <ScaleTransform ScaleX="0.9" ScaleY="0.9"/>
+                        </TransformGroup>
+                    </Image.RenderTransform>
+                </Image>
+
+            </Grid>
+            
+
+        </Grid>
+            </Grid>
+
+
+</Window>
