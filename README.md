@@ -4,6 +4,8 @@
 [![Pull requests](https://img.shields.io/github/issues-pr-raw/Microsoft/samples-for-ai.svg)](https://github.com/Microsoft/samples-for-ai/pulls?q=is%3Aopen+is%3Apr)
 [![Issues](https://img.shields.io/github/issues-raw/Microsoft/samples-for-ai.svg)](https://github.com/Microsoft/samples-for-ai/issues?q=is%3Aopen+is%3Aissue)
 
+Samples for AI is a deep learning samples and projects collection. It contains a lot of classic deep learning algorithms and applications with different frameworks, which is a good entry for the beginners to get started with deep learning.
+
 Samples in Visual Studio solution format are provided for users to get started with deep learning using:
 - [Microsoft Visual Studio Tools for AI](https://github.com/Microsoft/vs-tools-for-ai)
 - [Open Platform for AI](https://github.com/Microsoft/pai)
@@ -50,6 +52,11 @@ This project has adopted the [Microsoft Open Source Code of Conduct](https://ope
 For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/)
 or contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
 
+# Related Projects
+
+[Open Platform for AI](https://github.com/Microsoft/pai): an open source platform that provides complete AI model training and resource management capabilities, it is easy to extend and supports on-premise, cloud and hybrid environments in various scale.
+
+[NeuronBlocks](https://github.com/Microsoft/NeuronBlocks) : A NLP deep learning modeling toolkit that helps engineers to build DNN models like playing Lego. The main goal of this toolkit is to minimize developing cost for NLP deep neural network model building, including both training and inference stages.
 
 # License
 
