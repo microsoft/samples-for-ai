@@ -17,6 +17,8 @@ Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "NTM", "NTM\NTM.pyproj", "{0
 EndProject
 Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "yolo_tensorflow", "yolo_tensorflow\yolo_tensorflow.pyproj", "{BF2EDCF7-997E-4770-BC53-CFDEB579874D}"
 EndProject
+Project("{888888A0-9F3D-457C-B088-3A5042F75D52}") = "autoencoder", "autoencoder\autoencoder.pyproj", "{5481A4BB-C273-47A9-B946-5DC841A6B66B}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU

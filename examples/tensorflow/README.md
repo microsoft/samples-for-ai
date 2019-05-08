@@ -61,9 +61,15 @@ This is Tensorflow implementation of Neural Turing Machine. This implementation 
 Example of a deep convolutional generative adversarial network. A network able to reproduce detailed images.
 Train data can be supplied in a folder with name input or passed as arg with --input_dir, Tweak the values if necessary. Or it will use MNIST dataset as default.
 
+
 8. **yolo-tensorflow**
 
 YOLO (You Only Look Once) is a state-of-the-are, real-time object detection system. This example trained a yolo model with pascal-voc 2007 data.
+
+
+9. **autoencoder**
+
+Example of an autoencoder in tensorflow. Using by default MNIST, it encodes and decodes image, training the network to be able to compress and rebuild the image.
 
 
 # How to Run
