@@ -204,7 +204,26 @@ def _extract_tar(file_path, target_dir):
     try:
         import tarfile
         with tarfile.open(file_path) as tar:
-            tar.extractall(path=target_dir)
+            def is_within_directory(directory, target):
+                
+                abs_directory = os.path.abspath(directory)
+                abs_target = os.path.abspath(target)
+            
+                prefix = os.path.commonprefix([abs_directory, abs_target])
+                
+                return prefix == abs_directory
+            
+            def safe_extract(tar, path=".", members=None, *, numeric_owner=False):
+            
+                for member in tar.getmembers():
+                    member_path = os.path.join(path, member.name)
+                    if not is_within_directory(path, member_path):
+                        raise Exception("Attempted Path Traversal in Tar File")
+            
+                tar.extractall(path, members, numeric_owner=numeric_owner) 
+                
+            
+            safe_extract(tar, path=target_dir)
     except:
         logger.error("Fail to extract. Error: {0}.".format(sys.exc_info()))
         return False
